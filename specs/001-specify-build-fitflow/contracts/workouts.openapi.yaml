@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: FitFlow Pro - Workouts & Sets API
+  version: 1.0.0
+  description: Workout session and set logging endpoints
+
+servers:
+  - url: https://fitflow.local/api
+    description: Raspberry Pi 5 backend
+
+paths:
+  /workouts:
+    get:
+      summary: List user workouts
+      operationId: listWorkouts
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Workout list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workout'
+
+    post:
+      summary: Create workout session
+      operationId: createWorkout
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - program_day_id
+                - date
+              properties:
+                program_day_id:
+                  type: integer
+                date:
+                  type: string
+                  format: date
+      responses:
+        '201':
+          description: Workout created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workout'
+
+  /sets:
+    post:
+      summary: Log completed set
+      operationId: logSet
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - workout_id
+                - exercise_id
+                - set_number
+                - weight_kg
+                - reps
+                - rir
+                - timestamp
+              properties:
+                workout_id:
+                  type: integer
+                exercise_id:
+                  type: integer
+                set_number:
+                  type: integer
+                  minimum: 1
+                weight_kg:
+                  type: number
+                  minimum: 0
+                  maximum: 500
+                reps:
+                  type: integer
+                  minimum: 1
+                  maximum: 50
+                rir:
+                  type: integer
+                  minimum: 0
+                  maximum: 4
+                timestamp:
+                  type: integer
+                  description: Unix timestamp (milliseconds)
+                notes:
+                  type: string
+                  maxLength: 500
+                localId:
+                  type: integer
+                  description: Client-side ID for sync deduplication
+      responses:
+        '201':
+          description: Set logged
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  localId:
+                    type: integer
+                  synced:
+                    type: boolean
+
+components:
+  schemas:
+    Workout:
+      type: object
+      properties:
+        id:
+          type: integer
+        program_day_id:
+          type: integer
+        date:
+          type: string
+          format: date
+        started_at:
+          type: integer
+        completed_at:
+          type: integer
+        status:
+          type: string
+          enum: [not_started, in_progress, completed, cancelled]
+        total_volume_kg:
+          type: number
+        average_rir:
+          type: number
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

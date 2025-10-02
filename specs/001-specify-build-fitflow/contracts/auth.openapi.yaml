@@ -1,0 +1,147 @@
+openapi: 3.0.3
+info:
+  title: FitFlow Pro - Authentication API
+  version: 1.0.0
+  description: User registration and authentication endpoints
+
+servers:
+  - url: https://fitflow.local/api
+    description: Raspberry Pi 5 backend
+
+paths:
+  /auth/register:
+    post:
+      summary: Register new user account
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  minLength: 8
+                  example: SecurePass123!
+                age:
+                  type: integer
+                  minimum: 13
+                  maximum: 100
+                  example: 28
+                weight_kg:
+                  type: number
+                  minimum: 30
+                  maximum: 300
+                  example: 75.5
+                experience_level:
+                  type: string
+                  enum: [beginner, intermediate, advanced]
+                  example: intermediate
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                    example: 1
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Username already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      summary: Authenticate user
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        age:
+          type: integer
+        weight_kg:
+          type: number
+        experience_level:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        created_at:
+          type: integer
+          description: Unix timestamp (milliseconds)
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Validation failed
+        details:
+          type: string
+          example: Password must be at least 8 characters
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
