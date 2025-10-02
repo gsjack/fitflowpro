@@ -1,0 +1,53 @@
+TAP version 14
+# Subtest: Integration Test: Analytics and Progression Tracking (T076)
+    # Subtest: should track 1RM progression over 4 weeks (120kg → 130kg)
+        ok 1 - Should have 16 total sets (8 workouts × 2 sets)
+        ok 2 - Week 1 1RM should be ~120kg, got 123.3kg
+        ok 3 - Week 4 1RM should be ~130kg, got 136.2kg
+        ok 4 - 1RM should improve by at least 8kg over 4 weeks, improved by 12.8kg
+        1..4
+    ok 1 - should track 1RM progression over 4 weeks (120kg → 130kg) # time=6.811ms
+    
+    # Subtest: should track volume trends with MEV/MAV/MRV landmarks
+        ok 1 - Should have 4 weeks of data
+        ok 2 - Week 1 should have 14 sets
+        ok 3 - Week 1 should be in MAV-MRV zone
+        ok 4 - Week 2 should have 16 sets
+        ok 5 - Week 2 should be in MAV-MRV zone
+        ok 6 - Week 3 should have 18 sets
+        ok 7 - Week 3 should be in MAV-MRV zone
+        ok 8 - Week 4 should have 10 sets
+        ok 9 - Week 4 (deload) should be in MEV-MAV zone
+        1..9
+    ok 2 - should track volume trends with MEV/MAV/MRV landmarks # time=3.097ms
+    
+    # Subtest: should calculate adherence and consistency metrics
+        ok 1 - Should have 24 completed workouts
+        ok 2 - Adherence rate should be 100%
+        ok 3 - Average duration should be 50-60 minutes, got 54.2
+        1..3
+    ok 3 - should calculate adherence and consistency metrics # time=2.34ms
+    
+    # Subtest: should verify deload compliance
+        ok 1 - Week 3 should have 18 sets (MRV)
+        ok 2 - Week 4 should have 10 sets (deload)
+        ok 3 - Deload should reduce volume by ~50%, reduced by 44%
+        ok 4 - Deload should be compliant (≤60% of previous week)
+        1..4
+    ok 4 - should verify deload compliance # time=1.867ms
+    
+    # Subtest: should handle multiple muscle groups in analytics
+        ok 1 - Should have 3 muscle groups
+        ok 2 - Chest should have 10 sets
+        ok 3 - Back should have 12 sets
+        ok 4 - Legs should have 8 sets
+        ok 5 - Chest volume should be 10,000 kg
+        ok 6 - Back volume should be 9,600 kg
+        ok 7 - Legs volume should be 9,600 kg
+        1..7
+    ok 5 - should handle multiple muscle groups in analytics # time=2.397ms
+    
+    1..5
+ok 1 - Integration Test: Analytics and Progression Tracking (T076) # time=37.918ms
+
+1..1

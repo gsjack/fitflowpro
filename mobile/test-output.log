@@ -1,0 +1,20 @@
+
+Running 2 tests using 1 worker
+
+
+========================================
+🏋️  GUIDED WORKOUT E2E TEST
+========================================
+
+📱 Step 1: Loading app...
+✓ App loaded
+
+🔐 Step 2: Logging in...
+✓ Login submitted
+✓ Dashboard loaded
+
+📋 Step 3: Checking today's workout...
+✓ Today's workout found: Push B (Shoulder-Focused)
+
+🚀 Step 4: Starting workout...
+Navigating to Workout tab...

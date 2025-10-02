@@ -1,0 +1,128 @@
+TAP version 14
+# Subtest: GET /api/analytics/1rm-progression - T017
+{"level":30,"time":1759428137465,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"GET","url":"/api/analytics/1rm-progression?exercise_id=1&start_date=2025-01-01&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+    # Subtest: returns 401 unauthorized without JWT
+        ok 1 - should return 401 without auth token
+        1..1
+    ok 1 - returns 401 unauthorized without JWT # time=238.934ms
+    
+{"level":30,"time":1759428137476,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":401},"responseTime":9.165085999993607,"msg":"request completed"}
+{"level":30,"time":1759428137485,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428137865,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":201},"responseTime":380.5438439999707,"msg":"request completed"}
+    # Subtest: validates query parameters and response schema
+        # Subtest: requires exercise_id query param
+            ok 1 - should return 400 without exercise_id
+            1..1
+        ok 1 - requires exercise_id query param # time=4.079ms
+        
+        # Subtest: requires start_date query param
+            ok 1 - should return 400 without start_date
+            1..1
+        ok 2 - requires start_date query param # time=1.699ms
+        
+        # Subtest: requires end_date query param
+            ok 1 - should return 400 without end_date
+            1..1
+        ok 3 - requires end_date query param # time=1.568ms
+        
+        # Subtest: returns valid response schema with all params
+            ok 1 - should return 200 with valid params
+            ok 2 - response should be an array
+            1..2
+        ok 4 - returns valid response schema with all params # time=5.88ms
+        
+        1..4
+    ok 2 - validates query parameters and response schema # time=400.142ms
+    
+    1..2
+ok 1 - GET /api/analytics/1rm-progression - T017 # time=699.42ms
+
+# Subtest: GET /api/analytics/volume-trends - T018
+{"level":30,"time":1759428137970,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=chest&start_date=2025-01-01&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+    # Subtest: returns 401 unauthorized without JWT
+        ok 1 - should return 401 without auth token
+        1..1
+    ok 1 - returns 401 unauthorized without JWT # time=70.359ms
+    
+{"level":30,"time":1759428137867,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/analytics/1rm-progression?start_date=2025-01-01&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428137868,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"err":{"type":"Error","message":"querystring must have required property 'exercise_id'","stack":"Error: querystring must have required property 'exercise_id'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:178:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at handleRequest (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:24:5)\n    at runPreParsing (/home/asigator/fitness2025/backend/node_modules/fastify/lib/route.js:613:5)\n    at next (/home/asigator/fitness2025/backend/node_modules/fastify/lib/hooks.js:233:9)\n    at /home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:204:12\n    at resolveOriginOption (/home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:162:129)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"exercise_id"},"message":"must have required property 'exercise_id'"}],"validationContext":"querystring"},"msg":"querystring must have required property 'exercise_id'"}
+{"level":30,"time":1759428137870,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"responseTime":2.6143879999872297,"msg":"request completed"}
+{"level":30,"time":1759428137872,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/analytics/1rm-progression?exercise_id=1&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428137872,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"err":{"type":"Error","message":"querystring must have required property 'start_date'","stack":"Error: querystring must have required property 'start_date'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:178:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at handleRequest (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:24:5)\n    at runPreParsing (/home/asigator/fitness2025/backend/node_modules/fastify/lib/route.js:613:5)\n    at next (/home/asigator/fitness2025/backend/node_modules/fastify/lib/hooks.js:233:9)\n    at /home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:204:12\n    at resolveOriginOption (/home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:162:129)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"start_date"},"message":"must have required property 'start_date'"}],"validationContext":"querystring"},"msg":"querystring must have required property 'start_date'"}
+{"level":30,"time":1759428137873,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"responseTime":0.5435820000129752,"msg":"request completed"}
+{"level":30,"time":1759428137875,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/analytics/1rm-progression?exercise_id=1&start_date=2025-01-01","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428137875,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"err":{"type":"Error","message":"querystring must have required property 'end_date'","stack":"Error: querystring must have required property 'end_date'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:178:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at handleRequest (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:24:5)\n    at runPreParsing (/home/asigator/fitness2025/backend/node_modules/fastify/lib/route.js:613:5)\n    at next (/home/asigator/fitness2025/backend/node_modules/fastify/lib/hooks.js:233:9)\n    at /home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:204:12\n    at resolveOriginOption (/home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:162:129)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"end_date"},"message":"must have required property 'end_date'"}],"validationContext":"querystring"},"msg":"querystring must have required property 'end_date'"}
+{"level":30,"time":1759428137875,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"responseTime":0.4617689999868162,"msg":"request completed"}
+{"level":30,"time":1759428137878,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/analytics/1rm-progression?exercise_id=1&start_date=2025-01-01&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428137881,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":3.6647639999864623,"msg":"request completed"}
+{"level":30,"time":1759428137971,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":401},"responseTime":1.1445450000464916,"msg":"request completed"}
+{"level":30,"time":1759428137974,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138348,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":201},"responseTime":373.4978000000119,"msg":"request completed"}
+    # Subtest: validates query parameters and response schema
+        # Subtest: requires muscle_group query param
+            ok 1 - should return 400 without muscle_group
+            1..1
+        ok 1 - requires muscle_group query param # time=2.716ms
+        
+        # Subtest: requires start_date query param
+            ok 1 - should return 400 without start_date
+            1..1
+        ok 2 - requires start_date query param # time=1.818ms
+        
+        # Subtest: requires end_date query param
+            ok 1 - should return 400 without end_date
+            1..1
+        ok 3 - requires end_date query param # time=1.973ms
+        
+        # Subtest: returns valid response schema with all params
+            ok 1 - should return 200 with valid params
+            ok 2 - response should be an array
+            1..2
+        ok 4 - returns valid response schema with all params # time=2.806ms
+        
+        1..4
+    ok 2 - validates query parameters and response schema # time=389.157ms
+    
+    1..2
+ok 2 - GET /api/analytics/volume-trends - T018 # time=478.361ms
+
+# Subtest: GET /api/analytics/consistency - T019
+{"level":30,"time":1759428138436,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"GET","url":"/api/analytics/consistency","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+    # Subtest: returns 401 unauthorized without JWT
+        ok 1 - should return 401 without auth token
+        1..1
+    ok 1 - returns 401 unauthorized without JWT # time=59.945ms
+    
+{"level":30,"time":1759428138349,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/analytics/volume-trends?start_date=2025-01-01&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138350,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"err":{"type":"Error","message":"querystring must have required property 'muscle_group'","stack":"Error: querystring must have required property 'muscle_group'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:178:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at handleRequest (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:24:5)\n    at runPreParsing (/home/asigator/fitness2025/backend/node_modules/fastify/lib/route.js:613:5)\n    at next (/home/asigator/fitness2025/backend/node_modules/fastify/lib/hooks.js:233:9)\n    at /home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:204:12\n    at resolveOriginOption (/home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:162:129)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"muscle_group"},"message":"must have required property 'muscle_group'"}],"validationContext":"querystring"},"msg":"querystring must have required property 'muscle_group'"}
+{"level":30,"time":1759428138350,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"responseTime":0.791254999989178,"msg":"request completed"}
+{"level":30,"time":1759428138353,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=chest&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138354,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"err":{"type":"Error","message":"querystring must have required property 'start_date'","stack":"Error: querystring must have required property 'start_date'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:178:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at handleRequest (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:24:5)\n    at runPreParsing (/home/asigator/fitness2025/backend/node_modules/fastify/lib/route.js:613:5)\n    at next (/home/asigator/fitness2025/backend/node_modules/fastify/lib/hooks.js:233:9)\n    at /home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:204:12\n    at resolveOriginOption (/home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:162:129)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"start_date"},"message":"must have required property 'start_date'"}],"validationContext":"querystring"},"msg":"querystring must have required property 'start_date'"}
+{"level":30,"time":1759428138354,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"responseTime":0.47866200003772974,"msg":"request completed"}
+{"level":30,"time":1759428138356,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=chest&start_date=2025-01-01","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138356,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"err":{"type":"Error","message":"querystring must have required property 'end_date'","stack":"Error: querystring must have required property 'end_date'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:178:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at handleRequest (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:24:5)\n    at runPreParsing (/home/asigator/fitness2025/backend/node_modules/fastify/lib/route.js:613:5)\n    at next (/home/asigator/fitness2025/backend/node_modules/fastify/lib/hooks.js:233:9)\n    at /home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:204:12\n    at resolveOriginOption (/home/asigator/fitness2025/backend/node_modules/@fastify/cors/index.js:162:129)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"end_date"},"message":"must have required property 'end_date'"}],"validationContext":"querystring"},"msg":"querystring must have required property 'end_date'"}
+{"level":30,"time":1759428138357,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"responseTime":0.5247349999845028,"msg":"request completed"}
+{"level":30,"time":1759428138359,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=chest&start_date=2025-01-01&end_date=2025-01-31","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138361,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":1.1155049999943003,"msg":"request completed"}
+{"level":30,"time":1759428138437,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":401},"responseTime":0.584558000031393,"msg":"request completed"}
+{"level":30,"time":1759428138439,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138810,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":201},"responseTime":371.2504539999645,"msg":"request completed"}
+    # Subtest: validates response schema
+        ok 1 - should return 200 with valid auth
+        ok 2 - response should be an object
+        ok 3 - response should have adherence_rate property
+        ok 4 - response should have avg_session_duration property
+        ok 5 - response should have total_workouts property
+        ok 6 - adherence_rate should be number
+        ok 7 - avg_session_duration should be number
+        ok 8 - total_workouts should be number
+        1..8
+    ok 2 - validates response schema # time=376.011ms
+    
+    1..2
+ok 3 - GET /api/analytics/consistency - T019 # time=451.129ms
+
+{"level":30,"time":1759428138811,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/analytics/consistency","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138812,"pid":6702,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":1.0302019999944605,"msg":"request completed"}
+1..3
+Database connection closed

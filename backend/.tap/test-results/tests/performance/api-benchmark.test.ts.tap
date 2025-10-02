@@ -1,0 +1,347 @@
+TAP version 14
+# Subtest: Performance Test: API Response Time Benchmark (T080)
+    # Subtest: POST /api/sets should have p95 < 50ms (100 requests)
+        ok 1 - Request 1 returned valid status
+        ok 2 - Request 2 returned valid status
+        ok 3 - Request 3 returned valid status
+        ok 4 - Request 4 returned valid status
+        ok 5 - Request 5 returned valid status
+        ok 6 - Request 6 returned valid status
+        ok 7 - Request 7 returned valid status
+        ok 8 - Request 8 returned valid status
+        ok 9 - Request 9 returned valid status
+        ok 10 - Request 10 returned valid status
+        ok 11 - Request 11 returned valid status
+        ok 12 - Request 12 returned valid status
+        ok 13 - Request 13 returned valid status
+        ok 14 - Request 14 returned valid status
+        ok 15 - Request 15 returned valid status
+        ok 16 - Request 16 returned valid status
+        ok 17 - Request 17 returned valid status
+        ok 18 - Request 18 returned valid status
+        ok 19 - Request 19 returned valid status
+        ok 20 - Request 20 returned valid status
+        ok 21 - Request 21 returned valid status
+        ok 22 - Request 22 returned valid status
+        ok 23 - Request 23 returned valid status
+        ok 24 - Request 24 returned valid status
+        ok 25 - Request 25 returned valid status
+        ok 26 - Request 26 returned valid status
+        ok 27 - Request 27 returned valid status
+        ok 28 - Request 28 returned valid status
+        ok 29 - Request 29 returned valid status
+        ok 30 - Request 30 returned valid status
+        ok 31 - Request 31 returned valid status
+        ok 32 - Request 32 returned valid status
+        ok 33 - Request 33 returned valid status
+        ok 34 - Request 34 returned valid status
+        ok 35 - Request 35 returned valid status
+        ok 36 - Request 36 returned valid status
+        ok 37 - Request 37 returned valid status
+        ok 38 - Request 38 returned valid status
+        ok 39 - Request 39 returned valid status
+        ok 40 - Request 40 returned valid status
+        ok 41 - Request 41 returned valid status
+        ok 42 - Request 42 returned valid status
+        ok 43 - Request 43 returned valid status
+        ok 44 - Request 44 returned valid status
+        ok 45 - Request 45 returned valid status
+        ok 46 - Request 46 returned valid status
+        ok 47 - Request 47 returned valid status
+        ok 48 - Request 48 returned valid status
+        ok 49 - Request 49 returned valid status
+        ok 50 - Request 50 returned valid status
+        ok 51 - Request 51 returned valid status
+        ok 52 - Request 52 returned valid status
+        ok 53 - Request 53 returned valid status
+        ok 54 - Request 54 returned valid status
+        ok 55 - Request 55 returned valid status
+        ok 56 - Request 56 returned valid status
+        ok 57 - Request 57 returned valid status
+        ok 58 - Request 58 returned valid status
+        ok 59 - Request 59 returned valid status
+        ok 60 - Request 60 returned valid status
+        ok 61 - Request 61 returned valid status
+        ok 62 - Request 62 returned valid status
+        ok 63 - Request 63 returned valid status
+        ok 64 - Request 64 returned valid status
+        ok 65 - Request 65 returned valid status
+        ok 66 - Request 66 returned valid status
+        ok 67 - Request 67 returned valid status
+        ok 68 - Request 68 returned valid status
+        ok 69 - Request 69 returned valid status
+        ok 70 - Request 70 returned valid status
+        ok 71 - Request 71 returned valid status
+        ok 72 - Request 72 returned valid status
+        ok 73 - Request 73 returned valid status
+        ok 74 - Request 74 returned valid status
+        ok 75 - Request 75 returned valid status
+        ok 76 - Request 76 returned valid status
+        ok 77 - Request 77 returned valid status
+        ok 78 - Request 78 returned valid status
+        ok 79 - Request 79 returned valid status
+        ok 80 - Request 80 returned valid status
+        ok 81 - Request 81 returned valid status
+        ok 82 - Request 82 returned valid status
+        ok 83 - Request 83 returned valid status
+        ok 84 - Request 84 returned valid status
+        ok 85 - Request 85 returned valid status
+        ok 86 - Request 86 returned valid status
+        ok 87 - Request 87 returned valid status
+        ok 88 - Request 88 returned valid status
+        ok 89 - Request 89 returned valid status
+        ok 90 - Request 90 returned valid status
+        ok 91 - Request 91 returned valid status
+        ok 92 - Request 92 returned valid status
+        ok 93 - Request 93 returned valid status
+        ok 94 - Request 94 returned valid status
+        ok 95 - Request 95 returned valid status
+        ok 96 - Request 96 returned valid status
+        ok 97 - Request 97 returned valid status
+        ok 98 - Request 98 returned valid status
+        ok 99 - Request 99 returned valid status
+        ok 100 - Request 100 returned valid status
+        # POST /api/sets Performance (100 requests):
+        #   Average:    3.58ms
+        #   p50:        2.00ms
+        #   p95:        5.00ms
+        #   p99:        93.00ms
+        #   Max:        93.00ms
+        ok 101 - p95 should be < 50ms, got 5.00ms
+        1..101
+    ok 1 - POST /api/sets should have p95 < 50ms (100 requests) # time=403.665ms
+    
+    # Subtest: GET /api/workouts should have p95 < 100ms
+        ok 1 - Request 1 returned valid status
+        ok 2 - Request 2 returned valid status
+        ok 3 - Request 3 returned valid status
+        ok 4 - Request 4 returned valid status
+        ok 5 - Request 5 returned valid status
+        ok 6 - Request 6 returned valid status
+        ok 7 - Request 7 returned valid status
+        ok 8 - Request 8 returned valid status
+        ok 9 - Request 9 returned valid status
+        ok 10 - Request 10 returned valid status
+        ok 11 - Request 11 returned valid status
+        ok 12 - Request 12 returned valid status
+        ok 13 - Request 13 returned valid status
+        ok 14 - Request 14 returned valid status
+        ok 15 - Request 15 returned valid status
+        ok 16 - Request 16 returned valid status
+        ok 17 - Request 17 returned valid status
+        ok 18 - Request 18 returned valid status
+        ok 19 - Request 19 returned valid status
+        ok 20 - Request 20 returned valid status
+        ok 21 - Request 21 returned valid status
+        ok 22 - Request 22 returned valid status
+        ok 23 - Request 23 returned valid status
+        ok 24 - Request 24 returned valid status
+        ok 25 - Request 25 returned valid status
+        ok 26 - Request 26 returned valid status
+        ok 27 - Request 27 returned valid status
+        ok 28 - Request 28 returned valid status
+        ok 29 - Request 29 returned valid status
+        ok 30 - Request 30 returned valid status
+        ok 31 - Request 31 returned valid status
+        ok 32 - Request 32 returned valid status
+        ok 33 - Request 33 returned valid status
+        ok 34 - Request 34 returned valid status
+        ok 35 - Request 35 returned valid status
+        ok 36 - Request 36 returned valid status
+        ok 37 - Request 37 returned valid status
+        ok 38 - Request 38 returned valid status
+        ok 39 - Request 39 returned valid status
+        ok 40 - Request 40 returned valid status
+        ok 41 - Request 41 returned valid status
+        ok 42 - Request 42 returned valid status
+        ok 43 - Request 43 returned valid status
+        ok 44 - Request 44 returned valid status
+        ok 45 - Request 45 returned valid status
+        ok 46 - Request 46 returned valid status
+        ok 47 - Request 47 returned valid status
+        ok 48 - Request 48 returned valid status
+        ok 49 - Request 49 returned valid status
+        ok 50 - Request 50 returned valid status
+        # GET /api/workouts Performance (50 requests):
+        #   Average:    1.32ms
+        #   p95:        2.00ms
+        ok 51 - p95 should be < 100ms, got 2.00ms
+        1..51
+    ok 2 - GET /api/workouts should have p95 < 100ms # time=75.712ms
+    
+    # Subtest: GET /api/analytics/volume-trends should have p95 < 200ms
+        ok 1 - Request 1 returned valid status
+        ok 2 - Request 2 returned valid status
+        ok 3 - Request 3 returned valid status
+        ok 4 - Request 4 returned valid status
+        ok 5 - Request 5 returned valid status
+        ok 6 - Request 6 returned valid status
+        ok 7 - Request 7 returned valid status
+        ok 8 - Request 8 returned valid status
+        ok 9 - Request 9 returned valid status
+        ok 10 - Request 10 returned valid status
+        ok 11 - Request 11 returned valid status
+        ok 12 - Request 12 returned valid status
+        ok 13 - Request 13 returned valid status
+        ok 14 - Request 14 returned valid status
+        ok 15 - Request 15 returned valid status
+        ok 16 - Request 16 returned valid status
+        ok 17 - Request 17 returned valid status
+        ok 18 - Request 18 returned valid status
+        ok 19 - Request 19 returned valid status
+        ok 20 - Request 20 returned valid status
+        ok 21 - Request 21 returned valid status
+        ok 22 - Request 22 returned valid status
+        ok 23 - Request 23 returned valid status
+        ok 24 - Request 24 returned valid status
+        ok 25 - Request 25 returned valid status
+        ok 26 - Request 26 returned valid status
+        ok 27 - Request 27 returned valid status
+        ok 28 - Request 28 returned valid status
+        ok 29 - Request 29 returned valid status
+        ok 30 - Request 30 returned valid status
+        # GET /api/analytics/volume-trends Performance (30 requests):
+        #   Average:    1.13ms
+        #   p95:        2.00ms
+        ok 31 - p95 should be < 200ms, got 2.00ms
+        1..31
+    ok 3 - GET /api/analytics/volume-trends should have p95 < 200ms # time=42.187ms
+    
+    # Subtest: GET /api/analytics/1rm-progression should have p95 < 200ms
+        ok 1 - Request 1 returned valid status
+        ok 2 - Request 2 returned valid status
+        ok 3 - Request 3 returned valid status
+        ok 4 - Request 4 returned valid status
+        ok 5 - Request 5 returned valid status
+        ok 6 - Request 6 returned valid status
+        ok 7 - Request 7 returned valid status
+        ok 8 - Request 8 returned valid status
+        ok 9 - Request 9 returned valid status
+        ok 10 - Request 10 returned valid status
+        ok 11 - Request 11 returned valid status
+        ok 12 - Request 12 returned valid status
+        ok 13 - Request 13 returned valid status
+        ok 14 - Request 14 returned valid status
+        ok 15 - Request 15 returned valid status
+        ok 16 - Request 16 returned valid status
+        ok 17 - Request 17 returned valid status
+        ok 18 - Request 18 returned valid status
+        ok 19 - Request 19 returned valid status
+        ok 20 - Request 20 returned valid status
+        ok 21 - Request 21 returned valid status
+        ok 22 - Request 22 returned valid status
+        ok 23 - Request 23 returned valid status
+        ok 24 - Request 24 returned valid status
+        ok 25 - Request 25 returned valid status
+        ok 26 - Request 26 returned valid status
+        ok 27 - Request 27 returned valid status
+        ok 28 - Request 28 returned valid status
+        ok 29 - Request 29 returned valid status
+        ok 30 - Request 30 returned valid status
+        # GET /api/analytics/1rm-progression Performance (30 requests):
+        #   Average:    1.10ms
+        #   p95:        2.00ms
+        ok 31 - p95 should be < 200ms, got 2.00ms
+        1..31
+    ok 4 - GET /api/analytics/1rm-progression should have p95 < 200ms # time=43.247ms
+    
+    # Subtest: POST /api/auth/login should have p95 < 100ms
+        ok 1 - Request 1 returned status 400
+        ok 2 - Request 2 returned status 400
+        ok 3 - Request 3 returned status 400
+        ok 4 - Request 4 returned status 400
+        ok 5 - Request 5 returned status 400
+        ok 6 - Request 6 returned status 400
+        ok 7 - Request 7 returned status 400
+        ok 8 - Request 8 returned status 400
+        ok 9 - Request 9 returned status 400
+        ok 10 - Request 10 returned status 400
+        ok 11 - Request 11 returned status 400
+        ok 12 - Request 12 returned status 400
+        ok 13 - Request 13 returned status 400
+        ok 14 - Request 14 returned status 400
+        ok 15 - Request 15 returned status 400
+        ok 16 - Request 16 returned status 400
+        ok 17 - Request 17 returned status 400
+        ok 18 - Request 18 returned status 400
+        ok 19 - Request 19 returned status 400
+        ok 20 - Request 20 returned status 400
+        # POST /api/auth/login Performance (20 requests):
+        #   Average:    2.05ms
+        #   p95:        3.00ms
+        ok 21 - p95 should be < 100ms, got 3.00ms
+        1..21
+    ok 5 - POST /api/auth/login should have p95 < 100ms # time=44.272ms
+    
+    # Subtest: Concurrent requests should maintain performance
+        # Concurrent Requests Performance (50 requests):
+        #   Total duration: 57.00ms
+        #   Avg per req:    1.14ms
+        ok 1 - All requests completed
+        ok 2 - Avg duration should be < 100ms, got 1.14ms
+        1..2
+    ok 6 - Concurrent requests should maintain performance # time=58.484ms
+    
+    # Subtest: Database query optimization verification
+        # Date range query duration: 3ms
+        ok 1 - Date range query should be < 100ms, got 3ms
+        ok 2 - Valid response status
+        1..2
+    ok 7 - Database query optimization verification # time=3.456ms
+    
+    # Subtest: Payload size impact on performance
+        # small payload avg: 1.50ms
+        ok 1 - small payload should be < 100ms
+        # medium payload avg: 1.60ms
+        ok 2 - medium payload should be < 100ms
+        # large payload avg: 1.30ms
+        ok 3 - large payload should be < 100ms
+        1..3
+    ok 8 - Payload size impact on performance # time=44.592ms
+    
+    # Subtest: Error response performance
+        ok 1 - Error status returned
+        ok 2 - Error status returned
+        ok 3 - Error status returned
+        ok 4 - Error status returned
+        ok 5 - Error status returned
+        ok 6 - Error status returned
+        ok 7 - Error status returned
+        ok 8 - Error status returned
+        ok 9 - Error status returned
+        ok 10 - Error status returned
+        ok 11 - Error status returned
+        ok 12 - Error status returned
+        ok 13 - Error status returned
+        ok 14 - Error status returned
+        ok 15 - Error status returned
+        ok 16 - Error status returned
+        ok 17 - Error status returned
+        ok 18 - Error status returned
+        ok 19 - Error status returned
+        ok 20 - Error status returned
+        # Error response avg: 1.80ms
+        ok 21 - Error response should be < 50ms, got 1.80ms
+        1..21
+    ok 9 - Error response performance # time=39.666ms
+    
+    # Subtest: Server health check latency
+        ok 1 - Health check returned valid status
+        ok 2 - Health check returned valid status
+        ok 3 - Health check returned valid status
+        ok 4 - Health check returned valid status
+        ok 5 - Health check returned valid status
+        ok 6 - Health check returned valid status
+        ok 7 - Health check returned valid status
+        ok 8 - Health check returned valid status
+        ok 9 - Health check returned valid status
+        ok 10 - Health check returned valid status
+        # Health check avg: 1.10ms
+        ok 11 - Health check should be < 10ms, got 1.10ms
+        1..11
+    ok 10 - Server health check latency # time=11.807ms
+    
+    1..10
+ok 1 - Performance Test: API Response Time Benchmark (T080) # time=781.485ms
+
+1..1

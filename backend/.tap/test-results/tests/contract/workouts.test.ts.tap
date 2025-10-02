@@ -1,0 +1,400 @@
+TAP version 14
+# Subtest: POST /api/workouts - Create workout session
+    # Subtest: should return 401 unauthorized without JWT token
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:32:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 32
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: |
+            tap.test('POST /api/workouts - Create workout session', async (t) => {
+              t.test('should return 401 unauthorized without JWT token', async (t) => {
+                const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+            ---------------------^
+                  method: 'POST',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 1 - should return 401 unauthorized without JWT token # time=169.596ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 31
+        columnNumber: 5
+        typeName: Test
+      source: |2
+         */
+        tap.test('POST /api/workouts - Create workout session', async (t) => {
+          t.test('should return 401 unauthorized without JWT token', async (t) => {
+        ----^
+            const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+              method: 'POST',
+      ...
+    
+    # Subtest: should validate request schema - missing required fields
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:47:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 47
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: >2
+          
+              t.test('should validate request schema - missing required fields', async (t) => {
+                const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+            ---------------------^
+                  method: 'POST',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 2 - should validate request schema - missing required fields # time=15.327ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 46
+        columnNumber: 5
+        typeName: Test
+      source: >2
+          });
+      
+          t.test('should validate request schema - missing required fields', async (t) => {
+        ----^
+            const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+              method: 'POST',
+      ...
+    
+    # Subtest: should validate request schema - invalid date format
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:64:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 64
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: >2
+          
+              t.test('should validate request schema - invalid date format', async (t) => {
+                const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+            ---------------------^
+                  method: 'POST',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 3 - should validate request schema - invalid date format # time=12.615ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 63
+        columnNumber: 5
+        typeName: Test
+      source: >2
+          });
+      
+          t.test('should validate request schema - invalid date format', async (t) => {
+        ----^
+            const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+              method: 'POST',
+      ...
+    
+    # Subtest: should create workout and return 201 with correct schema
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:88:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 88
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: |2
+                };
+          
+                const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+            ---------------------^
+                  method: 'POST',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 4 - should create workout and return 201 with correct schema # time=10.161ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 82
+        columnNumber: 5
+        typeName: Test
+      source: >2
+          });
+      
+          t.test('should create workout and return 201 with correct schema', async (t) => {
+        ----^
+            const requestBody = {
+              program_day_id: 1,
+      ...
+    
+    1..4
+not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
+  ---
+  at:
+    fileName: tests/contract/workouts.test.ts
+    lineNumber: 30
+    columnNumber: 5
+    isToplevel: true
+  source: |2
+     * - 401 unauthorized without JWT
+     */
+    tap.test('POST /api/workouts - Create workout session', async (t) => {
+    ----^
+      t.test('should return 401 unauthorized without JWT token', async (t) => {
+        const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+  ...
+
+# Subtest: GET /api/workouts - List user workouts
+    # Subtest: should return 401 unauthorized without JWT token
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:142:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 142
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: |
+            tap.test('GET /api/workouts - List user workouts', async (t) => {
+              t.test('should return 401 unauthorized without JWT token', async (t) => {
+                const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+            ---------------------^
+                  method: 'GET',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 1 - should return 401 unauthorized without JWT token # time=18.15ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 141
+        columnNumber: 5
+        typeName: Test
+      source: |2
+         */
+        tap.test('GET /api/workouts - List user workouts', async (t) => {
+          t.test('should return 401 unauthorized without JWT token', async (t) => {
+        ----^
+            const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+              method: 'GET',
+      ...
+    
+    # Subtest: should list workouts without query parameters
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:153:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 153
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: |2
+          
+              t.test('should list workouts without query parameters', async (t) => {
+                const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+            ---------------------^
+                  method: 'GET',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 2 - should list workouts without query parameters # time=7.987ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 152
+        columnNumber: 5
+        typeName: Test
+      source: |2
+          });
+      
+          t.test('should list workouts without query parameters', async (t) => {
+        ----^
+            const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+              method: 'GET',
+      ...
+    
+    # Subtest: should filter workouts with start_date query parameter
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:192:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 192
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: >2
+              t.test('should filter workouts with start_date query parameter', async (t)
+            => {
+                const startDate = '2025-10-01';
+                const response = await fetch(`${API_BASE_URL}/api/workouts?start_date=${startDate}`, {
+            ---------------------^
+                  method: 'GET',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 3 - should filter workouts with start_date query parameter # time=9.739ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 190
+        columnNumber: 5
+        typeName: Test
+      source: >2
+          });
+      
+          t.test('should filter workouts with start_date query parameter', async (t) => {
+        ----^
+            const startDate = '2025-10-01';
+            const response = await fetch(`${API_BASE_URL}/api/workouts?start_date=${startDate}`, {
+      ...
+    
+    # Subtest: should filter workouts with end_date query parameter
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:218:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 218
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: >2
+              t.test('should filter workouts with end_date query parameter', async (t) =>
+            {
+                const endDate = '2025-10-31';
+                const response = await fetch(`${API_BASE_URL}/api/workouts?end_date=${endDate}`, {
+            ---------------------^
+                  method: 'GET',
+                  headers: {
+          ...
+        
+        1..1
+    not ok 4 - should filter workouts with end_date query parameter # time=9.491ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 216
+        columnNumber: 5
+        typeName: Test
+      source: >2
+          });
+      
+          t.test('should filter workouts with end_date query parameter', async (t) => {
+        ----^
+            const endDate = '2025-10-31';
+            const response = await fetch(`${API_BASE_URL}/api/workouts?end_date=${endDate}`, {
+      ...
+    
+    # Subtest: should filter workouts with both start_date and end_date
+        not ok 1 - fetch failed
+          ---
+          stack: |
+            async Test.<anonymous> (tests/contract/workouts.test.ts:245:22)
+          at:
+            fileName: tests/contract/workouts.test.ts
+            lineNumber: 245
+            columnNumber: 22
+            typeName: async Test
+            methodName: <anonymous>
+            functionName: async Test.<anonymous>
+          type: TypeError
+          tapCaught: returnedPromiseRejection
+          source: >2
+                const startDate = '2025-10-01';
+                const endDate = '2025-10-31';
+                const response = await fetch(
+            ---------------------^
+                  `${API_BASE_URL}/api/workouts?start_date=${startDate}&end_date=${endDate}`,
+                  {
+          ...
+        
+        1..1
+    not ok 5 - should filter workouts with both start_date and end_date # time=12.076ms
+      ---
+      at:
+        fileName: tests/contract/workouts.test.ts
+        lineNumber: 242
+        columnNumber: 5
+        typeName: Test
+      source: >2
+          });
+      
+          t.test('should filter workouts with both start_date and end_date', async (t) => {
+        ----^
+            const startDate = '2025-10-01';
+            const endDate = '2025-10-31';
+      ...
+    
+    1..5
+not ok 2 - GET /api/workouts - List user workouts # time=81.895ms
+  ---
+  at:
+    fileName: tests/contract/workouts.test.ts
+    lineNumber: 140
+    columnNumber: 5
+    isToplevel: true
+  source: |2
+     * - 401 unauthorized without JWT
+     */
+    tap.test('GET /api/workouts - List user workouts', async (t) => {
+    ----^
+      t.test('should return 401 unauthorized without JWT token', async (t) => {
+        const response = await fetch(`${API_BASE_URL}/api/workouts`, {
+  ...
+
+1..2

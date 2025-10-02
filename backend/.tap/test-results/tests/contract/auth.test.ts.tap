@@ -1,0 +1,382 @@
+TAP version 14
+# Subtest: Authentication Endpoints Contract Tests
+{"level":30,"time":1759428137462,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+    # Subtest: POST /api/auth/register
+        # Subtest: should register new user with valid data and return 201
+            not ok 1 - should return 201 Created
+              ---
+              compare: ===
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 32
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:32:9)
+              source: |2
+              
+                      // Expect 201 Created status
+                      t.equal(response.statusCode, 201, 'should return 201 Created');
+                --------^
+              
+                      const body = JSON.parse(response.body);
+              diff: |
+                --- expected
+                +++ actual
+                @@ -1,1 +1,1 @@
+                -201
+                +409
+              ...
+            
+            not ok 2 - response should contain user_id
+              ---
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 37
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:37:9)
+              source: |2
+              
+                      // Validate response schema
+                      t.ok(body.user_id, 'response should contain user_id');
+                --------^
+                      t.type(body.user_id, 'number', 'user_id should be a number');
+              ...
+            
+            not ok 3 - user_id should be a number
+              ---
+              compare: ===
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 38
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:38:9)
+              source: |2
+                      // Validate response schema
+                      t.ok(body.user_id, 'response should contain user_id');
+                      t.type(body.user_id, 'number', 'user_id should be a number');
+                --------^
+              
+                      t.ok(body.token, 'response should contain token');
+              diff: |
+                --- expected
+                +++ actual
+                @@ -1,1 +1,1 @@
+                -number
+                +undefined
+              ...
+            
+            not ok 4 - response should contain token
+              ---
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 40
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:40:9)
+              source: >2
+                      t.type(body.user_id, 'number', 'user_id should be a number');
+              
+                      t.ok(body.token, 'response should contain token');
+                --------^
+                      t.type(body.token, 'string', 'token should be a string');
+                      t.match(body.token, /^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/, 'token should be a valid JWT');
+              ...
+            
+            not ok 5 - token should be a string
+              ---
+              compare: ===
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 41
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:41:9)
+              source: >2
+              
+                      t.ok(body.token, 'response should contain token');
+                      t.type(body.token, 'string', 'token should be a string');
+                --------^
+                      t.match(body.token, /^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/, 'token should be a valid JWT');
+                    });
+              diff: |
+                --- expected
+                +++ actual
+                @@ -1,1 +1,1 @@
+                -string
+                +undefined
+              ...
+            
+            not ok 6 - token should be a valid JWT
+              ---
+              diff: |
+                --- expected
+                +++ actual
+                @@ -1,1 +1,1 @@
+                -/^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/
+                +undefined
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 42
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:42:9)
+              source: >2
+                      t.ok(body.token, 'response should contain token');
+                      t.type(body.token, 'string', 'token should be a string');
+                      t.match(body.token, /^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/, 'token should be a valid JWT');
+                --------^
+                    });
+              ...
+            
+            1..6
+        not ok 1 - should register new user with valid data and return 201 # time=322.988ms
+          ---
+          at:
+            fileName: tests/contract/auth.test.ts
+            lineNumber: 16
+            columnNumber: 13
+            typeName: Test
+          source: >2
+          
+              await t.test('POST /api/auth/register', async (t) => {
+                await t.test('should register new user with valid data and return 201', async (t) => {
+            ------------^
+                  const validRegistration = {
+                    username: 'test@example.com',
+          ...
+        
+{"level":30,"time":1759428137486,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":409},"responseTime":22.448118999949656,"msg":"request completed"}
+{"level":30,"time":1759428137575,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+        # Subtest: should validate username is email format
+            ok 1 - should return 400 for invalid email format
+            ok 2 - response should contain error field
+            ok 3 - error should be a string
+            1..3
+        ok 2 - should validate username is email format # time=16.428ms
+        
+{"level":30,"time":1759428137586,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":400},"err":{"type":"Error","message":"body/username must match format \"email\"","stack":"Error: body/username must match format \"email\"\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/username","schemaPath":"#/properties/username/format","keyword":"format","params":{"format":"email"},"message":"must match format \"email\""}],"validationContext":"body"},"msg":"body/username must match format \"email\""}
+{"level":30,"time":1759428137589,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":400},"responseTime":13.744034000032116,"msg":"request completed"}
+{"level":30,"time":1759428137592,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+        # Subtest: should validate password minimum length (8 characters)
+            ok 1 - should return 400 for password < 8 chars
+            ok 2 - response should contain error field
+            1..2
+        ok 3 - should validate password minimum length (8 characters) # time=2.779ms
+        
+{"level":30,"time":1759428137593,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"err":{"type":"Error","message":"body/password must NOT have fewer than 8 characters","stack":"Error: body/password must NOT have fewer than 8 characters\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/password","schemaPath":"#/properties/password/minLength","keyword":"minLength","params":{"limit":8},"message":"must NOT have fewer than 8 characters"}],"validationContext":"body"},"msg":"body/password must NOT have fewer than 8 characters"}
+{"level":30,"time":1759428137594,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"responseTime":1.1088040000176989,"msg":"request completed"}
+{"level":30,"time":1759428137596,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+        # Subtest: should validate age range (13-100)
+            ok 1 - should return 400 for age < 13
+            ok 2 - response should contain error field
+            1..2
+        ok 4 - should validate age range (13-100) # time=2.561ms
+        
+{"level":30,"time":1759428137597,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"err":{"type":"Error","message":"body/age must be >= 13","stack":"Error: body/age must be >= 13\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/age","schemaPath":"#/properties/age/minimum","keyword":"minimum","params":{"comparison":">=","limit":13},"message":"must be >= 13"}],"validationContext":"body"},"msg":"body/age must be >= 13"}
+{"level":30,"time":1759428137597,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"responseTime":0.8802579999901354,"msg":"request completed"}
+{"level":30,"time":1759428137600,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+        # Subtest: should validate weight_kg range (30-300)
+            ok 1 - should return 400 for weight_kg < 30
+            ok 2 - response should contain error field
+            1..2
+        ok 5 - should validate weight_kg range (30-300) # time=2.389ms
+        
+{"level":30,"time":1759428137601,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"err":{"type":"Error","message":"body/weight_kg must be >= 30","stack":"Error: body/weight_kg must be >= 30\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/weight_kg","schemaPath":"#/properties/weight_kg/minimum","keyword":"minimum","params":{"comparison":">=","limit":30},"message":"must be >= 30"}],"validationContext":"body"},"msg":"body/weight_kg must be >= 30"}
+{"level":30,"time":1759428137601,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"responseTime":0.8987569999881089,"msg":"request completed"}
+{"level":30,"time":1759428137604,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+        # Subtest: should validate experience_level enum
+            ok 1 - should return 400 for invalid experience_level
+            ok 2 - response should contain error field
+            1..2
+        ok 6 - should validate experience_level enum # time=2.547ms
+        
+{"level":30,"time":1759428137604,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"err":{"type":"Error","message":"body/experience_level must be equal to one of the allowed values","stack":"Error: body/experience_level must be equal to one of the allowed values\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/experience_level","schemaPath":"#/properties/experience_level/enum","keyword":"enum","params":{"allowedValues":["beginner","intermediate","advanced"]},"message":"must be equal to one of the allowed values"}],"validationContext":"body"},"msg":"body/experience_level must be equal to one of the allowed values"}
+{"level":30,"time":1759428137605,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"responseTime":1.0531690000207163,"msg":"request completed"}
+{"level":30,"time":1759428137608,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428137608,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":409},"responseTime":0.7427399999578483,"msg":"request completed"}
+{"level":30,"time":1759428137609,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+        # Subtest: should return 409 for duplicate username
+            ok 1 - should return 409 for duplicate username
+            ok 2 - response should contain error field
+            ok 3 - error should be a string
+            1..3
+        ok 7 - should return 409 for duplicate username # time=3.418ms
+        
+{"level":30,"time":1759428137609,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":409},"responseTime":0.5570549999829382,"msg":"request completed"}
+{"level":30,"time":1759428137612,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+        # Subtest: should allow registration without optional fields
+            not ok 1 - should return 201 with only required fields
+              ---
+              compare: ===
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 200
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:200:9)
+              source: >2
+              
+                      // Should still succeed with 201
+                      t.equal(response.statusCode, 201, 'should return 201 with only required fields');
+                --------^
+              
+                      const body = JSON.parse(response.body);
+              diff: |
+                --- expected
+                +++ actual
+                @@ -1,1 +1,1 @@
+                -201
+                +409
+              ...
+            
+            not ok 2 - response should contain user_id
+              ---
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 203
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:203:9)
+              source: |2
+              
+                      const body = JSON.parse(response.body);
+                      t.ok(body.user_id, 'response should contain user_id');
+                --------^
+                      t.ok(body.token, 'response should contain token');
+                    });
+              ...
+            
+            not ok 3 - response should contain token
+              ---
+              at:
+                fileName: tests/contract/auth.test.ts
+                lineNumber: 204
+                columnNumber: 9
+                typeName: Test
+              stack: |
+                Test.<anonymous> (tests/contract/auth.test.ts:204:9)
+              source: |2
+                      const body = JSON.parse(response.body);
+                      t.ok(body.user_id, 'response should contain user_id');
+                      t.ok(body.token, 'response should contain token');
+                --------^
+                    });
+                  });
+              ...
+            
+            1..3
+        not ok 8 - should allow registration without optional fields # time=21.209ms
+          ---
+          at:
+            fileName: tests/contract/auth.test.ts
+            lineNumber: 187
+            columnNumber: 13
+            typeName: Test
+          source: >2
+                });
+          
+                await t.test('should allow registration without optional fields', async (t) => {
+            ------------^
+                  const minimalRegistration = {
+                    username: 'minimal@example.com',
+          ...
+        
+        1..8
+    not ok 1 - POST /api/auth/register # time=395.121ms
+      ---
+      at:
+        fileName: tests/contract/auth.test.ts
+        lineNumber: 15
+        columnNumber: 11
+        typeName: Test
+      source: >2
+          const app = await buildApp();
+      
+          await t.test('POST /api/auth/register', async (t) => {
+        ----------^
+            await t.test('should register new user with valid data and return 201', async (t) => {
+              const validRegistration = {
+      ...
+    
+{"level":30,"time":1759428137613,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":409},"responseTime":0.8355129999690689,"msg":"request completed"}
+{"level":30,"time":1759428137643,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428137644,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":409},"responseTime":0.8209919999935664,"msg":"request completed"}
+{"level":30,"time":1759428137644,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138018,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":200},"responseTime":373.87803500000155,"msg":"request completed"}
+    # Subtest: POST /api/auth/login
+        # Subtest: should login with valid credentials and return 200
+            ok 1 - should return 200 OK
+            ok 2 - response should contain token
+            ok 3 - token should be a string
+            ok 4 - token should be a valid JWT
+            ok 5 - response should contain user object
+            ok 6 - user should be an object
+            ok 7 - user should have id
+            ok 8 - user.id should be a number
+            ok 9 - user should have correct username
+            ok 10 - user.username should be a string
+            ok 11 - user should have created_at timestamp
+            ok 12 - user.created_at should be a number (Unix timestamp)
+            1..12
+        ok 1 - should login with valid credentials and return 200 # time=379.863ms
+        
+        # Subtest: should return 401 for invalid username
+            ok 1 - should return 401 for invalid username
+            ok 2 - response should contain error field
+            ok 3 - error should be a string
+            1..3
+        ok 2 - should return 401 for invalid username # time=2.855ms
+        
+{"level":30,"time":1759428138024,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138025,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":401},"responseTime":0.8492640000185929,"msg":"request completed"}
+{"level":30,"time":1759428138028,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138029,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":409},"responseTime":0.9076919999788515,"msg":"request completed"}
+{"level":30,"time":1759428138030,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138398,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":401},"responseTime":368.5499950000085,"msg":"request completed"}
+        # Subtest: should return 401 for invalid password
+            ok 1 - should return 401 for invalid password
+            ok 2 - response should contain error field
+            ok 3 - error should be a string
+            1..3
+        ok 3 - should return 401 for invalid password # time=371.882ms
+        
+        # Subtest: should require both username and password
+            ok 1 - should return 400 for missing password
+            ok 2 - response should contain error field
+            1..2
+        ok 4 - should require both username and password # time=2.198ms
+        
+        1..4
+    ok 2 - POST /api/auth/login # time=761.98ms
+    
+    1..2
+not ok 1 - Authentication Endpoints Contract Tests # time=1223.019ms
+  ---
+  at:
+    fileName: tests/contract/auth.test.ts
+    lineNumber: 12
+    columnNumber: 5
+    isToplevel: true
+  source: |2
+     */
+  
+    tap.test('Authentication Endpoints Contract Tests', async (t) => {
+    ----^
+      const app = await buildApp();
+  ...
+
+{"level":30,"time":1759428138401,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759428138401,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":400},"err":{"type":"Error","message":"body must have required property 'password'","stack":"Error: body must have required property 'password'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"password"},"message":"must have required property 'password'"}],"validationContext":"body"},"msg":"body must have required property 'password'"}
+{"level":30,"time":1759428138402,"pid":6703,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":400},"responseTime":0.7779919999884441,"msg":"request completed"}
+1..1
+Database connection closed
