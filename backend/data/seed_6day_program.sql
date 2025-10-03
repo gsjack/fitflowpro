@@ -110,7 +110,7 @@ VALUES (2, 39, 6, 3, '8-12', 1); -- Barbell Curl
 
 -- 1. Compound leg exercise for testosterone boost
 INSERT INTO program_exercises (program_day_id, exercise_id, order_index, sets, reps, rir)
-VALUES (4, 27, 1, 3, '8-12', 3); -- Leg Press
+VALUES (4, 71, 1, 3, '8-12', 3); -- Goblet Squat
 
 -- 2. Overhead pressing
 INSERT INTO program_exercises (program_day_id, exercise_id, order_index, sets, reps, rir)

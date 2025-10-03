@@ -7,8 +7,8 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Card, Button, Text, Chip, ActivityIndicator, SegmentedButtons } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import { Card, Button, Text, Chip, ActivityIndicator, SegmentedButtons, Dialog, Portal, List, IconButton } from 'react-native-paper';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { useRecoveryStore, getRecoveryMessage } from '../stores/recoveryStore';
 import * as workoutDb from '../services/database/workoutDb';
@@ -17,11 +17,34 @@ import { colors, gradients } from '../theme/colors';
 import { spacing, borderRadius } from '../theme/typography';
 import GradientCard from '../components/common/GradientCard';
 import StatCard from '../components/common/StatCard';
+import { getAuthenticatedClient } from '../services/api/authApi';
 
 interface DashboardScreenProps {
   userId: number;
   onStartWorkout?: (programDayId: number, date: string) => Promise<void>;
   onSubmitRecovery?: () => void;
+}
+
+interface ProgramDay {
+  id: number;
+  day_name: string;
+  day_type: 'strength' | 'vo2max';
+  exercise_count?: number;
+}
+
+interface RecommendedProgramDay {
+  id: number;
+  program_id: number;
+  day_name: string;
+  day_type: 'strength' | 'vo2max';
+  weekday: number;
+  exercises: {
+    id: number;
+    exercise_name: string;
+    sets: number;
+    reps: number;
+    rir: number;
+  }[];
 }
 
 export default function DashboardScreen({
@@ -31,6 +54,7 @@ export default function DashboardScreen({
 }: DashboardScreenProps) {
   const [loading, setLoading] = useState(true);
   const [todayWorkout, setTodayWorkout] = useState<Workout | null>(null);
+  const [recommendedProgramDay, setRecommendedProgramDay] = useState<RecommendedProgramDay | null>(null);
 
   // Recovery assessment state
   const [sleepQuality, setSleepQuality] = useState<string>('');
@@ -38,12 +62,29 @@ export default function DashboardScreen({
   const [mentalMotivation, setMentalMotivation] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Workout swap dialog state
+  const [showSwapDialog, setShowSwapDialog] = useState(false);
+  const [programDays, setProgramDays] = useState<ProgramDay[]>([]);
+  const [loadingProgramDays, setLoadingProgramDays] = useState(false);
+  const [swapping, setSwapping] = useState(false);
+
   useWorkoutStore();
   const { todayAssessment, volumeAdjustment, getTodayAssessment, submitAssessment } = useRecoveryStore();
 
   useEffect(() => {
     loadDashboardData();
   }, [userId]);
+
+  const getRecommendedWorkout = async () => {
+    try {
+      const client = await getAuthenticatedClient();
+      const response = await client.get<RecommendedProgramDay>('/api/program-days/recommended');
+      return response.data;
+    } catch (error) {
+      console.error('[DashboardScreen] Error fetching recommended workout:', error);
+      return null;
+    }
+  };
 
   const loadDashboardData = async () => {
     try {
@@ -55,6 +96,14 @@ export default function DashboardScreen({
       // Load today's workout (includes day_name and day_type from API)
       const todayWkt = await workoutDb.getTodayWorkout(userId);
       setTodayWorkout(todayWkt);
+
+      // If no workout for today, fetch recommended workout
+      if (!todayWkt) {
+        const recommended = await getRecommendedWorkout();
+        setRecommendedProgramDay(recommended);
+      } else {
+        setRecommendedProgramDay(null);
+      }
     } catch (error) {
       console.error('[DashboardScreen] Error loading data:', error);
     } finally {
@@ -63,8 +112,13 @@ export default function DashboardScreen({
   };
 
   const handleStartWorkout = async () => {
-    if (onStartWorkout && todayWorkout) {
-      await onStartWorkout(todayWorkout.program_day_id, todayWorkout.date);
+    if (onStartWorkout) {
+      if (todayWorkout) {
+        await onStartWorkout(todayWorkout.program_day_id, todayWorkout.date);
+      } else if (recommendedProgramDay) {
+        const today = new Date().toISOString().split('T')[0];
+        await onStartWorkout(recommendedProgramDay.id, today);
+      }
     }
   };
 
@@ -90,6 +144,44 @@ export default function DashboardScreen({
       console.error('[DashboardScreen] Error submitting recovery:', error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleOpenSwapDialog = async () => {
+    setShowSwapDialog(true);
+    setLoadingProgramDays(true);
+
+    try {
+      const client = await getAuthenticatedClient();
+      const response = await client.get<ProgramDay[]>('/api/program-days');
+      setProgramDays(response.data);
+    } catch (error) {
+      console.error('[DashboardScreen] Error loading program days:', error);
+      Alert.alert('Error', 'Failed to load program days. Please try again.');
+      setShowSwapDialog(false);
+    } finally {
+      setLoadingProgramDays(false);
+    }
+  };
+
+  const handleSwapWorkout = async (newProgramDayId: number) => {
+    if (!todayWorkout) return;
+
+    try {
+      setSwapping(true);
+      const client = await getAuthenticatedClient();
+      await client.patch(`/api/workouts/${todayWorkout.id}`, {
+        program_day_id: newProgramDayId,
+      });
+
+      // Close dialog and reload dashboard
+      setShowSwapDialog(false);
+      await loadDashboardData();
+    } catch (error) {
+      console.error('[DashboardScreen] Error swapping workout:', error);
+      Alert.alert('Error', 'Failed to change workout. Please try again.');
+    } finally {
+      setSwapping(false);
     }
   };
 
@@ -272,16 +364,28 @@ export default function DashboardScreen({
               <Text variant="labelMedium" style={styles.workoutLabel}>
                 TODAY'S WORKOUT
               </Text>
-              <Chip
-                mode="flat"
-                style={[
-                  styles.statusChipNew,
-                  { backgroundColor: getStatusColor(todayWorkout.status) + '30' },
-                ]}
-                textStyle={{ color: getStatusColor(todayWorkout.status), fontWeight: '600' }}
-              >
-                {todayWorkout.status.replace('_', ' ').toUpperCase()}
-              </Chip>
+              <View style={styles.headerActions}>
+                <Chip
+                  mode="flat"
+                  style={[
+                    styles.statusChipNew,
+                    { backgroundColor: getStatusColor(todayWorkout.status) + '30' },
+                  ]}
+                  textStyle={{ color: getStatusColor(todayWorkout.status), fontWeight: '600' }}
+                >
+                  {todayWorkout.status.replace('_', ' ').toUpperCase()}
+                </Chip>
+                {todayWorkout.status === 'not_started' && (
+                  <IconButton
+                    icon="swap-horizontal"
+                    size={20}
+                    iconColor={colors.primary.main}
+                    onPress={handleOpenSwapDialog}
+                    accessibilityLabel="Change workout"
+                    style={styles.swapButton}
+                  />
+                )}
+              </View>
             </View>
 
             {/* Workout Name */}
@@ -374,6 +478,71 @@ export default function DashboardScreen({
             )}
           </View>
         </GradientCard>
+      ) : recommendedProgramDay ? (
+        <GradientCard
+          gradient={gradients.hero}
+          style={styles.workoutCard}
+          onPress={handleStartWorkout}
+          accessibilityLabel={`Recommended workout: ${recommendedProgramDay.day_name}`}
+          accessibilityRole="button"
+        >
+          <View style={styles.workoutCardContent}>
+            {/* Header with Recommended Label */}
+            <View style={styles.workoutHeader}>
+              <Text variant="labelMedium" style={styles.workoutLabel}>
+                RECOMMENDED
+              </Text>
+            </View>
+
+            {/* Workout Name */}
+            <Text variant="headlineLarge" style={styles.workoutNameNew}>
+              {recommendedProgramDay.day_name}
+            </Text>
+
+            {/* Workout Type */}
+            <Text variant="bodyMedium" style={styles.workoutTypeNew}>
+              {recommendedProgramDay.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}
+            </Text>
+
+            {/* Exercise Details */}
+            {recommendedProgramDay.exercises && recommendedProgramDay.exercises.length > 0 && (
+              <View style={styles.exerciseDetails}>
+                <Text variant="labelMedium" style={styles.exerciseHeader}>
+                  WORKOUT EXERCISES
+                </Text>
+                {recommendedProgramDay.exercises.map((exercise, index) => (
+                  <View key={exercise.id} style={styles.exerciseItem}>
+                    <View style={styles.exerciseInfo}>
+                      <Text variant="bodyMedium" style={styles.exerciseName}>
+                        {index + 1}. {exercise.exercise_name}
+                      </Text>
+                      <Text variant="bodySmall" style={styles.exerciseSpecs}>
+                        {exercise.sets} sets × {exercise.reps} reps @ {exercise.rir} RIR
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+                <Text variant="bodySmall" style={styles.exerciseSummary}>
+                  {recommendedProgramDay.exercises.length} exercises • {recommendedProgramDay.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
+                </Text>
+              </View>
+            )}
+
+            {/* Action Button */}
+            <Button
+              mode="contained"
+              onPress={handleStartWorkout}
+              style={styles.workoutActionButton}
+              buttonColor={colors.primary.main}
+              contentStyle={styles.buttonContent}
+              labelStyle={styles.buttonLabel}
+              icon="play"
+              accessibilityLabel="Start workout"
+            >
+              Start Workout
+            </Button>
+          </View>
+        </GradientCard>
       ) : (
         <Card style={styles.emptyWorkoutCard}>
           <Card.Content style={styles.emptyContent}>
@@ -386,6 +555,57 @@ export default function DashboardScreen({
           </Card.Content>
         </Card>
       )}
+
+      {/* Workout Swap Dialog */}
+      <Portal>
+        <Dialog
+          visible={showSwapDialog}
+          onDismiss={() => setShowSwapDialog(false)}
+          style={styles.swapDialog}
+        >
+          <Dialog.Title>Change Workout</Dialog.Title>
+          <Dialog.Content>
+            {loadingProgramDays ? (
+              <ActivityIndicator size="large" style={styles.dialogLoader} />
+            ) : (
+              <View>
+                {programDays.map((day) => {
+                  const isCurrentDay = todayWorkout?.program_day_id === day.id;
+                  const dayIcon = day.day_type === 'vo2max' ? 'heart-pulse' : 'dumbbell';
+
+                  return (
+                    <List.Item
+                      key={day.id}
+                      title={day.day_name}
+                      description={`${day.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}${day.exercise_count ? ` • ${day.exercise_count} exercises` : ''}`}
+                      left={(props) => <List.Icon {...props} icon={dayIcon} />}
+                      right={(props) =>
+                        isCurrentDay ? (
+                          <List.Icon {...props} icon="check-circle" color={colors.success.main} />
+                        ) : null
+                      }
+                      onPress={() => !isCurrentDay && handleSwapWorkout(day.id)}
+                      disabled={swapping || isCurrentDay}
+                      style={[
+                        styles.programDayItem,
+                        isCurrentDay && styles.currentProgramDay,
+                      ]}
+                    />
+                  );
+                })}
+              </View>
+            )}
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button
+              onPress={() => setShowSwapDialog(false)}
+              disabled={swapping}
+            >
+              Cancel
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </ScrollView>
   );
 }
@@ -419,37 +639,38 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   promptContent: {
-    padding: spacing.md,
+    padding: spacing.sm,
+    paddingHorizontal: spacing.xs,
   },
   promptTitle: {
     color: colors.text.primary,
     fontWeight: '600',
-    marginBottom: spacing.md,
-    fontSize: 16,
+    marginBottom: spacing.sm,
+    fontSize: 14,
   },
 
   // Recovery Assessment Questions
   questionContainer: {
-    marginBottom: spacing.md,
+    marginBottom: spacing.xs,
   },
   questionLabel: {
     color: colors.text.primary,
     fontWeight: '500',
-    marginBottom: spacing.xs,
-    fontSize: 13,
+    marginBottom: 2,
+    fontSize: 11,
   },
   segmentedButtons: {
-    marginTop: 4,
+    marginTop: 2,
   },
   submitButton: {
-    minHeight: 42,
-    marginTop: spacing.sm,
+    minHeight: 38,
+    marginTop: spacing.xs,
   },
   scorePreviewText: {
     color: colors.text.secondary,
     fontWeight: '500',
-    fontSize: 12,
-    marginTop: spacing.sm,
+    fontSize: 11,
+    marginTop: spacing.xs,
     textAlign: 'center',
   },
 
@@ -471,8 +692,16 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     letterSpacing: 1.5,
   },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
   statusChipNew: {
     height: 28,
+  },
+  swapButton: {
+    margin: 0,
   },
   workoutNameNew: {
     color: colors.text.primary,
@@ -562,5 +791,23 @@ const styles = StyleSheet.create({
   emptyDescription: {
     color: colors.text.tertiary,
     textAlign: 'center',
+  },
+
+  // Swap Dialog
+  swapDialog: {
+    backgroundColor: colors.background.secondary,
+  },
+  dialogLoader: {
+    marginVertical: spacing.xl,
+  },
+  programDayItem: {
+    backgroundColor: colors.background.primary,
+    marginVertical: spacing.xs,
+    borderRadius: borderRadius.sm,
+  },
+  currentProgramDay: {
+    backgroundColor: colors.primary.main + '20',
+    borderWidth: 1,
+    borderColor: colors.primary.main,
   },
 });

@@ -7,8 +7,9 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { View, ScrollView, StyleSheet, AccessibilityInfo, findNodeHandle } from 'react-native';
-import { Text, Button, ProgressBar, IconButton } from 'react-native-paper';
+import { Text, Button, ProgressBar, IconButton, Dialog, Portal, Paragraph } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { type ProgramExercise } from '../services/database/programDb';
 import { getSetsForExercise, getWorkoutById } from '../services/database/workoutDb';
@@ -23,6 +24,7 @@ interface WorkoutScreenProps {
 }
 
 export default function WorkoutScreen({}: WorkoutScreenProps) {
+  const navigation = useNavigation();
   const {
     currentWorkout,
     exerciseIndex,
@@ -40,6 +42,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [previousSet, setPreviousSet] = useState<{ weight: number; reps: number } | null>(null);
   const [checkedForActiveWorkout, setCheckedForActiveWorkout] = useState(false);
+  const [cancelDialogVisible, setCancelDialogVisible] = useState(false);
 
   // Accessibility: Ref for auto-focus after set completion
   const setLogCardRef = useRef<View>(null);
@@ -227,12 +230,18 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
     }
   };
 
-  // Handle workout cancellation
-  const handleCancelWorkout = async () => {
+  // Show cancel confirmation dialog
+  const handleCancelWorkout = () => {
+    setCancelDialogVisible(true);
+  };
+
+  // Confirm and cancel workout
+  const confirmCancelWorkout = async () => {
     try {
+      setCancelDialogVisible(false);
       await cancelWorkout();
-      // TODO: Navigate back to home
-      console.log('[WorkoutScreen] Workout cancelled');
+      console.log('[WorkoutScreen] Workout cancelled, navigating back');
+      navigation.goBack();
     } catch (error) {
       console.error('[WorkoutScreen] Failed to cancel workout:', error);
     }
@@ -343,6 +352,31 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
           )}
         </ScrollView>
       </LinearGradient>
+
+      {/* Cancel Workout Confirmation Dialog */}
+      <Portal>
+        <Dialog
+          visible={cancelDialogVisible}
+          onDismiss={() => setCancelDialogVisible(false)}
+          style={styles.cancelDialog}
+        >
+          <Dialog.Title>Exit Workout?</Dialog.Title>
+          <Dialog.Content>
+            <Paragraph>
+              All logged sets will be deleted and the workout will be reset. You can start it again later.
+            </Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setCancelDialogVisible(false)}>Keep Training</Button>
+            <Button
+              onPress={confirmCancelWorkout}
+              textColor={colors.error.main}
+            >
+              Exit
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </View>
   );
 }
@@ -445,5 +479,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.5,
+  },
+
+  // Cancel Dialog
+  cancelDialog: {
+    backgroundColor: colors.background.secondary,
   },
 });

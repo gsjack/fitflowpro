@@ -13,6 +13,7 @@ import { colors } from './src/theme/colors';
 // Import screens
 import AuthScreen from './src/screens/AuthScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
+import WorkoutScreen from './src/screens/WorkoutScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import PlannerScreen from './src/screens/PlannerScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -36,9 +37,15 @@ export type MainTabParamList = {
   Settings: undefined;
 };
 
+export type DashboardStackParamList = {
+  DashboardHome: undefined;
+  Workout: undefined;
+};
+
 // Create navigators
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
+const DashboardStack = createNativeStackNavigator<DashboardStackParamList>();
 
 // Create QueryClient for TanStack Query
 const queryClient = new QueryClient();
@@ -47,10 +54,20 @@ const queryClient = new QueryClient();
  * Wrapper components to handle screen props
  */
 
+// Dashboard Stack Navigator (Dashboard + Workout screens)
+function DashboardStackNavigator() {
+  return (
+    <DashboardStack.Navigator screenOptions={{ headerShown: false }}>
+      <DashboardStack.Screen name="DashboardHome" component={DashboardWrapper} />
+      <DashboardStack.Screen name="Workout" component={WorkoutScreen} />
+    </DashboardStack.Navigator>
+  );
+}
+
 // Dashboard wrapper - provides required props
 function DashboardWrapper() {
   const [userId, setUserId] = useState<number | null>(null);
-  const navigation = useNavigation<BottomTabNavigationProp<MainTabParamList>>();
+  const navigation = useNavigation();
 
   useEffect(() => {
     void (async () => {
@@ -71,11 +88,12 @@ function DashboardWrapper() {
     <DashboardScreen
       userId={userId}
       onStartWorkout={async (programDayId: number, date: string) => {
-        // Start workout via store (stay on Dashboard)
+        // Start workout via store and navigate to WorkoutScreen
         try {
           console.log('[Dashboard] Starting workout...');
           await useWorkoutStore.getState().startWorkout(userId, programDayId, date);
-          console.log('[Dashboard] Workout started');
+          console.log('[Dashboard] Workout started, navigating to WorkoutScreen');
+          navigation.navigate('Workout' as never);
         } catch (error) {
           console.error('[DashboardWrapper] Failed to start workout:', error);
         }
@@ -148,7 +166,7 @@ function MainAppTabs({ onLogout }: { onLogout: () => void }) {
     >
       <Tab.Screen
         name="Dashboard"
-        component={DashboardWrapper}
+        component={DashboardStackNavigator}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (

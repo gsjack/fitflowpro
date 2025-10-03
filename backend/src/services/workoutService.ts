@@ -12,6 +12,9 @@ import {
   stmtGetWorkoutsByUser,
   stmtGetWorkoutsByUserDateRange,
   stmtUpdateWorkoutStatus,
+  stmtUpdateWorkoutProgramDay,
+  stmtGetWorkoutById,
+  stmtValidateProgramDayOwnership,
   db,
 } from '../database/db.js';
 
@@ -125,36 +128,98 @@ export function listWorkouts(
 }
 
 /**
- * Update workout status and metrics
+ * Update workout status and metrics, and optionally change program_day_id
  *
+ * @param userId - ID of the user (for validation)
  * @param workoutId - ID of the workout to update
- * @param status - New status (in_progress, completed, cancelled)
+ * @param status - Optional new status (in_progress, completed, cancelled)
+ * @param programDayId - Optional new program_day_id (only allowed if status is not_started)
  * @param totalVolumeKg - Optional total volume in kg (sets × reps × weight)
  * @param averageRir - Optional average RIR across all sets
  * @returns The updated workout object
  */
 export function updateWorkoutStatus(
+  userId: number,
   workoutId: number,
-  status: 'not_started' | 'in_progress' | 'completed' | 'cancelled',
+  status?: 'not_started' | 'in_progress' | 'completed' | 'cancelled',
+  programDayId?: number,
   totalVolumeKg?: number,
   averageRir?: number
 ): Workout {
-  // Calculate completed_at timestamp if status is completed
-  const completedAt = status === 'completed' ? Date.now() : null;
+  // Get current workout to check status
+  const currentWorkout = stmtGetWorkoutById.get(workoutId) as Workout | undefined;
 
-  // Update workout
-  stmtUpdateWorkoutStatus.run(
-    status,
-    completedAt,
-    totalVolumeKg ?? null,
-    averageRir ?? null,
-    workoutId
-  );
+  if (!currentWorkout) {
+    throw new Error(`Workout with ID ${workoutId} not found`);
+  }
+
+  // Verify ownership
+  if (currentWorkout.user_id !== userId) {
+    throw new Error('Not authorized to update this workout');
+  }
+
+  // Handle program_day_id change
+  if (programDayId !== undefined) {
+    // Only allow changing program_day_id if workout is not started
+    if (currentWorkout.status !== 'not_started') {
+      throw new Error(
+        `Cannot change program_day_id: workout status is "${currentWorkout.status}". Only "not_started" workouts can be reassigned.`
+      );
+    }
+
+    // Validate that program_day_id exists and belongs to user's program
+    const programDay = stmtValidateProgramDayOwnership.get(
+      programDayId,
+      userId
+    ) as { id: number } | undefined;
+
+    if (!programDay) {
+      throw new Error(
+        `Invalid program_day_id ${programDayId}: does not exist or does not belong to user's program`
+      );
+    }
+
+    // Update program_day_id
+    stmtUpdateWorkoutProgramDay.run(programDayId, workoutId);
+  }
+
+  // Handle status update
+  if (status !== undefined) {
+    // Calculate timestamps based on status
+    let startedAt: number | null;
+    let completedAt: number | null;
+
+    if (status === 'not_started') {
+      // Reset timestamps when returning to not_started (e.g., after cancel)
+      startedAt = null;
+      completedAt = null;
+    } else if (status === 'in_progress') {
+      // Set started_at if not already set
+      startedAt = currentWorkout.started_at || Date.now();
+      completedAt = currentWorkout.completed_at;
+    } else if (status === 'completed') {
+      // Preserve started_at, set completed_at if not already set
+      startedAt = currentWorkout.started_at;
+      completedAt = currentWorkout.completed_at || Date.now();
+    } else {
+      // For 'cancelled' status, preserve existing timestamps
+      startedAt = currentWorkout.started_at;
+      completedAt = currentWorkout.completed_at;
+    }
+
+    // Update workout status and metrics
+    stmtUpdateWorkoutStatus.run(
+      status,
+      startedAt,
+      completedAt,
+      totalVolumeKg ?? null,
+      averageRir ?? null,
+      workoutId
+    );
+  }
 
   // Return updated workout
-  const workout = db
-    .prepare('SELECT * FROM workouts WHERE id = ?')
-    .get(workoutId) as Workout;
+  const workout = stmtGetWorkoutById.get(workoutId) as Workout;
 
   return workout;
 }

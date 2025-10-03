@@ -9,6 +9,7 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { createWorkout, listWorkouts, updateWorkoutStatus } from '../services/workoutService.js';
 import { authenticateJWT, AuthenticatedRequest } from '../middleware/auth.js';
+import { stmtGetWorkoutById, db } from '../database/db.js';
 
 /**
  * Create workout request body interface
@@ -24,6 +25,7 @@ interface CreateWorkoutBody {
 interface ListWorkoutsQuery {
   start_date?: string;
   end_date?: string;
+  workout_id?: number;
 }
 
 /**
@@ -86,6 +88,10 @@ const listWorkoutsSchema = {
           type: 'string',
           pattern: '^\\d{4}-\\d{2}-\\d{2}$',
           description: 'End date filter (YYYY-MM-DD)',
+        },
+        workout_id: {
+          type: 'integer',
+          description: 'Fetch specific workout by ID',
         },
       },
     },
@@ -208,10 +214,45 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
       reply: FastifyReply
     ) => {
       try {
-        const { start_date, end_date } = request.query;
+        const { start_date, end_date, workout_id } = request.query;
         const authenticatedUser = (request as AuthenticatedRequest).user;
 
-        // List workouts for authenticated user with optional date filters
+        // If workout_id provided, fetch specific workout
+        if (workout_id !== undefined) {
+          const workout = stmtGetWorkoutById.get(workout_id) as any;
+
+          if (!workout) {
+            return reply.status(404).send({ error: 'Workout not found' });
+          }
+
+          // Verify ownership
+          if (workout.user_id !== authenticatedUser.userId) {
+            return reply.status(403).send({ error: 'Not authorized to access this workout' });
+          }
+
+          // Get program_day info and exercises
+          const programDay = db.prepare('SELECT day_name, day_type FROM program_days WHERE id = ?')
+            .get(workout.program_day_id) as any;
+
+          const exercises = db.prepare(`
+            SELECT pe.*, e.name as exercise_name
+            FROM program_exercises pe
+            JOIN exercises e ON pe.exercise_id = e.id
+            WHERE pe.program_day_id = ?
+            ORDER BY pe.order_index ASC
+          `).all(workout.program_day_id);
+
+          const workoutWithDetails = {
+            ...workout,
+            day_name: programDay?.day_name || null,
+            day_type: programDay?.day_type || null,
+            exercises,
+          };
+
+          return reply.status(200).send([workoutWithDetails]);
+        }
+
+        // Otherwise, list workouts with date filters
         const workouts = listWorkouts(
           authenticatedUser.userId,
           start_date,
@@ -232,13 +273,16 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
   /**
    * PATCH /api/workouts/:id
    *
-   * Update workout status (e.g., mark as completed)
+   * Update workout status (e.g., mark as completed) or change program_day_id
    *
    * Requires JWT authentication
    */
   fastify.patch<{
     Params: { id: string };
-    Body: { status: 'not_started' | 'in_progress' | 'completed' | 'cancelled' };
+    Body: {
+      status?: 'not_started' | 'in_progress' | 'completed' | 'cancelled';
+      program_day_id?: number;
+    };
   }>(
     '/workouts/:id',
     {
@@ -258,19 +302,42 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
               type: 'string',
               enum: ['not_started', 'in_progress', 'completed', 'cancelled'],
             },
+            program_day_id: {
+              type: 'integer',
+              description: 'Change the program day for this workout (only allowed if status is not_started)',
+            },
           },
-          required: ['status'],
+          minProperties: 1, // Require at least one property
         },
       },
     },
     async (request, reply) => {
       try {
         const workoutId = parseInt(request.params.id, 10);
-        const { status } = request.body;
+        const { status, program_day_id } = request.body;
+        const authenticatedUser = (request as AuthenticatedRequest).user;
 
-        const workout = updateWorkoutStatus(workoutId, status);
+        const workout = updateWorkoutStatus(
+          authenticatedUser.userId,
+          workoutId,
+          status,
+          program_day_id
+        );
         return reply.status(200).send(workout);
       } catch (error) {
+        // Handle validation errors
+        if (error instanceof Error) {
+          if (
+            error.message.includes('not allowed') ||
+            error.message.includes('Invalid') ||
+            error.message.includes('does not belong')
+          ) {
+            return reply.status(400).send({
+              error: error.message,
+            });
+          }
+        }
+
         fastify.log.error(error);
         return reply.status(500).send({
           error: 'Failed to update workout',

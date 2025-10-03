@@ -73,13 +73,22 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
   startWorkout: async (userId: number, programDayId: number, date: string) => {
     try {
       // Fetch today's existing workout (should be pre-scheduled)
-      const workout = await workoutDb.getTodayWorkout(userId);
+      let workout = await workoutDb.getTodayWorkout(userId);
 
       if (!workout) {
-        throw new Error('No workout scheduled for today');
-      }
+        // Create workout first
+        console.log('[WorkoutStore] No workout found, creating new workout:', { programDayId, date });
+        await workoutDb.createWorkout(userId, programDayId, date);
+        workout = await workoutDb.getTodayWorkout(userId);
 
-      console.log('[WorkoutStore] Found existing workout:', workout.id, 'Status:', workout.status);
+        if (!workout) {
+          throw new Error('Failed to create workout');
+        }
+
+        console.log('[WorkoutStore] Created new workout:', workout.id);
+      } else {
+        console.log('[WorkoutStore] Found existing workout:', workout.id, 'Status:', workout.status);
+      }
 
       // Update workout status to in_progress via API
       await workoutDb.updateWorkoutStatus(workout.id, 'in_progress');
@@ -203,7 +212,7 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
   },
 
   /**
-   * Cancel the current workout
+   * Cancel the current workout - resets to not_started and deletes logged sets
    */
   cancelWorkout: async () => {
     const { currentWorkout } = get();
@@ -213,8 +222,16 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
     }
 
     try {
-      // Update workout status to cancelled via API
-      await workoutDb.updateWorkoutStatus(currentWorkout.id, 'cancelled');
+      // Get all sets for this workout
+      const sets = await workoutDb.getSetsForWorkout(currentWorkout.id);
+
+      // Delete all logged sets
+      for (const set of sets) {
+        await workoutDb.deleteSet(set.id);
+      }
+
+      // Reset workout status to not_started (so user can do it another day)
+      await workoutDb.updateWorkoutStatus(currentWorkout.id, 'not_started');
 
       // Clear current workout state
       set({
@@ -224,7 +241,7 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
         totalVolumeKg: 0,
       });
 
-      console.log('[WorkoutStore] Workout cancelled:', currentWorkout.id);
+      console.log('[WorkoutStore] Workout reset to not_started:', currentWorkout.id);
     } catch (error) {
       console.error('[WorkoutStore] Failed to cancel workout:', error);
       throw error;
