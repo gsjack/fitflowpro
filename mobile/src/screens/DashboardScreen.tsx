@@ -14,6 +14,10 @@ import { useWorkoutStore } from '../stores/workoutStore';
 import { useRecoveryStore, getRecoveryMessage } from '../stores/recoveryStore';
 import * as workoutDb from '../services/database/workoutDb';
 import type { Workout } from '../database/db';
+import { colors, gradients } from '../theme/colors';
+import { spacing, borderRadius } from '../theme/typography';
+import GradientCard from '../components/common/GradientCard';
+import StatCard from '../components/common/StatCard';
 
 interface DashboardScreenProps {
   userId: number;
@@ -112,170 +116,192 @@ export default function DashboardScreen({
 
   return (
     <ScrollView style={styles.container} accessibilityRole="scrollbar">
-      {/* Recovery Assessment Prompt */}
-      {!todayAssessment && (
-        <Card
-          style={styles.card}
-          accessible={true}
-          accessibilityRole="alert"
-          accessibilityLabel="Recovery assessment needed"
-        >
-          <Card.Content>
-            <Text variant="titleMedium" style={styles.cardTitle} accessibilityRole="header">
-              Recovery Assessment
-            </Text>
-            <Text variant="bodyMedium" style={styles.cardDescription}>
-              How are you feeling today? Submit your daily recovery check-in to optimize your
-              workout volume.
-            </Text>
-            <Button
-              mode="contained"
-              onPress={handleSubmitRecovery}
-              style={styles.button}
-              accessibilityLabel="Submit recovery check"
-              accessibilityHint="Opens form to assess sleep, soreness, and motivation"
-              accessibilityRole="button"
-            >
-              Submit Recovery Check
-            </Button>
-          </Card.Content>
-        </Card>
-      )}
+      {/* Hero Section with Date & Recovery */}
+      <View style={styles.heroSection}>
+        <Text variant="headlineLarge" style={styles.dateText}>
+          {new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </Text>
 
-      {/* Recovery Status (if assessment exists) */}
-      {todayAssessment && (
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text variant="titleMedium" style={styles.cardTitle} accessibilityRole="header">
-              Recovery Status
-            </Text>
-            <View style={styles.recoveryInfo}>
+        {todayAssessment ? (
+          <View style={styles.recoveryHero}>
+            <StatCard
+              label="Recovery Score"
+              value={todayAssessment.total_score}
+              unit="/15"
+              description={getRecoveryMessage(volumeAdjustment)}
+              color={
+                volumeAdjustment === 'none'
+                  ? colors.success.main
+                  : volumeAdjustment === 'rest_day'
+                    ? colors.error.main
+                    : colors.warning.main
+              }
+            />
+          </View>
+        ) : (
+          <GradientCard
+            gradient={gradients.primary as [string, string, ...string[]]}
+            style={styles.recoveryPrompt}
+            accessible={true}
+            accessibilityRole="none"
+            accessibilityLabel="Recovery assessment needed"
+          >
+            <View style={styles.promptContent}>
+              <Text variant="titleLarge" style={styles.promptTitle}>
+                Start Your Day Right
+              </Text>
+              <Text variant="bodyMedium" style={styles.promptDescription}>
+                Quick 30-second recovery check to optimize today's training
+              </Text>
+              <Button
+                mode="contained"
+                onPress={handleSubmitRecovery}
+                style={styles.promptButton}
+                buttonColor={colors.success.main}
+                textColor="#000000"
+                accessibilityLabel="Submit recovery check"
+                accessibilityHint="Opens form to assess sleep, soreness, and motivation"
+              >
+                Submit Recovery Check
+              </Button>
+            </View>
+          </GradientCard>
+        )}
+      </View>
+
+      {/* Today's Workout Card */}
+      {todayWorkout ? (
+        <GradientCard
+          gradient={
+            todayWorkout.status === 'completed'
+              ? [colors.success.dark, colors.background.secondary]
+              : todayWorkout.status === 'in_progress'
+                ? [colors.primary.dark, colors.background.secondary]
+                : gradients.hero
+          }
+          style={styles.workoutCard}
+          onPress={
+            todayWorkout.status === 'not_started' || todayWorkout.status === 'in_progress'
+              ? handleStartWorkout
+              : undefined
+          }
+          accessibilityLabel={`Today's workout: ${todayWorkout.day_name || 'Workout'}`}
+          accessibilityRole={
+            todayWorkout.status === 'not_started' || todayWorkout.status === 'in_progress'
+              ? 'button'
+              : 'none'
+          }
+        >
+          <View style={styles.workoutCardContent}>
+            {/* Header with Status */}
+            <View style={styles.workoutHeader}>
+              <Text variant="labelMedium" style={styles.workoutLabel}>
+                TODAY'S WORKOUT
+              </Text>
               <Chip
                 mode="flat"
                 style={[
-                  styles.recoveryChip,
-                  {
-                    backgroundColor:
-                      volumeAdjustment === 'none'
-                        ? '#22c55e20'
-                        : volumeAdjustment === 'rest_day'
-                          ? '#ef444420'
-                          : '#eab30820',
-                  },
+                  styles.statusChipNew,
+                  { backgroundColor: getStatusColor(todayWorkout.status) + '30' },
                 ]}
+                textStyle={{ color: getStatusColor(todayWorkout.status), fontWeight: '600' }}
               >
-                Score: {todayAssessment.total_score}/15
+                {todayWorkout.status.replace('_', ' ').toUpperCase()}
               </Chip>
             </View>
-            <Text variant="bodyMedium" style={styles.recoveryMessage}>
-              {getRecoveryMessage(volumeAdjustment)}
+
+            {/* Workout Name */}
+            <Text variant="headlineLarge" style={styles.workoutNameNew}>
+              {todayWorkout.day_name || 'Workout'}
+            </Text>
+
+            {/* Workout Type */}
+            <Text variant="bodyMedium" style={styles.workoutTypeNew}>
+              {todayWorkout.day_type === 'vo2max' ? '🏃 VO2max Cardio' : '💪 Strength Training'}
+            </Text>
+
+            {/* Exercise Preview */}
+            {todayWorkout.exercises && todayWorkout.exercises.length > 0 && (
+              <View style={styles.exercisePreview}>
+                <Text variant="bodySmall" style={styles.exerciseCount}>
+                  {todayWorkout.exercises.length} exercises •{' '}
+                  {todayWorkout.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
+                </Text>
+              </View>
+            )}
+
+            {/* Action Button or Metrics */}
+            {todayWorkout.status === 'not_started' && (
+              <Button
+                mode="contained"
+                onPress={handleStartWorkout}
+                style={styles.workoutActionButton}
+                buttonColor={colors.primary.main}
+                contentStyle={styles.buttonContent}
+                labelStyle={styles.buttonLabel}
+                icon="play"
+                accessibilityLabel="Start workout"
+              >
+                Start Workout
+              </Button>
+            )}
+
+            {todayWorkout.status === 'in_progress' && (
+              <Button
+                mode="contained"
+                onPress={handleStartWorkout}
+                style={styles.workoutActionButton}
+                buttonColor={colors.success.main}
+                textColor="#000000"
+                contentStyle={styles.buttonContent}
+                labelStyle={styles.buttonLabel}
+                icon="play-circle"
+                accessibilityLabel="Resume workout"
+              >
+                Resume Workout
+              </Button>
+            )}
+
+            {todayWorkout.status === 'completed' && (
+              <View style={styles.completedMetrics}>
+                <View style={styles.metricItem}>
+                  <Text variant="displaySmall" style={styles.metricValue}>
+                    {todayWorkout.total_volume_kg?.toFixed(0) || '0'}
+                  </Text>
+                  <Text variant="bodySmall" style={styles.metricLabel}>
+                    kg volume
+                  </Text>
+                </View>
+                {todayWorkout.average_rir !== undefined && (
+                  <View style={styles.metricItem}>
+                    <Text variant="displaySmall" style={styles.metricValue}>
+                      {todayWorkout.average_rir.toFixed(1)}
+                    </Text>
+                    <Text variant="bodySmall" style={styles.metricLabel}>
+                      avg RIR
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+          </View>
+        </GradientCard>
+      ) : (
+        <Card style={styles.emptyWorkoutCard}>
+          <Card.Content style={styles.emptyContent}>
+            <Text variant="headlineSmall" style={styles.emptyTitle}>
+              No Workout Today
+            </Text>
+            <Text variant="bodyMedium" style={styles.emptyDescription}>
+              Head to the Planner to schedule your training
             </Text>
           </Card.Content>
         </Card>
       )}
-
-      {/* Today's Workout Card */}
-      <Card style={styles.card}>
-        <Card.Content>
-          <Text variant="titleMedium" style={styles.cardTitle} accessibilityRole="header">
-            Today's Workout
-          </Text>
-          {todayWorkout ? (
-            <>
-              <Text variant="bodyLarge" style={styles.workoutName} accessibilityRole="text">
-                {todayWorkout.day_name || 'Workout'}
-              </Text>
-              <Text
-                variant="bodyMedium"
-                style={styles.workoutType}
-                accessibilityLabel={`Workout type: ${todayWorkout.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}`}
-              >
-                {todayWorkout.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}
-              </Text>
-
-              {/* Exercise List */}
-              {todayWorkout.exercises && todayWorkout.exercises.length > 0 && (
-                <View style={styles.exerciseList}>
-                  {todayWorkout.exercises.map((exercise, index) => (
-                    <View key={exercise.id} style={styles.exerciseItem}>
-                      <Text variant="bodyMedium" style={styles.exerciseName}>
-                        {index + 1}. {exercise.exercise_name}
-                      </Text>
-                      <Text variant="bodySmall" style={styles.exerciseDetails}>
-                        {exercise.sets} sets × {exercise.reps} reps @ RIR {exercise.rir}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              <View
-                style={styles.workoutStatus}
-                accessible={true}
-                accessibilityLabel={`Status: ${todayWorkout.status.replace('_', ' ')}`}
-              >
-                <Chip
-                  mode="flat"
-                  style={[
-                    styles.statusChip,
-                    { backgroundColor: getStatusColor(todayWorkout.status) + '20' },
-                  ]}
-                  textStyle={{ color: getStatusColor(todayWorkout.status) }}
-                  accessibilityElementsHidden={true}
-                  importantForAccessibility="no"
-                >
-                  {todayWorkout.status.replace('_', ' ').toUpperCase()}
-                </Chip>
-              </View>
-              {todayWorkout.status === 'not_started' && (
-                <Button
-                  mode="contained"
-                  onPress={handleStartWorkout}
-                  style={styles.button}
-                  accessibilityLabel="Start workout"
-                  accessibilityHint={`Begin ${todayWorkout.day_name || "today's workout"}`}
-                  accessibilityRole="button"
-                >
-                  Start Workout
-                </Button>
-              )}
-              {todayWorkout.status === 'in_progress' && (
-                <Button
-                  mode="contained"
-                  onPress={handleStartWorkout}
-                  style={styles.button}
-                  accessibilityLabel="Resume workout"
-                  accessibilityHint="Continue the workout in progress"
-                  accessibilityRole="button"
-                >
-                  Resume Workout
-                </Button>
-              )}
-              {todayWorkout.status === 'completed' && todayWorkout.total_volume_kg && (
-                <View style={styles.workoutMetrics}>
-                  <Text variant="bodyMedium">
-                    Total Volume: {todayWorkout.total_volume_kg.toFixed(0)} kg
-                  </Text>
-                  {todayWorkout.average_rir !== undefined && (
-                    <Text variant="bodyMedium">
-                      Average RIR: {todayWorkout.average_rir.toFixed(1)}
-                    </Text>
-                  )}
-                </View>
-              )}
-            </>
-          ) : (
-            <>
-              <Text variant="bodyMedium" style={styles.noWorkout}>
-                No workout scheduled for today
-              </Text>
-              <Text variant="bodySmall" style={styles.noWorkoutHint}>
-                Check your program planner to schedule workouts
-              </Text>
-            </>
-          )}
-        </Card.Content>
-      </Card>
 
       {/* Recent Workout History */}
       <Card style={styles.card}>
@@ -335,116 +361,187 @@ export default function DashboardScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.background.primary,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.background.primary,
   },
+
+  // Hero Section
+  heroSection: {
+    padding: spacing.lg,
+    paddingTop: spacing.md,
+  },
+  dateText: {
+    color: colors.text.primary,
+    marginBottom: spacing.lg,
+    fontWeight: '600',
+  },
+  recoveryHero: {
+    marginTop: spacing.sm,
+  },
+  recoveryPrompt: {
+    marginTop: spacing.sm,
+  },
+  promptContent: {
+    padding: spacing.lg,
+  },
+  promptTitle: {
+    color: colors.text.primary,
+    fontWeight: '700',
+    marginBottom: spacing.sm,
+  },
+  promptDescription: {
+    color: colors.text.secondary,
+    marginBottom: spacing.lg,
+  },
+  promptButton: {
+    minHeight: 48,
+  },
+
+  // Workout Card
+  workoutCard: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  workoutCardContent: {
+    padding: spacing.lg,
+  },
+  workoutHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
+  workoutLabel: {
+    color: colors.text.secondary,
+    letterSpacing: 1.5,
+  },
+  statusChipNew: {
+    height: 28,
+  },
+  workoutNameNew: {
+    color: colors.text.primary,
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+  },
+  workoutTypeNew: {
+    color: colors.text.secondary,
+    marginBottom: spacing.md,
+  },
+  exercisePreview: {
+    paddingVertical: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: colors.effects.divider,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.effects.divider,
+    marginBottom: spacing.lg,
+  },
+  exerciseCount: {
+    color: colors.text.tertiary,
+  },
+  workoutActionButton: {
+    minHeight: 56,
+    borderRadius: borderRadius.md,
+  },
+  buttonContent: {
+    height: 56,
+  },
+  buttonLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+  completedMetrics: {
+    flexDirection: 'row',
+    gap: spacing.xl,
+    marginTop: spacing.md,
+  },
+  metricItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  metricValue: {
+    color: colors.success.main,
+    fontWeight: '700',
+  },
+  metricLabel: {
+    color: colors.text.tertiary,
+    marginTop: spacing.xs,
+  },
+
+  // Empty State
+  emptyWorkoutCard: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    backgroundColor: colors.background.secondary,
+    borderRadius: borderRadius.lg,
+  },
+  emptyContent: {
+    padding: spacing.xl,
+    alignItems: 'center',
+  },
+  emptyTitle: {
+    color: colors.text.primary,
+    marginBottom: spacing.sm,
+  },
+  emptyDescription: {
+    color: colors.text.tertiary,
+    textAlign: 'center',
+  },
+
+  // Recent History
   card: {
-    margin: 16,
-    marginBottom: 0,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    backgroundColor: colors.background.secondary,
+    borderRadius: borderRadius.lg,
   },
   cardTitle: {
-    fontWeight: 'bold',
-    marginBottom: 8,
+    fontWeight: '600',
+    marginBottom: spacing.sm,
+    color: colors.text.primary,
   },
   cardSubtitle: {
-    color: '#6b7280',
-    marginBottom: 8,
-  },
-  cardDescription: {
-    marginBottom: 16,
-    color: '#4b5563',
-  },
-  button: {
-    marginTop: 16,
-    minHeight: 44, // WCAG 2.1 AA: Minimum 44pt touch target
-  },
-  recoveryInfo: {
-    marginVertical: 8,
-  },
-  recoveryChip: {
-    alignSelf: 'flex-start',
-  },
-  recoveryMessage: {
-    marginTop: 8,
-    color: '#4b5563',
-  },
-  workoutName: {
-    fontWeight: '600',
-    marginTop: 4,
-  },
-  workoutType: {
-    color: '#6b7280',
-    marginTop: 4,
-  },
-  exerciseList: {
-    marginTop: 12,
-    marginBottom: 8,
-  },
-  exerciseItem: {
-    marginBottom: 8,
-  },
-  exerciseName: {
-    fontWeight: '500',
-  },
-  exerciseDetails: {
-    color: '#6b7280',
-    marginTop: 2,
-  },
-  workoutStatus: {
-    marginTop: 12,
-    marginBottom: 8,
-  },
-  statusChip: {
-    alignSelf: 'flex-start',
-  },
-  workoutMetrics: {
-    marginTop: 16,
-    gap: 4,
-  },
-  noWorkout: {
-    color: '#6b7280',
-    marginTop: 8,
-  },
-  noWorkoutHint: {
-    color: '#9ca3af',
-    marginTop: 4,
-    fontStyle: 'italic',
+    color: colors.text.tertiary,
+    marginBottom: spacing.sm,
   },
   divider: {
-    marginVertical: 12,
+    marginVertical: spacing.md,
+    backgroundColor: colors.effects.divider,
   },
   historyItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingVertical: spacing.sm,
   },
   historyDate: {
     flex: 1,
   },
   historyDateText: {
     fontWeight: '500',
+    color: colors.text.primary,
   },
   historyDetails: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: spacing.md,
   },
   historyChip: {
     height: 28,
   },
   historyVolume: {
-    color: '#6b7280',
+    color: colors.text.secondary,
     minWidth: 60,
     textAlign: 'right',
   },
   noHistory: {
-    color: '#6b7280',
+    color: colors.text.tertiary,
     textAlign: 'center',
-    marginTop: 8,
+    marginTop: spacing.sm,
   },
 });

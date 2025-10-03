@@ -8,7 +8,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, Button, ProgressBar } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as timerService from '../../services/timer/timerService';
+import { colors } from '../../theme/colors';
+import { spacing, borderRadius } from '../../theme/typography';
 
 interface RestTimerProps {
   isActive: boolean;
@@ -79,90 +82,140 @@ export default function RestTimer({ isActive, onComplete }: RestTimerProps) {
 
   const progress = targetSeconds > 0 ? (targetSeconds - remainingSeconds) / targetSeconds : 0;
   const formattedTime = timerService.formatTime(remainingSeconds);
+  const isAlmostDone = remainingSeconds <= 10 && remainingSeconds > 0;
 
   return (
-    <Card style={styles.card} accessibilityRole="timer">
-      <Card.Content>
-        <Text variant="titleMedium" style={styles.title} accessibilityRole="header">
-          Rest Timer
-        </Text>
+    <Card style={styles.card} elevation={5}>
+      <LinearGradient
+        colors={
+          isAlmostDone
+            ? [colors.warning.dark, colors.background.tertiary]
+            : [colors.primary.dark, colors.background.tertiary]
+        }
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradient}
+      >
+        <Card.Content style={styles.content}>
+          <Text variant="labelMedium" style={styles.title}>
+            REST TIMER
+          </Text>
 
-        <Text
-          variant="displayMedium"
-          style={styles.countdown}
-          accessibilityLabel={`Time remaining: ${formattedTime}`}
-          accessibilityLiveRegion="polite"
-        >
-          {formattedTime}
-        </Text>
+          <Text
+            variant="displayLarge"
+            style={[styles.countdown, isAlmostDone && styles.countdownWarning]}
+            accessibilityLabel={`Time remaining: ${formattedTime}`}
+            accessibilityLiveRegion="polite"
+          >
+            {formattedTime}
+          </Text>
 
-        <ProgressBar
-          progress={progress}
-          style={styles.progressBar}
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no"
-        />
+          <View style={styles.progressContainer}>
+            <ProgressBar
+              progress={progress}
+              color={isAlmostDone ? colors.warning.main : colors.success.main}
+              style={styles.progressBar}
+            />
+          </View>
 
-        <View style={styles.buttonRow}>
-          <Button
-            mode="outlined"
-            onPress={handleSubtract30s}
-            style={styles.button}
-            accessibilityLabel="Reduce timer by 30 seconds"
-            accessibilityRole="button"
-          >
-            -30s
-          </Button>
-          <Button
-            mode="outlined"
-            onPress={handleAdd30s}
-            style={styles.button}
-            accessibilityLabel="Add 30 seconds to timer"
-            accessibilityRole="button"
-          >
-            +30s
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => void handleSkip()}
-            style={styles.button}
-            accessibilityLabel="Skip rest period"
-            accessibilityHint="Ends the rest timer and allows you to continue the workout"
-            accessibilityRole="button"
-          >
-            Skip
-          </Button>
-        </View>
-      </Card.Content>
+          <View style={styles.buttonRow}>
+            <Button
+              mode="outlined"
+              onPress={handleSubtract30s}
+              style={styles.controlButton}
+              textColor={colors.text.primary}
+              contentStyle={styles.controlButtonContent}
+              accessibilityLabel="Reduce timer by 30 seconds"
+            >
+              -30s
+            </Button>
+            <Button
+              mode="contained"
+              onPress={() => void handleSkip()}
+              style={styles.skipButton}
+              buttonColor={colors.success.main}
+              textColor="#000000"
+              contentStyle={styles.skipButtonContent}
+              icon="skip-next"
+              accessibilityLabel="Skip rest period"
+            >
+              Skip
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={handleAdd30s}
+              style={styles.controlButton}
+              textColor={colors.text.primary}
+              contentStyle={styles.controlButtonContent}
+              accessibilityLabel="Add 30 seconds to timer"
+            >
+              +30s
+            </Button>
+          </View>
+        </Card.Content>
+      </LinearGradient>
     </Card>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    margin: 16,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+  },
+  gradient: {
+    width: '100%',
+  },
+  content: {
+    padding: spacing.xl,
+    alignItems: 'center',
   },
   title: {
-    textAlign: 'center',
-    marginBottom: 8,
+    color: colors.text.secondary,
+    letterSpacing: 2,
+    marginBottom: spacing.md,
   },
   countdown: {
     textAlign: 'center',
-    marginVertical: 16,
+    marginVertical: spacing.lg,
     fontVariant: ['tabular-nums'],
+    color: colors.text.primary,
+    fontWeight: '700',
+    fontSize: 64,
+  },
+  countdownWarning: {
+    color: colors.warning.main,
+  },
+  progressContainer: {
+    width: '100%',
+    marginBottom: spacing.lg,
   },
   progressBar: {
-    height: 8,
-    borderRadius: 4,
-    marginBottom: 16,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: colors.background.primary,
   },
   buttonRow: {
     flexDirection: 'row',
-    gap: 8,
-    justifyContent: 'center',
+    gap: spacing.sm,
+    width: '100%',
   },
-  button: {
+  controlButton: {
     flex: 1,
-    minHeight: 44, // WCAG 2.1 AA: Minimum 44pt touch target
+    borderRadius: borderRadius.md,
+    borderColor: colors.effects.divider,
+  },
+  controlButtonContent: {
+    height: 48,
+  },
+  skipButton: {
+    flex: 2,
+    borderRadius: borderRadius.md,
+  },
+  skipButtonContent: {
+    height: 48,
   },
 });

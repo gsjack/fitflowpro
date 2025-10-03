@@ -22,6 +22,7 @@ import {
   Searchbar,
   IconButton,
 } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as programDb from '../services/database/programDb';
 import {
   VOLUME_LANDMARKS,
@@ -29,6 +30,7 @@ import {
   getVolumeZoneColor,
   type MuscleGroup,
 } from '../constants/volumeLandmarks';
+import { colors } from '../theme/colors';
 
 interface PlannerScreenProps {
   userId: number;
@@ -227,10 +229,17 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   if (!program) {
     return (
       <View style={styles.container}>
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text variant="titleMedium">No Active Program</Text>
-            <Text variant="bodyMedium" style={styles.emptyText}>
+        <Card style={styles.emptyCard}>
+          <Card.Content style={styles.emptyCardContent}>
+            <MaterialCommunityIcons
+              name="calendar-blank-outline"
+              size={64}
+              color={colors.text.disabled}
+            />
+            <Text variant="titleMedium" style={styles.emptyTitle}>
+              No Active Program
+            </Text>
+            <Text variant="bodyMedium" style={styles.emptySubtitle}>
               Create a training program to start planning your workouts
             </Text>
           </Card.Content>
@@ -462,7 +471,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#0A0E27', // Dark theme background
   },
   loadingContainer: {
     flex: 1,
@@ -472,6 +481,24 @@ const styles = StyleSheet.create({
   card: {
     margin: 16,
     marginBottom: 0,
+  },
+  emptyCard: {
+    margin: 16,
+    backgroundColor: colors.background.secondary,
+  },
+  emptyCardContent: {
+    alignItems: 'center',
+    padding: 32,
+  },
+  emptyTitle: {
+    marginTop: 16,
+    color: colors.text.primary,
+    textAlign: 'center',
+  },
+  emptySubtitle: {
+    marginTop: 8,
+    color: colors.text.secondary,
+    textAlign: 'center',
   },
   programTitle: {
     fontWeight: 'bold',

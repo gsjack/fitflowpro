@@ -12,12 +12,16 @@
 
 import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Surface, Text, SegmentedButtons, ActivityIndicator, useTheme } from 'react-native-paper';
+import { Surface, Text, SegmentedButtons, ActivityIndicator } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   useConsistencyMetrics,
 } from '../services/api/analyticsApi';
 import { OneRMProgressionChart } from '../components/analytics/OneRMProgressionChart';
 import { VolumeChart } from '../components/analytics/VolumeChart';
+import { colors } from '../theme/colors';
+import { spacing } from '../theme/typography';
+import StatCard from '../components/common/StatCard';
 
 /**
  * Tab options for analytics navigation
@@ -44,32 +48,37 @@ export function AnalyticsScreen(): React.JSX.Element {
   return (
     <View style={styles.container}>
       {/* Tab Navigation */}
-      <Surface style={styles.tabContainer} elevation={1}>
+      <Surface style={styles.tabContainer} elevation={0}>
         <SegmentedButtons
           value={activeTab}
-          onValueChange={(value) => setActiveTab(value)}
+          onValueChange={(value) => setActiveTab(value as AnalyticsTab)}
           buttons={[
             {
               value: 'strength',
               label: 'Strength',
-              icon: 'weight-lifter',
             },
             {
               value: 'volume',
               label: 'Volume',
-              icon: 'chart-bar',
             },
             {
               value: 'consistency',
-              label: 'Consistency',
-              icon: 'calendar-check',
+              label: 'Stats',
             },
             {
               value: 'cardio',
               label: 'Cardio',
-              icon: 'run',
             },
           ]}
+          style={styles.segmentedButtons}
+          theme={{
+            colors: {
+              secondaryContainer: colors.primary.main,
+              onSecondaryContainer: colors.text.primary,
+              surfaceVariant: colors.background.tertiary,
+              onSurfaceVariant: colors.text.secondary,
+            },
+          }}
         />
       </Surface>
 
@@ -150,14 +159,12 @@ interface ConsistencyTabProps {
 }
 
 function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.JSX.Element {
-  const theme = useTheme();
-
   if (isLoading) {
     return (
       <View style={styles.centerContent}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={colors.primary.main} />
         <Text variant="bodyMedium" style={styles.loadingText}>
-          Loading consistency metrics...
+          Loading stats...
         </Text>
       </View>
     );
@@ -167,7 +174,7 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
     return (
       <View style={styles.centerContent}>
         <Text variant="bodyLarge" style={styles.errorText}>
-          Error loading consistency data
+          Error loading data
         </Text>
         <Text variant="bodyMedium" style={styles.errorSubtext}>
           {error.message}
@@ -179,7 +186,15 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
   if (!data) {
     return (
       <View style={styles.centerContent}>
-        <Text variant="bodyMedium">No consistency data available</Text>
+        <MaterialCommunityIcons
+          name="chart-line-variant"
+          size={64}
+          color={colors.text.disabled}
+        />
+        <Text variant="titleMedium" style={styles.emptyText}>No data available</Text>
+        <Text variant="bodyMedium" style={styles.emptySubtext}>
+          Complete workouts to see your performance stats
+        </Text>
       </View>
     );
   }
@@ -189,49 +204,40 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
 
   return (
     <View>
-      <Text variant="titleLarge" style={styles.sectionTitle}>
-        Consistency Metrics
+      <Text variant="headlineSmall" style={styles.sectionTitle}>
+        Performance Stats
       </Text>
 
-      {/* Adherence Rate */}
-      <Surface style={styles.metricCard} elevation={1}>
-        <Text variant="titleMedium" style={styles.metricLabel}>
-          Adherence Rate
-        </Text>
-        <Text variant="displaySmall" style={[styles.metricValue, { color: theme.colors.primary }]}>
-          {adherencePercentage}%
-        </Text>
-        <Text variant="bodySmall" style={styles.metricDescription}>
-          Percentage of scheduled workouts completed
-        </Text>
-      </Surface>
+      <View style={styles.statsGrid}>
+        <StatCard
+          label="Adherence Rate"
+          value={adherencePercentage}
+          unit="%"
+          description="Scheduled workouts completed"
+          color={
+            adherencePercentage >= 80
+              ? colors.success.main
+              : adherencePercentage >= 60
+                ? colors.warning.main
+                : colors.error.main
+          }
+        />
 
-      {/* Average Session Duration */}
-      <Surface style={styles.metricCard} elevation={1}>
-        <Text variant="titleMedium" style={styles.metricLabel}>
-          Average Session Duration
-        </Text>
-        <Text variant="displaySmall" style={[styles.metricValue, { color: theme.colors.primary }]}>
-          {avgDurationMinutes}
-          <Text variant="titleMedium"> min</Text>
-        </Text>
-        <Text variant="bodySmall" style={styles.metricDescription}>
-          Average workout duration
-        </Text>
-      </Surface>
+        <StatCard
+          label="Avg Duration"
+          value={avgDurationMinutes}
+          unit="min"
+          description="Average workout time"
+          color={colors.primary.main}
+        />
 
-      {/* Total Workouts */}
-      <Surface style={styles.metricCard} elevation={1}>
-        <Text variant="titleMedium" style={styles.metricLabel}>
-          Total Workouts
-        </Text>
-        <Text variant="displaySmall" style={[styles.metricValue, { color: theme.colors.primary }]}>
-          {data.total_workouts}
-        </Text>
-        <Text variant="bodySmall" style={styles.metricDescription}>
-          Workouts completed all-time
-        </Text>
-      </Surface>
+        <StatCard
+          label="Total Workouts"
+          value={data.total_workouts}
+          description="All-time completed sessions"
+          color={colors.success.main}
+        />
+      </View>
     </View>
   );
 }
@@ -242,6 +248,11 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
 function CardioTab(): React.JSX.Element {
   return (
     <View style={styles.centerContent}>
+      <MaterialCommunityIcons
+        name="run"
+        size={64}
+        color={colors.text.disabled}
+      />
       <Text variant="titleLarge" style={styles.sectionTitle}>
         Cardio Metrics
       </Text>
@@ -258,71 +269,75 @@ function CardioTab(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.background.primary,
   },
   tabContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    backgroundColor: colors.background.primary,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.effects.divider,
+  },
+  segmentedButtons: {
+    backgroundColor: colors.background.secondary,
   },
   content: {
     flex: 1,
   },
   contentContainer: {
-    padding: 16,
+    padding: spacing.lg,
   },
   sectionTitle: {
-    marginBottom: 8,
-    fontWeight: '600',
+    marginBottom: spacing.lg,
+    fontWeight: '700',
+    color: colors.text.primary,
   },
   sectionDescription: {
-    marginBottom: 16,
-    color: '#666',
+    marginBottom: spacing.lg,
+    color: colors.text.secondary,
   },
   centerContent: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 48,
+    paddingVertical: spacing.xxxl,
   },
   loadingText: {
-    marginTop: 16,
-    color: '#666',
+    marginTop: spacing.lg,
+    color: colors.text.secondary,
   },
   errorText: {
-    color: '#d32f2f',
-    marginBottom: 8,
+    color: colors.error.main,
+    marginBottom: spacing.sm,
   },
   errorSubtext: {
-    color: '#666',
+    color: colors.text.tertiary,
     textAlign: 'center',
   },
-  metricCard: {
-    padding: 20,
-    marginBottom: 16,
-    borderRadius: 12,
-    backgroundColor: '#fff',
+  emptyText: {
+    marginTop: spacing.lg,
+    color: colors.text.primary,
+    textAlign: 'center',
   },
-  metricLabel: {
-    marginBottom: 8,
-    color: '#666',
+  emptySubtext: {
+    marginTop: spacing.sm,
+    color: colors.text.secondary,
+    textAlign: 'center',
+    paddingHorizontal: spacing.xl,
   },
-  metricValue: {
-    fontWeight: '700',
-    marginBottom: 4,
-  },
-  metricDescription: {
-    color: '#999',
+  statsGrid: {
+    gap: spacing.md,
   },
   placeholderText: {
-    color: '#666',
+    color: colors.text.secondary,
     textAlign: 'center',
-    marginTop: 16,
+    marginTop: spacing.lg,
   },
   placeholderSubtext: {
-    color: '#999',
+    color: colors.text.tertiary,
     textAlign: 'center',
-    marginTop: 8,
-    paddingHorizontal: 32,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.xl,
   },
 });
 

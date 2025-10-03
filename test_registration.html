@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FitFlow Registration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .pending { background-color: #fff3cd; border-color: #ffeaa7; }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background-color: #0056b3; }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>FitFlow Pro - Registration Debug Test</h1>
+    
+    <div class="test-section pending" id="config-section">
+        <h2>1. Configuration</h2>
+        <label>Backend URL:</label>
+        <input type="text" id="backend-url" value="http://localhost:3000" />
+        <br/>
+        <label>Email:</label>
+        <input type="email" id="email" value="webapp-test@example.com" />
+        <br/>
+        <label>Password:</label>
+        <input type="password" id="password" value="testpass123" />
+        <br/>
+        <button onclick="testConfiguration()">Test Configuration</button>
+        <pre id="config-result"></pre>
+    </div>
+
+    <div class="test-section pending" id="health-section">
+        <h2>2. Backend Health Check</h2>
+        <button onclick="testHealth()">Test /health</button>
+        <pre id="health-result"></pre>
+    </div>
+
+    <div class="test-section pending" id="register-section">
+        <h2>3. Registration API Test</h2>
+        <button onclick="testRegistration()">Test Registration</button>
+        <pre id="register-result"></pre>
+    </div>
+
+    <div class="test-section pending" id="diagnosis-section">
+        <h2>4. Diagnosis</h2>
+        <pre id="diagnosis-result">Click "Test Registration" to see diagnosis...</pre>
+    </div>
+
+    <script>
+        let backendUrl = 'http://localhost:3000';
+        
+        function updateBackendUrl() {
+            backendUrl = document.getElementById('backend-url').value;
+        }
+
+        async function testConfiguration() {
+            updateBackendUrl();
+            const result = document.getElementById('config-result');
+            result.textContent = `Backend URL: ${backendUrl}\nOrigin: ${window.location.origin}\nUser Agent: ${navigator.userAgent}`;
+            document.getElementById('config-section').className = 'test-section success';
+        }
+
+        async function testHealth() {
+            updateBackendUrl();
+            const section = document.getElementById('health-section');
+            const result = document.getElementById('health-result');
+            
+            try {
+                result.textContent = 'Testing...';
+                section.className = 'test-section pending';
+                
+                const response = await fetch(`${backendUrl}/health`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                result.textContent = `Status: ${response.status}\nResponse: ${JSON.stringify(data, null, 2)}`;
+                section.className = 'test-section success';
+            } catch (error) {
+                result.textContent = `ERROR: ${error.message}\n\nPossible causes:\n- Backend not running on ${backendUrl}\n- CORS blocking the request\n- Network connectivity issue`;
+                section.className = 'test-section error';
+            }
+        }
+
+        async function testRegistration() {
+            updateBackendUrl();
+            const section = document.getElementById('register-section');
+            const result = document.getElementById('register-result');
+            const diagSection = document.getElementById('diagnosis-section');
+            const diagResult = document.getElementById('diagnosis-result');
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                result.textContent = 'Testing registration...';
+                section.className = 'test-section pending';
+                
+                const requestBody = {
+                    username: email,
+                    password: password,
+                    age: 25,
+                    weight_kg: 75,
+                    experience_level: 'beginner'
+                };
+                
+                const startTime = Date.now();
+                
+                const response = await fetch(`${backendUrl}/api/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const duration = Date.now() - startTime;
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.textContent = `✅ SUCCESS (${duration}ms)\n\nStatus: ${response.status}\nUser ID: ${data.user_id}\nToken: ${data.token.substring(0, 50)}...\n\nFull Response:\n${JSON.stringify(data, null, 2)}`;
+                    section.className = 'test-section success';
+                    
+                    diagResult.textContent = `✅ DIAGNOSIS: Registration working correctly!\n\n✅ Backend is running and accessible\n✅ CORS is configured correctly\n✅ Request format is valid\n✅ JWT token generated successfully\n\nResponse time: ${duration}ms`;
+                    diagSection.className = 'test-section success';
+                } else {
+                    const errorText = await response.text();
+                    result.textContent = `❌ FAILED (${duration}ms)\n\nStatus: ${response.status}\nError: ${errorText}`;
+                    section.className = 'test-section error';
+                    
+                    if (response.status === 409) {
+                        diagResult.textContent = `⚠️ DIAGNOSIS: User already exists\n\nThe registration endpoint is working, but this email is already registered.\nTry a different email address.`;
+                        diagSection.className = 'test-section error';
+                    } else {
+                        diagResult.textContent = `❌ DIAGNOSIS: Server error\n\nHTTP ${response.status}: ${errorText}`;
+                        diagSection.className = 'test-section error';
+                    }
+                }
+            } catch (error) {
+                result.textContent = `❌ NETWORK ERROR\n\nError: ${error.message}\n\nStack: ${error.stack}`;
+                section.className = 'test-section error';
+                
+                diagResult.textContent = `❌ DIAGNOSIS: Network Error Detected!\n\n🔍 Root Cause Analysis:\n\n1. ❌ Backend Connectivity Issue\n   - Cannot reach ${backendUrl}\n   - Error: ${error.message}\n\n2. 🔧 Possible Solutions:\n\n   For WebApp (browser):\n   - Ensure backend is running: npm run dev (in backend folder)\n   - Check backend URL is correct: ${backendUrl}\n   - Verify no CORS issues (check browser console)\n\n   For Mobile Device:\n   - ❌ DO NOT use localhost:3000\n   - ✅ USE your computer's IP address\n   - Example: http://192.168.178.49:3000\n   - Get your IP: Run 'ip addr show' or 'ifconfig'\n   - Set environment variable:\n     export FITFLOW_API_URL="http://192.168.178.49:3000"\n\n   For Android Emulator:\n   - Use http://10.0.2.2:3000 (special alias for host)\n\n   For iOS Simulator:\n   - Use http://localhost:3000 (works on simulator)\n\n3. 🧪 Quick Test:\n   Open terminal and run:\n   curl ${backendUrl}/health\n   \n   If this fails, backend is not accessible.`;
+                diagSection.className = 'test-section error';
+            }
+        }
+
+        // Auto-test on page load
+        window.onload = function() {
+            testConfiguration();
+        };
+    </script>
+</body>
+</html>

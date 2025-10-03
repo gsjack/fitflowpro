@@ -27,6 +27,7 @@
     "expo": "~54.0.12",
     "expo-dev-client": "~6.0.13",
     "expo-file-system": "^19.0.16",
+    "expo-linear-gradient": "~14.0.1",
     "expo-notifications": "^0.32.12",
     "expo-sharing": "^14.0.7",
     "expo-sqlite": "~14.0.6",

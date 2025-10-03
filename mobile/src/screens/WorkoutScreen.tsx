@@ -7,13 +7,16 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { View, ScrollView, StyleSheet, AccessibilityInfo, findNodeHandle } from 'react-native';
-import { Text, Appbar, Button, ProgressBar } from 'react-native-paper';
+import { Text, Appbar, Button, ProgressBar, IconButton } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { type ProgramExercise } from '../services/database/programDb';
 import { getSetsForExercise, getWorkoutById } from '../services/database/workoutDb';
 import SetLogCard from '../components/workout/SetLogCard';
 import RestTimer from '../components/workout/RestTimer';
 import * as timerService from '../services/timer/timerService';
+import { colors } from '../theme/colors';
+import { spacing, borderRadius } from '../theme/typography';
 
 interface WorkoutScreenProps {
   navigation?: any; // For future navigation implementation
@@ -238,14 +241,22 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
   if (!currentWorkout || !currentExercise) {
     return (
       <View style={styles.container}>
-        <Appbar.Header>
-          <View style={styles.headerContent}>
-            <Text variant="titleLarge" style={styles.headerTitle}>Workout</Text>
+        <LinearGradient
+          colors={[colors.background.primary, colors.background.secondary]}
+          style={styles.gradient}
+        >
+          <Appbar.Header style={styles.header}>
+            <View style={styles.headerContent}>
+              <Text variant="headlineMedium" style={styles.headerTitle}>Workout</Text>
+            </View>
+          </Appbar.Header>
+          <View style={styles.emptyState}>
+            <Text variant="headlineSmall" style={styles.emptyTitle}>No Active Workout</Text>
+            <Text variant="bodyMedium" style={styles.emptyDescription}>
+              Start a workout from the Dashboard
+            </Text>
           </View>
-        </Appbar.Header>
-        <View style={styles.content}>
-          <Text variant="bodyLarge">No active workout</Text>
-        </View>
+        </LinearGradient>
       </View>
     );
   }
@@ -256,68 +267,87 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header>
-        <View style={styles.headerContent} accessible={true} accessibilityRole="header" accessibilityLabel="Workout screen">
-          <Text variant="titleLarge" style={styles.headerTitle}>Workout</Text>
-        </View>
-        <Appbar.Action
-          icon="close"
-          onPress={handleCancelWorkout}
-          accessibilityLabel="Cancel workout"
-          accessibilityHint="Discards the current workout session"
-        />
-      </Appbar.Header>
+      <LinearGradient
+        colors={[colors.background.primary, colors.background.secondary]}
+        style={styles.gradient}
+      >
+        {/* Sticky Header with Progress */}
+        <View style={styles.stickyHeader}>
+          <Appbar.Header style={styles.header}>
+            <View style={styles.headerContent} accessible={true} accessibilityRole="header">
+              <Text variant="labelMedium" style={styles.headerLabel}>ACTIVE WORKOUT</Text>
+              <Text variant="headlineSmall" style={styles.headerTitle}>
+                {currentExercise.exercise_name}
+              </Text>
+            </View>
+            <IconButton
+              icon="close"
+              iconColor={colors.text.secondary}
+              size={24}
+              onPress={handleCancelWorkout}
+              accessibilityLabel="Cancel workout"
+            />
+          </Appbar.Header>
 
-      <ScrollView style={styles.scrollView} accessibilityRole="scrollbar">
-        {/* Progress Indicator */}
-        <View
-          style={styles.progressContainer}
-          accessible={true}
-          accessibilityRole="progressbar"
-          accessibilityLabel={`Workout progress: ${completedSetCount} of ${totalSets} sets complete`}
-          accessibilityValue={{ min: 0, max: totalSets, now: completedSetCount }}
-        >
-          <Text variant="titleMedium" style={styles.progressText} accessibilityRole="header">
-            Progress: {completedSetCount} / {totalSets} sets complete
-          </Text>
-          <ProgressBar
-            progress={progress}
-            style={styles.progressBar}
-            accessibilityElementsHidden={true}
-            importantForAccessibility="no"
-          />
-        </View>
-
-        {/* Rest Timer */}
-        <RestTimer isActive={isTimerActive} onComplete={handleTimerComplete} />
-
-        {/* Set Logging Card */}
-        <View ref={setLogCardRef}>
-          <SetLogCard
-            exerciseName={currentExercise.exercise_name}
-            setNumber={currentSetNumber}
-            targetReps={currentExercise.reps}
-            targetRir={currentExercise.rir}
-            previousWeight={previousSet?.weight}
-            previousReps={previousSet?.reps}
-            onLogSet={handleLogSet}
-          />
-        </View>
-
-        {/* Complete Workout Button */}
-        {completedSetCount >= totalSets && (
-          <Button
-            mode="contained"
-            onPress={handleCompleteWorkout}
-            style={styles.completeWorkoutButton}
-            accessibilityLabel="Complete workout"
-            accessibilityHint="Finishes and saves the current workout session"
-            accessibilityRole="button"
+          {/* Progress Bar */}
+          <View
+            style={styles.progressContainer}
+            accessible={true}
+            accessibilityRole="progressbar"
+            accessibilityLabel={`Workout progress: ${completedSetCount} of ${totalSets} sets complete`}
+            accessibilityValue={{ min: 0, max: totalSets, now: completedSetCount }}
           >
-            Complete Workout
-          </Button>
-        )}
-      </ScrollView>
+            <View style={styles.progressHeader}>
+              <Text variant="titleSmall" style={styles.progressText}>
+                Set {currentSetNumber} of {currentExercise.sets}
+              </Text>
+              <Text variant="bodySmall" style={styles.progressTotal}>
+                {completedSetCount}/{totalSets} total
+              </Text>
+            </View>
+            <ProgressBar
+              progress={progress}
+              color={colors.primary.main}
+              style={styles.progressBar}
+            />
+          </View>
+        </View>
+
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+          {/* Rest Timer */}
+          <RestTimer isActive={isTimerActive} onComplete={handleTimerComplete} />
+
+          {/* Set Logging Card */}
+          <View ref={setLogCardRef}>
+            <SetLogCard
+              exerciseName={currentExercise.exercise_name}
+              setNumber={currentSetNumber}
+              targetReps={currentExercise.reps}
+              targetRir={currentExercise.rir}
+              previousWeight={previousSet?.weight}
+              previousReps={previousSet?.reps}
+              onLogSet={handleLogSet}
+            />
+          </View>
+
+          {/* Complete Workout Button */}
+          {completedSetCount >= totalSets && (
+            <Button
+              mode="contained"
+              onPress={handleCompleteWorkout}
+              style={styles.completeWorkoutButton}
+              buttonColor={colors.success.main}
+              textColor="#000000"
+              contentStyle={styles.completeButtonContent}
+              labelStyle={styles.completeButtonLabel}
+              icon="check-circle"
+              accessibilityLabel="Complete workout"
+            >
+              Finish Workout
+            </Button>
+          )}
+        </ScrollView>
+      </LinearGradient>
     </View>
   );
 }
@@ -325,35 +355,97 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.background.primary,
   },
-  scrollView: {
+  gradient: {
     flex: 1,
   },
-  content: {
+
+  // Empty State
+  emptyState: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
+    padding: spacing.xl,
+  },
+  emptyTitle: {
+    color: colors.text.primary,
+    marginBottom: spacing.sm,
+  },
+  emptyDescription: {
+    color: colors.text.tertiary,
+    textAlign: 'center',
+  },
+
+  // Header
+  stickyHeader: {
+    backgroundColor: colors.background.primary,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.effects.divider,
+  },
+  header: {
+    backgroundColor: 'transparent',
+    elevation: 0,
   },
   headerContent: {
     flex: 1,
     justifyContent: 'center',
-    paddingLeft: 16,
+    paddingLeft: spacing.md,
+  },
+  headerLabel: {
+    color: colors.text.tertiary,
+    letterSpacing: 1.5,
+    marginBottom: spacing.xs,
   },
   headerTitle: {
-    color: 'white',
+    color: colors.text.primary,
+    fontWeight: '700',
   },
+
+  // Progress
   progressContainer: {
-    padding: 16,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.md,
+  },
+  progressHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
   },
   progressText: {
-    marginBottom: 8,
+    color: colors.text.primary,
+    fontWeight: '600',
+  },
+  progressTotal: {
+    color: colors.text.tertiary,
   },
   progressBar: {
     height: 8,
     borderRadius: 4,
+    backgroundColor: colors.background.tertiary,
   },
+
+  // Content
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: spacing.xl,
+  },
+
+  // Complete Button
   completeWorkoutButton: {
-    margin: 16,
+    marginHorizontal: spacing.lg,
+    marginTop: spacing.lg,
+    borderRadius: borderRadius.md,
+  },
+  completeButtonContent: {
+    height: 56,
+  },
+  completeButtonLabel: {
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
 });

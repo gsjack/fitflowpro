@@ -165,15 +165,21 @@ export async function register(
  * @throws Error if login fails (401 invalid credentials, 400 validation)
  */
 export async function login(username: string, password: string): Promise<LoginResponse> {
+  console.log('[authApi] login called with username:', username);
+  console.log('[authApi] API_BASE_URL:', API_BASE_URL);
+
   const payload: LoginRequest = {
     username,
     password,
   };
 
+  console.log('[authApi] Posting to /api/auth/login...');
   const response = await baseClient.post<LoginResponse>('/api/auth/login', payload);
+  console.log('[authApi] Login response:', response.status, response.data);
 
   // Store token immediately after successful login
   await storeToken(response.data.token);
+  console.log('[authApi] Token stored successfully');
 
   return response.data;
 }

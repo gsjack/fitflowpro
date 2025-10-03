@@ -6,8 +6,11 @@
  */
 
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { Card, TextInput, Button, Text, SegmentedButtons } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colors } from '../../theme/colors';
+import { spacing, borderRadius } from '../../theme/typography';
 
 interface SetLogCardProps {
   exerciseName: string;
@@ -65,162 +68,258 @@ export default function SetLogCard({
     weightKg !== '' && reps !== '' && !isNaN(parseFloat(weightKg)) && !isNaN(parseInt(reps, 10));
 
   return (
-    <Card style={styles.card}>
-      <Card.Content>
-        <Text variant="titleLarge" style={styles.exerciseName} accessibilityRole="header">
-          {exerciseName}
-        </Text>
-        <Text
-          variant="bodyMedium"
-          style={styles.setInfo}
-          accessibilityLabel={`Set ${setNumber}. Target: ${targetReps} repetitions at RIR ${targetRir}`}
-        >
-          Set {setNumber} • Target: {targetReps} reps @ RIR {targetRir}
-        </Text>
+    <Card style={styles.card} elevation={4}>
+      <LinearGradient
+        colors={[colors.background.secondary, colors.background.tertiary]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradient}
+      >
+        <Card.Content style={styles.content}>
+          {/* Set Info Header */}
+          <View style={styles.header}>
+            <Text variant="labelMedium" style={styles.setLabel}>
+              SET {setNumber}
+            </Text>
+            <Text variant="bodySmall" style={styles.targetInfo}>
+              Target: {targetReps} reps @ RIR {targetRir}
+            </Text>
+          </View>
 
-        {/* Weight Input */}
-        <View
-          style={styles.inputRow}
-          accessibilityRole="adjustable"
-          accessibilityLabel={`Weight input. Current value: ${weightKg || '0'} kilograms`}
-        >
-          <Button
-            mode="outlined"
-            onPress={() => adjustWeight(-2.5)}
-            style={styles.adjustButton}
-            accessibilityLabel="Decrease weight by 2.5 kilograms"
-            accessibilityRole="button"
-          >
-            -2.5
-          </Button>
-          <TextInput
-            label="Weight (kg)"
-            value={weightKg}
-            onChangeText={setWeightKg}
-            keyboardType="decimal-pad"
-            style={styles.input}
-            mode="outlined"
-            accessibilityLabel="Weight in kilograms"
-            accessibilityHint="Enter the weight used for this set"
-            autoFocus={true}
-          />
-          <Button
-            mode="outlined"
-            onPress={() => adjustWeight(2.5)}
-            style={styles.adjustButton}
-            accessibilityLabel="Increase weight by 2.5 kilograms"
-            accessibilityRole="button"
-          >
-            +2.5
-          </Button>
-        </View>
+          {/* Large Number Inputs */}
+          <View style={styles.mainInputs}>
+            {/* Weight Input */}
+            <View style={styles.inputGroup}>
+              <Text variant="labelSmall" style={styles.inputLabel}>WEIGHT (KG)</Text>
+              <View style={styles.numberInputRow}>
+                <Button
+                  mode="contained-tonal"
+                  onPress={() => adjustWeight(-2.5)}
+                  style={styles.adjustButtonLarge}
+                  buttonColor={colors.background.tertiary}
+                  textColor={colors.text.primary}
+                  contentStyle={styles.adjustButtonContent}
+                  labelStyle={styles.adjustButtonLabel}
+                  accessibilityLabel="Decrease weight"
+                >
+                  −
+                </Button>
+                <View style={styles.numberDisplay}>
+                  <TextInput
+                    value={weightKg}
+                    onChangeText={setWeightKg}
+                    keyboardType="decimal-pad"
+                    style={styles.numberInput}
+                    mode="flat"
+                    textColor={colors.primary.main}
+                    underlineColor="transparent"
+                    activeUnderlineColor="transparent"
+                    contentStyle={styles.numberInputContent}
+                    autoFocus={true}
+                  />
+                </View>
+                <Button
+                  mode="contained-tonal"
+                  onPress={() => adjustWeight(2.5)}
+                  style={styles.adjustButtonLarge}
+                  buttonColor={colors.background.tertiary}
+                  textColor={colors.text.primary}
+                  contentStyle={styles.adjustButtonContent}
+                  labelStyle={styles.adjustButtonLabel}
+                  accessibilityLabel="Increase weight"
+                >
+                  +
+                </Button>
+              </View>
+            </View>
 
-        {/* Reps Input */}
-        <View
-          style={styles.inputRow}
-          accessibilityRole="adjustable"
-          accessibilityLabel={`Repetitions input. Current value: ${reps || '0'} reps`}
-        >
-          <Button
-            mode="outlined"
-            onPress={() => adjustReps(-1)}
-            style={styles.adjustButton}
-            accessibilityLabel="Decrease reps by 1"
-            accessibilityRole="button"
-          >
-            -1
-          </Button>
-          <TextInput
-            label="Reps"
-            value={reps}
-            onChangeText={setReps}
-            keyboardType="number-pad"
-            style={styles.input}
-            mode="outlined"
-            accessibilityLabel="Number of repetitions"
-            accessibilityHint="Enter the number of reps completed"
-          />
-          <Button
-            mode="outlined"
-            onPress={() => adjustReps(1)}
-            style={styles.adjustButton}
-            accessibilityLabel="Increase reps by 1"
-            accessibilityRole="button"
-          >
-            +1
-          </Button>
-        </View>
+            {/* Reps Input */}
+            <View style={styles.inputGroup}>
+              <Text variant="labelSmall" style={styles.inputLabel}>REPS</Text>
+              <View style={styles.numberInputRow}>
+                <Button
+                  mode="contained-tonal"
+                  onPress={() => adjustReps(-1)}
+                  style={styles.adjustButtonLarge}
+                  buttonColor={colors.background.tertiary}
+                  textColor={colors.text.primary}
+                  contentStyle={styles.adjustButtonContent}
+                  labelStyle={styles.adjustButtonLabel}
+                  accessibilityLabel="Decrease reps"
+                >
+                  −
+                </Button>
+                <View style={styles.numberDisplay}>
+                  <TextInput
+                    value={reps}
+                    onChangeText={setReps}
+                    keyboardType="number-pad"
+                    style={styles.numberInput}
+                    mode="flat"
+                    textColor={colors.success.main}
+                    underlineColor="transparent"
+                    activeUnderlineColor="transparent"
+                    contentStyle={styles.numberInputContent}
+                  />
+                </View>
+                <Button
+                  mode="contained-tonal"
+                  onPress={() => adjustReps(1)}
+                  style={styles.adjustButtonLarge}
+                  buttonColor={colors.background.tertiary}
+                  textColor={colors.text.primary}
+                  contentStyle={styles.adjustButtonContent}
+                  labelStyle={styles.adjustButtonLabel}
+                  accessibilityLabel="Increase reps"
+                >
+                  +
+                </Button>
+              </View>
+            </View>
+          </View>
 
-        {/* RIR Selector */}
-        <View
-          style={styles.rirContainer}
-          accessibilityRole="radiogroup"
-          accessibilityLabel={`Reps in reserve. Current value: ${rir}`}
-        >
-          <Text variant="bodyMedium" style={styles.rirLabel} accessibilityRole="text">
-            RIR (Reps in Reserve)
-          </Text>
-          <SegmentedButtons
-            value={rir}
-            onValueChange={setRir}
-            buttons={[
-              { value: '0', label: '0', accessibilityLabel: 'RIR 0: Complete failure' },
-              { value: '1', label: '1', accessibilityLabel: 'RIR 1: 1 rep left in tank' },
-              { value: '2', label: '2', accessibilityLabel: 'RIR 2: 2 reps left in tank' },
-              { value: '3', label: '3', accessibilityLabel: 'RIR 3: 3 reps left in tank' },
-              { value: '4', label: '4', accessibilityLabel: 'RIR 4: 4 or more reps left' },
-            ]}
-          />
-        </View>
+          {/* RIR Selector */}
+          <View style={styles.rirContainer}>
+            <Text variant="labelSmall" style={styles.rirLabel}>
+              REPS IN RESERVE (RIR)
+            </Text>
+            <SegmentedButtons
+              value={rir}
+              onValueChange={setRir}
+              density="small"
+              buttons={[
+                { value: '0', label: '0' },
+                { value: '1', label: '1' },
+                { value: '2', label: '2' },
+                { value: '3', label: '3' },
+                { value: '4', label: '4+' },
+              ]}
+              theme={{
+                colors: {
+                  secondaryContainer: colors.primary.main,
+                  onSecondaryContainer: colors.text.primary,
+                  surfaceVariant: colors.background.tertiary,
+                  onSurfaceVariant: colors.text.secondary,
+                },
+              }}
+            />
+          </View>
 
-        {/* Complete Set Button */}
-        <Button
-          mode="contained"
-          onPress={handleLogSet}
-          disabled={!isValid}
-          style={styles.completeButton}
-          accessibilityLabel="Complete set"
-          accessibilityHint={`Logs ${weightKg || '0'} kilograms for ${reps || '0'} reps at RIR ${rir} and starts rest timer`}
-          accessibilityRole="button"
-        >
-          Complete Set
-        </Button>
-      </Card.Content>
+          {/* Complete Set Button */}
+          <Button
+            mode="contained"
+            onPress={handleLogSet}
+            disabled={!isValid}
+            style={styles.completeButton}
+            buttonColor={colors.success.main}
+            textColor="#000000"
+            contentStyle={styles.completeButtonContent}
+            labelStyle={styles.completeButtonLabel}
+            icon="check-circle"
+            accessibilityLabel="Complete set"
+          >
+            Complete Set
+          </Button>
+        </Card.Content>
+      </LinearGradient>
     </Card>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    margin: 16,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
   },
-  exerciseName: {
-    marginBottom: 4,
+  gradient: {
+    width: '100%',
   },
-  setInfo: {
-    marginBottom: 16,
-    opacity: 0.7,
+  content: {
+    padding: spacing.lg,
   },
-  inputRow: {
+  header: {
+    marginBottom: spacing.lg,
+  },
+  setLabel: {
+    color: colors.text.secondary,
+    letterSpacing: 1.5,
+    marginBottom: spacing.xs,
+  },
+  targetInfo: {
+    color: colors.text.tertiary,
+  },
+  mainInputs: {
+    gap: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  inputGroup: {
+    gap: spacing.sm,
+  },
+  inputLabel: {
+    color: colors.text.tertiary,
+    letterSpacing: 1.2,
+  },
+  numberInputRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginBottom: 12,
+    gap: spacing.md,
   },
-  input: {
+  adjustButtonLarge: {
+    minWidth: 56,
+    borderRadius: borderRadius.md,
+  },
+  adjustButtonContent: {
+    height: 56,
+  },
+  adjustButtonLabel: {
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  numberDisplay: {
     flex: 1,
+    backgroundColor: colors.background.primary,
+    borderRadius: borderRadius.md,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  adjustButton: {
-    minWidth: 60,
+  numberInput: {
+    backgroundColor: 'transparent',
+    width: '100%',
+  },
+  numberInputContent: {
+    fontSize: 72, // Large for gym visibility (increased from 48pt)
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingHorizontal: 0,
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto',
+      web: 'system-ui',
+    }),
+    fontVariantNumeric: 'tabular-nums', // Monospace numbers for alignment
   },
   rirContainer: {
-    marginTop: 8,
-    marginBottom: 16,
+    marginBottom: spacing.lg,
   },
   rirLabel: {
-    marginBottom: 8,
+    color: colors.text.tertiary,
+    letterSpacing: 1.2,
+    marginBottom: spacing.sm,
   },
   completeButton: {
-    marginTop: 8,
+    minHeight: 56,
+    borderRadius: borderRadius.md,
+  },
+  completeButtonContent: {
+    height: 56,
+  },
+  completeButtonLabel: {
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
 });

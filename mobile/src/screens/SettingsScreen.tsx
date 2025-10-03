@@ -455,17 +455,21 @@ const styles = StyleSheet.create({
   saveButton: {
     marginTop: 8,
     marginBottom: 16,
+    height: 56, // WCAG AAA compliance - optimal touch target
+    minHeight: 56,
   },
   divider: {
     marginVertical: 24,
   },
   logoutButton: {
     marginBottom: 12,
-    minHeight: 44, // WCAG 2.1 AA: Minimum 44pt touch target
+    height: 56, // WCAG AAA compliance - optimal touch target (upgraded from 44pt)
+    minHeight: 56,
   },
   deleteButton: {
     marginBottom: 24,
-    minHeight: 44, // WCAG 2.1 AA: Minimum 44pt touch target
+    height: 56, // WCAG AAA compliance - optimal touch target (upgraded from 44pt)
+    minHeight: 56,
   },
   versionText: {
     textAlign: 'center',

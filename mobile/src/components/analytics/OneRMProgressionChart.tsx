@@ -15,7 +15,9 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Surface, Text, Menu, Button, ActivityIndicator, useTheme } from 'react-native-paper';
 import { Svg, Line, Circle, Text as SvgText, Polyline } from 'react-native-svg';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { use1RMProgression, OneRMDataPoint } from '../../services/api/analyticsApi';
+import { colors } from '../../theme/colors';
 
 const CHART_WIDTH = Dimensions.get('window').width - 64; // Account for padding
 const CHART_HEIGHT = 250;
@@ -107,6 +109,11 @@ export function OneRMProgressionChart({
 
       {!isLoading && !error && data && data.length === 0 && (
         <View style={styles.centerContent}>
+          <MaterialCommunityIcons
+            name="chart-line-variant"
+            size={64}
+            color={colors.text.disabled}
+          />
           <Text variant="bodyMedium" style={styles.emptyText}>
             No progression data available
           </Text>
@@ -285,7 +292,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     borderRadius: 12,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background.secondary, // #1A1F3A - soft dark
     marginBottom: 16,
   },
   header: {
@@ -315,11 +322,13 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   emptyText: {
-    color: '#666',
+    color: colors.text.primary,
+    marginTop: 16,
     marginBottom: 4,
+    textAlign: 'center',
   },
   emptySubtext: {
-    color: '#999',
+    color: colors.text.secondary,
     textAlign: 'center',
     paddingHorizontal: 32,
   },

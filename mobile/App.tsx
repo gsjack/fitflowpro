@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Provider as PaperProvider, MD3LightTheme } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import darkTheme from './src/theme/darkTheme';
+import { colors } from './src/theme/colors';
 
 // Import screens
 import AuthScreen from './src/screens/AuthScreen';
@@ -110,18 +112,8 @@ function PlannerWrapper() {
 }
 
 // Settings wrapper - provides logout handler
-function SettingsWrapper() {
-  const [, setForceUpdate] = useState(0);
-
-  const handleLogout = () => {
-    void (async () => {
-      await clearToken();
-      // Force re-render to trigger auth check
-      setForceUpdate((prev) => prev + 1);
-    })();
-  };
-
-  return <SettingsScreen onLogout={handleLogout} />;
+function SettingsWrapper({ onLogout }: { onLogout: () => void }) {
+  return <SettingsScreen onLogout={onLogout} />;
 }
 
 // Auth wrapper - provides auth success handler
@@ -139,16 +131,32 @@ function AuthWrapper({ onAuthSuccess }: { onAuthSuccess: () => void }) {
  * - Planner: Program customization and mesocycle planning
  * - Settings: Profile and app configuration
  */
-function MainAppTabs() {
+function MainAppTabs({ onLogout }: { onLogout: () => void }) {
   return (
     <Tab.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#6200ee',
+          backgroundColor: colors.background.primary,
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 1,
+          borderBottomColor: colors.effects.divider,
         },
-        headerTintColor: '#fff',
-        tabBarActiveTintColor: '#6200ee',
-        tabBarInactiveTintColor: 'gray',
+        headerTintColor: colors.text.primary,
+        tabBarActiveTintColor: colors.primary.main,
+        tabBarInactiveTintColor: colors.text.tertiary,
+        tabBarStyle: {
+          backgroundColor: colors.background.secondary,
+          borderTopWidth: 1,
+          borderTopColor: colors.effects.divider,
+          paddingBottom: 4,
+          paddingTop: 4,
+          height: 60,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+        },
       }}
     >
       <Tab.Screen
@@ -157,6 +165,9 @@ function MainAppTabs() {
         options={{
           title: 'FitFlow Pro',
           tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+          ),
         }}
       />
       <Tab.Screen
@@ -165,6 +176,9 @@ function MainAppTabs() {
         options={{
           title: 'Active Workout',
           tabBarLabel: 'Workout',
+          tabBarIcon: ({ color, size }) => (
+            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+          ),
         }}
       />
       <Tab.Screen
@@ -173,6 +187,9 @@ function MainAppTabs() {
         options={{
           title: 'Progress Analytics',
           tabBarLabel: 'Analytics',
+          tabBarIcon: ({ color, size }) => (
+            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+          ),
         }}
       />
       <Tab.Screen
@@ -181,16 +198,23 @@ function MainAppTabs() {
         options={{
           title: 'Program Planner',
           tabBarLabel: 'Planner',
+          tabBarIcon: ({ color, size }) => (
+            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+          ),
         }}
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsWrapper}
         options={{
           title: 'Settings',
           tabBarLabel: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+          ),
         }}
-      />
+      >
+        {() => <SettingsWrapper onLogout={onLogout} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
@@ -226,6 +250,16 @@ function AppNavigator() {
     void checkAuth();
   };
 
+  const handleLogout = () => {
+    // Handle logout: clear token and reset authentication state
+    void (async () => {
+      console.log('[AppNavigator] handleLogout called - clearing token');
+      await clearToken();
+      console.log('[AppNavigator] Token cleared, setting isAuthenticated to false');
+      setIsAuthenticated(false);
+    })();
+  };
+
   // Show loading spinner while checking auth
   if (isAuthenticated === null) {
     return (
@@ -235,11 +269,25 @@ function AppNavigator() {
     );
   }
 
+  const navigationTheme = {
+    dark: true,
+    colors: {
+      primary: colors.primary.main,
+      background: colors.background.primary,
+      card: colors.background.secondary,
+      text: colors.text.primary,
+      border: colors.effects.divider,
+      notification: colors.primary.main,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isAuthenticated ? (
-          <Stack.Screen name="MainApp" component={MainAppTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="MainApp" options={{ headerShown: false }}>
+            {() => <MainAppTabs onLogout={handleLogout} />}
+          </Stack.Screen>
         ) : (
           <Stack.Screen
             name="Auth"
@@ -265,9 +313,9 @@ function AppNavigator() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <PaperProvider theme={MD3LightTheme}>
+      <PaperProvider theme={darkTheme}>
         <AppNavigator />
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
       </PaperProvider>
     </QueryClientProvider>
   );

@@ -13,7 +13,7 @@
  */
 
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Pressable } from 'react-native';
 import {
   Text,
   TextInput,
@@ -26,6 +26,7 @@ import {
 import { register, login, getUserId } from '../services/api/authApi';
 import { initializeDatabase } from '../database/db';
 import { seedProgram } from '../database/seedProgram';
+import { colors } from '../theme/colors';
 
 interface AuthScreenProps {
   onAuthSuccess: () => void; // Navigate to DashboardScreen after login/register
@@ -114,17 +115,21 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
    * Handle login submission
    */
   const handleLogin = async () => {
+    console.log('[AuthScreen] handleLogin called with email:', email);
     setError(null);
     setEmailTouched(true);
     setPasswordTouched(true);
 
     if (!isFormValid()) {
+      console.log('[AuthScreen] Form validation failed');
       return;
     }
 
+    console.log('[AuthScreen] Form valid, calling login API...');
     setIsLoading(true);
 
     try {
+      console.log('[AuthScreen] Calling login API with:', { email, password: '***' });
       await login(email, password);
 
       console.log('[AuthScreen] Login successful');
@@ -204,6 +209,7 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
    * Handle form submission (login or register)
    */
   const handleSubmit = async () => {
+    console.log('[AuthScreen] handleSubmit called, mode:', mode);
     if (mode === 'login') {
       await handleLogin();
     } else {
@@ -244,7 +250,13 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
               { value: 'login', label: 'Login' },
               { value: 'register', label: 'Register' },
             ]}
-            style={styles.modeSelector}
+            style={[styles.modeSelector, { backgroundColor: colors.background.secondary }]}
+            theme={{
+              colors: {
+                secondaryContainer: colors.primary.main, // Electric blue when selected
+                onSecondaryContainer: colors.text.primary, // White text
+              },
+            }}
           />
 
           {/* Email Input */}
@@ -368,27 +380,70 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
             </Text>
           )}
 
-          {/* Submit Button */}
-          <Button
-            mode="contained"
-            onPress={() => void handleSubmit()}
-            disabled={isLoading}
-            style={styles.submitButton}
-            accessibilityLabel={mode === 'login' ? 'Login' : 'Create account'}
-            accessibilityHint={
-              mode === 'login' ? 'Sign in to your account' : 'Register a new account'
-            }
-            accessibilityRole="button"
-            accessibilityState={{ disabled: isLoading }}
-          >
-            {isLoading ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : mode === 'login' ? (
-              'Login'
-            ) : (
-              'Create Account'
-            )}
-          </Button>
+          {/* Submit Button - Web-compatible implementation */}
+          {Platform.OS === 'web' ? (
+            // Web: Use native button with onClick for proper event handling
+            <button
+              type="button"
+              onClick={() => {
+                console.log('[AuthScreen] Web button onClick triggered!');
+                void handleSubmit();
+              }}
+              disabled={isLoading}
+              style={{
+                marginTop: 24,
+                minHeight: 56,
+                borderRadius: 12,
+                backgroundColor: theme.colors.primary,
+                color: '#FFFFFF',
+                fontSize: 18,
+                fontWeight: 'bold',
+                border: 'none',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                opacity: isLoading ? 0.6 : 1,
+                width: '100%',
+              }}
+            >
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : mode === 'login' ? (
+                'Login'
+              ) : (
+                'Create Account'
+              )}
+            </button>
+          ) : (
+            // Native: Use Pressable
+            <Pressable
+              onPress={() => {
+                console.log('[AuthScreen] Native Pressable onPress triggered!');
+                void handleSubmit();
+              }}
+              disabled={isLoading}
+              style={({ pressed }) => [
+                styles.submitButton,
+                {
+                  backgroundColor: pressed ? theme.colors.primaryContainer : theme.colors.primary,
+                  opacity: isLoading ? 0.6 : 1,
+                },
+              ]}
+              accessibilityLabel={mode === 'login' ? 'Login' : 'Create account'}
+              accessibilityHint={
+                mode === 'login' ? 'Sign in to your account' : 'Register a new account'
+              }
+              accessibilityRole="button"
+            >
+              <View style={styles.buttonContent}>
+                {isLoading ? (
+                  <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                  <Text style={styles.buttonText}>
+                    {mode === 'login' ? 'Login' : 'Create Account'}
+                  </Text>
+                )}
+              </View>
+            </Pressable>
+          )}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -398,13 +453,16 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#0A0E27', // Dark theme background
   },
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
+    backgroundColor: '#0A0E27', // Dark theme background
   },
   content: {
     padding: 24,
+    backgroundColor: '#0A0E27', // Dark theme background
   },
   title: {
     fontWeight: 'bold',
@@ -436,7 +494,21 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: 24,
-    paddingVertical: 8,
-    minHeight: 44, // WCAG 2.1 AA: Minimum 44pt touch target
+    minHeight: 56, // Large touch target
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContent: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
