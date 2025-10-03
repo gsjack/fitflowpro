@@ -90,13 +90,17 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
 
     const loadExercises = async () => {
       try {
+        console.log('[WorkoutScreen] Loading exercises for workout:', currentWorkout.id, 'exerciseIndex:', exerciseIndex);
+
         // Fetch workout from API - exercises are included in the response
         const workout = await getWorkoutById(currentWorkout.id);
 
         if (workout && workout.exercises && workout.exercises.length > 0) {
+          console.log('[WorkoutScreen] Loaded exercises:', workout.exercises.map(e => e.exercise_name));
           setExercises(workout.exercises);
 
           if (workout.exercises.length > exerciseIndex) {
+            console.log('[WorkoutScreen] Setting currentExercise to index', exerciseIndex, ':', workout.exercises[exerciseIndex].exercise_name);
             setCurrentExercise(workout.exercises[exerciseIndex]);
           }
         } else {

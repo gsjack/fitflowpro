@@ -3,11 +3,13 @@
  *
  * REST endpoints for daily recovery check-in and auto-regulation:
  * - POST /api/recovery-assessments - Submit daily 3-question assessment
+ * - GET /api/recovery-assessments/:userId/today - Get today's assessment
  */
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { createAssessment } from '../services/recoveryService.js';
 import { authenticateJWT } from '../middleware/auth.js';
+import { db } from '../database/db.js';
 
 /**
  * Recovery assessment request body interface
@@ -155,6 +157,64 @@ export default async function recoveryRoutes(fastify: FastifyInstance) {
         fastify.log.error(error);
         return reply.status(500).send({
           error: 'Failed to create recovery assessment',
+        });
+      }
+    }
+  );
+
+  /**
+   * GET /api/recovery-assessments/:userId/today
+   *
+   * Get today's recovery assessment for a user
+   * Returns 404 if no assessment found for today
+   *
+   * Requires JWT authentication
+   */
+  fastify.get<{ Params: { userId: string } }>(
+    '/recovery-assessments/:userId/today',
+    {
+      preHandler: authenticateJWT,
+    },
+    async (
+      request: FastifyRequest<{ Params: { userId: string } }>,
+      reply: FastifyReply
+    ) => {
+      try {
+        const userId = parseInt(request.params.userId);
+
+        // Get authenticated user ID
+        // @ts-expect-error - jwtVerify attaches user to request
+        const authUserId = request.user.userId;
+
+        // Verify user can only access their own data
+        if (userId !== authUserId) {
+          return reply.status(403).send({
+            error: 'Forbidden: Cannot access other users data',
+          });
+        }
+
+        // Get today's date
+        const today = new Date().toISOString().split('T')[0];
+
+        // Query database
+        const assessment = db
+          .prepare(
+            `SELECT * FROM recovery_assessments
+             WHERE user_id = ? AND date = ?`
+          )
+          .get(userId, today);
+
+        if (!assessment) {
+          return reply.status(404).send({
+            error: 'No assessment found for today',
+          });
+        }
+
+        return reply.status(200).send(assessment);
+      } catch (error) {
+        fastify.log.error(error);
+        return reply.status(500).send({
+          error: 'Failed to fetch recovery assessment',
         });
       }
     }

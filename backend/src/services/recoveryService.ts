@@ -7,7 +7,7 @@
  * - Volume adjustment logic per FR-009
  */
 
-import { stmtCreateRecoveryAssessment, calculateVolumeAdjustment } from '../database/db.js';
+import { stmtCreateRecoveryAssessment, calculateVolumeAdjustment, db } from '../database/db.js';
 
 /**
  * Recovery assessment response interface
@@ -67,18 +67,48 @@ export function createAssessment(
   // Determine volume adjustment based on total score (FR-009)
   const volumeAdjustment = calculateVolumeAdjustment(totalScore);
 
-  // Insert recovery assessment into database
+  // Check if assessment already exists for this user and date
+  const existing = db
+    .prepare('SELECT id FROM recovery_assessments WHERE user_id = ? AND date = ?')
+    .get(userId, date) as { id: number } | undefined;
+
   const timestamp = Date.now();
-  stmtCreateRecoveryAssessment.run(
-    userId,
-    date,
-    sleepQuality,
-    muscleSoreness,
-    mentalMotivation,
-    totalScore,
-    volumeAdjustment,
-    timestamp
-  );
+
+  if (existing) {
+    // Update existing assessment
+    db.prepare(`
+      UPDATE recovery_assessments
+      SET sleep_quality = ?,
+          muscle_soreness = ?,
+          mental_motivation = ?,
+          total_score = ?,
+          volume_adjustment = ?,
+          timestamp = ?
+      WHERE id = ?
+    `).run(
+      sleepQuality,
+      muscleSoreness,
+      mentalMotivation,
+      totalScore,
+      volumeAdjustment,
+      timestamp,
+      existing.id
+    );
+    console.log(`Recovery assessment updated: id=${existing.id}, user=${userId}, date=${date}`);
+  } else {
+    // Insert new recovery assessment
+    stmtCreateRecoveryAssessment.run(
+      userId,
+      date,
+      sleepQuality,
+      muscleSoreness,
+      mentalMotivation,
+      totalScore,
+      volumeAdjustment,
+      timestamp
+    );
+    console.log(`Recovery assessment created: user=${userId}, date=${date}`);
+  }
 
   // Log assessment for monitoring
   console.log(

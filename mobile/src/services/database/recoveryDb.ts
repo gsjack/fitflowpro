@@ -97,13 +97,10 @@ export async function createAssessment(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: userId,
         date,
         sleep_quality: sleepQuality,
         muscle_soreness: muscleSoreness,
         mental_motivation: mentalMotivation,
-        total_score: totalScore,
-        volume_adjustment: volumeAdjustment,
       }),
     });
 

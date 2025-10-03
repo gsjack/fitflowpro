@@ -212,7 +212,11 @@ export async function updateWorkoutStatus(
     throw new Error('Not authenticated');
   }
 
-  console.log('[workoutDb] Updating workout status via API:', { workoutId, status });
+  console.log('[workoutDb] Updating workout status via API:', { workoutId, status, totalVolumeKg, averageRir });
+
+  const body: any = { status };
+  if (totalVolumeKg !== undefined) body.total_volume_kg = totalVolumeKg;
+  if (averageRir !== undefined) body.average_rir = averageRir;
 
   const response = await fetch(`${API_BASE_URL}/api/workouts/${workoutId}`, {
     method: 'PATCH',
@@ -220,7 +224,7 @@ export async function updateWorkoutStatus(
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {

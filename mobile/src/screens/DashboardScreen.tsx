@@ -18,6 +18,7 @@ import { spacing, borderRadius } from '../theme/typography';
 import GradientCard from '../components/common/GradientCard';
 import StatCard from '../components/common/StatCard';
 import { getAuthenticatedClient } from '../services/api/authApi';
+import { getQuoteOfTheDay } from '../constants/quotes';
 
 interface DashboardScreenProps {
   userId: number;
@@ -208,6 +209,8 @@ export default function DashboardScreen({
     );
   }
 
+  const quoteOfTheDay = getQuoteOfTheDay();
+
   return (
     <ScrollView style={styles.container} accessibilityRole="scrollbar">
       {/* Hero Section with Date & Recovery */}
@@ -220,40 +223,36 @@ export default function DashboardScreen({
           })}
         </Text>
 
+        {/* Quote of the Day */}
+        <View style={styles.quoteContainer}>
+          <Text variant="bodyMedium" style={styles.quoteText}>
+            "{quoteOfTheDay}"
+          </Text>
+        </View>
+
         {todayAssessment ? (
-          <View style={styles.recoveryHero}>
-            <StatCard
-              label="Recovery Score"
-              value={todayAssessment.total_score}
-              unit="/15"
-              description={getRecoveryMessage(volumeAdjustment)}
-              color={
-                volumeAdjustment === 'none'
-                  ? colors.success.main
-                  : volumeAdjustment === 'rest_day'
-                    ? colors.error.main
-                    : colors.warning.main
-              }
-            />
+          <View style={styles.recoveryPrompt}>
+            <Text variant="bodySmall" style={styles.promptTitle}>
+              Recovery Check ✓
+            </Text>
+            <View style={styles.recoveryLoggedState}>
+              <Text variant="bodyMedium" style={styles.recoveryScoreText}>
+                {todayAssessment.total_score}/15
+              </Text>
+              <Text variant="bodySmall" style={styles.recoveryMessageText}>
+                {getRecoveryMessage(volumeAdjustment)}
+              </Text>
+            </View>
           </View>
         ) : (
-          <GradientCard
-            gradient={gradients.primary as [string, string, ...string[]]}
-            style={styles.recoveryPrompt}
-            accessible={true}
-            accessibilityRole="none"
-            accessibilityLabel="Recovery assessment"
-          >
-            <View style={styles.promptContent}>
-              <Text variant="titleMedium" style={styles.promptTitle}>
-                Recovery Check
-              </Text>
+          <View style={styles.recoveryPrompt}>
+            <Text variant="bodySmall" style={styles.promptTitle}>
+              Sleep • Soreness • Motivation
+            </Text>
 
+            <View style={styles.compactQuestions}>
               {/* Question 1: Sleep */}
-              <View style={styles.questionContainer}>
-                <Text variant="bodyMedium" style={styles.questionLabel}>
-                  Sleep
-                </Text>
+              <View style={styles.compactQuestion}>
                 <SegmentedButtons
                   value={sleepQuality}
                   onValueChange={setSleepQuality}
@@ -264,16 +263,12 @@ export default function DashboardScreen({
                     { value: '4', label: '4' },
                     { value: '5', label: '5' },
                   ]}
-                  style={styles.segmentedButtons}
                   density="small"
                 />
               </View>
 
               {/* Question 2: Soreness */}
-              <View style={styles.questionContainer}>
-                <Text variant="bodyMedium" style={styles.questionLabel}>
-                  Soreness
-                </Text>
+              <View style={styles.compactQuestion}>
                 <SegmentedButtons
                   value={muscleSoreness}
                   onValueChange={setMuscleSoreness}
@@ -284,16 +279,12 @@ export default function DashboardScreen({
                     { value: '4', label: '4' },
                     { value: '5', label: '5' },
                   ]}
-                  style={styles.segmentedButtons}
                   density="small"
                 />
               </View>
 
               {/* Question 3: Motivation */}
-              <View style={styles.questionContainer}>
-                <Text variant="bodyMedium" style={styles.questionLabel}>
-                  Motivation
-                </Text>
+              <View style={styles.compactQuestion}>
                 <SegmentedButtons
                   value={mentalMotivation}
                   onValueChange={setMentalMotivation}
@@ -304,34 +295,24 @@ export default function DashboardScreen({
                     { value: '4', label: '4' },
                     { value: '5', label: '5' },
                   ]}
-                  style={styles.segmentedButtons}
                   density="small"
                 />
               </View>
 
               {/* Submit Button */}
               <Button
-                mode="contained"
+                mode="text"
                 onPress={handleSubmitRecoveryAssessment}
-                style={styles.submitButton}
-                buttonColor={colors.success.main}
-                textColor="#000000"
+                style={styles.submitButtonMinimal}
                 disabled={!allQuestionsAnswered || isSubmitting}
                 loading={isSubmitting}
                 accessibilityLabel="Submit recovery assessment"
                 compact
               >
-                Submit
+                {allQuestionsAnswered ? `Submit (${parseInt(sleepQuality) + parseInt(muscleSoreness) + parseInt(mentalMotivation)}/15)` : 'Submit'}
               </Button>
-
-              {/* Preview of total score */}
-              {allQuestionsAnswered && (
-                <Text variant="bodySmall" style={styles.scorePreviewText}>
-                  Score: {parseInt(sleepQuality) + parseInt(muscleSoreness) + parseInt(mentalMotivation)}/15
-                </Text>
-              )}
             </View>
-          </GradientCard>
+          </View>
         )}
       </View>
 
@@ -629,49 +610,62 @@ const styles = StyleSheet.create({
   },
   dateText: {
     color: colors.text.primary,
-    marginBottom: spacing.lg,
+    marginBottom: spacing.md,
     fontWeight: '600',
   },
-  recoveryHero: {
-    marginTop: spacing.sm,
+  quoteContainer: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    marginBottom: spacing.sm,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primary.main,
+    backgroundColor: colors.background.secondary,
+    borderRadius: borderRadius.sm,
+  },
+  quoteText: {
+    color: colors.text.secondary,
+    fontStyle: 'italic',
+    lineHeight: 20,
   },
   recoveryPrompt: {
     marginTop: spacing.sm,
-  },
-  promptContent: {
-    padding: spacing.sm,
-    paddingHorizontal: spacing.xs,
+    paddingVertical: spacing.sm,
   },
   promptTitle: {
-    color: colors.text.primary,
-    fontWeight: '600',
+    color: colors.text.tertiary,
+    fontSize: 11,
+    textAlign: 'center',
     marginBottom: spacing.sm,
-    fontSize: 14,
+    letterSpacing: 0.5,
   },
 
-  // Recovery Assessment Questions
-  questionContainer: {
+  // Logged Recovery State
+  recoveryLoggedState: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.md,
+    paddingVertical: spacing.xs,
+  },
+  recoveryScoreText: {
+    color: colors.text.primary,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  recoveryMessageText: {
+    color: colors.text.secondary,
+    fontSize: 12,
+  },
+
+  // Compact Recovery Assessment
+  compactQuestions: {
+    gap: spacing.xs,
+  },
+  compactQuestion: {
     marginBottom: spacing.xs,
   },
-  questionLabel: {
-    color: colors.text.primary,
-    fontWeight: '500',
-    marginBottom: 2,
-    fontSize: 11,
-  },
-  segmentedButtons: {
-    marginTop: 2,
-  },
-  submitButton: {
-    minHeight: 38,
+  submitButtonMinimal: {
     marginTop: spacing.xs,
-  },
-  scorePreviewText: {
-    color: colors.text.secondary,
-    fontWeight: '500',
-    fontSize: 11,
-    marginTop: spacing.xs,
-    textAlign: 'center',
   },
 
   // Workout Card
