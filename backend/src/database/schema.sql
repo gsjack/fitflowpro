@@ -131,15 +131,16 @@ CREATE TABLE IF NOT EXISTS recovery_assessments (
 -- ============================================================================
 
 -- VO2max Sessions (Norwegian 4x4 or Zone 2)
+-- Physiological constraints added in Migration 003 (via triggers for existing DBs)
 CREATE TABLE IF NOT EXISTS vo2max_sessions (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   workout_id INTEGER NOT NULL,
   protocol TEXT NOT NULL CHECK(protocol IN ('4x4', 'zone2')),
-  duration_seconds INTEGER NOT NULL,
+  duration_seconds INTEGER NOT NULL CHECK(duration_seconds >= 600 AND duration_seconds <= 7200),  -- 10-120 minutes
   intervals_completed INTEGER,
-  average_hr INTEGER,
-  peak_hr INTEGER,
-  estimated_vo2max REAL,
+  average_hr INTEGER CHECK(average_hr >= 60 AND average_hr <= 220),  -- Physiological HR range
+  peak_hr INTEGER CHECK(peak_hr >= 60 AND peak_hr <= 220),  -- Physiological HR range
+  estimated_vo2max REAL CHECK(estimated_vo2max >= 20.0 AND estimated_vo2max <= 80.0),  -- ml/kg/min
   synced INTEGER NOT NULL DEFAULT 0,
   FOREIGN KEY (workout_id) REFERENCES workouts(id)
 );
@@ -182,10 +183,12 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 -- Sets table (hot path for workout logging)
 CREATE INDEX IF NOT EXISTS idx_sets_workout ON sets(workout_id);
 CREATE INDEX IF NOT EXISTS idx_sets_synced ON sets(synced);
+CREATE INDEX IF NOT EXISTS idx_sets_exercise_id ON sets(exercise_id);  -- Migration 002: Volume analytics
 
 -- Workouts table (frequent queries by user and date)
 CREATE INDEX IF NOT EXISTS idx_workouts_user_date ON workouts(user_id, date);
 CREATE INDEX IF NOT EXISTS idx_workouts_synced ON workouts(synced);
+CREATE INDEX IF NOT EXISTS idx_workouts_date_range ON workouts(user_id, date);  -- Migration 002: Date range queries
 
 -- Recovery assessments (daily lookup)
 CREATE INDEX IF NOT EXISTS idx_recovery_user_date ON recovery_assessments(user_id, date);
@@ -193,3 +196,12 @@ CREATE INDEX IF NOT EXISTS idx_recovery_user_date ON recovery_assessments(user_i
 -- Audit logs (security queries)
 CREATE INDEX IF NOT EXISTS idx_audit_user ON audit_logs(user_id);
 CREATE INDEX IF NOT EXISTS idx_audit_timestamp ON audit_logs(timestamp);
+
+-- Exercise library (filtering and search) - Migration 002
+CREATE INDEX IF NOT EXISTS idx_exercises_muscle_groups ON exercises(muscle_groups);
+CREATE INDEX IF NOT EXISTS idx_exercises_equipment ON exercises(equipment);
+
+-- Program exercises (ordered retrieval) - Migration 002
+CREATE INDEX IF NOT EXISTS idx_program_exercises_program_day_id ON program_exercises(program_day_id);
+CREATE INDEX IF NOT EXISTS idx_program_exercises_exercise_id ON program_exercises(exercise_id);
+CREATE INDEX IF NOT EXISTS idx_program_exercises_order ON program_exercises(program_day_id, order_index);
