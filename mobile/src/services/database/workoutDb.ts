@@ -11,6 +11,20 @@
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/**
+ * Program exercise interface (returned in workout)
+ */
+export interface ProgramExercise {
+  id: number;
+  program_day_id: number;
+  exercise_id: number;
+  exercise_name: string;
+  order_index: number;
+  sets: number;
+  reps: string;
+  rir: number;
+}
+
 // API configuration
 const getDefaultApiUrl = () => {
   if (Platform.OS === 'android') {
@@ -19,7 +33,7 @@ const getDefaultApiUrl = () => {
   return 'http://localhost:3000';
 };
 
-const API_BASE_URL = process.env.FITFLOW_API_URL || getDefaultApiUrl();
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || getDefaultApiUrl();
 const TOKEN_STORAGE_KEY = '@fitflow/auth_token';
 
 /**
@@ -38,7 +52,7 @@ export interface Workout {
   synced: number;
   day_name?: string | null;
   day_type?: 'strength' | 'vo2max' | null;
-  exercises?: any[];
+  exercises?: ProgramExercise[];
 }
 
 /**

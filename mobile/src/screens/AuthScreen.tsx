@@ -6,7 +6,7 @@
  *
  * Features:
  * - Login form: email, password
- * - Register form: email, password, age, weight_kg, experience_level
+ * - Register form: email, password, experience_level
  * - Form validation: email format, password ≥8 chars
  * - Uses authApi from T031 (register, login functions)
  * - Stores token and navigates to DashboardScreen on success
@@ -64,8 +64,6 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
   // Form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [age, setAge] = useState('');
-  const [weightKg, setWeightKg] = useState('');
   const [experienceLevel, setExperienceLevel] = useState<ExperienceLevel>('beginner');
 
   // UI state
@@ -94,18 +92,6 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
     if (password.length < 8) {
       setError('Password must be at least 8 characters');
       return false;
-    }
-
-    if (mode === 'register') {
-      if (age && (parseInt(age) < 13 || parseInt(age) > 100)) {
-        setError('Age must be between 13 and 100');
-        return false;
-      }
-
-      if (weightKg && (parseFloat(weightKg) < 30 || parseFloat(weightKg) > 300)) {
-        setError('Weight must be between 30 and 300 kg');
-        return false;
-      }
     }
 
     return true;
@@ -177,10 +163,7 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
     setIsLoading(true);
 
     try {
-      const ageNumber = age ? parseInt(age) : undefined;
-      const weightNumber = weightKg ? parseFloat(weightKg) : undefined;
-
-      await register(email, password, ageNumber, weightNumber, experienceLevel);
+      await register(email, password, undefined, undefined, experienceLevel);
 
       console.log('[AuthScreen] Registration successful, calling onAuthSuccess callback');
 
@@ -327,30 +310,6 @@ export default function AuthScreen({ onAuthSuccess }: AuthScreenProps) {
           {/* Registration-only fields */}
           {mode === 'register' && (
             <>
-              {/* Age Input */}
-              <TextInput
-                mode="outlined"
-                label="Age (optional)"
-                value={age}
-                onChangeText={setAge}
-                keyboardType="numeric"
-                placeholder="13-100"
-                disabled={isLoading}
-                style={styles.input}
-              />
-
-              {/* Weight Input */}
-              <TextInput
-                mode="outlined"
-                label="Weight (kg, optional)"
-                value={weightKg}
-                onChangeText={setWeightKg}
-                keyboardType="decimal-pad"
-                placeholder="30-300"
-                disabled={isLoading}
-                style={styles.input}
-              />
-
               {/* Experience Level */}
               <Text variant="labelLarge" style={styles.label}>
                 Experience Level

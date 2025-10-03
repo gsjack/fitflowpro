@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
  * Handles user registration, login, and account deletion.
  * Manages JWT token storage and automatic header injection.
  *
- * Base URL is configurable via FITFLOW_API_URL environment variable.
+ * Base URL is configurable via EXPO_PUBLIC_API_URL environment variable.
  * Default: http://localhost:3000 (web/iOS) or http://10.0.2.2:3000 (Android emulator)
  */
 
@@ -24,7 +24,7 @@ const getDefaultApiUrl = () => {
   return 'http://localhost:3000';
 };
 
-const API_BASE_URL = process.env.FITFLOW_API_URL || getDefaultApiUrl();
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || getDefaultApiUrl();
 const TOKEN_STORAGE_KEY = '@fitflow/auth_token';
 
 /**

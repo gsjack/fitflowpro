@@ -5,7 +5,7 @@
  * Uses React Native Paper components for Material Design UI.
  *
  * Features:
- * - User profile editing (age, weight_kg)
+ * - User profile display (username)
  * - CSV export button (calls T054 csvExporter)
  * - Delete Account button (opens T055 DeleteAccountModal)
  * - Logout button (clear AsyncStorage token)
@@ -22,9 +22,12 @@ import {
   Divider,
   ActivityIndicator,
   useTheme,
+  Portal,
+  Dialog,
+  Paragraph,
 } from 'react-native-paper';
 import * as FileSystem from 'expo-file-system/legacy';
-import { clearToken, getToken } from '../services/api/authApi';
+import { getToken } from '../services/api/authApi';
 import {
   exportAndShareWorkouts,
   exportAndShareRecovery,
@@ -43,8 +46,6 @@ interface SettingsScreenProps {
 async function getUserFromToken(): Promise<{
   userId: number;
   username: string;
-  age?: number;
-  weight_kg?: number;
 } | null> {
   try {
     const token = await getToken();
@@ -63,10 +64,6 @@ async function getUserFromToken(): Promise<{
       userId: payload.userId,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       username: payload.username || '',
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      age: payload.age,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      weight_kg: payload.weight_kg,
     };
   } catch (err) {
     console.error('[SettingsScreen] Failed to decode token:', err);
@@ -87,13 +84,11 @@ export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
   // User state
   const [userId, setUserId] = useState<number | null>(null);
   const [username, setUsername] = useState('');
-  const [age, setAge] = useState('');
-  const [weightKg, setWeightKg] = useState('');
 
   // UI state
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [logoutDialogVisible, setLogoutDialogVisible] = useState(false);
 
   // Load user data on mount
   useEffect(() => {
@@ -112,46 +107,11 @@ export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
       if (user) {
         setUserId(user.userId);
         setUsername(user.username);
-        setAge(user.age?.toString() || '');
-        setWeightKg(user.weight_kg?.toString() || '');
       }
     } catch (err) {
       console.error('[SettingsScreen] Failed to load user data:', err);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  /**
-   * Save user profile changes
-   * Note: This should call backend PATCH /api/users/:id endpoint
-   * For now, we just update local state
-   */
-  const handleSaveProfile = async () => {
-    setIsSaving(true);
-
-    try {
-      // Validate inputs
-      if (age && (parseInt(age) < 13 || parseInt(age) > 100)) {
-        Alert.alert('Invalid Age', 'Age must be between 13 and 100');
-        return;
-      }
-
-      if (weightKg && (parseFloat(weightKg) < 30 || parseFloat(weightKg) > 300)) {
-        Alert.alert('Invalid Weight', 'Weight must be between 30 and 300 kg');
-        return;
-      }
-
-      // TODO: Call backend PATCH /api/users/:id endpoint
-      // For now, just show success message
-      console.log('[SettingsScreen] Profile updated:', { age, weightKg });
-
-      Alert.alert('Success', 'Profile updated successfully', [{ text: 'OK' }]);
-    } catch (err) {
-      console.error('[SettingsScreen] Failed to save profile:', err);
-      Alert.alert('Error', 'Failed to update profile. Please try again.', [{ text: 'OK' }]);
-    } finally {
-      setIsSaving(false);
     }
   };
 
@@ -244,30 +204,22 @@ export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
   };
 
   /**
-   * Handle logout
+   * Handle logout - show confirmation dialog
    */
-  const handleLogout = async () => {
-    Alert.alert('Logout', 'Are you sure you want to logout?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Logout',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            // Clear JWT token
-            await clearToken();
+  const handleLogout = () => {
+    console.log('[SettingsScreen] Logout button pressed, showing dialog');
+    setLogoutDialogVisible(true);
+  };
 
-            console.log('[SettingsScreen] Logged out successfully');
-
-            // Navigate to auth screen
-            onLogout();
-          } catch (err) {
-            console.error('[SettingsScreen] Logout failed:', err);
-            Alert.alert('Error', 'Failed to logout. Please try again.', [{ text: 'OK' }]);
-          }
-        },
-      },
-    ]);
+  /**
+   * Confirm logout - actually perform logout
+   */
+  const confirmLogout = () => {
+    console.log('[SettingsScreen] Logout confirmed by user');
+    setLogoutDialogVisible(false);
+    // onLogout will handle token clearing and navigation
+    console.log('[SettingsScreen] Calling onLogout callback');
+    void onLogout();
   };
 
   /**
@@ -297,48 +249,14 @@ export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
           Profile
         </Text>
 
-        {/* Email (read-only) */}
+        {/* Username (read-only) */}
         <TextInput
           mode="outlined"
-          label="Email"
+          label="Username"
           value={username}
           editable={false}
           style={styles.input}
         />
-
-        {/* Age Input */}
-        <TextInput
-          mode="outlined"
-          label="Age"
-          value={age}
-          onChangeText={setAge}
-          keyboardType="numeric"
-          placeholder="13-100"
-          disabled={isSaving}
-          style={styles.input}
-        />
-
-        {/* Weight Input */}
-        <TextInput
-          mode="outlined"
-          label="Weight (kg)"
-          value={weightKg}
-          onChangeText={setWeightKg}
-          keyboardType="decimal-pad"
-          placeholder="30-300"
-          disabled={isSaving}
-          style={styles.input}
-        />
-
-        {/* Save Profile Button */}
-        <Button
-          mode="contained"
-          onPress={() => void handleSaveProfile()}
-          disabled={isSaving}
-          style={styles.saveButton}
-        >
-          {isSaving ? <ActivityIndicator size="small" color="#fff" /> : 'Save Profile'}
-        </Button>
 
         <Divider style={styles.divider} />
 
@@ -426,6 +344,20 @@ export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
         onDismiss={() => setDeleteModalVisible(false)}
         onSuccess={handleDeleteAccountSuccess}
       />
+
+      {/* Logout Confirmation Dialog */}
+      <Portal>
+        <Dialog visible={logoutDialogVisible} onDismiss={() => setLogoutDialogVisible(false)}>
+          <Dialog.Title>Logout</Dialog.Title>
+          <Dialog.Content>
+            <Paragraph>Are you sure you want to logout?</Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setLogoutDialogVisible(false)}>Cancel</Button>
+            <Button onPress={confirmLogout}>Logout</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </ScrollView>
   );
 }
@@ -451,12 +383,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 12,
-  },
-  saveButton: {
-    marginTop: 8,
-    marginBottom: 16,
-    height: 56, // WCAG AAA compliance - optimal touch target
-    minHeight: 56,
   },
   divider: {
     marginVertical: 24,

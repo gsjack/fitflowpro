@@ -130,6 +130,7 @@ Rest timers (3-5 min for compound lifts) use **silent audio session workaround**
 ```bash
 cd mobile
 npm run dev              # Start Expo dev server
+npx expo start -c        # Start with cache clear (needed after .env changes)
 npm run test:unit        # Run Vitest unit tests
 npm run test:integration # Run integration scenarios
 npm run test:contract    # Validate API contracts
@@ -137,6 +138,12 @@ npm run lint             # ESLint check
 npm run build:ios        # Build iOS app
 npm run build:android    # Build Android app
 ```
+
+**Important for physical device testing:**
+- Set `EXPO_PUBLIC_API_URL=http://<YOUR_IP>:3000` in `.env` file
+- Use your machine's local network IP (e.g., `192.168.178.48:3000`)
+- Restart Expo with cache clear: `npx expo start -c`
+- Verify env var is loaded: Check for `env: export EXPO_PUBLIC_API_URL` in console output
 
 ### Backend
 
@@ -150,6 +157,13 @@ npm run test:performance # Benchmark queries (< 5ms writes)
 npm run build            # Compile TypeScript
 npm run start            # Production server
 ```
+
+**Raspberry Pi ARM64 Note:**
+- If you get esbuild architecture errors on Raspberry Pi, delete `node_modules` and reinstall:
+  ```bash
+  rm -rf node_modules && npm install
+  ```
+- This ensures platform-specific binaries (@esbuild/linux-arm64) are installed correctly
 
 ### Database
 
@@ -299,6 +313,100 @@ console.timeEnd('db_write'); // Should be < 5ms
 - **Overall**: ≥ 80%
 - **Critical paths**: 100% (auth, sync, workout logging)
 
+## Debugging Methodology
+
+When debugging network/API issues between mobile and backend, follow this systematic approach:
+
+### 1. Isolate the Layer
+
+**Question**: Which layer is failing?
+
+```bash
+# Layer 1: Backend running?
+curl http://localhost:3000/health
+# Expected: {"status":"ok"}
+
+# Layer 2: Backend accessible from network?
+curl http://192.168.178.48:3000/health
+# Expected: {"status":"ok"}
+
+# Layer 3: CORS configured?
+curl -X OPTIONS http://192.168.178.48:3000/api/auth/register \
+  -H "Origin: http://192.168.178.100"
+# Expected: 204 with access-control-allow-origin header
+
+# Layer 4: Endpoint working?
+curl -X POST http://192.168.178.48:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"test@example.com","password":"Test123!"}'
+# Expected: 201 with user_id and token
+```
+
+### 2. Check Both Sides
+
+**Backend Logs**: Check if requests are arriving
+```bash
+# Look for incoming requests in server logs
+# If mobile app shows "network error" but NO requests in backend logs → client issue
+# If requests arrive but fail → backend issue
+```
+
+**Mobile Logs**: Check what URL is being used
+```typescript
+// Add temporary debug logging
+console.log('[DEBUG] API_BASE_URL:', API_BASE_URL);
+console.log('[DEBUG] EXPO_PUBLIC_API_URL:', process.env.EXPO_PUBLIC_API_URL);
+```
+
+### 3. Triangulate the Problem
+
+| Symptom | Backend Logs | Mobile Connects to Root | Likely Cause |
+|---------|--------------|------------------------|--------------|
+| Network error | No requests | ✅ Yes | Wrong API URL in code |
+| Network error | No requests | ❌ No | Network/firewall issue |
+| Network error | OPTIONS succeeds, POST fails | ✅ Yes | CORS misconfiguration |
+| 400/500 errors | Requests arrive | ✅ Yes | API contract mismatch |
+
+### 4. Verify Assumptions
+
+Common false assumptions that waste debugging time:
+
+- ❌ "`.env` file exists" ≠ "env vars are loaded at runtime"
+- ❌ "Backend running" ≠ "Backend accessible from network"
+- ❌ "CORS configured" ≠ "CORS working for actual requests"
+- ❌ "Code changed" ≠ "Bundle rebuilt with changes"
+- ❌ "Dependencies installed" ≠ "Correct architecture binaries installed"
+
+**Always verify** by:
+- Checking actual console output (e.g., `env: export EXPO_PUBLIC_API_URL`)
+- Reading server logs for incoming connections
+- Testing with curl/Postman from same network as mobile device
+
+### 5. Spawn Subagents for Complex Debugging
+
+When troubleshooting requires multiple file reads, log analysis, and testing:
+
+```bash
+# Use subagents to parallelize investigation
+# Agent 1: Analyze backend routes and logs
+# Agent 2: Test CORS and connectivity
+# Agent 3: Read mobile API configuration
+
+# This saves time and provides comprehensive analysis
+```
+
+### 6. Check for Known Pitfalls
+
+Before deep investigation, check if the issue matches a known pattern:
+
+**Common React Native/Expo Issues:**
+- ❓ Button/dialog doesn't work on iOS → See "Alert.alert Compatibility"
+- ❓ Env vars not loaded → See "Expo Environment Variables"
+- ❓ Async operations don't complete → See "Async Void Anti-Pattern"
+- ❓ Network errors from physical devices → See "Expo Environment Variables"
+
+**Always check "Common Pitfalls" section below before assuming complex root cause.**
+
 ## Common Pitfalls
 
 ### SQLite Write Performance
@@ -329,6 +437,194 @@ if (activeSession.deviceId !== currentDeviceId) {
 
 **Problem**: Timer stops after 30 seconds when backgrounded
 **Solution**: Silent audio session (already implemented in `/mobile/src/services/timer/`)
+
+### Expo Environment Variables (CRITICAL)
+
+**Problem**: Network errors when connecting from physical devices despite backend being reachable
+**Root Cause**: Expo SDK 49+ only loads environment variables with `EXPO_PUBLIC_` prefix at runtime
+
+**Symptoms**:
+- ✅ Backend server running and accessible (curl works)
+- ✅ CORS configured correctly
+- ✅ `.env` file exists with correct IP
+- ❌ Mobile app falls back to `localhost:3000` instead of network IP
+- ❌ `process.env.FITFLOW_API_URL` returns `undefined` at runtime
+
+**Diagnosis Steps**:
+1. Check backend logs - if no POST requests from mobile device, issue is client-side
+2. Check if mobile device can reach backend with curl/browser to root URL
+3. If connectivity works but API calls don't, suspect environment variable not loaded
+4. Add debug logging: `console.log('API_BASE_URL:', API_BASE_URL)` in API client
+
+**Solution**:
+```typescript
+// ❌ Bad: Not available at runtime in Expo
+const API_BASE_URL = process.env.FITFLOW_API_URL || 'http://localhost:3000';
+
+// ✅ Good: Expo-compatible environment variable
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
+```
+
+**Files to update**:
+1. `.env`: `EXPO_PUBLIC_API_URL=http://192.168.178.48:3000`
+2. All API service files: Use `process.env.EXPO_PUBLIC_API_URL`
+3. **Critical**: Restart Expo with cache clear: `npx expo start -c`
+
+**Why cache clear is required**: Expo embeds environment variables during Metro bundling. Changing `.env` without clearing cache will not pick up new values.
+
+**Verification**:
+```bash
+# After starting Expo, verify env var is exported
+# Look for this in Expo output:
+env: export EXPO_PUBLIC_API_URL
+
+# Test from iPhone/Android
+# Backend logs should show requests from device IP (192.168.178.x)
+```
+
+**Key Lesson**: Environment variable presence in `.env` file ≠ availability at runtime. Always verify env vars are actually loaded in the JavaScript bundle, especially in React Native/Expo where bundling strips non-prefixed variables.
+
+### Alert.alert Compatibility (React Native/Expo)
+
+**Problem**: Buttons don't work, confirmation dialogs don't appear, or callbacks don't execute on iOS
+**Root Cause**: `Alert.alert` from `react-native` has known compatibility issues in Expo Go and on physical iOS devices
+
+**Symptoms**:
+- Button press has no visible effect
+- No dialog appears
+- Dialog appears but buttons don't work
+- Callbacks never execute (no console logs)
+- Works on Android but not iOS
+
+**Diagnosis**:
+```typescript
+// Add debug logging before and after Alert.alert
+console.log('[Component] About to show alert');
+Alert.alert('Title', 'Message', [
+  { text: 'Cancel', onPress: () => console.log('[Component] Cancel pressed') },
+  { text: 'OK', onPress: () => console.log('[Component] OK pressed') },
+]);
+console.log('[Component] Alert.alert called');
+
+// If you see "Alert.alert called" but never see "OK pressed", Alert.alert is broken
+```
+
+**Solution**: Use UI library components instead of native `Alert.alert`
+
+**For React Native Paper projects** (recommended):
+```typescript
+// ❌ Bad: Alert.alert (unreliable on iOS)
+import { Alert } from 'react-native';
+
+const handleAction = () => {
+  Alert.alert('Confirm', 'Are you sure?', [
+    { text: 'Cancel', style: 'cancel' },
+    { text: 'OK', onPress: () => performAction() },
+  ]);
+};
+
+// ✅ Good: React Native Paper Dialog (consistent cross-platform)
+import { Portal, Dialog, Paragraph, Button } from 'react-native-paper';
+
+const [dialogVisible, setDialogVisible] = useState(false);
+
+const handleAction = () => {
+  setDialogVisible(true);
+};
+
+const confirmAction = () => {
+  setDialogVisible(false);
+  performAction();
+};
+
+// In JSX:
+<Portal>
+  <Dialog visible={dialogVisible} onDismiss={() => setDialogVisible(false)}>
+    <Dialog.Title>Confirm</Dialog.Title>
+    <Dialog.Content>
+      <Paragraph>Are you sure?</Paragraph>
+    </Dialog.Content>
+    <Dialog.Actions>
+      <Button onPress={() => setDialogVisible(false)}>Cancel</Button>
+      <Button onPress={confirmAction}>OK</Button>
+    </Dialog.Actions>
+  </Dialog>
+</Portal>
+```
+
+**Why this is better**:
+- ✅ Works reliably across iOS, Android, and web
+- ✅ Consistent Material Design UI
+- ✅ Customizable styling
+- ✅ No platform-specific bugs
+- ✅ Better accessibility support
+
+**Key Lesson**: When using a UI component library (React Native Paper, NativeBase, etc.), prefer library components over native React Native components for consistency and reliability.
+
+### Async Void Anti-Pattern
+
+**Problem**: Async operations don't complete, state updates don't trigger, race conditions occur
+**Root Cause**: Using `void (async () => {...})()` pattern to suppress TypeScript errors
+
+**Symptoms**:
+- Function returns immediately but async work doesn't complete
+- State updates (`setState()`) don't trigger re-renders
+- No error handling for async failures
+- Intermittent failures (race conditions)
+
+**Bad Pattern**:
+```typescript
+// ❌ Bad: Void async IIFE (Immediately Invoked Function Expression)
+const handleLogout = () => {
+  void (async () => {
+    await clearToken();
+    setIsAuthenticated(false); // May not execute!
+  })();
+  // Function returns here, before async work completes
+};
+```
+
+**Why this fails**:
+1. `void` operator discards the Promise, so TypeScript stops complaining
+2. Function returns immediately (doesn't wait for async work)
+3. React may re-render before `setIsAuthenticated(false)` executes
+4. No error handling - failures are silently ignored
+
+**Good Pattern**:
+```typescript
+// ✅ Good: Proper async function
+const handleLogout = async () => {
+  try {
+    await clearToken();
+    setIsAuthenticated(false);
+  } catch (error) {
+    console.error('[Component] Logout failed:', error);
+    // Still set to unauthenticated as fallback
+    setIsAuthenticated(false);
+  }
+};
+
+// When calling from event handlers:
+<Button onPress={() => void handleLogout()}>Logout</Button>
+// Or if you need to handle the promise:
+<Button onPress={async () => await handleLogout()}>Logout</Button>
+```
+
+**If caller must be synchronous** (e.g., React Navigation callbacks):
+```typescript
+// ✅ Good: Properly handle promise without blocking
+const handleLogout = () => {
+  // Fire async work but don't use void
+  clearToken()
+    .then(() => setIsAuthenticated(false))
+    .catch((error) => {
+      console.error('[Component] Logout failed:', error);
+      setIsAuthenticated(false);
+    });
+};
+```
+
+**Key Lesson**: Never use `void (async () => {...})()` to silence TypeScript. Either make the function `async` or use proper promise chaining. Void async patterns create race conditions and hide errors.
 
 ## Security
 

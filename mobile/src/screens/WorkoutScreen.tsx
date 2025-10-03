@@ -7,7 +7,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { View, ScrollView, StyleSheet, AccessibilityInfo, findNodeHandle } from 'react-native';
-import { Text, Appbar, Button, ProgressBar, IconButton } from 'react-native-paper';
+import { Text, Button, ProgressBar, IconButton } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { type ProgramExercise } from '../services/database/programDb';
@@ -245,11 +245,6 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
           colors={[colors.background.primary, colors.background.secondary]}
           style={styles.gradient}
         >
-          <Appbar.Header style={styles.header}>
-            <View style={styles.headerContent}>
-              <Text variant="headlineMedium" style={styles.headerTitle}>Workout</Text>
-            </View>
-          </Appbar.Header>
           <View style={styles.emptyState}>
             <Text variant="headlineSmall" style={styles.emptyTitle}>No Active Workout</Text>
             <Text variant="bodyMedium" style={styles.emptyDescription}>
@@ -271,9 +266,9 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
         colors={[colors.background.primary, colors.background.secondary]}
         style={styles.gradient}
       >
-        {/* Sticky Header with Progress */}
+        {/* Workout Info with Progress */}
         <View style={styles.stickyHeader}>
-          <Appbar.Header style={styles.header}>
+          <View style={styles.workoutInfo}>
             <View style={styles.headerContent} accessible={true} accessibilityRole="header">
               <Text variant="labelMedium" style={styles.headerLabel}>ACTIVE WORKOUT</Text>
               <Text variant="headlineSmall" style={styles.headerTitle}>
@@ -287,7 +282,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
               onPress={handleCancelWorkout}
               accessibilityLabel="Cancel workout"
             />
-          </Appbar.Header>
+          </View>
 
           {/* Progress Bar */}
           <View
@@ -383,9 +378,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.effects.divider,
   },
-  header: {
-    backgroundColor: 'transparent',
-    elevation: 0,
+  workoutInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: spacing.md,
+    paddingRight: spacing.xs,
   },
   headerContent: {
     flex: 1,

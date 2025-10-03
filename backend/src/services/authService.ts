@@ -10,6 +10,7 @@ import {
   stmtGetUserByUsername,
   stmtCreateUser,
 } from '../database/db.js';
+import { createDefaultProgram } from './programService.js';
 
 // Bcrypt cost factor (constitutional requirement)
 const BCRYPT_COST = 12;
@@ -88,6 +89,14 @@ export async function registerUser(
   );
 
   const user_id = result.lastInsertRowid as number;
+
+  // Create default 6-day Renaissance Periodization program for new user
+  try {
+    createDefaultProgram(user_id);
+  } catch (error) {
+    // Log error but don't fail registration - user can still use the app
+    console.error(`Failed to create default program for user ${user_id}:`, error);
+  }
 
   // Generate JWT token with 30-day expiration
   const token = jwtSign({

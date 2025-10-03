@@ -6,13 +6,13 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import darkTheme from './src/theme/darkTheme';
 import { colors } from './src/theme/colors';
 
 // Import screens
 import AuthScreen from './src/screens/AuthScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
-import WorkoutScreen from './src/screens/WorkoutScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import PlannerScreen from './src/screens/PlannerScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -31,7 +31,6 @@ export type RootStackParamList = {
 
 export type MainTabParamList = {
   Dashboard: undefined;
-  Workout: undefined;
   Analytics: undefined;
   Planner: undefined;
   Settings: undefined;
@@ -72,12 +71,11 @@ function DashboardWrapper() {
     <DashboardScreen
       userId={userId}
       onStartWorkout={async (programDayId: number, date: string) => {
-        // Start workout via store and navigate to Workout tab
+        // Start workout via store (stay on Dashboard)
         try {
           console.log('[Dashboard] Starting workout...');
           await useWorkoutStore.getState().startWorkout(userId, programDayId, date);
-          console.log('[Dashboard] Workout started, navigating to workout tab');
-          navigation.navigate('Workout'); // Auto-navigate to Workout tab
+          console.log('[Dashboard] Workout started');
         } catch (error) {
           console.error('[DashboardWrapper] Failed to start workout:', error);
         }
@@ -125,8 +123,7 @@ function AuthWrapper({ onAuthSuccess }: { onAuthSuccess: () => void }) {
  * Main app bottom tab navigator
  *
  * Provides navigation between core app screens:
- * - Dashboard: Workout overview and quick actions
- * - Workout: Active workout tracking with set logging
+ * - Dashboard: Workout overview, quick actions, and active workout tracking
  * - Analytics: Progress charts and 1RM trends
  * - Planner: Program customization and mesocycle planning
  * - Settings: Profile and app configuration
@@ -135,16 +132,10 @@ function MainAppTabs({ onLogout }: { onLogout: () => void }) {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.background.primary,
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 1,
-          borderBottomColor: colors.effects.divider,
-        },
-        headerTintColor: colors.text.primary,
+        headerShown: false,
         tabBarActiveTintColor: colors.primary.main,
         tabBarInactiveTintColor: colors.text.tertiary,
+        tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: colors.background.secondary,
           borderTopWidth: 1,
@@ -153,31 +144,15 @@ function MainAppTabs({ onLogout }: { onLogout: () => void }) {
           paddingTop: 4,
           height: 60,
         },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
-        },
       }}
     >
       <Tab.Screen
         name="Dashboard"
         component={DashboardWrapper}
         options={{
-          title: 'FitFlow Pro',
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Workout"
-        component={WorkoutScreen}
-        options={{
-          title: 'Active Workout',
-          tabBarLabel: 'Workout',
-          tabBarIcon: ({ color, size }) => (
-            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+            <MaterialCommunityIcons name="view-dashboard" size={size} color={color} />
           ),
         }}
       />
@@ -185,10 +160,9 @@ function MainAppTabs({ onLogout }: { onLogout: () => void }) {
         name="Analytics"
         component={AnalyticsScreen}
         options={{
-          title: 'Progress Analytics',
           tabBarLabel: 'Analytics',
           tabBarIcon: ({ color, size }) => (
-            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+            <MaterialCommunityIcons name="chart-line" size={size} color={color} />
           ),
         }}
       />
@@ -196,20 +170,18 @@ function MainAppTabs({ onLogout }: { onLogout: () => void }) {
         name="Planner"
         component={PlannerWrapper}
         options={{
-          title: 'Program Planner',
           tabBarLabel: 'Planner',
           tabBarIcon: ({ color, size }) => (
-            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+            <MaterialCommunityIcons name="calendar-month" size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen
         name="Settings"
         options={{
-          title: 'Settings',
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <View style={{ width: size, height: size, backgroundColor: color, borderRadius: size / 2 }} />
+            <MaterialCommunityIcons name="cog" size={size} color={color} />
           ),
         }}
       >
@@ -250,14 +222,18 @@ function AppNavigator() {
     void checkAuth();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // Handle logout: clear token and reset authentication state
-    void (async () => {
+    try {
       console.log('[AppNavigator] handleLogout called - clearing token');
       await clearToken();
       console.log('[AppNavigator] Token cleared, setting isAuthenticated to false');
       setIsAuthenticated(false);
-    })();
+    } catch (error) {
+      console.error('[AppNavigator] Logout failed:', error);
+      // Still set to unauthenticated even if token clear fails
+      setIsAuthenticated(false);
+    }
   };
 
   // Show loading spinner while checking auth

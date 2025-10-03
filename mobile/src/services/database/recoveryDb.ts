@@ -23,7 +23,7 @@ const getDefaultApiUrl = () => {
   return 'http://localhost:3000';
 };
 
-const API_BASE_URL = process.env.FITFLOW_API_URL || getDefaultApiUrl();
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || getDefaultApiUrl();
 const TOKEN_STORAGE_KEY = '@fitflow/auth_token';
 
 /**

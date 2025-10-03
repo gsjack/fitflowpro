@@ -3,17 +3,16 @@
  *
  * Main dashboard showing:
  * - Today's workout card with "Start Workout" button
- * - Recent workout history (last 7 days)
- * - Recovery assessment prompt (if not submitted today)
+ * - Inline recovery assessment (if not submitted today)
  */
 
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Card, Button, Text, Divider, Chip, ActivityIndicator } from 'react-native-paper';
+import { Card, Button, Text, Chip, ActivityIndicator, SegmentedButtons } from 'react-native-paper';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { useRecoveryStore, getRecoveryMessage } from '../stores/recoveryStore';
 import * as workoutDb from '../services/database/workoutDb';
-import type { Workout } from '../database/db';
+import type { Workout } from '../services/database/workoutDb';
 import { colors, gradients } from '../theme/colors';
 import { spacing, borderRadius } from '../theme/typography';
 import GradientCard from '../components/common/GradientCard';
@@ -32,10 +31,15 @@ export default function DashboardScreen({
 }: DashboardScreenProps) {
   const [loading, setLoading] = useState(true);
   const [todayWorkout, setTodayWorkout] = useState<Workout | null>(null);
-  const [recentWorkouts, setRecentWorkouts] = useState<Workout[]>([]);
+
+  // Recovery assessment state
+  const [sleepQuality, setSleepQuality] = useState<string>('');
+  const [muscleSoreness, setMuscleSoreness] = useState<string>('');
+  const [mentalMotivation, setMentalMotivation] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useWorkoutStore();
-  const { todayAssessment, volumeAdjustment, getTodayAssessment } = useRecoveryStore();
+  const { todayAssessment, volumeAdjustment, getTodayAssessment, submitAssessment } = useRecoveryStore();
 
   useEffect(() => {
     loadDashboardData();
@@ -49,16 +53,8 @@ export default function DashboardScreen({
       await getTodayAssessment(userId);
 
       // Load today's workout (includes day_name and day_type from API)
-      const today = new Date().toISOString().split('T')[0];
       const todayWkt = await workoutDb.getTodayWorkout(userId);
       setTodayWorkout(todayWkt);
-
-      // Load recent workout history (last 7 days)
-      const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      const startDate = sevenDaysAgo.toISOString().split('T')[0];
-      const recent = await workoutDb.getWorkouts(userId, startDate, today);
-      setRecentWorkouts(recent.slice(0, 7));
     } catch (error) {
       console.error('[DashboardScreen] Error loading data:', error);
     } finally {
@@ -72,24 +68,28 @@ export default function DashboardScreen({
     }
   };
 
-  const handleSubmitRecovery = () => {
-    if (onSubmitRecovery) {
-      onSubmitRecovery();
+  const handleSubmitRecoveryAssessment = async () => {
+    if (!sleepQuality || !muscleSoreness || !mentalMotivation) {
+      return;
     }
-  };
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
+    try {
+      setIsSubmitting(true);
+      await submitAssessment(
+        userId,
+        parseInt(sleepQuality),
+        parseInt(muscleSoreness),
+        parseInt(mentalMotivation)
+      );
 
-    if (dateStr === today.toISOString().split('T')[0]) {
-      return 'Today';
-    } else if (dateStr === yesterday.toISOString().split('T')[0]) {
-      return 'Yesterday';
-    } else {
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      // Reset form
+      setSleepQuality('');
+      setMuscleSoreness('');
+      setMentalMotivation('');
+    } catch (error) {
+      console.error('[DashboardScreen] Error submitting recovery:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -105,6 +105,8 @@ export default function DashboardScreen({
         return '#6b7280'; // Gray
     }
   };
+
+  const allQuestionsAnswered = sleepQuality && muscleSoreness && mentalMotivation;
 
   if (loading) {
     return (
@@ -148,26 +150,94 @@ export default function DashboardScreen({
             style={styles.recoveryPrompt}
             accessible={true}
             accessibilityRole="none"
-            accessibilityLabel="Recovery assessment needed"
+            accessibilityLabel="Recovery assessment"
           >
             <View style={styles.promptContent}>
-              <Text variant="titleLarge" style={styles.promptTitle}>
-                Start Your Day Right
+              <Text variant="titleMedium" style={styles.promptTitle}>
+                Recovery Check
               </Text>
-              <Text variant="bodyMedium" style={styles.promptDescription}>
-                Quick 30-second recovery check to optimize today's training
-              </Text>
+
+              {/* Question 1: Sleep */}
+              <View style={styles.questionContainer}>
+                <Text variant="bodyMedium" style={styles.questionLabel}>
+                  Sleep
+                </Text>
+                <SegmentedButtons
+                  value={sleepQuality}
+                  onValueChange={setSleepQuality}
+                  buttons={[
+                    { value: '1', label: '1' },
+                    { value: '2', label: '2' },
+                    { value: '3', label: '3' },
+                    { value: '4', label: '4' },
+                    { value: '5', label: '5' },
+                  ]}
+                  style={styles.segmentedButtons}
+                  density="small"
+                />
+              </View>
+
+              {/* Question 2: Soreness */}
+              <View style={styles.questionContainer}>
+                <Text variant="bodyMedium" style={styles.questionLabel}>
+                  Soreness
+                </Text>
+                <SegmentedButtons
+                  value={muscleSoreness}
+                  onValueChange={setMuscleSoreness}
+                  buttons={[
+                    { value: '1', label: '1' },
+                    { value: '2', label: '2' },
+                    { value: '3', label: '3' },
+                    { value: '4', label: '4' },
+                    { value: '5', label: '5' },
+                  ]}
+                  style={styles.segmentedButtons}
+                  density="small"
+                />
+              </View>
+
+              {/* Question 3: Motivation */}
+              <View style={styles.questionContainer}>
+                <Text variant="bodyMedium" style={styles.questionLabel}>
+                  Motivation
+                </Text>
+                <SegmentedButtons
+                  value={mentalMotivation}
+                  onValueChange={setMentalMotivation}
+                  buttons={[
+                    { value: '1', label: '1' },
+                    { value: '2', label: '2' },
+                    { value: '3', label: '3' },
+                    { value: '4', label: '4' },
+                    { value: '5', label: '5' },
+                  ]}
+                  style={styles.segmentedButtons}
+                  density="small"
+                />
+              </View>
+
+              {/* Submit Button */}
               <Button
                 mode="contained"
-                onPress={handleSubmitRecovery}
-                style={styles.promptButton}
+                onPress={handleSubmitRecoveryAssessment}
+                style={styles.submitButton}
                 buttonColor={colors.success.main}
                 textColor="#000000"
-                accessibilityLabel="Submit recovery check"
-                accessibilityHint="Opens form to assess sleep, soreness, and motivation"
+                disabled={!allQuestionsAnswered || isSubmitting}
+                loading={isSubmitting}
+                accessibilityLabel="Submit recovery assessment"
+                compact
               >
-                Submit Recovery Check
+                Submit
               </Button>
+
+              {/* Preview of total score */}
+              {allQuestionsAnswered && (
+                <Text variant="bodySmall" style={styles.scorePreviewText}>
+                  Score: {parseInt(sleepQuality) + parseInt(muscleSoreness) + parseInt(mentalMotivation)}/15
+                </Text>
+              )}
             </View>
           </GradientCard>
         )}
@@ -221,15 +291,29 @@ export default function DashboardScreen({
 
             {/* Workout Type */}
             <Text variant="bodyMedium" style={styles.workoutTypeNew}>
-              {todayWorkout.day_type === 'vo2max' ? '🏃 VO2max Cardio' : '💪 Strength Training'}
+              {todayWorkout.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}
             </Text>
 
-            {/* Exercise Preview */}
+            {/* Exercise Details */}
             {todayWorkout.exercises && todayWorkout.exercises.length > 0 && (
-              <View style={styles.exercisePreview}>
-                <Text variant="bodySmall" style={styles.exerciseCount}>
-                  {todayWorkout.exercises.length} exercises •{' '}
-                  {todayWorkout.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
+              <View style={styles.exerciseDetails}>
+                <Text variant="labelMedium" style={styles.exerciseHeader}>
+                  WORKOUT EXERCISES
+                </Text>
+                {todayWorkout.exercises.map((exercise, index) => (
+                  <View key={exercise.id} style={styles.exerciseItem}>
+                    <View style={styles.exerciseInfo}>
+                      <Text variant="bodyMedium" style={styles.exerciseName}>
+                        {index + 1}. {exercise.exercise_name}
+                      </Text>
+                      <Text variant="bodySmall" style={styles.exerciseSpecs}>
+                        {exercise.sets} sets × {exercise.reps} reps @ {exercise.rir} RIR
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+                <Text variant="bodySmall" style={styles.exerciseSummary}>
+                  {todayWorkout.exercises.length} exercises • {todayWorkout.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
                 </Text>
               </View>
             )}
@@ -302,58 +386,6 @@ export default function DashboardScreen({
           </Card.Content>
         </Card>
       )}
-
-      {/* Recent Workout History */}
-      <Card style={styles.card}>
-        <Card.Content>
-          <Text variant="titleMedium" style={styles.cardTitle} accessibilityRole="header">
-            Recent History
-          </Text>
-          <Text
-            variant="bodySmall"
-            style={styles.cardSubtitle}
-            accessibilityLabel="Showing workouts from the last 7 days"
-          >
-            Last 7 days
-          </Text>
-          <Divider style={styles.divider} />
-          {recentWorkouts.length > 0 ? (
-            recentWorkouts.map((workout, index) => (
-              <View key={workout.id}>
-                <View style={styles.historyItem}>
-                  <View style={styles.historyDate}>
-                    <Text variant="bodyMedium" style={styles.historyDateText}>
-                      {formatDate(workout.date)}
-                    </Text>
-                  </View>
-                  <View style={styles.historyDetails}>
-                    <Chip
-                      mode="flat"
-                      style={[
-                        styles.historyChip,
-                        { backgroundColor: getStatusColor(workout.status) + '20' },
-                      ]}
-                      textStyle={{ color: getStatusColor(workout.status), fontSize: 12 }}
-                    >
-                      {workout.status.replace('_', ' ')}
-                    </Chip>
-                    {workout.total_volume_kg && (
-                      <Text variant="bodySmall" style={styles.historyVolume}>
-                        {workout.total_volume_kg.toFixed(0)} kg
-                      </Text>
-                    )}
-                  </View>
-                </View>
-                {index < recentWorkouts.length - 1 && <Divider style={styles.divider} />}
-              </View>
-            ))
-          ) : (
-            <Text variant="bodyMedium" style={styles.noHistory}>
-              No recent workouts
-            </Text>
-          )}
-        </Card.Content>
-      </Card>
     </ScrollView>
   );
 }
@@ -387,19 +419,38 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   promptContent: {
-    padding: spacing.lg,
+    padding: spacing.md,
   },
   promptTitle: {
     color: colors.text.primary,
-    fontWeight: '700',
-    marginBottom: spacing.sm,
+    fontWeight: '600',
+    marginBottom: spacing.md,
+    fontSize: 16,
   },
-  promptDescription: {
+
+  // Recovery Assessment Questions
+  questionContainer: {
+    marginBottom: spacing.md,
+  },
+  questionLabel: {
+    color: colors.text.primary,
+    fontWeight: '500',
+    marginBottom: spacing.xs,
+    fontSize: 13,
+  },
+  segmentedButtons: {
+    marginTop: 4,
+  },
+  submitButton: {
+    minHeight: 42,
+    marginTop: spacing.sm,
+  },
+  scorePreviewText: {
     color: colors.text.secondary,
-    marginBottom: spacing.lg,
-  },
-  promptButton: {
-    minHeight: 48,
+    fontWeight: '500',
+    fontSize: 12,
+    marginTop: spacing.sm,
+    textAlign: 'center',
   },
 
   // Workout Card
@@ -432,7 +483,7 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     marginBottom: spacing.md,
   },
-  exercisePreview: {
+  exerciseDetails: {
     paddingVertical: spacing.md,
     borderTopWidth: 1,
     borderTopColor: colors.effects.divider,
@@ -440,8 +491,28 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.effects.divider,
     marginBottom: spacing.lg,
   },
-  exerciseCount: {
+  exerciseHeader: {
+    color: colors.text.secondary,
+    letterSpacing: 1.2,
+    marginBottom: spacing.md,
+  },
+  exerciseItem: {
+    marginBottom: spacing.md,
+  },
+  exerciseInfo: {
+    gap: spacing.xs,
+  },
+  exerciseName: {
+    color: colors.text.primary,
+    fontWeight: '600',
+  },
+  exerciseSpecs: {
     color: colors.text.tertiary,
+  },
+  exerciseSummary: {
+    color: colors.text.tertiary,
+    marginTop: spacing.sm,
+    fontStyle: 'italic',
   },
   workoutActionButton: {
     minHeight: 56,
@@ -491,57 +562,5 @@ const styles = StyleSheet.create({
   emptyDescription: {
     color: colors.text.tertiary,
     textAlign: 'center',
-  },
-
-  // Recent History
-  card: {
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.lg,
-    backgroundColor: colors.background.secondary,
-    borderRadius: borderRadius.lg,
-  },
-  cardTitle: {
-    fontWeight: '600',
-    marginBottom: spacing.sm,
-    color: colors.text.primary,
-  },
-  cardSubtitle: {
-    color: colors.text.tertiary,
-    marginBottom: spacing.sm,
-  },
-  divider: {
-    marginVertical: spacing.md,
-    backgroundColor: colors.effects.divider,
-  },
-  historyItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: spacing.sm,
-  },
-  historyDate: {
-    flex: 1,
-  },
-  historyDateText: {
-    fontWeight: '500',
-    color: colors.text.primary,
-  },
-  historyDetails: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-  },
-  historyChip: {
-    height: 28,
-  },
-  historyVolume: {
-    color: colors.text.secondary,
-    minWidth: 60,
-    textAlign: 'right',
-  },
-  noHistory: {
-    color: colors.text.tertiary,
-    textAlign: 'center',
-    marginTop: spacing.sm,
   },
 });
