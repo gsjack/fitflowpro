@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: Exercise Library API
+  version: 1.0.0
+  description: API endpoints for browsing and filtering the exercise library
+
+paths:
+  /api/exercises:
+    get:
+      summary: List all exercises with optional filtering
+      description: Returns list of exercises from the 114 pre-seeded exercise library
+      parameters:
+        - name: muscle_group
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [chest, back, shoulders, quads, hamstrings, glutes, biceps, triceps, calves, abs]
+          description: Filter by primary muscle group
+        - name: equipment
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [barbell, dumbbell, cable, machine, bodyweight]
+          description: Filter by equipment type
+        - name: movement_pattern
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [compound, isolation]
+          description: Filter by movement pattern
+      responses:
+        '200':
+          description: List of exercises
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exercises:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exercise'
+                  count:
+                    type: integer
+                    example: 42
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/exercises/{exerciseId}:
+    get:
+      summary: Get exercise details by ID
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Exercise ID
+      responses:
+        '200':
+          description: Exercise details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '404':
+          description: Exercise not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Exercise:
+      type: object
+      required:
+        - id
+        - name
+        - primary_muscle_group
+        - equipment
+        - movement_pattern
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Barbell Bench Press"
+        primary_muscle_group:
+          type: string
+          example: "chest"
+        secondary_muscle_groups:
+          type: array
+          items:
+            type: string
+          example: ["shoulders", "triceps"]
+        equipment:
+          type: string
+          example: "barbell"
+        movement_pattern:
+          type: string
+          enum: [compound, isolation]
+          example: "compound"
+        description:
+          type: string
+          example: "Lie on flat bench, lower bar to chest, press to full extension"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid muscle_group parameter"
+        statusCode:
+          type: integer
+          example: 400

@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: VO2max Cardio Tracking API
+  version: 1.0.0
+  description: API endpoints for logging and tracking VO2max cardio sessions
+
+paths:
+  /api/vo2max-sessions:
+    post:
+      summary: Log a VO2max cardio session
+      description: Create new VO2max session with Norwegian 4x4 protocol data
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - date
+                - duration_minutes
+                - protocol_type
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-10-03"
+                duration_minutes:
+                  type: integer
+                  minimum: 10
+                  maximum: 120
+                  example: 32
+                protocol_type:
+                  type: string
+                  enum: [norwegian_4x4]
+                  default: norwegian_4x4
+                average_heart_rate:
+                  type: integer
+                  minimum: 60
+                  maximum: 220
+                  example: 165
+                  description: Optional, used for VO2max calculation
+                peak_heart_rate:
+                  type: integer
+                  minimum: 60
+                  maximum: 220
+                  example: 178
+                rpe:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                  example: 8
+                  description: Rate of Perceived Exertion (fallback if no HR data)
+                intervals_completed:
+                  type: integer
+                  minimum: 0
+                  maximum: 4
+                  example: 4
+                notes:
+                  type: string
+                  maxLength: 500
+      responses:
+        '201':
+          description: VO2max session logged successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: integer
+                  estimated_vo2max:
+                    type: number
+                    format: float
+                    example: 52.3
+                    description: ml/kg/min (calculated using Cooper formula if HR provided)
+                  completion_status:
+                    type: string
+                    enum: [completed, incomplete]
+        '400':
+          description: Validation error (invalid HR, duration, etc.)
+        '401':
+          description: Not authenticated
+
+    get:
+      summary: Get VO2max session history
+      description: List all VO2max sessions for authenticated user with pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: start_date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: List of VO2max sessions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VO2maxSession'
+                  count:
+                    type: integer
+                  has_more:
+                    type: boolean
+        '401':
+          description: Not authenticated
+
+  /api/vo2max-sessions/{sessionId}:
+    get:
+      summary: Get VO2max session details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Session details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VO2maxSession'
+        '401':
+          description: Not authenticated
+        '404':
+          description: Session not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    VO2maxSession:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        date:
+          type: string
+          format: date
+        duration_minutes:
+          type: integer
+        protocol_type:
+          type: string
+        average_heart_rate:
+          type: integer
+          nullable: true
+        peak_heart_rate:
+          type: integer
+          nullable: true
+        rpe:
+          type: integer
+          nullable: true
+        intervals_completed:
+          type: integer
+        estimated_vo2max:
+          type: number
+          format: float
+          nullable: true
+        completion_status:
+          type: string
+          enum: [completed, incomplete]
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time

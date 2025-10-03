@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+  title: Volume Tracking Analytics API
+  version: 1.0.0
+  description: API endpoints for muscle volume tracking and MEV/MAV/MRV analysis
+
+paths:
+  /api/analytics/volume-current-week:
+    get:
+      summary: Get current week volume tracking data
+      description: Calculate completed and planned sets per muscle group for current week (Monday-Sunday) with MEV/MAV/MRV markers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current week volume data for all muscle groups
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  week_start:
+                    type: string
+                    format: date
+                    example: "2025-09-29"
+                  week_end:
+                    type: string
+                    format: date
+                    example: "2025-10-05"
+                  muscle_groups:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MuscleGroupVolumeTracking'
+        '401':
+          description: Not authenticated
+
+  /api/analytics/volume-trends:
+    get:
+      summary: Get historical volume trends
+      description: Weekly volume per muscle group over time with MEV/MAV/MRV comparison
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: weeks
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 8
+            maximum: 52
+          description: Number of weeks to include
+        - name: muscle_group
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter by specific muscle group
+      responses:
+        '200':
+          description: Historical volume trends
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  weeks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        week_start:
+                          type: string
+                          format: date
+                        muscle_groups:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              muscle_group:
+                                type: string
+                              completed_sets:
+                                type: integer
+                              mev:
+                                type: integer
+                              mav:
+                                type: integer
+                              mrv:
+                                type: integer
+        '401':
+          description: Not authenticated
+
+  /api/analytics/program-volume-analysis:
+    get:
+      summary: Get planned program volume analysis
+      description: Analyze planned weekly volume in active program vs MEV/MAV/MRV for Planner screen tile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Program volume analysis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  program_id:
+                    type: integer
+                  mesocycle_phase:
+                    type: string
+                  muscle_groups:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        muscle_group:
+                          type: string
+                        planned_weekly_sets:
+                          type: integer
+                        mev:
+                          type: integer
+                        mav:
+                          type: integer
+                        mrv:
+                          type: integer
+                        zone:
+                          type: string
+                          enum: [below_mev, adequate, optimal, above_mrv]
+                        warning:
+                          type: string
+                          nullable: true
+                          example: "Below minimum effective volume - consider adding exercises"
+        '401':
+          description: Not authenticated
+        '404':
+          description: No active program found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    MuscleGroupVolumeTracking:
+      type: object
+      properties:
+        muscle_group:
+          type: string
+          enum: [chest, back, shoulders, quads, hamstrings, glutes, biceps, triceps, calves, abs]
+        completed_sets:
+          type: integer
+          description: Sets completed so far this week
+        planned_sets:
+          type: integer
+          description: Total sets planned for this week
+        remaining_sets:
+          type: integer
+          description: Sets remaining in scheduled workouts
+        mev:
+          type: integer
+          description: Minimum Effective Volume threshold
+        mav:
+          type: integer
+          description: Maximum Adaptive Volume threshold
+        mrv:
+          type: integer
+          description: Maximum Recoverable Volume threshold
+        completion_percentage:
+          type: number
+          format: float
+          example: 66.7
+          description: (completed_sets / planned_sets) * 100
+        zone:
+          type: string
+          enum: [below_mev, adequate, optimal, above_mrv, on_track]
+          description: |
+            - below_mev: completed < MEV (red warning)
+            - adequate: MEV <= completed < MAV (yellow)
+            - optimal: MAV <= completed <= MRV (green)
+            - above_mrv: completed > MRV (red warning)
+            - on_track: mid-week progress tracking
+        warning:
+          type: string
+          nullable: true
+          example: "Volume exceeds MRV - risk of overtraining"

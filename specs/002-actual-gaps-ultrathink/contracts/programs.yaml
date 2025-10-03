@@ -1,0 +1,199 @@
+openapi: 3.0.0
+info:
+  title: Program Management API
+  version: 1.0.0
+  description: API endpoints for viewing and managing training programs
+
+paths:
+  /api/programs:
+    get:
+      summary: Get user's active program
+      description: Returns the currently active training program for authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Active program with all program days and exercises
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgramFull'
+        '401':
+          description: Not authenticated
+        '404':
+          description: No active program found
+
+  /api/programs/{programId}/advance-phase:
+    patch:
+      summary: Advance mesocycle phase
+      description: Advance program to next mesocycle phase (MEV→MAV→MRV→Deload) with automatic volume recalculation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: programId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                manual:
+                  type: boolean
+                  description: If true, manual phase advancement; if false, auto-advancement based on recovery scores
+                  default: false
+                target_phase:
+                  type: string
+                  enum: [mev, mav, mrv, deload]
+                  description: Required if manual=true
+      responses:
+        '200':
+          description: Phase advanced successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  previous_phase:
+                    type: string
+                    example: "mev"
+                  new_phase:
+                    type: string
+                    example: "mav"
+                  volume_multiplier:
+                    type: number
+                    example: 1.2
+                  exercises_updated:
+                    type: integer
+                    example: 42
+        '400':
+          description: Invalid phase transition
+        '401':
+          description: Not authenticated
+
+  /api/programs/{programId}/volume:
+    get:
+      summary: Get program volume analysis
+      description: Calculate planned weekly volume per muscle group vs MEV/MAV/MRV recommendations
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: programId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Volume analysis per muscle group
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  muscle_groups:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MuscleGroupVolume'
+                  warnings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        muscle_group:
+                          type: string
+                        issue:
+                          type: string
+                          enum: [below_mev, above_mrv]
+                        current_volume:
+                          type: integer
+                        threshold:
+                          type: integer
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ProgramFull:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        mesocycle_phase:
+          type: string
+          enum: [mev, mav, mrv, deload]
+        mesocycle_week:
+          type: integer
+          minimum: 1
+          maximum: 8
+        program_days:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProgramDay'
+
+    ProgramDay:
+      type: object
+      properties:
+        id:
+          type: integer
+        day_name:
+          type: string
+          example: "Push A"
+        day_of_week:
+          type: integer
+          minimum: 1
+          maximum: 7
+        exercises:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProgramExercise'
+
+    ProgramExercise:
+      type: object
+      properties:
+        id:
+          type: integer
+        exercise_id:
+          type: integer
+        exercise_name:
+          type: string
+        target_sets:
+          type: integer
+          minimum: 1
+          maximum: 10
+        target_rep_range:
+          type: string
+          example: "6-8"
+        target_rir:
+          type: integer
+          minimum: 0
+          maximum: 4
+        order_index:
+          type: integer
+
+    MuscleGroupVolume:
+      type: object
+      properties:
+        muscle_group:
+          type: string
+        planned_sets:
+          type: integer
+        mev:
+          type: integer
+        mav:
+          type: integer
+        mrv:
+          type: integer
+        zone:
+          type: string
+          enum: [below_mev, adequate, optimal, above_mrv]

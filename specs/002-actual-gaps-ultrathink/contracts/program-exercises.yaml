@@ -1,0 +1,231 @@
+openapi: 3.0.0
+info:
+  title: Program Exercise Editor API
+  version: 1.0.0
+  description: API endpoints for adding, updating, and removing exercises from training programs
+
+paths:
+  /api/program-exercises:
+    post:
+      summary: Add exercise to program day
+      description: Add a new exercise to a program day (duplicates allowed for drop sets)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - program_day_id
+                - exercise_id
+                - target_sets
+                - target_rep_range
+                - target_rir
+              properties:
+                program_day_id:
+                  type: integer
+                exercise_id:
+                  type: integer
+                target_sets:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                target_rep_range:
+                  type: string
+                  pattern: '^\d+-\d+$'
+                  example: "8-12"
+                target_rir:
+                  type: integer
+                  minimum: 0
+                  maximum: 4
+                order_index:
+                  type: integer
+                  description: Optional, defaults to append at end
+      responses:
+        '201':
+          description: Exercise added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  program_exercise_id:
+                    type: integer
+                  volume_warning:
+                    type: string
+                    nullable: true
+                    example: "Chest volume now 24 sets (exceeds MRV 22)"
+        '400':
+          description: Validation error
+        '401':
+          description: Not authenticated
+        '404':
+          description: Program day or exercise not found
+
+  /api/program-exercises/{programExerciseId}:
+    patch:
+      summary: Update program exercise parameters
+      description: Modify sets, reps, or RIR for an existing program exercise
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: programExerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target_sets:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                target_rep_range:
+                  type: string
+                  pattern: '^\d+-\d+$'
+                target_rir:
+                  type: integer
+                  minimum: 0
+                  maximum: 4
+      responses:
+        '200':
+          description: Exercise updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updated:
+                    type: boolean
+                  volume_warning:
+                    type: string
+                    nullable: true
+        '400':
+          description: Validation error
+        '401':
+          description: Not authenticated
+        '404':
+          description: Program exercise not found
+
+    delete:
+      summary: Remove exercise from program
+      description: Delete a program exercise (shows warning if volume drops below MEV)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: programExerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Exercise removed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted:
+                    type: boolean
+                  volume_warning:
+                    type: string
+                    nullable: true
+                    example: "Chest volume now 6 sets (below MEV 8)"
+        '401':
+          description: Not authenticated
+        '404':
+          description: Program exercise not found
+
+  /api/program-exercises/{exerciseId}/swap:
+    put:
+      summary: Swap exercise with another (maintain sets/reps/RIR)
+      description: Replace an exercise with a compatible alternative from the same muscle group
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - new_exercise_id
+              properties:
+                new_exercise_id:
+                  type: integer
+      responses:
+        '200':
+          description: Exercise swapped successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  swapped:
+                    type: boolean
+                  old_exercise_name:
+                    type: string
+                  new_exercise_name:
+                    type: string
+        '400':
+          description: Incompatible muscle groups
+        '401':
+          description: Not authenticated
+        '404':
+          description: Exercise not found
+
+  /api/program-exercises/batch-reorder:
+    patch:
+      summary: Reorder exercises within a program day
+      description: Update order_index for multiple exercises in a single transaction
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - program_day_id
+                - exercise_order
+              properties:
+                program_day_id:
+                  type: integer
+                exercise_order:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      program_exercise_id:
+                        type: integer
+                      new_order_index:
+                        type: integer
+      responses:
+        '200':
+          description: Exercises reordered successfully
+        '400':
+          description: Invalid order data
+        '401':
+          description: Not authenticated
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
