@@ -1,0 +1,317 @@
+TAP version 14
+# Subtest: VO2max Service Unit Tests
+    # Subtest: estimateVO2max()
+        # Subtest: should calculate VO2max using Cooper formula for age 30
+            ok 1 - VO2max ≈ 48.45 (got 48.45)
+            1..1
+        ok 1 - should calculate VO2max using Cooper formula for age 30 # time=6.012ms
+        
+        # Subtest: should calculate VO2max using Cooper formula for age 28
+            ok 1 - VO2max ≈ 48.96 (got 48.96)
+            1..1
+        ok 2 - should calculate VO2max using Cooper formula for age 28 # time=1.449ms
+        
+        # Subtest: should clamp VO2max to minimum 20.0 ml/kg/min
+            ok 1 - VO2max clamped to minimum 20.0
+            ok 2 - VO2max within maximum range
+            1..2
+        ok 3 - should clamp VO2max to minimum 20.0 ml/kg/min # time=1.288ms
+        
+        # Subtest: should clamp VO2max to maximum 80.0 ml/kg/min
+            ok 1 - VO2max within maximum range
+            ok 2 - VO2max within minimum range
+            1..2
+        ok 4 - should clamp VO2max to maximum 80.0 ml/kg/min # time=1.147ms
+        
+        # Subtest: should handle averageHR parameter (even though not used in formula)
+            ok 1 - averageHR does not affect Cooper formula
+            1..1
+        ok 5 - should handle averageHR parameter (even though not used in formula) # time=0.954ms
+        
+        1..5
+    ok 1 - estimateVO2max() # time=20.697ms
+    
+    # Subtest: createVO2maxSession() - validation
+        # Subtest: should reject duration below minimum (10 minutes)
+            ok 1 - Throws error for duration < 10 minutes
+            1..1
+        ok 1 - should reject duration below minimum (10 minutes) # time=3.14ms
+        
+        # Subtest: should reject duration above maximum (120 minutes)
+            ok 1 - Throws error for duration > 120 minutes
+            1..1
+        ok 2 - should reject duration above maximum (120 minutes) # time=0.962ms
+        
+        # Subtest: should reject average_heart_rate below 60 bpm
+            ok 1 - Throws error for HR < 60 bpm
+            1..1
+        ok 3 - should reject average_heart_rate below 60 bpm # time=1.119ms
+        
+        # Subtest: should reject average_heart_rate above 220 bpm
+            ok 1 - Throws error for HR > 220 bpm
+            1..1
+        ok 4 - should reject average_heart_rate above 220 bpm # time=0.933ms
+        
+        # Subtest: should reject peak_heart_rate below 60 bpm
+            ok 1 - Throws error for peak HR < 60 bpm
+            1..1
+        ok 5 - should reject peak_heart_rate below 60 bpm # time=1.262ms
+        
+        # Subtest: should reject peak_heart_rate above 220 bpm
+            ok 1 - Throws error for peak HR > 220 bpm
+            1..1
+        ok 6 - should reject peak_heart_rate above 220 bpm # time=1.272ms
+        
+        # Subtest: should reject estimated_vo2max below 20.0 ml/kg/min
+            ok 1 - Throws error for VO2max < 20.0
+            1..1
+        ok 7 - should reject estimated_vo2max below 20.0 ml/kg/min # time=1.309ms
+        
+        # Subtest: should reject estimated_vo2max above 80.0 ml/kg/min
+            ok 1 - Throws error for VO2max > 80.0
+            1..1
+        ok 8 - should reject estimated_vo2max above 80.0 ml/kg/min # time=1.042ms
+        
+        # Subtest: should reject Norwegian 4x4 with > 4 intervals
+            ok 1 - Throws error for intervals > 4
+            1..1
+        ok 9 - should reject Norwegian 4x4 with > 4 intervals # time=0.89ms
+        
+[VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
+[VO2max] Session created: id=192, workout=154, protocol=4x4, duration=30min, VO2max=48.5
+        # Subtest: should accept valid Norwegian 4x4 session
+            ok 1 - Returns session ID
+            ok 2 - Session ID is positive
+            1..2
+        ok 10 - should accept valid Norwegian 4x4 session # time=4.751ms
+        
+[VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=140)
+[VO2max] Session created: id=193, workout=154, protocol=zone2, duration=60min, VO2max=48.5
+        # Subtest: should accept valid Zone 2 session
+            ok 1 - Returns session ID
+            ok 2 - Session ID is positive
+            1..2
+        ok 11 - should accept valid Zone 2 session # time=2.024ms
+        
+        1..11
+    ok 2 - createVO2maxSession() - validation # time=37.65ms
+    
+[VO2max] Auto-calculated VO2max: 49.0 ml/kg/min (age=28, HR=170)
+[VO2max] Session created: id=194, workout=155, protocol=4x4, duration=30min, VO2max=49.0
+    # Subtest: createVO2maxSession() - auto-calculation
+        # Subtest: should auto-calculate VO2max when HR provided and VO2max not provided
+            ok 1 - VO2max was calculated
+            ok 2 - VO2max is approximately 49
+            1..2
+        ok 1 - should auto-calculate VO2max when HR provided and VO2max not provided # time=1.923ms
+        
+[VO2max] Session created: id=195, workout=155, protocol=4x4, duration=30min, VO2max=55.0
+        # Subtest: should use provided VO2max if both VO2max and HR provided
+            ok 1 - Uses provided VO2max, not calculated
+            1..1
+        ok 2 - should use provided VO2max if both VO2max and HR provided # time=1.329ms
+        
+[VO2max] Session created: id=196, workout=155, protocol=4x4, duration=28min, VO2max=N/A
+        # Subtest: should leave VO2max null if no HR and no VO2max provided
+            ok 1 - VO2max is null when no data available
+            1..1
+        ok 3 - should leave VO2max null if no HR and no VO2max provided # time=1.269ms
+        
+        1..3
+    not ok 3 - createVO2maxSession() - auto-calculation # time=25.15ms
+      ---
+      at:
+        fileName: tests/unit/vo2maxService.test.ts
+        lineNumber: 310
+        columnNumber: 11
+        typeName: Test
+      source: |2
+      
+          // Auto-calculation Tests
+          await t.test('createVO2maxSession() - auto-calculation', async (t) => {
+        ----------^
+            let userId: number;
+            let workoutId: number;
+      ...
+    
+    not ok 4 - no such column: user_id
+      ---
+      stack: |
+        Database.prepare (node_modules/better-sqlite3/lib/methods/wrappers.js:5:21)
+        Test.<anonymous> (tests/unit/vo2maxService.test.ts:409:10)
+      at:
+        fileName: node_modules/better-sqlite3/lib/methods/wrappers.js
+        lineNumber: 5
+        columnNumber: 21
+        typeName: Database
+        methodName: prepare
+        functionName: Database.prepare
+      type: SqliteError
+      code: SQLITE_ERROR
+      test: createVO2maxSession() - auto-calculation
+      source: |
+      
+        exports.prepare = function prepare(sql) {
+        	return this[cppdb].prepare(sql, this, false);
+        --------------------^
+        };
+      ...
+    
+    not ok 5 - createVO2maxSession() - auto-calculation # time=25.15ms
+      ---
+      at:
+        fileName: tests/unit/vo2maxService.test.ts
+        lineNumber: 310
+        columnNumber: 11
+        typeName: Test
+      source: |2
+      
+          // Auto-calculation Tests
+          await t.test('createVO2maxSession() - auto-calculation', async (t) => {
+        ----------^
+            let userId: number;
+            let workoutId: number;
+      ...
+    
+[VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=160)
+[VO2max] Session created: id=197, workout=156, protocol=4x4, duration=30min, VO2max=48.5
+[VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=140)
+[VO2max] Session created: id=198, workout=157, protocol=zone2, duration=60min, VO2max=48.5
+[VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=170)
+[VO2max] Session created: id=199, workout=158, protocol=4x4, duration=30min, VO2max=48.5
+    # Subtest: getVO2maxSessions() - filtering
+        # Subtest: should return all sessions without filters
+            ok 1 - Returns at least 3 sessions
+            1..1
+        ok 1 - should return all sessions without filters # time=1.21ms
+        
+        # Subtest: should filter by start_date
+            ok 1 - Returns at least 2 sessions on or after 2025-10-02
+            ok 2 - All dates are >= start_date
+            1..2
+        ok 2 - should filter by start_date # time=1.245ms
+        
+        # Subtest: should filter by end_date
+            ok 1 - Returns at least 2 sessions on or before 2025-10-02
+            ok 2 - All dates are <= end_date
+            1..2
+        ok 3 - should filter by end_date # time=1.667ms
+        
+        # Subtest: should filter by date range
+            ok 1 - Returns at least 2 sessions within range
+            ok 2 - All dates are within range
+            1..2
+        ok 4 - should filter by date range # time=1.26ms
+        
+        # Subtest: should filter by protocol_type (norwegian_4x4)
+            ok 1 - Returns at least 2 Norwegian 4x4 sessions
+            ok 2 - All sessions are Norwegian 4x4
+            1..2
+        ok 5 - should filter by protocol_type (norwegian_4x4) # time=1.308ms
+        
+        # Subtest: should filter by protocol_type (zone2)
+            ok 1 - Returns at least 1 Zone 2 session
+            ok 2 - All sessions are Zone 2
+            1..2
+        ok 6 - should filter by protocol_type (zone2) # time=1.155ms
+        
+        # Subtest: should respect limit parameter
+            ok 1 - Respects limit of 2
+            1..1
+        ok 7 - should respect limit parameter # time=1.185ms
+        
+        1..7
+    ok 6 - getVO2maxSessions() - filtering # time=21.156ms
+    
+[VO2max] Session created: id=200, workout=159, protocol=4x4, duration=30min, VO2max=45.0
+[VO2max] Session created: id=201, workout=160, protocol=4x4, duration=30min, VO2max=47.0
+[VO2max] Session created: id=202, workout=161, protocol=4x4, duration=30min, VO2max=48.5
+    # Subtest: getVO2maxProgression()
+        # Subtest: should return progression data ordered by date
+            ok 1 - Returns at least 3 progression points
+            ok 2 - Returns our 3 test sessions
+            1..2
+        ok 1 - should return progression data ordered by date # time=1.621ms
+        
+        # Subtest: should filter progression by start_date
+            ok 1 - Returns at least 2 points after start_date
+            1..1
+        ok 2 - should filter progression by start_date # time=1.283ms
+        
+        # Subtest: should filter progression by end_date
+            ok 1 - Returns at least 2 points before end_date
+            1..1
+        ok 3 - should filter progression by end_date # time=1.088ms
+        
+        # Subtest: should filter progression by date range
+            ok 1 - Returns session within range
+            1..1
+        ok 4 - should filter progression by date range # time=0.904ms
+        
+        1..4
+    ok 7 - getVO2maxProgression() # time=14.21ms
+    
+[VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
+[VO2max] Session created: id=203, workout=162, protocol=4x4, duration=30min, VO2max=48.5
+    # Subtest: getVO2maxSessionById()
+        # Subtest: should return session by ID for correct user
+            ok 1 - Returns session
+            ok 2 - Correct session ID
+            ok 3 - Correct user ID
+            1..3
+        ok 1 - should return session by ID for correct user # time=1.352ms
+        
+        # Subtest: should return null for non-existent session
+            ok 1 - Returns null for non-existent session
+            1..1
+        ok 2 - should return null for non-existent session # time=0.956ms
+        
+        # Subtest: should return null for session belonging to different user
+            ok 1 - Returns null for other users session
+            1..1
+        ok 3 - should return null for session belonging to different user # time=0.841ms
+        
+        1..3
+    ok 8 - getVO2maxSessionById() # time=9.515ms
+    
+    1..8
+not ok 1 - VO2max Service Unit Tests # time=170.335ms
+  ---
+  at:
+    fileName: tests/unit/vo2maxService.test.ts
+    lineNumber: 23
+    columnNumber: 5
+    isToplevel: true
+  source: >
+    import type { VO2maxSessionData, VO2maxSessionFilters } from
+    '../../src/services/vo2maxService.js';
+  
+  
+    tap.test('VO2max Service Unit Tests', async (t) => {
+  
+    ----^
+      // Cooper Formula Tests
+      await t.test('estimateVO2max()', async (t) => {
+  ...
+
+not ok 2 - VO2max Service Unit Tests # time=170.335ms
+  ---
+  at:
+    fileName: tests/unit/vo2maxService.test.ts
+    lineNumber: 23
+    columnNumber: 5
+    isToplevel: true
+  source: >
+    import type { VO2maxSessionData, VO2maxSessionFilters } from
+    '../../src/services/vo2maxService.js';
+  
+  
+    tap.test('VO2max Service Unit Tests', async (t) => {
+  
+    ----^
+      // Cooper Formula Tests
+      await t.test('estimateVO2max()', async (t) => {
+  ...
+
+1..2
+Database connection closed

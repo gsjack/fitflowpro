@@ -1,0 +1,176 @@
+TAP version 14
+# Subtest: Program Exercise Service Unit Tests
+    # Subtest: getProgramExercises
+        # Subtest: should return empty array when no exercises exist
+            ok 1 - Returns empty array for new program day
+            1..1
+        ok 1 - should return empty array when no exercises exist # time=5.396ms
+        
+        # Subtest: should return exercises after creation
+            ok 1 - Returns at least 1 exercise
+            ok 2 - Created exercise is in results
+            ok 3 - Sets match
+            1..3
+        ok 2 - should return exercises after creation # time=3.349ms
+        
+        # Subtest: should filter by exercise_id
+            ok 1 - Returns at least 1 exercise
+            ok 2 - All exercises match filter
+            1..2
+        ok 3 - should filter by exercise_id # time=1.345ms
+        
+        1..3
+    ok 1 - getProgramExercises # time=16.72ms
+    
+    # Subtest: createProgramExercise
+        # Subtest: should create program exercise successfully
+            ok 1 - Returns program_exercise_id
+            ok 2 - Returns volume_warning
+            1..2
+        ok 1 - should create program exercise successfully # time=2.432ms
+        
+        # Subtest: should accept custom order_index
+            ok 1 - Order index is 0
+            1..1
+        ok 2 - should accept custom order_index # time=2.009ms
+        
+        # Subtest: should return volume warning when exceeding MRV
+            ok 1 - Returns volume warning
+            ok 2 - Warning mentions MRV or exceeds
+            1..2
+        ok 3 - should return volume warning when exceeding MRV # time=7.701ms
+        
+        # Subtest: should throw error for non-existent program_day_id
+            ok 1 - Throws error for non-existent program_day_id
+            1..1
+        ok 4 - should throw error for non-existent program_day_id # time=1.89ms
+        
+        # Subtest: should throw error for non-existent exercise_id
+            ok 1 - Throws error for non-existent exercise_id
+            1..1
+        ok 5 - should throw error for non-existent exercise_id # time=1.417ms
+        
+        1..5
+    ok 2 - createProgramExercise # time=23.546ms
+    
+    # Subtest: updateProgramExercise
+        # Subtest: should update target_sets
+            ok 1 - Returns updated=true
+            ok 2 - Sets updated to 5
+            1..2
+        ok 1 - should update target_sets # time=2.402ms
+        
+        # Subtest: should update target_rep_range
+            ok 1 - Returns updated=true
+            ok 2 - Reps updated to 6-10
+            1..2
+        ok 2 - should update target_rep_range # time=2.098ms
+        
+        # Subtest: should update target_rir
+            ok 1 - Returns updated=true
+            ok 2 - RIR updated to 1
+            1..2
+        ok 3 - should update target_rir # time=1.424ms
+        
+        # Subtest: should update multiple fields at once
+            ok 1 - Returns updated=true
+            ok 2 - Sets updated
+            ok 3 - Reps updated
+            ok 4 - RIR updated
+            1..4
+        ok 4 - should update multiple fields at once # time=2.541ms
+        
+        # Subtest: should throw error for non-existent program_exercise_id
+            ok 1 - Throws error for non-existent program_exercise_id
+            1..1
+        ok 5 - should throw error for non-existent program_exercise_id # time=0.919ms
+        
+        1..5
+    ok 3 - updateProgramExercise # time=20.24ms
+    
+    # Subtest: deleteProgramExercise
+        # Subtest: should delete program exercise
+            ok 1 - Returns deleted=true
+            ok 2 - Exercise count decreased by 1
+            1..2
+        ok 1 - should delete program exercise # time=2.659ms
+        
+        # Subtest: should return volume warning when dropping below MEV
+            ok 1 - Returns volume warning
+            ok 2 - Warning mentions MEV or below
+            1..2
+        ok 2 - should return volume warning when dropping below MEV # time=3.188ms
+        
+        # Subtest: should throw error for non-existent program_exercise_id
+            ok 1 - Throws error for non-existent program_exercise_id
+            1..1
+        ok 3 - should throw error for non-existent program_exercise_id # time=0.921ms
+        
+        1..3
+    ok 4 - deleteProgramExercise # time=10.542ms
+    
+    # Subtest: swapExercise
+        # Subtest: should swap exercise with compatible alternative
+            ok 1 - Returns swapped=true
+            ok 2 - Old exercise name is string
+            ok 3 - New exercise name is string
+            ok 4 - Exercise names are different
+            ok 5 - Exercise ID updated
+            1..5
+        ok 1 - should swap exercise with compatible alternative # time=2.854ms
+        
+        # Subtest: should preserve order_index after swap
+            ok 1 - Order index preserved
+            1..1
+        ok 2 - should preserve order_index after swap # time=1.348ms
+        
+        # Subtest: should throw error for incompatible muscle groups
+            ok 1 - Throws error for incompatible exercise
+            1..1
+        ok 3 - should throw error for incompatible muscle groups # time=1.048ms
+        
+        # Subtest: should throw error for non-existent program_exercise_id
+            ok 1 - Throws error for non-existent program_exercise_id
+            1..1
+        ok 4 - should throw error for non-existent program_exercise_id # time=0.876ms
+        
+        # Subtest: should throw error for non-existent new_exercise_id
+            ok 1 - Throws error for non-existent new_exercise_id
+            1..1
+        ok 5 - should throw error for non-existent new_exercise_id # time=0.892ms
+        
+        1..5
+    ok 5 - swapExercise # time=13.28ms
+    
+    # Subtest: reorderExercises
+        # Subtest: should reorder exercises
+            ok 1 - Returns reordered=true
+            ok 2 - ex3 moved to index 0
+            ok 3 - ex1 moved to index 1
+            ok 4 - ex2 moved to index 2
+            1..4
+        ok 1 - should reorder exercises # time=2.687ms
+        
+        # Subtest: should handle partial reordering
+            ok 1 - Returns reordered=true
+            ok 2 - Exercise moved to index 10
+            1..2
+        ok 2 - should handle partial reordering # time=1.403ms
+        
+        1..2
+    ok 6 - reorderExercises # time=8.652ms
+    
+    # Subtest: Volume calculation with multi-muscle exercises
+        # Subtest: should count full sets for each targeted muscle group
+            ok 1 - Multi-muscle exercise counting logic executed
+            1..1
+        ok 1 - should count full sets for each targeted muscle group # time=2.09ms
+        
+        1..1
+    ok 7 - Volume calculation with multi-muscle exercises # time=3.653ms
+    
+    1..7
+ok 1 - Program Exercise Service Unit Tests # time=121.996ms
+
+1..1
+Database connection closed

@@ -1,0 +1,179 @@
+TAP version 14
+# Subtest: Program Service - advancePhase()
+    # Subtest: MEV → MAV: Automatic progression with +20% volume
+        ok 1 - Program starts in MEV phase
+        ok 2 - Program has exercises
+        ok 3 - Previous phase was MEV
+        ok 4 - New phase is MAV
+        ok 5 - Volume multiplier is 1.2
+        ok 6 - All exercises updated
+        ok 7 - Program phase updated to MAV
+        ok 8 - Week counter reset to 1
+        ok 9 - Exercise 2361: 3 sets → 4 sets (rounded)
+        ok 10 - Exercise 2362: 4 sets → 5 sets (rounded)
+        ok 11 - Exercise 2363: 3 sets → 4 sets (rounded)
+        ok 12 - Exercise 2364: 3 sets → 4 sets (rounded)
+        ok 13 - Exercise 2365: 4 sets → 5 sets (rounded)
+        ok 14 - Exercise 2366: 3 sets → 4 sets (rounded)
+        ok 15 - Exercise 2367: 3 sets → 4 sets (rounded)
+        ok 16 - Exercise 2368: 4 sets → 5 sets (rounded)
+        ok 17 - Exercise 2369: 4 sets → 5 sets (rounded)
+        ok 18 - Exercise 2370: 3 sets → 4 sets (rounded)
+        ok 19 - Exercise 2371: 3 sets → 4 sets (rounded)
+        ok 20 - Exercise 2372: 3 sets → 4 sets (rounded)
+        ok 21 - Exercise 2373: 3 sets → 4 sets (rounded)
+        ok 22 - Exercise 2374: 4 sets → 5 sets (rounded)
+        ok 23 - Exercise 2375: 3 sets → 4 sets (rounded)
+        ok 24 - Exercise 2376: 4 sets → 5 sets (rounded)
+        ok 25 - Exercise 2377: 3 sets → 4 sets (rounded)
+        ok 26 - Exercise 2378: 3 sets → 4 sets (rounded)
+        ok 27 - Exercise 2379: 3 sets → 4 sets (rounded)
+        ok 28 - Exercise 2380: 4 sets → 5 sets (rounded)
+        ok 29 - Exercise 2381: 3 sets → 4 sets (rounded)
+        ok 30 - Exercise 2382: 4 sets → 5 sets (rounded)
+        ok 31 - Exercise 2383: 3 sets → 4 sets (rounded)
+        ok 32 - Exercise 2384: 3 sets → 4 sets (rounded)
+        1..32
+    ok 1 - MEV → MAV: Automatic progression with +20% volume # time=12.584ms
+    
+    # Subtest: MAV → MRV: Automatic progression with +15% volume
+        ok 1 - Program is in MAV phase
+        ok 2 - Previous phase was MAV
+        ok 3 - New phase is MRV
+        ok 4 - Volume multiplier is 1.15
+        ok 5 - All exercises updated
+        ok 6 - Exercise 2361: 4 sets → 5 sets (rounded)
+        ok 7 - Exercise 2362: 5 sets → 6 sets (rounded)
+        ok 8 - Exercise 2363: 4 sets → 5 sets (rounded)
+        ok 9 - Exercise 2364: 4 sets → 5 sets (rounded)
+        ok 10 - Exercise 2365: 5 sets → 6 sets (rounded)
+        ok 11 - Exercise 2366: 4 sets → 5 sets (rounded)
+        ok 12 - Exercise 2367: 4 sets → 5 sets (rounded)
+        ok 13 - Exercise 2368: 5 sets → 6 sets (rounded)
+        ok 14 - Exercise 2369: 5 sets → 6 sets (rounded)
+        ok 15 - Exercise 2370: 4 sets → 5 sets (rounded)
+        ok 16 - Exercise 2371: 4 sets → 5 sets (rounded)
+        ok 17 - Exercise 2372: 4 sets → 5 sets (rounded)
+        ok 18 - Exercise 2373: 4 sets → 5 sets (rounded)
+        ok 19 - Exercise 2374: 5 sets → 6 sets (rounded)
+        ok 20 - Exercise 2375: 4 sets → 5 sets (rounded)
+        ok 21 - Exercise 2376: 5 sets → 6 sets (rounded)
+        ok 22 - Exercise 2377: 4 sets → 5 sets (rounded)
+        ok 23 - Exercise 2378: 4 sets → 5 sets (rounded)
+        ok 24 - Exercise 2379: 4 sets → 5 sets (rounded)
+        ok 25 - Exercise 2380: 5 sets → 6 sets (rounded)
+        ok 26 - Exercise 2381: 4 sets → 5 sets (rounded)
+        ok 27 - Exercise 2382: 5 sets → 6 sets (rounded)
+        ok 28 - Exercise 2383: 4 sets → 5 sets (rounded)
+        ok 29 - Exercise 2384: 4 sets → 5 sets (rounded)
+        1..29
+    ok 2 - MAV → MRV: Automatic progression with +15% volume # time=9.876ms
+    
+    # Subtest: MRV → Deload: Automatic progression with -50% volume
+        ok 1 - Program is in MRV phase
+        ok 2 - Previous phase was MRV
+        ok 3 - New phase is Deload
+        ok 4 - Volume multiplier is 0.5
+        ok 5 - All exercises updated
+        ok 6 - Exercise 2361: 5 sets → 3 sets (rounded)
+        ok 7 - Exercise 2362: 6 sets → 3 sets (rounded)
+        ok 8 - Exercise 2363: 5 sets → 3 sets (rounded)
+        ok 9 - Exercise 2364: 5 sets → 3 sets (rounded)
+        ok 10 - Exercise 2365: 6 sets → 3 sets (rounded)
+        ok 11 - Exercise 2366: 5 sets → 3 sets (rounded)
+        ok 12 - Exercise 2367: 5 sets → 3 sets (rounded)
+        ok 13 - Exercise 2368: 6 sets → 3 sets (rounded)
+        ok 14 - Exercise 2369: 6 sets → 3 sets (rounded)
+        ok 15 - Exercise 2370: 5 sets → 3 sets (rounded)
+        ok 16 - Exercise 2371: 5 sets → 3 sets (rounded)
+        ok 17 - Exercise 2372: 5 sets → 3 sets (rounded)
+        ok 18 - Exercise 2373: 5 sets → 3 sets (rounded)
+        ok 19 - Exercise 2374: 6 sets → 3 sets (rounded)
+        ok 20 - Exercise 2375: 5 sets → 3 sets (rounded)
+        ok 21 - Exercise 2376: 6 sets → 3 sets (rounded)
+        ok 22 - Exercise 2377: 5 sets → 3 sets (rounded)
+        ok 23 - Exercise 2378: 5 sets → 3 sets (rounded)
+        ok 24 - Exercise 2379: 5 sets → 3 sets (rounded)
+        ok 25 - Exercise 2380: 6 sets → 3 sets (rounded)
+        ok 26 - Exercise 2381: 5 sets → 3 sets (rounded)
+        ok 27 - Exercise 2382: 6 sets → 3 sets (rounded)
+        ok 28 - Exercise 2383: 5 sets → 3 sets (rounded)
+        ok 29 - Exercise 2384: 5 sets → 3 sets (rounded)
+        1..29
+    ok 3 - MRV → Deload: Automatic progression with -50% volume # time=4.429ms
+    
+    # Subtest: Deload → MEV: Automatic progression with 2.0x volume (baseline reset)
+        ok 1 - Program is in Deload phase
+        ok 2 - Previous phase was Deload
+        ok 3 - New phase is MEV (cycle completes)
+        ok 4 - Volume multiplier is 2.0 (baseline reset)
+        ok 5 - All exercises updated
+        ok 6 - Exercise 2361: 3 sets → 6 sets (baseline reset)
+        ok 7 - Exercise 2362: 3 sets → 6 sets (baseline reset)
+        ok 8 - Exercise 2363: 3 sets → 6 sets (baseline reset)
+        ok 9 - Exercise 2364: 3 sets → 6 sets (baseline reset)
+        ok 10 - Exercise 2365: 3 sets → 6 sets (baseline reset)
+        ok 11 - Exercise 2366: 3 sets → 6 sets (baseline reset)
+        ok 12 - Exercise 2367: 3 sets → 6 sets (baseline reset)
+        ok 13 - Exercise 2368: 3 sets → 6 sets (baseline reset)
+        ok 14 - Exercise 2369: 3 sets → 6 sets (baseline reset)
+        ok 15 - Exercise 2370: 3 sets → 6 sets (baseline reset)
+        ok 16 - Exercise 2371: 3 sets → 6 sets (baseline reset)
+        ok 17 - Exercise 2372: 3 sets → 6 sets (baseline reset)
+        ok 18 - Exercise 2373: 3 sets → 6 sets (baseline reset)
+        ok 19 - Exercise 2374: 3 sets → 6 sets (baseline reset)
+        ok 20 - Exercise 2375: 3 sets → 6 sets (baseline reset)
+        ok 21 - Exercise 2376: 3 sets → 6 sets (baseline reset)
+        ok 22 - Exercise 2377: 3 sets → 6 sets (baseline reset)
+        ok 23 - Exercise 2378: 3 sets → 6 sets (baseline reset)
+        ok 24 - Exercise 2379: 3 sets → 6 sets (baseline reset)
+        ok 25 - Exercise 2380: 3 sets → 6 sets (baseline reset)
+        ok 26 - Exercise 2381: 3 sets → 6 sets (baseline reset)
+        ok 27 - Exercise 2382: 3 sets → 6 sets (baseline reset)
+        ok 28 - Exercise 2383: 3 sets → 6 sets (baseline reset)
+        ok 29 - Exercise 2384: 3 sets → 6 sets (baseline reset)
+        1..29
+    ok 4 - Deload → MEV: Automatic progression with 2.0x volume (baseline reset) # time=3.645ms
+    
+    # Subtest: Manual phase transition: MEV → MRV (skip MAV)
+        ok 1 - Previous phase was MEV
+        ok 2 - New phase is MRV (skipped MAV)
+        ok 3 - Volume multiplier is positive
+        ok 4 - All exercises updated
+        ok 5 - Program phase updated to MRV
+        1..5
+    ok 5 - Manual phase transition: MEV → MRV (skip MAV) # time=1.433ms
+    
+    # Subtest: Error: Invalid target_phase
+        ok 1 - Throws error for invalid phase
+        1..1
+    ok 6 - Error: Invalid target_phase # time=1.589ms
+    
+    # Subtest: Error: Manual=true but target_phase missing
+        ok 1 - Throws error when manual=true but target_phase is missing
+        1..1
+    ok 7 - Error: Manual=true but target_phase missing # time=0.409ms
+    
+    # Subtest: Error: Program not found
+        ok 1 - Throws error for non-existent program
+        1..1
+    ok 8 - Error: Program not found # time=0.614ms
+    
+    # Subtest: Transaction atomicity: All exercises updated together
+        ok 1 - All exercises updated in single transaction
+        1..1
+    ok 9 - Transaction atomicity: All exercises updated together # time=1.47ms
+    
+    # Subtest: Volume calculation example: MEV 10 sets → MAV 12 sets
+        ok 1 - Started from MEV
+        ok 2 - Advanced to MAV
+        ok 3 - Multiplier is 1.2
+        ok 4 - MEV 10 sets × 1.2 = MAV 12 sets
+        1..4
+    ok 10 - Volume calculation example: MEV 10 sets → MAV 12 sets # time=1.596ms
+    
+    1..10
+ok 1 - Program Service - advancePhase() # time=57.083ms
+
+1..1
+Database connection closed

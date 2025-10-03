@@ -132,7 +132,7 @@ const equipmentPlan = db.prepare(`EXPLAIN QUERY PLAN SELECT * FROM exercises WHE
 const usesEquipmentIndex = equipmentPlan.some(row =>
   row.detail.includes('idx_exercises_equipment') || row.detail.includes('USING INDEX')
 );
-console.log(`    Query plan: ${equipmentPlan[0].detail}`);
+console.log(`    Query plan: ${equipmentPlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesEquipmentIndex ? '✓' : '✗'}\n`);
 
 // Test 3b: Program exercises ordered retrieval
@@ -143,7 +143,7 @@ const programExercisePlan = db.prepare(
 const usesProgramIndex = programExercisePlan.some(row =>
   row.detail.includes('idx_program_exercises') || row.detail.includes('USING INDEX')
 );
-console.log(`    Query plan: ${programExercisePlan[0].detail}`);
+console.log(`    Query plan: ${programExercisePlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesProgramIndex ? '✓' : '✗'}\n`);
 
 // Test 3c: Volume analytics by exercise
@@ -154,7 +154,7 @@ const volumePlan = db.prepare(
 const usesSetsIndex = volumePlan.some(row =>
   row.detail.includes('idx_sets_exercise') || row.detail.includes('USING INDEX')
 );
-console.log(`    Query plan: ${volumePlan[0].detail}`);
+console.log(`    Query plan: ${volumePlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesSetsIndex ? '✓' : '✗'}\n`);
 
 // ============================================================================

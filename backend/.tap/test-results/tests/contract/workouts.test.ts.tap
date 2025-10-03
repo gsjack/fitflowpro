@@ -24,7 +24,7 @@ TAP version 14
           ...
         
         1..1
-    not ok 1 - should return 401 unauthorized without JWT token # time=169.596ms
+    not ok 1 - should return 401 unauthorized without JWT token # time=60.639ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -64,7 +64,7 @@ TAP version 14
           ...
         
         1..1
-    not ok 2 - should validate request schema - missing required fields # time=15.327ms
+    not ok 2 - should validate request schema - missing required fields # time=6.536ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -104,7 +104,7 @@ TAP version 14
           ...
         
         1..1
-    not ok 3 - should validate request schema - invalid date format # time=12.615ms
+    not ok 3 - should validate request schema - invalid date format # time=5.229ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -144,7 +144,7 @@ TAP version 14
           ...
         
         1..1
-    not ok 4 - should create workout and return 201 with correct schema # time=10.161ms
+    not ok 4 - should create workout and return 201 with correct schema # time=4.854ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -161,7 +161,7 @@ TAP version 14
       ...
     
     1..4
-not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
+not ok 1 - POST /api/workouts - Create workout session # time=87.491ms
   ---
   at:
     fileName: tests/contract/workouts.test.ts
@@ -202,7 +202,7 @@ not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
           ...
         
         1..1
-    not ok 1 - should return 401 unauthorized without JWT token # time=18.15ms
+    not ok 1 - should return 401 unauthorized without JWT token # time=7.469ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -242,7 +242,7 @@ not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
           ...
         
         1..1
-    not ok 2 - should list workouts without query parameters # time=7.987ms
+    not ok 2 - should list workouts without query parameters # time=4.047ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -283,7 +283,7 @@ not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
           ...
         
         1..1
-    not ok 3 - should filter workouts with start_date query parameter # time=9.739ms
+    not ok 3 - should filter workouts with start_date query parameter # time=4.195ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -324,7 +324,7 @@ not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
           ...
         
         1..1
-    not ok 4 - should filter workouts with end_date query parameter # time=9.491ms
+    not ok 4 - should filter workouts with end_date query parameter # time=4.962ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -364,7 +364,7 @@ not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
           ...
         
         1..1
-    not ok 5 - should filter workouts with both start_date and end_date # time=12.076ms
+    not ok 5 - should filter workouts with both start_date and end_date # time=5.005ms
       ---
       at:
         fileName: tests/contract/workouts.test.ts
@@ -381,7 +381,7 @@ not ok 1 - POST /api/workouts - Create workout session # time=231.591ms
       ...
     
     1..5
-not ok 2 - GET /api/workouts - List user workouts # time=81.895ms
+not ok 2 - GET /api/workouts - List user workouts # time=36.873ms
   ---
   at:
     fileName: tests/contract/workouts.test.ts

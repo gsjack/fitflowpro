@@ -1,4 +1,5 @@
 import { get1RMProgression, getVolumeTrends, getConsistencyMetrics, } from '../services/analyticsService.js';
+import { getCurrentWeekVolume, getVolumeHistory, getProgramVolumeAnalysis, } from '../services/volumeService.js';
 import { authenticateJWT } from '../middleware/auth.js';
 const oneRMProgressionSchema = {
     schema: {
@@ -143,6 +144,84 @@ export default async function analyticsRoutes(fastify) {
             fastify.log.error(error);
             return reply.status(500).send({
                 error: 'Failed to retrieve consistency metrics',
+            });
+        }
+    });
+    fastify.get('/analytics/volume-current-week', {
+        preHandler: authenticateJWT,
+    }, async (request, reply) => {
+        try {
+            const authenticatedUser = request.user;
+            const volumeData = getCurrentWeekVolume(authenticatedUser.userId);
+            return reply.status(200).send(volumeData);
+        }
+        catch (error) {
+            fastify.log.error(error);
+            return reply.status(500).send({
+                error: 'Failed to retrieve current week volume',
+            });
+        }
+    });
+    fastify.get('/analytics/volume-trends', {
+        preHandler: authenticateJWT,
+    }, async (request, reply) => {
+        try {
+            const authenticatedUser = request.user;
+            const { weeks: weeksParam, muscle_group } = request.query;
+            let weeks = 8;
+            if (weeksParam) {
+                weeks = parseInt(weeksParam, 10);
+                if (isNaN(weeks) || weeks < 1) {
+                    return reply.status(400).send({
+                        error: 'Invalid weeks parameter. Must be a positive number.',
+                    });
+                }
+                if (weeks > 52) {
+                    return reply.status(400).send({
+                        error: 'Weeks parameter exceeds maximum of 52',
+                    });
+                }
+            }
+            if (muscle_group) {
+                const validMuscleGroups = [
+                    'chest', 'back', 'shoulders', 'quads', 'hamstrings',
+                    'glutes', 'biceps', 'triceps', 'calves', 'abs',
+                    'back_lats', 'back_traps', 'shoulders_front', 'shoulders_side', 'shoulders_rear',
+                    'front_delts', 'side_delts', 'rear_delts'
+                ];
+                if (!validMuscleGroups.includes(muscle_group)) {
+                    return reply.status(400).send({
+                        error: 'Invalid muscle_group parameter',
+                    });
+                }
+            }
+            const volumeHistory = getVolumeHistory(authenticatedUser.userId, weeks, muscle_group);
+            return reply.status(200).send(volumeHistory);
+        }
+        catch (error) {
+            fastify.log.error(error);
+            return reply.status(500).send({
+                error: 'Failed to retrieve volume trends',
+            });
+        }
+    });
+    fastify.get('/analytics/program-volume-analysis', {
+        preHandler: authenticateJWT,
+    }, async (request, reply) => {
+        try {
+            const authenticatedUser = request.user;
+            const programAnalysis = getProgramVolumeAnalysis(authenticatedUser.userId);
+            if (!programAnalysis) {
+                return reply.status(404).send({
+                    error: 'No active program found for user',
+                });
+            }
+            return reply.status(200).send(programAnalysis);
+        }
+        catch (error) {
+            fastify.log.error(error);
+            return reply.status(500).send({
+                error: 'Failed to retrieve program volume analysis',
             });
         }
     });

@@ -13,6 +13,7 @@ import setRoutes from './routes/sets.js';
 import recoveryRoutes from './routes/recovery.js';
 import analyticsRoutes from './routes/analytics.js';
 import programDaysRoutes from './routes/programDays.js';
+import exerciseRoutes from './routes/exercises.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fitflow-dev-secret-change-in-production';
 const PORT = parseInt(process.env.PORT || '3000', 10);
@@ -55,6 +56,7 @@ export async function buildApp() {
   await app.register(recoveryRoutes, { prefix: '/api' });
   await app.register(analyticsRoutes, { prefix: '/api' });
   await app.register(programDaysRoutes, { prefix: '/api' });
+  await app.register(exerciseRoutes);
 
   return app;
 }

@@ -234,3 +234,159 @@ export function getProgramDayExercises(programDayId: number): any[] {
 
   return stmt.all(programDayId);
 }
+
+/**
+ * Phase transition result
+ */
+interface PhaseAdvancementResult {
+  previous_phase: string;
+  new_phase: string;
+  volume_multiplier: number;
+  exercises_updated: number;
+}
+
+/**
+ * Advance program to the next mesocycle phase with automatic volume adjustment
+ *
+ * Phase progression cycle: mev → mav → mrv → deload → mev (repeats)
+ *
+ * Volume multipliers:
+ * - MEV → MAV: +20% (1.2x)
+ * - MAV → MRV: +15% (1.15x)
+ * - MRV → Deload: -50% (0.5x)
+ * - Deload → MEV: Reset to baseline (+100%, 2.0x)
+ *
+ * @param programId - The program ID to advance
+ * @param manual - If true, requires target_phase parameter
+ * @param targetPhase - Target phase for manual advancement
+ * @returns Phase advancement result
+ * @throws Error if program not found or invalid phase transition
+ */
+export function advancePhase(
+  programId: number,
+  manual: boolean = false,
+  targetPhase?: string
+): PhaseAdvancementResult {
+  // Validate target phase if manual
+  if (manual && !targetPhase) {
+    throw new Error('target_phase is required when manual=true');
+  }
+
+  if (targetPhase && !['mev', 'mav', 'mrv', 'deload'].includes(targetPhase)) {
+    throw new Error(`Invalid target_phase: ${targetPhase}`);
+  }
+
+  // Execute as atomic transaction
+  const advance = db.transaction(() => {
+    // 1. Get current program state
+    const programStmt = db.prepare('SELECT * FROM programs WHERE id = ?');
+    const program = programStmt.get(programId) as any;
+
+    if (!program) {
+      throw new Error(`Program with ID ${programId} not found`);
+    }
+
+    const previousPhase = program.mesocycle_phase;
+
+    // 2. Determine new phase
+    let newPhase: string;
+    let volumeMultiplier: number;
+
+    if (manual && targetPhase) {
+      // Manual phase transition
+      newPhase = targetPhase;
+
+      // Calculate multiplier based on transition
+      if (previousPhase === 'mev' && newPhase === 'mav') {
+        volumeMultiplier = 1.2;
+      } else if (previousPhase === 'mav' && newPhase === 'mrv') {
+        volumeMultiplier = 1.15;
+      } else if (previousPhase === 'mrv' && newPhase === 'deload') {
+        volumeMultiplier = 0.5;
+      } else if (previousPhase === 'deload' && newPhase === 'mev') {
+        volumeMultiplier = 2.0;
+      } else if (previousPhase === newPhase) {
+        // No change
+        volumeMultiplier = 1.0;
+      } else {
+        // For any other manual transition, calculate based on phases
+        volumeMultiplier = calculateMultiplierForTransition(previousPhase, newPhase);
+      }
+    } else {
+      // Automatic phase progression
+      const phaseProgression: Record<string, { next: string; multiplier: number }> = {
+        mev: { next: 'mav', multiplier: 1.2 },
+        mav: { next: 'mrv', multiplier: 1.15 },
+        mrv: { next: 'deload', multiplier: 0.5 },
+        deload: { next: 'mev', multiplier: 2.0 },
+      };
+
+      const progression = phaseProgression[previousPhase];
+      if (!progression) {
+        throw new Error(`Invalid current phase: ${previousPhase}`);
+      }
+
+      newPhase = progression.next;
+      volumeMultiplier = progression.multiplier;
+    }
+
+    // 3. Update all program exercises across all program days
+    const programDayIds = db
+      .prepare('SELECT id FROM program_days WHERE program_id = ?')
+      .all(programId)
+      .map((row: any) => row.id);
+
+    let exercisesUpdated = 0;
+
+    for (const programDayId of programDayIds) {
+      const exercises = db
+        .prepare('SELECT id, sets FROM program_exercises WHERE program_day_id = ?')
+        .all(programDayId) as Array<{ id: number; sets: number }>;
+
+      const updateStmt = db.prepare('UPDATE program_exercises SET sets = ? WHERE id = ?');
+
+      for (const exercise of exercises) {
+        const newSets = Math.round(exercise.sets * volumeMultiplier);
+        updateStmt.run(newSets, exercise.id);
+        exercisesUpdated++;
+      }
+    }
+
+    // 4. Update program phase and reset week counter
+    db.prepare('UPDATE programs SET mesocycle_phase = ?, mesocycle_week = 1 WHERE id = ?').run(
+      newPhase,
+      programId
+    );
+
+    return {
+      previous_phase: previousPhase,
+      new_phase: newPhase,
+      volume_multiplier: volumeMultiplier,
+      exercises_updated: exercisesUpdated,
+    };
+  });
+
+  return advance();
+}
+
+/**
+ * Calculate volume multiplier for arbitrary phase transitions
+ *
+ * @param fromPhase - Current phase
+ * @param toPhase - Target phase
+ * @returns Volume multiplier
+ */
+function calculateMultiplierForTransition(fromPhase: string, toPhase: string): number {
+  // Define relative volumes for each phase (baseline = mev = 1.0)
+  const phaseVolumes: Record<string, number> = {
+    mev: 1.0,
+    mav: 1.2,
+    mrv: 1.38, // 1.2 * 1.15
+    deload: 0.69, // 1.38 * 0.5
+  };
+
+  const fromVolume = phaseVolumes[fromPhase] || 1.0;
+  const toVolume = phaseVolumes[toPhase] || 1.0;
+
+  return toVolume / fromVolume;
+}

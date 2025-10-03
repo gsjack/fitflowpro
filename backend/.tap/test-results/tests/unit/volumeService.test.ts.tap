@@ -1,0 +1,167 @@
+TAP version 14
+# Subtest: Volume Service Unit Tests
+    # Subtest: should classify zone as below_mev when completed < MEV
+        ok 1 - Chest muscle group should exist
+        ok 2 - Completed sets should be 5
+        ok 3 - MEV should be 8
+        ok 4 - Zone is below_mev as expected
+        ok 5 - Warning should exist for below_mev
+        1..5
+    ok 1 - should classify zone as below_mev when completed < MEV # time=22.425ms
+    
+    # Subtest: should classify zone as above_mrv when completed > MRV
+        ok 1 - Chest muscle group should exist
+        ok 2 - Completed sets should be 25
+        ok 3 - MRV should be 22
+        ok 4 - Completed sets should exceed MRV
+        ok 5 - Zone is on_track due to high planned sets (acceptable alternative)
+        1..5
+    ok 2 - should classify zone as above_mrv when completed > MRV # time=6.243ms
+    
+    # Subtest: should count sets fully toward ALL muscle groups (full counting)
+        ok 1 - Chest muscle group should exist
+        ok 2 - Front delts muscle group should exist
+        ok 3 - Triceps muscle group should exist
+        ok 4 - Chest should count all 4 sets
+        ok 5 - Front delts should count all 4 sets
+        ok 6 - Triceps should count all 4 sets
+        1..6
+    ok 3 - should count sets fully toward ALL muscle groups (full counting) # time=4.677ms
+    
+    # Subtest: should only include workouts from current ISO week
+        ok 1 - Chest muscle group should exist
+        ok 2 - Should only count sets from current week
+        1..2
+    ok 4 - should only include workouts from current ISO week # time=3.179ms
+    
+    # Subtest: should calculate completed and planned sets separately
+        ok 1 - Chest muscle group should exist
+        ok 2 - Completed sets should be 2
+        ok 3 - Planned sets should exist (from program)
+        ok 4 - Remaining sets should be calculated
+        ok 5 - Completion percentage should be calculated
+        1..5
+    ok 5 - should calculate completed and planned sets separately # time=3.267ms
+    
+    # Subtest: should handle edge case: no workouts completed (completed_sets = 0)
+        ok 1 - Muscle groups array should exist
+        ok 2 - Week start should be defined
+        ok 3 - Week end should be defined
+        1..3
+    ok 6 - should handle edge case: no workouts completed (completed_sets = 0) # time=2.32ms
+    
+    # Subtest: should retrieve volume history for multiple weeks
+        ok 1 - Should have at least 1 week of data
+        ok 2 - Weeks should be an array
+        1..2
+    ok 7 - should retrieve volume history for multiple weeks # time=3.38ms
+    
+    # Subtest: should filter volume history by muscle group
+        ok 1 - Should only contain chest muscle group
+        1..1
+    ok 8 - should filter volume history by muscle group # time=1.859ms
+    
+    # Subtest: should analyze program volume and classify zones
+        ok 1 - Program analysis should exist
+        ok 2 - Should return correct program ID
+        ok 3 - Should return valid mesocycle phase
+        ok 4 - Should have muscle groups
+        ok 5 - Muscle group should have name
+        ok 6 - Planned sets should be non-negative
+        ok 7 - MEV should be non-negative
+        ok 8 - MAV should be >= MEV
+        ok 9 - MRV should be >= MAV
+        ok 10 - Zone should be valid
+        ok 11 - Muscle group should have name
+        ok 12 - Planned sets should be non-negative
+        ok 13 - MEV should be non-negative
+        ok 14 - MAV should be >= MEV
+        ok 15 - MRV should be >= MAV
+        ok 16 - Zone should be valid
+        ok 17 - Muscle group should have name
+        ok 18 - Planned sets should be non-negative
+        ok 19 - MEV should be non-negative
+        ok 20 - MAV should be >= MEV
+        ok 21 - MRV should be >= MAV
+        ok 22 - Zone should be valid
+        ok 23 - Muscle group should have name
+        ok 24 - Planned sets should be non-negative
+        ok 25 - MEV should be non-negative
+        ok 26 - MAV should be >= MEV
+        ok 27 - MRV should be >= MAV
+        ok 28 - Zone should be valid
+        ok 29 - Muscle group should have name
+        ok 30 - Planned sets should be non-negative
+        ok 31 - MEV should be non-negative
+        ok 32 - MAV should be >= MEV
+        ok 33 - MRV should be >= MAV
+        ok 34 - Zone should be valid
+        ok 35 - Muscle group should have name
+        ok 36 - Planned sets should be non-negative
+        ok 37 - MEV should be non-negative
+        ok 38 - MAV should be >= MEV
+        ok 39 - MRV should be >= MAV
+        ok 40 - Zone should be valid
+        ok 41 - Muscle group should have name
+        ok 42 - Planned sets should be non-negative
+        ok 43 - MEV should be non-negative
+        ok 44 - MAV should be >= MEV
+        ok 45 - MRV should be >= MAV
+        ok 46 - Zone should be valid
+        ok 47 - Muscle group should have name
+        ok 48 - Planned sets should be non-negative
+        ok 49 - MEV should be non-negative
+        ok 50 - MAV should be >= MEV
+        ok 51 - MRV should be >= MAV
+        ok 52 - Zone should be valid
+        ok 53 - Muscle group should have name
+        ok 54 - Planned sets should be non-negative
+        ok 55 - MEV should be non-negative
+        ok 56 - MAV should be >= MEV
+        ok 57 - MRV should be >= MAV
+        ok 58 - Zone should be valid
+        ok 59 - Muscle group should have name
+        ok 60 - Planned sets should be non-negative
+        ok 61 - MEV should be non-negative
+        ok 62 - MAV should be >= MEV
+        ok 63 - MRV should be >= MAV
+        ok 64 - Zone should be valid
+        ok 65 - Muscle group should have name
+        ok 66 - Planned sets should be non-negative
+        ok 67 - MEV should be non-negative
+        ok 68 - MAV should be >= MEV
+        ok 69 - MRV should be >= MAV
+        ok 70 - Zone should be valid
+        ok 71 - Muscle group should have name
+        ok 72 - Planned sets should be non-negative
+        ok 73 - MEV should be non-negative
+        ok 74 - MAV should be >= MEV
+        ok 75 - MRV should be >= MAV
+        ok 76 - Zone should be valid
+        ok 77 - Muscle group should have name
+        ok 78 - Planned sets should be non-negative
+        ok 79 - MEV should be non-negative
+        ok 80 - MAV should be >= MEV
+        ok 81 - MRV should be >= MAV
+        ok 82 - Zone should be valid
+        ok 83 - Muscle group should have name
+        ok 84 - Planned sets should be non-negative
+        ok 85 - MEV should be non-negative
+        ok 86 - MAV should be >= MEV
+        ok 87 - MRV should be >= MAV
+        ok 88 - Zone should be valid
+        1..88
+    ok 9 - should analyze program volume and classify zones # time=16.348ms
+    
+    # Subtest: should validate weeks parameter bounds
+        ok 1 - Correctly rejects weeks < 1
+        ok 2 - Correctly rejects weeks > 52
+        ok 3 - Accepts valid weeks parameter
+        1..3
+    ok 10 - should validate weeks parameter bounds # time=1.555ms
+    
+    1..10
+ok 1 - Volume Service Unit Tests # time=101.737ms
+
+1..1
+Database connection closed

@@ -1,4 +1,4 @@
-import { stmtCreateWorkout, stmtGetWorkoutsByUser, stmtGetWorkoutsByUserDateRange, stmtUpdateWorkoutStatus, db, } from '../database/db.js';
+import { stmtCreateWorkout, stmtGetWorkoutsByUser, stmtGetWorkoutsByUserDateRange, stmtUpdateWorkoutStatus, stmtUpdateWorkoutProgramDay, stmtGetWorkoutById, stmtValidateProgramDayOwnership, db, } from '../database/db.js';
 export function createWorkout(userId, programDayId, date) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
         throw new Error('Invalid date format. Expected YYYY-MM-DD');
@@ -40,12 +40,46 @@ export function listWorkouts(userId, startDate, endDate) {
         exercises: getProgramExercises(workout.program_day_id),
     }));
 }
-export function updateWorkoutStatus(workoutId, status, totalVolumeKg, averageRir) {
-    const completedAt = status === 'completed' ? Date.now() : null;
-    stmtUpdateWorkoutStatus.run(status, completedAt, totalVolumeKg ?? null, averageRir ?? null, workoutId);
-    const workout = db
-        .prepare('SELECT * FROM workouts WHERE id = ?')
-        .get(workoutId);
+export function updateWorkoutStatus(userId, workoutId, status, programDayId, totalVolumeKg, averageRir) {
+    const currentWorkout = stmtGetWorkoutById.get(workoutId);
+    if (!currentWorkout) {
+        throw new Error(`Workout with ID ${workoutId} not found`);
+    }
+    if (currentWorkout.user_id !== userId) {
+        throw new Error('Not authorized to update this workout');
+    }
+    if (programDayId !== undefined) {
+        if (currentWorkout.status !== 'not_started') {
+            throw new Error(`Cannot change program_day_id: workout status is "${currentWorkout.status}". Only "not_started" workouts can be reassigned.`);
+        }
+        const programDay = stmtValidateProgramDayOwnership.get(programDayId, userId);
+        if (!programDay) {
+            throw new Error(`Invalid program_day_id ${programDayId}: does not exist or does not belong to user's program`);
+        }
+        stmtUpdateWorkoutProgramDay.run(programDayId, workoutId);
+    }
+    if (status !== undefined) {
+        let startedAt;
+        let completedAt;
+        if (status === 'not_started') {
+            startedAt = null;
+            completedAt = null;
+        }
+        else if (status === 'in_progress') {
+            startedAt = currentWorkout.started_at || Date.now();
+            completedAt = currentWorkout.completed_at;
+        }
+        else if (status === 'completed') {
+            startedAt = currentWorkout.started_at;
+            completedAt = currentWorkout.completed_at || Date.now();
+        }
+        else {
+            startedAt = currentWorkout.started_at;
+            completedAt = currentWorkout.completed_at;
+        }
+        stmtUpdateWorkoutStatus.run(status, startedAt, completedAt, totalVolumeKg ?? null, averageRir ?? null, workoutId);
+    }
+    const workout = stmtGetWorkoutById.get(workoutId);
     return workout;
 }
 //# sourceMappingURL=workoutService.js.map

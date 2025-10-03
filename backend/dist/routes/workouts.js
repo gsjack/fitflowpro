@@ -1,5 +1,6 @@
 import { createWorkout, listWorkouts, updateWorkoutStatus } from '../services/workoutService.js';
 import { authenticateJWT } from '../middleware/auth.js';
+import { stmtGetWorkoutById, db } from '../database/db.js';
 const createWorkoutSchema = {
     schema: {
         body: {
@@ -53,6 +54,10 @@ const listWorkoutsSchema = {
                     type: 'string',
                     pattern: '^\\d{4}-\\d{2}-\\d{2}$',
                     description: 'End date filter (YYYY-MM-DD)',
+                },
+                workout_id: {
+                    type: 'integer',
+                    description: 'Fetch specific workout by ID',
                 },
             },
         },
@@ -130,8 +135,33 @@ export default async function workoutRoutes(fastify) {
         preHandler: authenticateJWT,
     }, async (request, reply) => {
         try {
-            const { start_date, end_date } = request.query;
+            const { start_date, end_date, workout_id } = request.query;
             const authenticatedUser = request.user;
+            if (workout_id !== undefined) {
+                const workout = stmtGetWorkoutById.get(workout_id);
+                if (!workout) {
+                    return reply.status(404).send({ error: 'Workout not found' });
+                }
+                if (workout.user_id !== authenticatedUser.userId) {
+                    return reply.status(403).send({ error: 'Not authorized to access this workout' });
+                }
+                const programDay = db.prepare('SELECT day_name, day_type FROM program_days WHERE id = ?')
+                    .get(workout.program_day_id);
+                const exercises = db.prepare(`
+            SELECT pe.*, e.name as exercise_name
+            FROM program_exercises pe
+            JOIN exercises e ON pe.exercise_id = e.id
+            WHERE pe.program_day_id = ?
+            ORDER BY pe.order_index ASC
+          `).all(workout.program_day_id);
+                const workoutWithDetails = {
+                    ...workout,
+                    day_name: programDay?.day_name || null,
+                    day_type: programDay?.day_type || null,
+                    exercises,
+                };
+                return reply.status(200).send([workoutWithDetails]);
+            }
             const workouts = listWorkouts(authenticatedUser.userId, start_date, end_date);
             return reply.status(200).send(workouts);
         }
@@ -159,18 +189,32 @@ export default async function workoutRoutes(fastify) {
                         type: 'string',
                         enum: ['not_started', 'in_progress', 'completed', 'cancelled'],
                     },
+                    program_day_id: {
+                        type: 'integer',
+                        description: 'Change the program day for this workout (only allowed if status is not_started)',
+                    },
                 },
-                required: ['status'],
+                minProperties: 1,
             },
         },
     }, async (request, reply) => {
         try {
             const workoutId = parseInt(request.params.id, 10);
-            const { status } = request.body;
-            const workout = updateWorkoutStatus(workoutId, status);
+            const { status, program_day_id } = request.body;
+            const authenticatedUser = request.user;
+            const workout = updateWorkoutStatus(authenticatedUser.userId, workoutId, status, program_day_id);
             return reply.status(200).send(workout);
         }
         catch (error) {
+            if (error instanceof Error) {
+                if (error.message.includes('not allowed') ||
+                    error.message.includes('Invalid') ||
+                    error.message.includes('does not belong')) {
+                    return reply.status(400).send({
+                        error: error.message,
+                    });
+                }
+            }
             fastify.log.error(error);
             return reply.status(500).send({
                 error: 'Failed to update workout',

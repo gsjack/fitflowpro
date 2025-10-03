@@ -1,5 +1,6 @@
 import { createAssessment } from '../services/recoveryService.js';
 import { authenticateJWT } from '../middleware/auth.js';
+import { db } from '../database/db.js';
 const createAssessmentSchema = {
     schema: {
         body: {
@@ -79,6 +80,36 @@ export default async function recoveryRoutes(fastify) {
             fastify.log.error(error);
             return reply.status(500).send({
                 error: 'Failed to create recovery assessment',
+            });
+        }
+    });
+    fastify.get('/recovery-assessments/:userId/today', {
+        preHandler: authenticateJWT,
+    }, async (request, reply) => {
+        try {
+            const userId = parseInt(request.params.userId);
+            const authUserId = request.user.userId;
+            if (userId !== authUserId) {
+                return reply.status(403).send({
+                    error: 'Forbidden: Cannot access other users data',
+                });
+            }
+            const today = new Date().toISOString().split('T')[0];
+            const assessment = db
+                .prepare(`SELECT * FROM recovery_assessments
+             WHERE user_id = ? AND date = ?`)
+                .get(userId, today);
+            if (!assessment) {
+                return reply.status(404).send({
+                    error: 'No assessment found for today',
+                });
+            }
+            return reply.status(200).send(assessment);
+        }
+        catch (error) {
+            fastify.log.error(error);
+            return reply.status(500).send({
+                error: 'Failed to fetch recovery assessment',
             });
         }
     });

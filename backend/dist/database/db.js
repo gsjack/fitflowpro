@@ -63,8 +63,22 @@ export const stmtGetWorkoutsByUserDateRange = db.prepare(`
 `);
 export const stmtUpdateWorkoutStatus = db.prepare(`
   UPDATE workouts
-  SET status = ?, completed_at = ?, total_volume_kg = ?, average_rir = ?
+  SET status = ?, started_at = ?, completed_at = ?, total_volume_kg = ?, average_rir = ?
   WHERE id = ?
+`);
+export const stmtUpdateWorkoutProgramDay = db.prepare(`
+  UPDATE workouts
+  SET program_day_id = ?
+  WHERE id = ?
+`);
+export const stmtGetWorkoutById = db.prepare(`
+  SELECT * FROM workouts WHERE id = ?
+`);
+export const stmtValidateProgramDayOwnership = db.prepare(`
+  SELECT pd.id
+  FROM program_days pd
+  JOIN programs p ON pd.program_id = p.id
+  WHERE pd.id = ? AND p.user_id = ?
 `);
 export const stmtLogSet = db.prepare(`
   INSERT INTO sets (workout_id, exercise_id, set_number, weight_kg, reps, rir, timestamp, notes, synced)

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { stmtGetUserByUsername, stmtCreateUser, } from '../database/db.js';
+import { createDefaultProgram } from './programService.js';
 const BCRYPT_COST = 12;
 export const JWT_EXPIRATION = '30d';
 export async function registerUser(username, password, age, weight_kg, experience_level, jwtSign) {
@@ -11,6 +12,12 @@ export async function registerUser(username, password, age, weight_kg, experienc
     const now = Date.now();
     const result = stmtCreateUser.run(username, password_hash, age ?? null, weight_kg ?? null, experience_level ?? null, now, now);
     const user_id = result.lastInsertRowid;
+    try {
+        createDefaultProgram(user_id);
+    }
+    catch (error) {
+        console.error(`Failed to create default program for user ${user_id}:`, error);
+    }
     const token = jwtSign({
         userId: user_id,
         username,

@@ -14,5 +14,5 @@ export interface Workout {
 }
 export declare function createWorkout(userId: number, programDayId: number, date: string): Workout;
 export declare function listWorkouts(userId: number, startDate?: string, endDate?: string): any[];
-export declare function updateWorkoutStatus(workoutId: number, status: 'not_started' | 'in_progress' | 'completed' | 'cancelled', totalVolumeKg?: number, averageRir?: number): Workout;
+export declare function updateWorkoutStatus(userId: number, workoutId: number, status?: 'not_started' | 'in_progress' | 'completed' | 'cancelled', programDayId?: number, totalVolumeKg?: number, averageRir?: number): Workout;
 //# sourceMappingURL=workoutService.d.ts.map

@@ -1,0 +1,49 @@
+TAP version 14
+# Subtest: VO2max Cardio Tracking Endpoints Contract Tests
+    not ok 1 - Method 'GET' already declared for route '/api/analytics/volume-trends'
+      ---
+      stack: |
+        Object.addNewRoute (node_modules/fastify/lib/route.js:371:19)
+        Object.route (node_modules/fastify/lib/route.js:265:19)
+        Object.prepareRoute (node_modules/fastify/lib/route.js:167:18)
+        Object._get [as get] (node_modules/fastify/fastify.js:262:34)
+        analyticsRoutes (src/routes/analytics.ts:309:11)
+        Plugin.exec (node_modules/avvio/lib/plugin.js:125:28)
+        Boot._loadPlugin (node_modules/avvio/boot.js:432:10)
+      at:
+        fileName: node_modules/fastify/lib/route.js
+        lineNumber: 371
+        columnNumber: 19
+        typeName: Object
+        methodName: addNewRoute
+        functionName: Object.addNewRoute
+      type: FastifyError
+      code: FST_ERR_DUPLICATED_ROUTE
+      statusCode: 500
+      tapCaught: returnedPromiseRejection
+      source: >2
+                  const isDuplicatedRoute = error.message.includes(`Method '${opts.method}' already declared for route`)
+                  if (isDuplicatedRoute) {
+                    throw new FST_ERR_DUPLICATED_ROUTE(opts.method, opts.url)
+        ------------------^
+                  }
+      ...
+    
+    1..1
+not ok 1 - VO2max Cardio Tracking Endpoints Contract Tests # time=89.323ms
+  ---
+  at:
+    fileName: tests/contract/vo2max.test.ts
+    lineNumber: 18
+    columnNumber: 5
+    isToplevel: true
+  source: |2
+     */
+  
+    tap.test('VO2max Cardio Tracking Endpoints Contract Tests', async (t) => {
+    ----^
+      const app = await buildApp();
+  ...
+
+1..1
+Database connection closed
