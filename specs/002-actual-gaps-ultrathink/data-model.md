@@ -684,23 +684,24 @@ sqlite3 data/fitflow.db < src/database/migrations/002_add_missing_indices.sql
 
 ### 1. Sync Strategy (No Changes)
 
-All new API endpoints follow the existing **local-first sync pattern**:
+All new API endpoints follow the existing **offline-first sync pattern**:
 
-1. Mobile app writes to local SQLite first (`synced = 0`)
-2. Background sync queue attempts POST to server
-3. On success, update `synced = 1`
-4. Server stores with identical schema
+1. Mobile app adds operation to sync queue (no local SQLite - mobile has NO database)
+2. Sync queue attempts POST to backend server with exponential backoff
+3. Backend stores data in SQLite database
+4. On success, sync queue clears pending operation
+
+**Note**: Mobile app has **NO local SQLite** (no expo-sqlite). Only backend uses better-sqlite3.
 
 **Example: VO2max Session Sync**:
 ```typescript
-// Mobile: Log VO2max session locally
-await db.runAsync(
-  'INSERT INTO vo2max_sessions (workout_id, protocol, duration_seconds, ..., synced) VALUES (?, ?, ?, ..., 0)',
-  [workoutId, protocol, durationSeconds, ...]
-);
+// Mobile: Add VO2max session to sync queue (no local DB write)
+const sessionData = {
+  workoutId, protocol, durationSeconds, avgHeartRate, ...
+};
 
-// Add to sync queue (non-blocking)
-syncQueue.add('vo2max_session', sessionData, localSessionId);
+// Add to sync queue - will retry until backend accepts
+syncQueue.add('vo2max_session', sessionData);
 
 // Background sync
 await api.post('/api/vo2max-sessions', { ...sessionData, localId: localSessionId });
@@ -747,11 +748,11 @@ All queries are designed to meet constitutional requirements:
 
 **Query Pattern**:
 ```typescript
-// Mobile app (local SQLite)
+// Backend API endpoint (SQLite)
 const weekStart = getMonday(new Date());
 const weekEnd = getSunday(new Date());
 
-const sets = await db.getAllAsync(`
+const sets = await db.all(`
   SELECT
     e.muscle_groups,
     COUNT(s.id) as set_count

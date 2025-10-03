@@ -78,7 +78,7 @@ function calculateVO2max(avgHeartRate: number, age: number, weightKg: number): n
 
 **Integration Points**:
 - **Backend**: `/api/vo2max-sessions` endpoint stores `estimated_vo2max` field calculated server-side
-- **Mobile**: VO2max sessions logged via `/mobile/src/services/database/workoutDb.ts` → `vo2max_sessions` table
+- **Mobile**: VO2max sessions logged via `/mobile/src/services/database/workoutDb.ts` (API client - NO local SQLite) → POST to backend → `vo2max_sessions` table
 - **Analytics**: Trend chart in `/mobile/src/screens/AnalyticsScreen.tsx` displays VO2max over time
 
 **Sources**:
@@ -400,7 +400,7 @@ async function getWeeklyVolumeByMuscle(userId: number, weekStart: string): Promi
 }
 ```
 
-**Mobile Query** (`mobile/src/services/database/workoutDb.ts`):
+**Mobile API Call** (`mobile/src/services/database/workoutDb.ts` - API client, NO local SQLite):
 ```typescript
 export async function getWeeklyVolume(weekStart: string): Promise<Record<MuscleGroup, number>> {
   const weekEnd = addDays(weekStart, 7);
@@ -652,7 +652,7 @@ async function getWeeklySets(userId: number): Promise<Set[]> {
 }
 ```
 
-**Mobile Query** (`mobile/src/services/database/workoutDb.ts`):
+**Mobile API Call** (`mobile/src/services/database/workoutDb.ts` - API client, NO local SQLite):
 ```typescript
 import { startOfWeek, endOfWeek, format } from 'date-fns';
 

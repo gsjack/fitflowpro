@@ -55,8 +55,8 @@ Complete 4 missing feature sets blocking 25% of FitFlow Pro functionality:
 ✅ **Performance**: All endpoints target < 200ms p95 (documented in research.md)
 ✅ **Security**: JWT auth, bcrypt hashing, input validation via JSON Schema
 ✅ **Code Quality**: TypeScript strict mode, ESLint compliance
-✅ **Offline-First**: Program viewing cached locally, editing requires online connection
-✅ **Local-First**: Mobile SQLite remains source of truth for workouts, sync queue for programs
+✅ **Offline-First**: Non-blocking UX with sync queue, cached API responses for offline viewing
+✅ **Backend SQLite Only**: NO mobile SQLite (no expo-sqlite) - backend better-sqlite3 is single source of truth
 
 **Status**: ✅ PASS - No violations
 
