@@ -708,3 +708,39 @@ This project follows `.specify/memory/constitution.md` standards:
 - **Code quality**: TypeScript strict mode, ESLint, complexity ≤ 10
 
 **Documented violation**: JWT 30-day expiration (vs. 24-hour requirement) justified for home server single-user use case.
+
+## Naming Conventions
+
+### Entity Naming Standards
+
+To ensure consistency across the codebase, follow these naming conventions:
+
+#### ProgramExercise Entity
+- **Database table**: `program_exercises` (snake_case)
+- **TypeScript interface/type**: `ProgramExercise` (PascalCase)
+- **TypeScript variable/parameter**: `programExercise` (camelCase)
+- **API route**: `/api/program-exercises` (kebab-case)
+- **File name (service)**: `programExerciseService.ts` (camelCase)
+- **File name (route)**: `program-exercises.ts` (kebab-case)
+
+#### VO2max Entity
+- **Display text**: `VO2max` (capital VO2, lowercase max)
+- **Database table**: `vo2max_sessions` (snake_case)
+- **TypeScript interface**: `VO2maxSession` (PascalCase)
+- **TypeScript variable**: `vo2maxSession` (camelCase)
+- **API route**: `/api/vo2max-sessions` (kebab-case)
+- **File name (service)**: `vo2maxService.ts` (camelCase)
+- **File name (route)**: `vo2max.ts` (kebab-case)
+
+### General Naming Rules
+
+- **snake_case**: Database tables, columns, SQL identifiers
+- **PascalCase**: TypeScript interfaces, types, classes, React components
+- **camelCase**: TypeScript variables, parameters, functions, file names (services/utilities)
+- **kebab-case**: API routes, route file names, CSS classes
+
+### Rationale
+- **snake_case for DB**: SQL convention, prevents escaping issues
+- **PascalCase for types**: TypeScript/JavaScript convention for types/classes
+- **camelCase for variables**: TypeScript/JavaScript convention
+- **kebab-case for URLs**: Web standard (SEO, readability)

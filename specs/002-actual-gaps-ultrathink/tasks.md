@@ -216,42 +216,43 @@
 - [ ] **T092** Integrate ProgramVolumeOverview tile into `/mobile/src/screens/PlannerScreen.tsx`
 - [ ] **T093** Add ExerciseSelectionModal integration (swap functionality)
 - [ ] **T094** Add drag-and-drop reordering with VolumeValidationBanner
-- [ ] **T095** Add "Advance Phase" button with confirmation dialog
+- [ ] **T095** Add offline detection and blocking UI for program editing (NetInfo listener + blocking overlay when offline, implements FR-011a)
+- [ ] **T096** Add "Advance Phase" button with confirmation dialog
 
 ### VO2max Workout Screen
-- [ ] **T096** Create `/mobile/src/screens/VO2maxWorkoutScreen.tsx` with interval timer
-- [ ] **T097** Add heart rate zone calculation based on user age (220 - age)
-- [ ] **T098** Add VO2maxSessionSummary screen navigation after completion
+- [ ] **T097** Create `/mobile/src/screens/VO2maxWorkoutScreen.tsx` with interval timer
+- [ ] **T098** Add heart rate zone calculation based on user age (220 - age)
+- [ ] **T099** Add VO2maxSessionSummary screen navigation after completion
 
 ### Analytics Screen
-- [ ] **T099** Add VO2max progress chart to `/mobile/src/screens/AnalyticsScreen.tsx`
-- [ ] **T100** Add volume trends chart with muscle group filter
+- [ ] **T100** Add VO2max progress chart to `/mobile/src/screens/AnalyticsScreen.tsx`
+- [ ] **T101** Add volume trends chart with muscle group filter
 
 ---
 
 ## Phase 10: Validation & Polish
 
 ### Scenario Validation (from quickstart.md)
-- [ ] **T101** Manually test Scenario 1: Exercise Swap (8 acceptance criteria)
-- [ ] **T102** Manually test Scenario 2: VO2max Session (9 acceptance criteria)
-- [ ] **T103** Manually test Scenario 3: Mesocycle Progression (10 acceptance criteria)
-- [ ] **T104** Manually test Scenario 4: Program Customization (11 acceptance criteria)
-- [ ] **T105** Manually test Scenario 5: Muscle Volume Tracking (8 acceptance criteria)
+- [ ] **T102** Manually test Scenario 1: Exercise Swap (8 acceptance criteria)
+- [ ] **T103** Manually test Scenario 2: VO2max Session (9 acceptance criteria)
+- [ ] **T104** Manually test Scenario 3: Mesocycle Progression (10 acceptance criteria)
+- [ ] **T105** Manually test Scenario 4: Program Customization (11 acceptance criteria)
+- [ ] **T106** Manually test Scenario 5: Muscle Volume Tracking (8 acceptance criteria)
 
 ### Performance Testing
-- [ ] **T106** Run backend performance benchmarks (SQLite < 5ms, API < 200ms)
-- [ ] **T107** Run mobile performance tests (UI < 100ms perceived latency)
+- [ ] **T107** Run backend performance benchmarks (SQLite < 5ms, API < 200ms)
+- [ ] **T108** Run mobile performance tests (UI < 100ms perceived latency)
 
 ### Code Quality
-- [ ] **T108** [P] Run ESLint on backend and fix violations
-- [ ] **T109** [P] Run ESLint on mobile and fix violations
-- [ ] **T110** Verify TypeScript strict mode compliance (no `any` types)
-- [ ] **T111** Run test coverage report (target ≥ 80% overall, 100% critical paths)
+- [ ] **T109** [P] Run ESLint on backend and fix violations
+- [ ] **T110** [P] Run ESLint on mobile and fix violations
+- [ ] **T111** Verify TypeScript strict mode compliance (no `any` types)
+- [ ] **T112** Run test coverage report (target ≥ 80% overall, 100% critical paths)
 
 ### Documentation
-- [ ] **T112** Update CLAUDE.md with new feature context (exercise library, programs, VO2max, volume tracking)
-- [ ] **T113** Document API endpoints in backend README
-- [ ] **T114** Add mobile component usage examples
+- [ ] **T113** Update CLAUDE.md with new feature context (exercise library, programs, VO2max, volume tracking)
+- [ ] **T114** Document API endpoints in backend README
+- [ ] **T115** Add mobile component usage examples
 
 ---
 
@@ -266,8 +267,8 @@
 6. **Backend Routes** (T046-T070) → GATE: Contract tests must PASS
 7. **Mobile API Clients** (T071-T076) → Blocks mobile components
 8. **Mobile Components** (T077-T088) → Blocks screen integrations
-9. **Screen Integrations** (T089-T100) → Blocks validation
-10. **Validation** (T101-T114) → Final phase
+9. **Screen Integrations** (T089-T101) → Blocks validation
+10. **Validation** (T102-T115) → Final phase
 
 ### Parallel Execution Examples
 
@@ -324,7 +325,7 @@ Task: "Create ExerciseSelectionModal.tsx"
 
 ## Estimated Effort
 
-**Total Tasks**: 114 (exceeds initial estimate of 45-50 due to comprehensive TDD approach)
+**Total Tasks**: 115 (exceeds initial estimate of 45-50 due to comprehensive TDD approach)
 
 **Time Estimates**:
 - Phase 1: Setup (1 hour)

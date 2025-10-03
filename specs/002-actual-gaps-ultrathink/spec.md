@@ -209,7 +209,12 @@
 - **FR-008**: Users MUST be able to add new exercises to any program day with specified sets/reps/RIR (same exercise can be added multiple times to support drop sets and varied rep ranges)
 - **FR-009**: Users MUST be able to remove exercises from their program
 - **FR-010**: System MUST validate that total weekly volume remains within MEV-MRV range when editing programs
-- **FR-011**: System MUST persist program changes immediately and sync across all user devices using last-write-wins conflict resolution (most recent change based on server timestamp takes precedence); program editing requires active internet connection
+- **FR-011**: System MUST persist program changes immediately and sync across all user devices using last-write-wins conflict resolution with the following mechanics:
+  - Server timestamp (UTC milliseconds) determines recency
+  - Older edits are silently overwritten by newer edits (no user notification)
+  - Timestamp collisions (same millisecond) resolved by database write order (arbitrary but consistent)
+  - Client re-fetches program after sync to confirm current state
+  - Program editing requires active internet connection
 - **FR-011a**: System MUST display "Connect to internet to edit programs" message when user attempts program modifications while offline; viewing programs is allowed offline (read-only mode)
 
 ### Functional Requirements - VO2max Cardio Tracking
@@ -238,7 +243,17 @@
 - **FR-027**: System MUST calculate planned sets by summing programmed sets for all exercises targeting each muscle group in remaining workouts this week
 - **FR-028**: Planner screen MUST display a "Program Volume Overview" tile showing planned weekly volume per muscle group vs MEV/MAV/MRV recommendations
 - **FR-029**: Planner tile MUST show warning when planned volume for any muscle group is below MEV threshold or above MRV threshold
-- **FR-030**: Volume calculations MUST account for exercises targeting multiple muscle groups (e.g., Deadlift counts toward Back, Hamstrings, Glutes)
+- **FR-030**: Volume calculations MUST account for exercises targeting multiple muscle groups using full set counting: each set counts fully toward ALL targeted muscle groups (e.g., 1 set of Deadlift = 1 set counted for Back + 1 set counted for Hamstrings + 1 set counted for Glutes, not fractional counting like 0.33 sets each)
+
+### Non-Functional Requirements
+
+- **NFR-001**: API response times MUST be < 200ms (p95) for all endpoints
+- **NFR-002**: SQLite write operations MUST be < 5ms (p95), < 10ms (p99)
+- **NFR-003**: UI interactions MUST have < 100ms perceived latency (tap to visual feedback)
+- **NFR-004**: Rest timer accuracy MUST be ±2 seconds over 5-minute duration
+- **NFR-005**: Test coverage MUST be ≥ 80% overall, 100% for critical paths (auth, workout logging, sync queue)
+- **NFR-006**: App MUST function offline for workout logging (core use case)
+- **NFR-007**: Data sync MUST retry with exponential backoff (1s, 2s, 4s, 8s, 16s) on network failure
 
 ### Key Entities *(include if feature involves data)*
 
