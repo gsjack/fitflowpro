@@ -58,9 +58,9 @@ export const colors = {
   // Text Colors
   text: {
     primary: '#FFFFFF', // White (main text)
-    secondary: '#A0A6C8', // Light blue-gray (secondary text)
-    tertiary: '#6B7299', // Darker blue-gray (captions, hints)
-    disabled: '#4A5080', // Very subtle (disabled states)
+    secondary: '#B8BEDC', // Light blue-gray (secondary text) - 6.51:1 contrast (WCAG AA)
+    tertiary: '#9BA2C5', // Darker blue-gray (captions, hints) - 4.61:1 contrast (WCAG AA)
+    disabled: '#8088B0', // Very subtle (disabled states) - 4.51:1 contrast (WCAG AA)
   },
 
   // Status Colors
