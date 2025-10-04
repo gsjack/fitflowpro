@@ -1,7 +1,7 @@
 {
   "name": "mobile",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "dev": "expo start",
@@ -35,11 +35,14 @@
     "date-fns": "^4.1.0",
     "expo": "~54.0.12",
     "expo-av": "^16.0.7",
+    "expo-constants": "~18.0.9",
     "expo-dev-client": "~6.0.13",
     "expo-file-system": "^19.0.16",
     "expo-haptics": "^15.0.7",
     "expo-linear-gradient": "~14.0.1",
+    "expo-linking": "~8.0.8",
     "expo-notifications": "^0.32.12",
+    "expo-router": "~6.0.10",
     "expo-sharing": "^14.0.7",
     "expo-splash-screen": "^31.0.10",
     "expo-sqlite": "~14.0.6",
