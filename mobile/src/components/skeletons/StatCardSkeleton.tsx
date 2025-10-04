@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { SkeletonWrapper } from './SkeletonWrapper';
 import { Card, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
@@ -47,7 +47,7 @@ function StatCardItemSkeleton() {
   return (
     <Card style={styles.card} elevation={2}>
       <Card.Content style={styles.content}>
-        <SkeletonPlaceholder
+        <SkeletonWrapper
           backgroundColor={colors.background.tertiary}
           highlightColor={colors.background.secondary}
           speed={1200}
@@ -63,7 +63,7 @@ function StatCardItemSkeleton() {
 
           {/* Description */}
           <View style={styles.description} />
-        </SkeletonPlaceholder>
+        </SkeletonWrapper>
       </Card.Content>
     </Card>
   );

@@ -9,10 +9,10 @@
 
 import React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { Card, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
+import { SkeletonWrapper } from './SkeletonWrapper';
 
 export function WorkoutCardSkeleton() {
   // Web fallback: show simple loading indicator (skeleton library not web-compatible)
@@ -30,7 +30,7 @@ export function WorkoutCardSkeleton() {
   return (
     <Card style={styles.card}>
       <Card.Content style={styles.content}>
-        <SkeletonPlaceholder
+        <SkeletonWrapper
           backgroundColor={colors.background.tertiary}
           highlightColor={colors.background.secondary}
           speed={1200}
@@ -56,7 +56,7 @@ export function WorkoutCardSkeleton() {
 
           {/* Action button */}
           <View style={styles.buttonSkeleton} />
-        </SkeletonPlaceholder>
+        </SkeletonWrapper>
       </Card.Content>
     </Card>
   );

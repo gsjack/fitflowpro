@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { SkeletonWrapper } from './SkeletonWrapper';
 import { Card, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
@@ -26,7 +26,7 @@ export function WorkoutExerciseSkeleton() {
 
   return (
     <View style={styles.container}>
-      <SkeletonPlaceholder
+      <SkeletonWrapper
         backgroundColor={colors.background.tertiary}
         highlightColor={colors.background.secondary}
         speed={1200}
@@ -58,7 +58,7 @@ export function WorkoutExerciseSkeleton() {
             <View style={styles.buttonSkeleton} />
           </View>
         </Card>
-      </SkeletonPlaceholder>
+      </SkeletonWrapper>
     </View>
   );
 }

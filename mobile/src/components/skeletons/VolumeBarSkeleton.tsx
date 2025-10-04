@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { SkeletonWrapper } from './SkeletonWrapper';
 import { Surface, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 
@@ -43,7 +43,7 @@ export function VolumeBarSkeleton({ count = 3 }: VolumeBarSkeletonProps) {
 function VolumeBarItemSkeleton() {
   return (
     <Surface style={styles.surface} elevation={1}>
-      <SkeletonPlaceholder
+      <SkeletonWrapper
         backgroundColor={colors.background.tertiary}
         highlightColor={colors.background.secondary}
         speed={1200}
@@ -72,7 +72,7 @@ function VolumeBarItemSkeleton() {
 
         {/* Completion percentage */}
         <View style={styles.completionText} />
-      </SkeletonPlaceholder>
+      </SkeletonWrapper>
     </Surface>
   );
 }
