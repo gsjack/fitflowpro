@@ -1,16 +1,6 @@
 import { db } from '../database/db.js';
 const VOLUME_LANDMARKS = {
     chest: { mev: 8, mav: 14, mrv: 22 },
-    back: { mev: 10, mav: 16, mrv: 26 },
-    back_lats: { mev: 10, mav: 16, mrv: 26 },
-    back_traps: { mev: 6, mav: 12, mrv: 20 },
-    shoulders: { mev: 8, mav: 14, mrv: 22 },
-    shoulders_front: { mev: 4, mav: 8, mrv: 14 },
-    shoulders_side: { mev: 8, mav: 16, mrv: 26 },
-    shoulders_rear: { mev: 8, mav: 14, mrv: 22 },
-    front_delts: { mev: 4, mav: 8, mrv: 14 },
-    side_delts: { mev: 8, mav: 16, mrv: 26 },
-    rear_delts: { mev: 8, mav: 14, mrv: 22 },
     biceps: { mev: 6, mav: 12, mrv: 20 },
     triceps: { mev: 6, mav: 12, mrv: 22 },
     quads: { mev: 8, mav: 14, mrv: 24 },
@@ -18,6 +8,20 @@ const VOLUME_LANDMARKS = {
     glutes: { mev: 6, mav: 12, mrv: 20 },
     calves: { mev: 8, mav: 14, mrv: 22 },
     abs: { mev: 8, mav: 16, mrv: 28 },
+    lats: { mev: 10, mav: 16, mrv: 26 },
+    traps: { mev: 6, mav: 12, mrv: 20 },
+    mid_back: { mev: 10, mav: 16, mrv: 26 },
+    lower_back: { mev: 6, mav: 12, mrv: 20 },
+    front_delts: { mev: 4, mav: 8, mrv: 14 },
+    side_delts: { mev: 8, mav: 16, mrv: 26 },
+    rear_delts: { mev: 8, mav: 14, mrv: 22 },
+    core: { mev: 8, mav: 16, mrv: 28 },
+    obliques: { mev: 6, mav: 12, mrv: 20 },
+    forearms: { mev: 4, mav: 8, mrv: 16 },
+    brachialis: { mev: 4, mav: 8, mrv: 14 },
+    hip_flexors: { mev: 4, mav: 8, mrv: 14 },
+    back: { mev: 10, mav: 16, mrv: 26 },
+    shoulders: { mev: 8, mav: 14, mrv: 22 },
 };
 function getISOWeekBoundaries(date) {
     const dayOfWeek = date.getDay();

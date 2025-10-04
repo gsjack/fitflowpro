@@ -35,7 +35,7 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
    * Get exercises with optional filtering
    */
   fastify.get(
-    '/api/exercises',
+    '/',
     {
       preHandler: authenticateJWT,
       schema: {
@@ -134,7 +134,7 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
    * Get exercise details by ID
    */
   fastify.get(
-    '/api/exercises/:id',
+    '/:id',
     {
       preHandler: authenticateJWT,
       schema: {

@@ -1,6 +1,7 @@
 import { db } from '../database/db.js';
 const VALID_MUSCLE_GROUPS = [
     'chest',
+    'back',
     'lats',
     'mid_back',
     'rear_delts',
@@ -23,9 +24,15 @@ export function getExercises(filters = {}) {
     const conditions = [];
     const params = [];
     if (filters.muscle_group) {
-        conditions.push('(primary_muscle_group = ? OR secondary_muscle_groups LIKE ?)');
-        params.push(filters.muscle_group);
-        params.push(`%"${filters.muscle_group}"%`);
+        if (filters.muscle_group === 'back') {
+            conditions.push('(primary_muscle_group IN (?, ?) OR secondary_muscle_groups LIKE ? OR secondary_muscle_groups LIKE ?)');
+            params.push('lats', 'mid_back', '%"lats"%', '%"mid_back"%');
+        }
+        else {
+            conditions.push('(primary_muscle_group = ? OR secondary_muscle_groups LIKE ?)');
+            params.push(filters.muscle_group);
+            params.push(`%"${filters.muscle_group}"%`);
+        }
     }
     if (filters.equipment) {
         conditions.push('equipment = ?');

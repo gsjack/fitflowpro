@@ -10,6 +10,8 @@ export interface User {
 }
 export interface RegisterResponse {
     user_id: number;
+    userId: number;
+    username: string;
     token: string;
 }
 export interface LoginResponse {

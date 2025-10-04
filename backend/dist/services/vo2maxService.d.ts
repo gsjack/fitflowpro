@@ -32,7 +32,7 @@ export interface VO2maxProgressionPoint {
     estimated_vo2max: number;
     protocol: string;
 }
-export declare function estimateVO2max(age: number, averageHR?: number): number;
+export declare function estimateVO2max(age: number, _averageHR?: number): number;
 export declare function createVO2maxSession(data: VO2maxSessionData): number;
 export declare function getVO2maxSessions(filters: VO2maxSessionFilters): any[];
 export declare function getVO2maxProgression(userId: number, startDate?: string, endDate?: string): VO2maxProgressionPoint[];

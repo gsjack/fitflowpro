@@ -8,6 +8,9 @@ import recoveryRoutes from './routes/recovery.js';
 import analyticsRoutes from './routes/analytics.js';
 import programDaysRoutes from './routes/programDays.js';
 import exerciseRoutes from './routes/exercises.js';
+import programRoutes from './routes/programs.js';
+import programExerciseRoutes from './routes/program-exercises.js';
+import vo2maxRoutes from './routes/vo2max.js';
 const JWT_SECRET = process.env.JWT_SECRET || 'fitflow-dev-secret-change-in-production';
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const HOST = process.env.HOST || '0.0.0.0';
@@ -37,7 +40,10 @@ export async function buildApp() {
     await app.register(recoveryRoutes, { prefix: '/api' });
     await app.register(analyticsRoutes, { prefix: '/api' });
     await app.register(programDaysRoutes, { prefix: '/api' });
-    await app.register(exerciseRoutes);
+    await app.register(exerciseRoutes, { prefix: '/api/exercises' });
+    await app.register(programRoutes, { prefix: '/api' });
+    await app.register(programExerciseRoutes, { prefix: '/api' });
+    await app.register(vo2maxRoutes, { prefix: '/api' });
     return app;
 }
 async function start() {

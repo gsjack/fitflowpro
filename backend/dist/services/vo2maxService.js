@@ -1,5 +1,5 @@
 import { db } from '../database/db.js';
-export function estimateVO2max(age, averageHR) {
+export function estimateVO2max(age, _averageHR) {
     const maxHR = 220 - age;
     const restingHR = 60;
     const vo2max = 15.3 * (maxHR / restingHR);
@@ -61,10 +61,10 @@ export function createVO2maxSession(data) {
     const result = db
         .prepare(`INSERT INTO vo2max_sessions (
         workout_id, protocol, duration_seconds, intervals_completed,
-        average_hr, peak_hr, estimated_vo2max, synced
+        average_hr, peak_hr, estimated_vo2max, synced, created_at
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, 1)`)
-        .run(data.workout_id, protocol, durationSeconds, data.intervals_completed ?? null, data.average_heart_rate ?? null, data.peak_heart_rate ?? null, estimatedVO2max ?? null);
+      VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)`)
+        .run(data.workout_id, protocol, durationSeconds, data.intervals_completed ?? null, data.average_heart_rate ?? null, data.peak_heart_rate ?? null, estimatedVO2max ?? null, Date.now());
     const sessionId = result.lastInsertRowid;
     console.log(`[VO2max] Session created: id=${sessionId}, workout=${data.workout_id}, ` +
         `protocol=${protocol}, duration=${data.duration_minutes}min, VO2max=${estimatedVO2max?.toFixed(1) ?? 'N/A'}`);

@@ -38,6 +38,7 @@ export interface ExerciseFilters {
  */
 const VALID_MUSCLE_GROUPS = [
   'chest',
+  'back', // Alias for lats/mid_back exercises
   'lats',
   'mid_back',
   'rear_delts',
@@ -74,11 +75,19 @@ export function getExercises(filters: ExerciseFilters = {}): Exercise[] {
 
   // Filter by muscle group (check both primary and secondary)
   if (filters.muscle_group) {
-    conditions.push(
-      '(primary_muscle_group = ? OR secondary_muscle_groups LIKE ?)'
-    );
-    params.push(filters.muscle_group);
-    params.push(`%"${filters.muscle_group}"%`); // JSON array contains check
+    // Handle "back" as an alias for lats/mid_back exercises
+    if (filters.muscle_group === 'back') {
+      conditions.push(
+        '(primary_muscle_group IN (?, ?) OR secondary_muscle_groups LIKE ? OR secondary_muscle_groups LIKE ?)'
+      );
+      params.push('lats', 'mid_back', '%"lats"%', '%"mid_back"%');
+    } else {
+      conditions.push(
+        '(primary_muscle_group = ? OR secondary_muscle_groups LIKE ?)'
+      );
+      params.push(filters.muscle_group);
+      params.push(`%"${filters.muscle_group}"%`); // JSON array contains check
+    }
   }
 
   // Filter by equipment

@@ -42,6 +42,8 @@ const registerSchema = {
                 type: 'object',
                 properties: {
                     user_id: { type: 'number' },
+                    userId: { type: 'number' },
+                    username: { type: 'string' },
                     token: { type: 'string' },
                 },
             },

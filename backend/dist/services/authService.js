@@ -24,6 +24,8 @@ export async function registerUser(username, password, age, weight_kg, experienc
     });
     return {
         user_id,
+        userId: user_id,
+        username,
         token,
     };
 }

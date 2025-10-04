@@ -22,7 +22,7 @@ tap.test('Volume Analytics Endpoints Contract Tests', async (t) => {
   let authToken: string;
   let userId: number;
 
-  await t.before(async () => {
+  t.before(async () => {
     const registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
@@ -36,18 +36,8 @@ tap.test('Volume Analytics Endpoints Contract Tests', async (t) => {
     });
 
     const userData = registerResponse.json();
-    userId = userData.id;
-
-    const loginResponse = await app.inject({
-      method: 'POST',
-      url: '/api/auth/login',
-      payload: {
-        username: userData.username,
-        password: 'SecurePass123!'
-      }
-    });
-
-    authToken = loginResponse.json().token;
+    userId = userData.user_id;
+    authToken = userData.token;
   });
 
   // T017: Contract test GET /api/analytics/volume-current-week

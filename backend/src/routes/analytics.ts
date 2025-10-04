@@ -7,7 +7,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import {
   get1RMProgression,
-  getVolumeTrends,
   getConsistencyMetrics,
 } from '../services/analyticsService.js';
 import {
@@ -22,15 +21,6 @@ import { authenticateJWT, AuthenticatedRequest } from '../middleware/auth.js';
  */
 interface OneRMProgressionQuery {
   exercise_id: string;
-  start_date: string;
-  end_date: string;
-}
-
-/**
- * Query params for volume trends
- */
-interface VolumeTrendsQuery {
-  muscle_group: string;
   start_date: string;
   end_date: string;
 }
@@ -68,49 +58,6 @@ const oneRMProgressionSchema = {
           properties: {
             date: { type: 'string' },
             estimated_1rm: { type: 'number' },
-          },
-        },
-      },
-    },
-  },
-};
-
-/**
- * Schema for volume trends endpoint
- */
-const volumeTrendsSchema = {
-  schema: {
-    querystring: {
-      type: 'object',
-      required: ['muscle_group', 'start_date', 'end_date'],
-      properties: {
-        muscle_group: {
-          type: 'string',
-          description: 'Muscle group name (e.g., chest, back_lats)',
-        },
-        start_date: {
-          type: 'string',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
-          description: 'Start date (YYYY-MM-DD)',
-        },
-        end_date: {
-          type: 'string',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
-          description: 'End date (YYYY-MM-DD)',
-        },
-      },
-    },
-    response: {
-      200: {
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            week: { type: 'string' },
-            total_sets: { type: 'number' },
-            mev: { type: 'number' },
-            mav: { type: 'number' },
-            mrv: { type: 'number' },
           },
         },
       },
@@ -187,50 +134,6 @@ export default async function analyticsRoutes(fastify: FastifyInstance) {
         fastify.log.error(error);
         return reply.status(500).send({
           error: 'Failed to retrieve 1RM progression',
-        });
-      }
-    }
-  );
-
-  /**
-   * GET /api/analytics/volume-trends (T051)
-   *
-   * Get volume trends for a muscle group over time with MEV/MAV/MRV landmarks
-   *
-   * Query params:
-   * - muscle_group: Muscle group name (e.g., chest, back_lats)
-   * - start_date: Start date (YYYY-MM-DD)
-   * - end_date: End date (YYYY-MM-DD)
-   *
-   * Returns: Array of {week, total_sets, mev, mav, mrv}
-   */
-  fastify.get<{ Querystring: VolumeTrendsQuery }>(
-    '/analytics/volume-trends',
-    {
-      ...volumeTrendsSchema,
-      preHandler: authenticateJWT,
-    },
-    async (
-      request: FastifyRequest<{ Querystring: VolumeTrendsQuery }>,
-      reply: FastifyReply
-    ) => {
-      try {
-        const { muscle_group, start_date, end_date } = request.query;
-        const authenticatedUser = (request as AuthenticatedRequest).user;
-
-        // Call analytics service
-        const trends = getVolumeTrends(
-          authenticatedUser.userId,
-          muscle_group,
-          start_date,
-          end_date
-        );
-
-        return reply.status(200).send(trends);
-      } catch (error) {
-        fastify.log.error(error);
-        return reply.status(500).send({
-          error: 'Failed to retrieve volume trends',
         });
       }
     }

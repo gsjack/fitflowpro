@@ -1,49 +1,96 @@
 TAP version 14
 # Subtest: Exercise Library Endpoints Contract Tests
-    not ok 1 - Method 'GET' already declared for route '/api/analytics/volume-trends'
-      ---
-      stack: |
-        Object.addNewRoute (node_modules/fastify/lib/route.js:371:19)
-        Object.route (node_modules/fastify/lib/route.js:265:19)
-        Object.prepareRoute (node_modules/fastify/lib/route.js:167:18)
-        Object._get [as get] (node_modules/fastify/fastify.js:262:34)
-        analyticsRoutes (src/routes/analytics.ts:309:11)
-        Plugin.exec (node_modules/avvio/lib/plugin.js:125:28)
-        Boot._loadPlugin (node_modules/avvio/boot.js:432:10)
-      at:
-        fileName: node_modules/fastify/lib/route.js
-        lineNumber: 371
-        columnNumber: 19
-        typeName: Object
-        methodName: addNewRoute
-        functionName: Object.addNewRoute
-      type: FastifyError
-      code: FST_ERR_DUPLICATED_ROUTE
-      statusCode: 500
-      tapCaught: returnedPromiseRejection
-      source: >2
-                  const isDuplicatedRoute = error.message.includes(`Method '${opts.method}' already declared for route`)
-                  if (isDuplicatedRoute) {
-                    throw new FST_ERR_DUPLICATED_ROUTE(opts.method, opts.url)
-        ------------------^
-                  }
-      ...
+{"level":30,"time":1759550015093,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015338,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":243.3565730000846,"msg":"request completed"}
+    # Subtest: GET /api/exercises
+        # Subtest: should return all exercises without filters (200)
+            ok 1 - Returns 200 OK
+            ok 2 - Returns exercises array
+            ok 3 - Returns count field
+            ok 4 - Returns at least one exercise
+            ok 5 - Exercise has id
+            ok 6 - Exercise has name
+            ok 7 - Exercise has primary_muscle_group
+            ok 8 - Exercise has secondary_muscle_groups array
+            ok 9 - Exercise has equipment
+            ok 10 - Exercise has valid movement_pattern
+            1..10
+        ok 1 - should return all exercises without filters (200) # time=12.502ms
+        
+        # Subtest: should filter by muscle_group (200)
+            ok 1 - Returns 200 OK
+            ok 2 - All exercises target chest
+            1..2
+        ok 2 - should filter by muscle_group (200) # time=4.34ms
+        
+        # Subtest: should filter by equipment (200)
+            ok 1 - Returns 200 OK
+            ok 2 - All exercises use barbell
+            1..2
+        ok 3 - should filter by equipment (200) # time=2.751ms
+        
+        # Subtest: should filter by movement_pattern (200)
+            ok 1 - Returns 200 OK
+            ok 2 - All exercises are compound
+            1..2
+        ok 4 - should filter by movement_pattern (200) # time=3.026ms
+        
+        # Subtest: should return 400 for invalid muscle_group
+            ok 1 - Returns 400 Bad Request
+            ok 2 - Returns error message
+            1..2
+        ok 5 - should return 400 for invalid muscle_group # time=4.227ms
+        
+        1..5
+    ok 1 - GET /api/exercises # time=36.158ms
     
-    1..1
-not ok 1 - Exercise Library Endpoints Contract Tests # time=87.121ms
-  ---
-  at:
-    fileName: tests/contract/exercises.test.ts
-    lineNumber: 13
-    columnNumber: 5
-    isToplevel: true
-  source: |2
-     */
-  
-    tap.test('Exercise Library Endpoints Contract Tests', async (t) => {
-    ----^
-      const app = await buildApp();
-  ...
+    # Subtest: GET /api/exercises/:id
+        # Subtest: should return exercise details by ID (200)
+            ok 1 - Returns 200 OK
+            ok 2 - Returns correct exercise
+            ok 3 - Has name
+            ok 4 - Has primary_muscle_group
+            ok 5 - Has secondary_muscle_groups
+            ok 6 - Has equipment
+            ok 7 - Has movement_pattern
+            ok 8 - Has description
+            1..8
+        ok 1 - should return exercise details by ID (200) # time=6.78ms
+        
+        # Subtest: should return 404 for non-existent exercise
+            ok 1 - Returns 404 Not Found
+            ok 2 - Returns error message
+            1..2
+        ok 2 - should return 404 for non-existent exercise # time=2.17ms
+        
+        # Subtest: should return 401 without authentication
+            ok 1 - Returns 401 Unauthorized
+            1..1
+        ok 3 - should return 401 without authentication # time=1.74ms
+        
+        1..3
+    ok 2 - GET /api/exercises/:id # time=14.756ms
+    
+    1..2
+ok 1 - Exercise Library Endpoints Contract Tests # time=592.088ms
 
+{"level":30,"time":1759550015340,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"GET","url":"/api/exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015347,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":6.401516000041738,"msg":"request completed"}
+{"level":30,"time":1759550015356,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/exercises?muscle_group=chest","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015357,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":1.0989190000109375,"msg":"request completed"}
+{"level":30,"time":1759550015362,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/exercises?equipment=barbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015363,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":1.1310480000684038,"msg":"request completed"}
+{"level":30,"time":1759550015366,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises?movement_pattern=compound","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015367,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.3084500000113621,"msg":"request completed"}
+{"level":30,"time":1759550015370,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/exercises?muscle_group=invalid","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015371,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"responseTime":1.517422999953851,"msg":"request completed"}
+{"level":30,"time":1759550015377,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"GET","url":"/api/exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015379,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":1.1929290000116453,"msg":"request completed"}
+{"level":30,"time":1759550015379,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/exercises/57","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015380,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":1.2310629999265075,"msg":"request completed"}
+{"level":30,"time":1759550015386,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"GET","url":"/api/exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015387,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":404},"responseTime":0.5847310000099242,"msg":"request completed"}
+{"level":30,"time":1759550015389,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/exercises/1","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759550015390,"pid":16119,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":401},"responseTime":0.8623590000206605,"msg":"request completed"}
 1..1
 Database connection closed

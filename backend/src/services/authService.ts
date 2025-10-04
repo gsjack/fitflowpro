@@ -36,6 +36,8 @@ export interface User {
  */
 export interface RegisterResponse {
   user_id: number;
+  userId: number; // Alias for compatibility
+  username: string;
   token: string;
 }
 
@@ -106,6 +108,8 @@ export async function registerUser(
 
   return {
     user_id,
+    userId: user_id, // Alias for compatibility
+    username,
     token,
   };
 }

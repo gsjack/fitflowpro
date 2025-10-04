@@ -1,7 +1,7 @@
 import { getExercises, getExerciseById } from '../services/exerciseService.js';
 import { authenticateJWT } from '../middleware/auth.js';
 export default async function exerciseRoutes(fastify) {
-    fastify.get('/api/exercises', {
+    fastify.get('/', {
         preHandler: authenticateJWT,
         schema: {
             querystring: {
@@ -86,7 +86,7 @@ export default async function exerciseRoutes(fastify) {
             });
         }
     });
-    fastify.get('/api/exercises/:id', {
+    fastify.get('/:id', {
         preHandler: authenticateJWT,
         schema: {
             params: {

@@ -16,7 +16,7 @@ tap.test('Exercise Library Endpoints Contract Tests', async (t) => {
   // Create test user and get auth token
   let authToken: string;
 
-  await t.before(async () => {
+  t.before(async () => {
     const registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
@@ -29,16 +29,8 @@ tap.test('Exercise Library Endpoints Contract Tests', async (t) => {
       }
     });
 
-    const loginResponse = await app.inject({
-      method: 'POST',
-      url: '/api/auth/login',
-      payload: {
-        username: registerResponse.json().username,
-        password: 'SecurePass123!'
-      }
-    });
-
-    authToken = loginResponse.json().token;
+    const body = registerResponse.json();
+    authToken = body.token;
   });
 
   // T004: Contract test GET /api/exercises with filtering

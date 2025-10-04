@@ -71,7 +71,7 @@ export interface VO2maxProgressionPoint {
  * @param averageHR - Average heart rate during session (optional, not used in Cooper formula)
  * @returns Estimated VO2max in ml/kg/min, clamped to physiological range 20-80
  */
-export function estimateVO2max(age: number, averageHR?: number): number {
+export function estimateVO2max(age: number, _averageHR?: number): number {
   const maxHR = 220 - age;
   const restingHR = 60; // Standard assumption
 
@@ -190,9 +190,9 @@ export function createVO2maxSession(data: VO2maxSessionData): number {
     .prepare(
       `INSERT INTO vo2max_sessions (
         workout_id, protocol, duration_seconds, intervals_completed,
-        average_hr, peak_hr, estimated_vo2max, synced
+        average_hr, peak_hr, estimated_vo2max, synced, created_at
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, 1)`
+      VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)`
     )
     .run(
       data.workout_id,
@@ -201,7 +201,8 @@ export function createVO2maxSession(data: VO2maxSessionData): number {
       data.intervals_completed ?? null,
       data.average_heart_rate ?? null,
       data.peak_heart_rate ?? null,
-      estimatedVO2max ?? null
+      estimatedVO2max ?? null,
+      Date.now()
     );
 
   const sessionId = result.lastInsertRowid as number;

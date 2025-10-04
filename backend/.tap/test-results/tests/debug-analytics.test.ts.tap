@@ -1,0 +1,65 @@
+TAP version 14
+{"level":30,"time":1759549675033,"pid":8139,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759549675257,"pid":8139,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":222.24243000001297,"msg":"request completed"}
+Register: 201 {
+  user_id: 327,
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMyNywidXNlcm5hbWUiOiJ0ZXN0LWRlYnVnLTE3NTk1NDk2NzQ4OTBAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTk1NDk2NzUsImV4cCI6MTc2MjE0MTY3NX0.Aud43-QLY2SyQYoJmApJntT3-NVwPwRdES4xmuZFPJ0'
+}
+Login: 400 {
+  statusCode: 400,
+  code: 'FST_ERR_VALIDATION',
+  error: 'Bad Request',
+  message: "body must have required property 'username'"
+}
+Auth token: undefined
+Analytics: 401 { error: 'Unauthorized - Invalid or expired token' }
+# Subtest: Debug Analytics Auth
+    not ok 1 - Should return 200
+      ---
+      compare: ===
+      at:
+        fileName: tests/debug-analytics.test.ts
+        lineNumber: 50
+        columnNumber: 5
+        typeName: Test
+      stack: |
+        Test.<anonymous> (tests/debug-analytics.test.ts:50:5)
+      source: >2
+          console.log('Analytics:', analyticsResponse.statusCode,
+        analyticsResponse.json());
+      
+          t.equal(analyticsResponse.statusCode, 200, 'Should return 200');
+        ----^
+      
+          await app.close();
+      diff: |
+        --- expected
+        +++ actual
+        @@ -1,1 +1,1 @@
+        -200
+        +401
+      ...
+    
+    1..1
+not ok 1 - Debug Analytics Auth # time=439.334ms
+  ---
+  at:
+    fileName: tests/debug-analytics.test.ts
+    lineNumber: 4
+    columnNumber: 5
+    isToplevel: true
+  source: |
+    import buildApp from '../src/server.js';
+  
+    tap.test('Debug Analytics Auth', async (t) => {
+    ----^
+      const app = await buildApp();
+  ...
+
+{"level":30,"time":1759549675260,"pid":8139,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759549675261,"pid":8139,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":400},"err":{"type":"Error","message":"body must have required property 'username'","stack":"Error: body must have required property 'username'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"username"},"message":"must have required property 'username'"}],"validationContext":"body"},"msg":"body must have required property 'username'"}
+{"level":30,"time":1759549675262,"pid":8139,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":400},"responseTime":2.551803000009386,"msg":"request completed"}
+{"level":30,"time":1759549675263,"pid":8139,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/analytics/volume-current-week","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759549675264,"pid":8139,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":401},"responseTime":1.036898000020301,"msg":"request completed"}
+1..1
+Database connection closed
