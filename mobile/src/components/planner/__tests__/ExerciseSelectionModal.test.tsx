@@ -67,7 +67,15 @@ describe('ExerciseSelectionModal', () => {
     });
   });
 
-  const renderWithProvider = (props: any) => {
+  interface TestProps {
+    visible?: boolean;
+    onDismiss?: () => void;
+    onSelect?: (exerciseId: number) => void;
+    currentExerciseId?: number;
+    muscleGroup?: string;
+  }
+
+  const renderWithProvider = (props: TestProps) => {
     return render(
       <PaperProvider>
         <ExerciseSelectionModal {...props} />

@@ -58,7 +58,8 @@ export function WeeklyConsistencyCalendar({
       const isToday = isSameDay(date, today);
       const dayOfWeek = date.getDay();
       // Simulate workout pattern: more likely on weekdays, random completion
-      const workoutCompleted = !isToday && Math.random() > (dayOfWeek === 0 || dayOfWeek === 6 ? 0.7 : 0.3);
+      const workoutCompleted =
+        !isToday && Math.random() > (dayOfWeek === 0 || dayOfWeek === 6 ? 0.7 : 0.3);
       const sets = workoutCompleted ? Math.floor(Math.random() * 20) + 5 : 0;
       const duration = workoutCompleted ? Math.floor(Math.random() * 60) + 30 : 0;
 
@@ -206,10 +207,7 @@ export function WeeklyConsistencyCalendar({
             {monthLabels.map((label, index) => (
               <Text
                 key={index}
-                style={[
-                  styles.monthLabel,
-                  { left: label.weekIndex * (SQUARE_SIZE + SQUARE_GAP) },
-                ]}
+                style={[styles.monthLabel, { left: label.weekIndex * (SQUARE_SIZE + SQUARE_GAP) }]}
               >
                 {label.month}
               </Text>
@@ -261,10 +259,7 @@ export function WeeklyConsistencyCalendar({
             {[0, 5, 10, 15, 20].map((sets, index) => (
               <View
                 key={index}
-                style={[
-                  styles.legendSquare,
-                  { backgroundColor: getIntensityColor(sets) },
-                ]}
+                style={[styles.legendSquare, { backgroundColor: getIntensityColor(sets) }]}
               />
             ))}
             <Text variant="bodySmall" style={styles.legendLabel}>
@@ -308,11 +303,7 @@ export function WeeklyConsistencyCalendar({
               </>
             ) : (
               <View style={styles.dialogRow}>
-                <MaterialCommunityIcons
-                  name="sleep"
-                  size={20}
-                  color={colors.text.secondary}
-                />
+                <MaterialCommunityIcons name="sleep" size={20} color={colors.text.secondary} />
                 <Paragraph style={styles.dialogText}>Rest day</Paragraph>
               </View>
             )}

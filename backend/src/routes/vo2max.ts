@@ -241,9 +241,44 @@ const updateSessionSchema = {
 };
 
 /**
+ * VO2max session response type
+ */
+interface VO2maxSessionResponse {
+  id: number;
+  user_id: number;
+  workout_id: number;
+  date: string;
+  duration_minutes: number;
+  protocol_type: string;
+  average_heart_rate: number | null;
+  peak_heart_rate: number | null;
+  estimated_vo2max: number | null;
+  intervals_completed: number | null;
+  rpe: number | null;
+  completion_status?: string;
+  notes: string | null;
+  created_at?: number;
+}
+
+/**
  * Transform database row to API response format
  */
-function transformSessionToResponse(row: any): any {
+function transformSessionToResponse(row: {
+  id: number;
+  user_id: number;
+  workout_id: number;
+  date: string;
+  duration_seconds: number;
+  protocol: string;
+  average_hr: number | null;
+  peak_hr: number | null;
+  estimated_vo2max: number | null;
+  intervals_completed: number | null;
+  rpe: number | null;
+  completion_status?: string;
+  notes: string | null;
+  created_at?: number;
+}): VO2maxSessionResponse {
   return {
     id: row.id,
     user_id: row.user_id,
@@ -280,10 +315,7 @@ export default async function vo2maxRoutes(fastify: FastifyInstance) {
       ...createSessionSchema,
       preHandler: authenticateJWT,
     },
-    async (
-      request: FastifyRequest<{ Body: CreateVO2maxSessionBody }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Body: CreateVO2maxSessionBody }>, reply: FastifyReply) => {
       try {
         const authenticatedUser = (request as AuthenticatedRequest).user;
         const {
@@ -319,8 +351,7 @@ export default async function vo2maxRoutes(fastify: FastifyInstance) {
 
           if (!vo2maxDay) {
             return reply.status(400).send({
-              error:
-                'No VO2max program day found. Please create a program with VO2max days first.',
+              error: 'No VO2max program day found. Please create a program with VO2max days first.',
             });
           }
 
@@ -337,9 +368,9 @@ export default async function vo2maxRoutes(fastify: FastifyInstance) {
           workoutId = workoutResult.lastInsertRowid as number;
         } else {
           // Verify workout ownership
-          const workout = db
-            .prepare('SELECT user_id FROM workouts WHERE id = ?')
-            .get(workoutId) as { user_id: number } | undefined;
+          const workout = db.prepare('SELECT user_id FROM workouts WHERE id = ?').get(workoutId) as
+            | { user_id: number }
+            | undefined;
 
           if (!workout || workout.user_id !== authenticatedUser.userId) {
             return reply.status(403).send({
@@ -503,19 +534,12 @@ export default async function vo2maxRoutes(fastify: FastifyInstance) {
       ...progressionSchema,
       preHandler: authenticateJWT,
     },
-    async (
-      request: FastifyRequest<{ Querystring: ProgressionQuery }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Querystring: ProgressionQuery }>, reply: FastifyReply) => {
       try {
         const authenticatedUser = (request as AuthenticatedRequest).user;
         const { start_date, end_date } = request.query;
 
-        const progression = getVO2maxProgression(
-          authenticatedUser.userId,
-          start_date,
-          end_date
-        );
+        const progression = getVO2maxProgression(authenticatedUser.userId, start_date, end_date);
 
         // Transform protocol format
         const transformedProgression = progression.map((point) => ({
@@ -627,7 +651,7 @@ export default async function vo2maxRoutes(fastify: FastifyInstance) {
 
         // Build dynamic update query
         const updates: string[] = [];
-        const params: any[] = [];
+        const params: (string | number)[] = [];
 
         if (duration_minutes !== undefined) {
           updates.push('duration_seconds = ?');

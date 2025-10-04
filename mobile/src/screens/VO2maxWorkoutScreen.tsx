@@ -13,7 +13,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, Button, Portal, Dialog, Paragraph, ActivityIndicator, Chip } from 'react-native-paper';
+import {
+  Text,
+  Button,
+  Portal,
+  Dialog,
+  Paragraph,
+  ActivityIndicator,
+  Chip,
+} from 'react-native-paper';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { format } from 'date-fns';
 import Norwegian4x4Timer from '../components/Norwegian4x4Timer';
@@ -463,14 +471,8 @@ export default function VO2maxWorkoutScreen() {
 
       {/* Session Summary Dialog */}
       <Portal>
-        <Dialog
-          visible={showSummary}
-          onDismiss={handleDone}
-          style={styles.summaryDialog}
-        >
-          <Dialog.Title style={styles.summaryTitle}>
-            Workout Complete! 🎉
-          </Dialog.Title>
+        <Dialog visible={showSummary} onDismiss={handleDone} style={styles.summaryDialog}>
+          <Dialog.Title style={styles.summaryTitle}>Workout Complete! 🎉</Dialog.Title>
           <Dialog.Content>
             {sessionData && (
               <View style={styles.summaryContent}>
@@ -539,11 +541,7 @@ export default function VO2maxWorkoutScreen() {
             )}
           </Dialog.Content>
           <Dialog.Actions style={styles.summaryActions}>
-            <Button
-              onPress={handleDone}
-              mode="outlined"
-              style={styles.summaryButton}
-            >
+            <Button onPress={handleDone} mode="outlined" style={styles.summaryButton}>
               Done
             </Button>
             {sessionData?.session_id && (

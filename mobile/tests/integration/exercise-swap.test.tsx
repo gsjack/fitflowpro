@@ -308,9 +308,7 @@ describe('Scenario 1: Exercise Swap Workflow (T020)', () => {
    * AC-5: Modal closes after confirming swap
    */
   it('AC-5: should close modal after successful swap', async () => {
-    const { getByLabelText, findByText, queryByText } = render(
-      <PlannerScreen userId={userId} />
-    );
+    const { getByLabelText, findByText, queryByText } = render(<PlannerScreen userId={userId} />);
 
     // Open swap modal
     await findByText('Barbell Bench Press');
@@ -446,9 +444,7 @@ describe('Scenario 1: Exercise Swap Workflow (T020)', () => {
    * Edge Case: Search functionality in swap modal
    */
   it('should filter exercises by search query', async () => {
-    const { getByLabelText, findByText, queryByText } = render(
-      <PlannerScreen userId={userId} />
-    );
+    const { getByLabelText, findByText, queryByText } = render(<PlannerScreen userId={userId} />);
 
     // Open swap modal
     await findByText('Barbell Bench Press');

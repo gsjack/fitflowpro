@@ -64,7 +64,7 @@ const WORKOUT_EXERCISES = [
 /**
  * Calculate middle value of rep range
  */
-function getTargetReps(exercise: typeof WORKOUT_EXERCISES[0]): number {
+function getTargetReps(exercise: (typeof WORKOUT_EXERCISES)[0]): number {
   return Math.floor((exercise.reps.min + exercise.reps.max) / 2);
 }
 
@@ -73,7 +73,7 @@ function getTargetReps(exercise: typeof WORKOUT_EXERCISES[0]): number {
  */
 async function logSet(
   page: Page,
-  exercise: typeof WORKOUT_EXERCISES[0],
+  exercise: (typeof WORKOUT_EXERCISES)[0],
   setNumber: number
 ): Promise<void> {
   const targetReps = getTargetReps(exercise);
@@ -86,27 +86,42 @@ async function logSet(
   await page.waitForSelector('text=Weight (kg)', { timeout: 5000 });
 
   // Fill in weight - look for the input by label
-  const weightInput = page.locator('input').filter({ has: page.locator('text=Weight (kg)') }).first();
-  if (await weightInput.count() === 0) {
+  const weightInput = page
+    .locator('input')
+    .filter({ has: page.locator('text=Weight (kg)') })
+    .first();
+  if ((await weightInput.count()) === 0) {
     // Alternative: find by placeholder or nearby text
-    await page.locator('input[inputmode="decimal"], input[type="text"]').first().fill(exercise.weight.toString());
+    await page
+      .locator('input[inputmode="decimal"], input[type="text"]')
+      .first()
+      .fill(exercise.weight.toString());
   } else {
     await weightInput.fill(exercise.weight.toString());
   }
   await page.waitForTimeout(300);
 
   // Fill in reps - look for the input by label
-  const repsInput = page.locator('input').filter({ has: page.locator('text=Reps') }).first();
-  if (await repsInput.count() === 0) {
+  const repsInput = page
+    .locator('input')
+    .filter({ has: page.locator('text=Reps') })
+    .first();
+  if ((await repsInput.count()) === 0) {
     // Alternative: find second numeric input
-    await page.locator('input[inputmode="numeric"], input[type="number"]').first().fill(targetReps.toString());
+    await page
+      .locator('input[inputmode="numeric"], input[type="number"]')
+      .first()
+      .fill(targetReps.toString());
   } else {
     await repsInput.fill(targetReps.toString());
   }
   await page.waitForTimeout(300);
 
   // Select RIR - use segmented button
-  const rirButton = page.locator(`button`).filter({ hasText: new RegExp(`^${exercise.rir}$`) }).first();
+  const rirButton = page
+    .locator(`button`)
+    .filter({ hasText: new RegExp(`^${exercise.rir}$`) })
+    .first();
   await rirButton.click();
   await page.waitForTimeout(300);
 
@@ -147,7 +162,10 @@ test('complete guided workout with all exercises', async ({ page }) => {
   console.log('🔐 Step 2: Logging in...');
 
   // Click Login tab
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(1000);
 
@@ -156,7 +174,10 @@ test('complete guided workout with all exercises', async ({ page }) => {
   await page.locator('input[type="password"]').fill('Password123');
 
   // Click login button
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
 
   console.log('✓ Login submitted');
@@ -167,7 +188,7 @@ test('complete guided workout with all exercises', async ({ page }) => {
   console.log('✓ Dashboard loaded\n');
 
   // ===== STEP 3: Verify today's workout is displayed =====
-  console.log('📋 Step 3: Checking today\'s workout...');
+  console.log("📋 Step 3: Checking today's workout...");
 
   const bodyText = await page.textContent('body');
 
@@ -180,7 +201,7 @@ test('complete guided workout with all exercises', async ({ page }) => {
     throw new Error('Expected workout not found on dashboard');
   }
 
-  console.log('✓ Today\'s workout found: Push B (Shoulder-Focused)\n');
+  console.log("✓ Today's workout found: Push B (Shoulder-Focused)\n");
 
   // ===== STEP 4: Start workout (navigate to Workout tab) =====
   console.log('🚀 Step 4: Starting workout...');
@@ -188,7 +209,7 @@ test('complete guided workout with all exercises', async ({ page }) => {
   // First, try to click "Start Workout" button to initialize the workout
   const startButton = page.locator('button').filter({ hasText: /Start Workout/i });
 
-  if (await startButton.count() > 0) {
+  if ((await startButton.count()) > 0) {
     await startButton.click();
     console.log('✓ Clicked "Start Workout" button');
     await page.waitForTimeout(1000);
@@ -219,7 +240,9 @@ test('complete guided workout with all exercises', async ({ page }) => {
     const exercise = WORKOUT_EXERCISES[i];
 
     console.log(`\n📝 Exercise ${i + 1}/${WORKOUT_EXERCISES.length}: ${exercise.name}`);
-    console.log(`   Target: ${exercise.sets} sets × ${exercise.reps.min}-${exercise.reps.max} reps @ RIR ${exercise.rir}`);
+    console.log(
+      `   Target: ${exercise.sets} sets × ${exercise.reps.min}-${exercise.reps.max} reps @ RIR ${exercise.rir}`
+    );
 
     // Log all sets for this exercise
     for (let setNum = 1; setNum <= exercise.sets; setNum++) {
@@ -231,7 +254,7 @@ test('complete guided workout with all exercises', async ({ page }) => {
 
         // Take error screenshot
         await page.screenshot({
-          path: `/tmp/error-${exercise.name.replace(/\s+/g, '-').toLowerCase()}-set${setNum}.png`
+          path: `/tmp/error-${exercise.name.replace(/\s+/g, '-').toLowerCase()}-set${setNum}.png`,
         });
 
         // Try to continue with next set
@@ -246,7 +269,7 @@ test('complete guided workout with all exercises', async ({ page }) => {
       // Look for "Next Exercise" button or similar
       const nextButton = page.locator('button').filter({ hasText: /Next Exercise|Continue/i });
 
-      if (await nextButton.count() > 0) {
+      if ((await nextButton.count()) > 0) {
         await nextButton.click();
         await page.waitForTimeout(1000);
         console.log('  → Moved to next exercise');
@@ -265,7 +288,7 @@ test('complete guided workout with all exercises', async ({ page }) => {
   // Look for "Complete Workout" button
   const completeButton = page.locator('button').filter({ hasText: /Complete Workout|Finish/i });
 
-  if (await completeButton.count() > 0) {
+  if ((await completeButton.count()) > 0) {
     await completeButton.click();
     console.log('✓ Clicked "Complete Workout" button');
     await page.waitForTimeout(2000);
@@ -300,7 +323,9 @@ test('complete guided workout with all exercises', async ({ page }) => {
   console.log('\n========================================');
   console.log('✅ WORKOUT TEST COMPLETED');
   console.log('========================================');
-  console.log(`Total sets logged: ${totalSetsLogged}/${WORKOUT_EXERCISES.reduce((sum, ex) => sum + ex.sets, 0)}`);
+  console.log(
+    `Total sets logged: ${totalSetsLogged}/${WORKOUT_EXERCISES.reduce((sum, ex) => sum + ex.sets, 0)}`
+  );
   console.log('Screenshots saved to:');
   console.log('  - /tmp/01-dashboard.png');
   console.log('  - /tmp/02-workout-started.png');
@@ -333,14 +358,20 @@ test('quick navigation to workout screen', async ({ page }) => {
   await page.waitForSelector('text=FitFlow Pro', { timeout: 10000 });
 
   // Login
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(500);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
   await page.waitForTimeout(3000);
 
@@ -352,7 +383,10 @@ test('quick navigation to workout screen', async ({ page }) => {
   await page.screenshot({ path: '/tmp/workout-screen-quick.png', fullPage: true });
 
   const bodyText = await page.textContent('body');
-  console.log('Workout screen visible:', bodyText?.includes('Set') || bodyText?.includes('Exercise') || bodyText?.includes('active'));
+  console.log(
+    'Workout screen visible:',
+    bodyText?.includes('Set') || bodyText?.includes('Exercise') || bodyText?.includes('active')
+  );
   console.log('Body text sample:', bodyText?.substring(0, 200));
 
   console.log('✅ Quick navigation completed\n');

@@ -192,7 +192,11 @@ export default function PhaseProgressIndicator({
           style={[
             styles.phaseDot,
             {
-              backgroundColor: isActive ? config.color : isPast ? config.color : colors.background.tertiary,
+              backgroundColor: isActive
+                ? config.color
+                : isPast
+                  ? config.color
+                  : colors.background.tertiary,
               borderColor: isActive ? config.color : colors.effects.divider,
               borderWidth: isActive ? 3 : 1,
             },
@@ -208,7 +212,11 @@ export default function PhaseProgressIndicator({
           style={[
             styles.phaseLabel,
             {
-              color: isActive ? config.color : isPast ? colors.text.secondary : colors.text.tertiary,
+              color: isActive
+                ? config.color
+                : isPast
+                  ? colors.text.secondary
+                  : colors.text.tertiary,
               fontWeight: isActive ? 'bold' : 'normal',
             },
           ]}
@@ -327,7 +335,8 @@ export default function PhaseProgressIndicator({
               <Paragraph style={styles.boldText}>{nextConfig.label}</Paragraph>.
             </Paragraph>
             <Paragraph style={styles.dialogVolumeText}>
-              Volume Adjustment: <Paragraph style={styles.boldText}>{currentConfig.volumeDescription}</Paragraph>
+              Volume Adjustment:{' '}
+              <Paragraph style={styles.boldText}>{currentConfig.volumeDescription}</Paragraph>
             </Paragraph>
             <Paragraph style={styles.dialogDescription}>
               This will update target sets for all exercises in your program.

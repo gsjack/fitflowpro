@@ -7,7 +7,15 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { View, ScrollView, StyleSheet, AccessibilityInfo, findNodeHandle } from 'react-native';
-import { Text, Button, ProgressBar, IconButton, Dialog, Portal, Paragraph } from 'react-native-paper';
+import {
+  Text,
+  Button,
+  ProgressBar,
+  IconButton,
+  Dialog,
+  Portal,
+  Paragraph,
+} from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { useWorkoutStore } from '../stores/workoutStore';
@@ -90,17 +98,30 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
 
     const loadExercises = async () => {
       try {
-        console.log('[WorkoutScreen] Loading exercises for workout:', currentWorkout.id, 'exerciseIndex:', exerciseIndex);
+        console.log(
+          '[WorkoutScreen] Loading exercises for workout:',
+          currentWorkout.id,
+          'exerciseIndex:',
+          exerciseIndex
+        );
 
         // Fetch workout from API - exercises are included in the response
         const workout = await getWorkoutById(currentWorkout.id);
 
         if (workout && workout.exercises && workout.exercises.length > 0) {
-          console.log('[WorkoutScreen] Loaded exercises:', workout.exercises.map(e => e.exercise_name));
+          console.log(
+            '[WorkoutScreen] Loaded exercises:',
+            workout.exercises.map((e) => e.exercise_name)
+          );
           setExercises(workout.exercises);
 
           if (workout.exercises.length > exerciseIndex) {
-            console.log('[WorkoutScreen] Setting currentExercise to index', exerciseIndex, ':', workout.exercises[exerciseIndex].exercise_name);
+            console.log(
+              '[WorkoutScreen] Setting currentExercise to index',
+              exerciseIndex,
+              ':',
+              workout.exercises[exerciseIndex].exercise_name
+            );
             setCurrentExercise(workout.exercises[exerciseIndex]);
           }
         } else {
@@ -259,7 +280,9 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
           style={styles.gradient}
         >
           <View style={styles.emptyState}>
-            <Text variant="headlineSmall" style={styles.emptyTitle}>No Active Workout</Text>
+            <Text variant="headlineSmall" style={styles.emptyTitle}>
+              No Active Workout
+            </Text>
             <Text variant="bodyMedium" style={styles.emptyDescription}>
               Start a workout from the Dashboard
             </Text>
@@ -283,7 +306,9 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
         <View style={styles.stickyHeader}>
           <View style={styles.workoutInfo}>
             <View style={styles.headerContent} accessible={true} accessibilityRole="header">
-              <Text variant="labelMedium" style={styles.headerLabel}>ACTIVE WORKOUT</Text>
+              <Text variant="labelMedium" style={styles.headerLabel}>
+                ACTIVE WORKOUT
+              </Text>
               <Text variant="headlineSmall" style={styles.headerTitle}>
                 {currentExercise.exercise_name}
               </Text>
@@ -367,15 +392,13 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
           <Dialog.Title>Exit Workout?</Dialog.Title>
           <Dialog.Content>
             <Paragraph>
-              All logged sets will be deleted and the workout will be reset. You can start it again later.
+              All logged sets will be deleted and the workout will be reset. You can start it again
+              later.
             </Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => setCancelDialogVisible(false)}>Keep Training</Button>
-            <Button
-              onPress={confirmCancelWorkout}
-              textColor={colors.error.main}
-            >
+            <Button onPress={confirmCancelWorkout} textColor={colors.error.main}>
               Exit
             </Button>
           </Dialog.Actions>

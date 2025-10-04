@@ -67,7 +67,9 @@ export async function startInterval(
     state.phaseStartTime = Date.now();
     state.isRunning = true;
 
-    console.log(`[IntervalTimer] Started ${cycles} cycles: ${workSeconds}s work / ${restSeconds}s rest`);
+    console.log(
+      `[IntervalTimer] Started ${cycles} cycles: ${workSeconds}s work / ${restSeconds}s rest`
+    );
 
     // Send start notification
     await sendNotification(
@@ -211,10 +213,7 @@ async function transitionToNextPhase(): Promise<void> {
       // All cycles complete
       await stopInterval();
 
-      await sendNotification(
-        'Interval Complete',
-        `All ${state.config.cycles} cycles finished!`
-      );
+      await sendNotification('Interval Complete', `All ${state.config.cycles} cycles finished!`);
       await playSound('complete');
 
       console.log('[IntervalTimer] All cycles completed');

@@ -20,7 +20,11 @@
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import * as SQLite from 'expo-sqlite';
-import { getVolumeZone, getVolumeZoneColor, VOLUME_LANDMARKS } from '../../src/constants/volumeLandmarks';
+import {
+  getVolumeZone,
+  getVolumeZoneColor,
+  VOLUME_LANDMARKS,
+} from '../../src/constants/volumeLandmarks';
 
 // Mock modules
 vi.mock('expo-sqlite', () => ({
@@ -449,7 +453,8 @@ describe('Integration Test: Muscle Volume Tracking Visualization (T024)', () => 
       },
     ]);
 
-    const volumeData = await mockDb.getAllAsync(`
+    const volumeData = await mockDb.getAllAsync(
+      `
       SELECT
         e.muscle_groups,
         COUNT(*) as total_sets
@@ -461,7 +466,9 @@ describe('Integration Test: Muscle Volume Tracking Visualization (T024)', () => 
         AND w.date <= ?
         AND w.status = 'completed'
       GROUP BY e.muscle_groups
-    `, [userId, weekStart, weekEnd]);
+    `,
+      [userId, weekStart, weekEnd]
+    );
 
     expect(volumeData.length).toBe(3);
 

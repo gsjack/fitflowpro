@@ -170,15 +170,15 @@ export function createVO2maxSession(data: VO2maxSessionData): number {
 
   if (estimatedVO2max === undefined && data.average_heart_rate !== undefined) {
     // Get user's age for Cooper formula
-    const user = db
-      .prepare('SELECT id, age FROM users WHERE id = ?')
-      .get(data.user_id) as { id: number; age: number } | undefined;
+    const user = db.prepare('SELECT id, age FROM users WHERE id = ?').get(data.user_id) as
+      | { id: number; age: number }
+      | undefined;
 
     if (user && user.age) {
       estimatedVO2max = estimateVO2max(user.age, data.average_heart_rate);
       console.log(
         `[VO2max] Auto-calculated VO2max: ${estimatedVO2max.toFixed(1)} ml/kg/min ` +
-        `(age=${user.age}, HR=${data.average_heart_rate})`
+          `(age=${user.age}, HR=${data.average_heart_rate})`
       );
     } else {
       console.warn(`[VO2max] Cannot calculate VO2max: user age not available`);
@@ -209,7 +209,7 @@ export function createVO2maxSession(data: VO2maxSessionData): number {
 
   console.log(
     `[VO2max] Session created: id=${sessionId}, workout=${data.workout_id}, ` +
-    `protocol=${protocol}, duration=${data.duration_minutes}min, VO2max=${estimatedVO2max?.toFixed(1) ?? 'N/A'}`
+      `protocol=${protocol}, duration=${data.duration_minutes}min, VO2max=${estimatedVO2max?.toFixed(1) ?? 'N/A'}`
   );
 
   return sessionId;
@@ -226,7 +226,7 @@ export function createVO2maxSession(data: VO2maxSessionData): number {
  * @param filters - Filter options
  * @returns Array of VO2max sessions with workout and user data
  */
-export function getVO2maxSessions(filters: VO2maxSessionFilters): any[] {
+export function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSession[] {
   const { user_id, start_date, end_date, protocol_type, limit = 50, offset = 0 } = filters;
 
   // Enforce maximum limit of 200
@@ -244,7 +244,7 @@ export function getVO2maxSessions(filters: VO2maxSessionFilters): any[] {
     WHERE w.user_id = ?
   `;
 
-  const params: any[] = [user_id];
+  const params: (string | number)[] = [user_id];
 
   // Add date range filters
   if (start_date) {
@@ -300,7 +300,7 @@ export function getVO2maxProgression(
       AND v.estimated_vo2max IS NOT NULL
   `;
 
-  const params: any[] = [userId];
+  const params: (string | number)[] = [userId];
 
   if (startDate) {
     query += ` AND w.date >= ?`;
@@ -334,7 +334,7 @@ export function getVO2maxProgression(
  * @param userId - User ID (for ownership validation)
  * @returns VO2max session or null if not found
  */
-export function getVO2maxSessionById(sessionId: number, userId: number): any | null {
+export function getVO2maxSessionById(sessionId: number, userId: number): VO2maxSession | null {
   const session = db
     .prepare(
       `

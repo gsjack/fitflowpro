@@ -109,7 +109,13 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
 
     const workoutResult = await mockDb.runAsync(
       'INSERT INTO workouts (user_id, program_day_id, date, status, started_at) VALUES (?, ?, ?, ?, ?)',
-      [workoutData.user_id, workoutData.program_day_id, workoutData.date, workoutData.status, Date.now()]
+      [
+        workoutData.user_id,
+        workoutData.program_day_id,
+        workoutData.date,
+        workoutData.status,
+        Date.now(),
+      ]
     );
 
     workoutId = workoutResult.lastInsertRowId;
@@ -186,7 +192,11 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
       { timeRemaining: 60, message: '1 minute remaining', sound: 'warning_beep' },
       { timeRemaining: 30, message: '30 seconds', sound: 'warning_beep' },
       { timeRemaining: 10, message: '10 seconds, prepare for recovery', sound: 'warning_beep' },
-      { timeRemaining: 0, message: 'Work interval complete! Start active recovery.', sound: 'completion_beep' },
+      {
+        timeRemaining: 0,
+        message: 'Work interval complete! Start active recovery.',
+        sound: 'completion_beep',
+      },
     ];
 
     for (const cue of audioCues) {
@@ -246,7 +256,10 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
     vi.mocked(mockTimer.getTimeRemaining).mockReturnValue(0);
     await sendNotification('Recovery Complete', 'Prepare for work interval 2.');
     await playSound('energetic_beep');
-    expect(sendNotification).toHaveBeenCalledWith('Recovery Complete', 'Prepare for work interval 2.');
+    expect(sendNotification).toHaveBeenCalledWith(
+      'Recovery Complete',
+      'Prepare for work interval 2.'
+    );
   });
 
   /**
@@ -431,16 +444,7 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
 
     expect(mockDb.runAsync).toHaveBeenCalledWith(
       expect.stringContaining('INSERT INTO vo2max_sessions'),
-      expect.arrayContaining([
-        workoutId,
-        '4x4',
-        1680,
-        4,
-        180,
-        182,
-        46.4,
-        0,
-      ])
+      expect.arrayContaining([workoutId, '4x4', 1680, 4, 180, 182, 46.4, 0])
     );
 
     // Validate physiological ranges
@@ -651,7 +655,9 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
       [workoutId]
     );
 
-    const avgHR = Math.round(intervalResults.reduce((sum, i) => sum + i.workHR, 0) / intervalResults.length);
+    const avgHR = Math.round(
+      intervalResults.reduce((sum, i) => sum + i.workHR, 0) / intervalResults.length
+    );
     const peakHR = Math.max(...intervalResults.map((i) => i.workHR));
     const estimatedVO2max = parseFloat((15.3 * (peakHR / 60)).toFixed(1));
 
@@ -664,10 +670,11 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
 
     // 5. Mark workout completed
     const completedAt = startTime + 1680000; // 28 minutes later
-    await mockDb.runAsync(
-      'UPDATE workouts SET status = ?, completed_at = ? WHERE id = ?',
-      ['completed', completedAt, workoutId]
-    );
+    await mockDb.runAsync('UPDATE workouts SET status = ?, completed_at = ? WHERE id = ?', [
+      'completed',
+      completedAt,
+      workoutId,
+    ]);
 
     // 6. Verify Analytics data
     vi.mocked(mockDb.getFirstAsync).mockResolvedValue({
@@ -681,10 +688,9 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
       estimated_vo2max: estimatedVO2max,
     });
 
-    const savedSession = await mockDb.getFirstAsync(
-      'SELECT * FROM vo2max_sessions WHERE id = ?',
-      [vo2maxSessionId]
-    );
+    const savedSession = await mockDb.getFirstAsync('SELECT * FROM vo2max_sessions WHERE id = ?', [
+      vo2maxSessionId,
+    ]);
 
     // Assertions
     expect(savedSession.workout_id).toBe(workoutId);

@@ -42,16 +42,16 @@ try {
   // Remove comments and split into individual CREATE INDEX statements
   const cleanSql = migration002
     .split('\n')
-    .filter(line => !line.trim().startsWith('--'))
+    .filter((line) => !line.trim().startsWith('--'))
     .join('\n')
     .replace(/\/\*[\s\S]*?\*\//g, ''); // Remove block comments
 
   const statements = cleanSql
     .split(';')
-    .map(s => s.trim())
-    .filter(s => s && s.toUpperCase().includes('CREATE INDEX'));
+    .map((s) => s.trim())
+    .filter((s) => s && s.toUpperCase().includes('CREATE INDEX'));
 
-  statements.forEach(statement => {
+  statements.forEach((statement) => {
     db.exec(statement + ';');
     const indexName = statement.match(/CREATE INDEX IF NOT EXISTS (\w+)/)?.[1];
     console.log(`  ✓ Created index: ${indexName}`);
@@ -82,17 +82,17 @@ const expectedIndices = {
   program_exercises: [
     'idx_program_exercises_program_day_id',
     'idx_program_exercises_exercise_id',
-    'idx_program_exercises_order'
+    'idx_program_exercises_order',
   ],
   sets: ['idx_sets_exercise_id'],
-  workouts: ['idx_workouts_date_range']
+  workouts: ['idx_workouts_date_range'],
 };
 
 let allIndicesFound = true;
 
 for (const [table, expectedIndexNames] of Object.entries(expectedIndices)) {
   const indices = db.prepare(`PRAGMA index_list(${table})`).all() as IndexInfo[];
-  const indexNames = indices.map(idx => idx.name);
+  const indexNames = indices.map((idx) => idx.name);
 
   console.log(`\n  Table: ${table}`);
 
@@ -128,31 +128,35 @@ interface QueryPlan {
 
 // Test 3a: Exercise equipment filtering
 console.log('  Test 3a: Exercise filtering by equipment');
-const equipmentPlan = db.prepare(`EXPLAIN QUERY PLAN SELECT * FROM exercises WHERE equipment = 'barbell'`).all() as QueryPlan[];
-const usesEquipmentIndex = equipmentPlan.some(row =>
-  row.detail.includes('idx_exercises_equipment') || row.detail.includes('USING INDEX')
+const equipmentPlan = db
+  .prepare(`EXPLAIN QUERY PLAN SELECT * FROM exercises WHERE equipment = 'barbell'`)
+  .all() as QueryPlan[];
+const usesEquipmentIndex = equipmentPlan.some(
+  (row) => row.detail.includes('idx_exercises_equipment') || row.detail.includes('USING INDEX')
 );
 console.log(`    Query plan: ${equipmentPlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesEquipmentIndex ? '✓' : '✗'}\n`);
 
 // Test 3b: Program exercises ordered retrieval
 console.log('  Test 3b: Program exercises ordered by index');
-const programExercisePlan = db.prepare(
-  `EXPLAIN QUERY PLAN SELECT * FROM program_exercises WHERE program_day_id = 1 ORDER BY order_index`
-).all() as QueryPlan[];
-const usesProgramIndex = programExercisePlan.some(row =>
-  row.detail.includes('idx_program_exercises') || row.detail.includes('USING INDEX')
+const programExercisePlan = db
+  .prepare(
+    `EXPLAIN QUERY PLAN SELECT * FROM program_exercises WHERE program_day_id = 1 ORDER BY order_index`
+  )
+  .all() as QueryPlan[];
+const usesProgramIndex = programExercisePlan.some(
+  (row) => row.detail.includes('idx_program_exercises') || row.detail.includes('USING INDEX')
 );
 console.log(`    Query plan: ${programExercisePlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesProgramIndex ? '✓' : '✗'}\n`);
 
 // Test 3c: Volume analytics by exercise
 console.log('  Test 3c: Volume aggregation by exercise');
-const volumePlan = db.prepare(
-  `EXPLAIN QUERY PLAN SELECT SUM(weight_kg * reps) FROM sets WHERE exercise_id = 10`
-).all() as QueryPlan[];
-const usesSetsIndex = volumePlan.some(row =>
-  row.detail.includes('idx_sets_exercise') || row.detail.includes('USING INDEX')
+const volumePlan = db
+  .prepare(`EXPLAIN QUERY PLAN SELECT SUM(weight_kg * reps) FROM sets WHERE exercise_id = 10`)
+  .all() as QueryPlan[];
+const usesSetsIndex = volumePlan.some(
+  (row) => row.detail.includes('idx_sets_exercise') || row.detail.includes('USING INDEX')
 );
 console.log(`    Query plan: ${volumePlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesSetsIndex ? '✓' : '✗'}\n`);
@@ -182,9 +186,11 @@ interface TriggerInfo {
   sql: string;
 }
 
-const triggers = db.prepare(
-  `SELECT name, sql FROM sqlite_master WHERE type='trigger' AND tbl_name='vo2max_sessions'`
-).all() as TriggerInfo[];
+const triggers = db
+  .prepare(
+    `SELECT name, sql FROM sqlite_master WHERE type='trigger' AND tbl_name='vo2max_sessions'`
+  )
+  .all() as TriggerInfo[];
 
 const expectedTriggers = [
   'validate_vo2max_hr_insert',
@@ -194,10 +200,10 @@ const expectedTriggers = [
   'validate_vo2max_hr_update',
   'validate_vo2max_peak_hr_update',
   'validate_vo2max_estimate_update',
-  'validate_vo2max_duration_update'
+  'validate_vo2max_duration_update',
 ];
 
-const triggerNames = triggers.map(t => t.name);
+const triggerNames = triggers.map((t) => t.name);
 let allTriggersFound = true;
 
 for (const expectedTrigger of expectedTriggers) {
@@ -227,39 +233,51 @@ const testUserId = 1;
 const testProgramDayId = 1;
 
 // Ensure test user exists
-db.prepare(`
+db.prepare(
+  `
   INSERT OR IGNORE INTO users (id, username, password_hash, created_at, updated_at)
   VALUES (?, 'test_migration_user', 'dummy_hash', ?, ?)
-`).run(testUserId, Date.now(), Date.now());
+`
+).run(testUserId, Date.now(), Date.now());
 
 // Ensure test program exists
-db.prepare(`
+db.prepare(
+  `
   INSERT OR IGNORE INTO programs (id, user_id, name, created_at)
   VALUES (1, ?, 'Test Program', ?)
-`).run(testUserId, Date.now());
+`
+).run(testUserId, Date.now());
 
 // Ensure test program_day exists
-db.prepare(`
+db.prepare(
+  `
   INSERT OR IGNORE INTO program_days (id, program_id, day_of_week, day_name, day_type)
   VALUES (?, 1, 1, 'Test Day', 'vo2max')
-`).run(testProgramDayId);
+`
+).run(testProgramDayId);
 
 // Create test workout
-const testWorkoutId = db.prepare(`
+const testWorkoutId = db
+  .prepare(
+    `
   INSERT INTO workouts (user_id, program_day_id, date, status)
   VALUES (?, ?, '2025-10-03', 'in_progress')
   RETURNING id
-`).get(testUserId, testProgramDayId) as { id: number };
+`
+  )
+  .get(testUserId, testProgramDayId) as { id: number };
 
 console.log(`  Created test workout: ${testWorkoutId.id}\n`);
 
 // Test 6a: Invalid heart rate (should fail)
 console.log('  Test 6a: Attempting to insert invalid average_hr (250 bpm)');
 try {
-  db.prepare(`
+  db.prepare(
+    `
     INSERT INTO vo2max_sessions (workout_id, protocol, duration_seconds, average_hr)
     VALUES (?, '4x4', 1200, 250)
-  `).run(testWorkoutId.id);
+  `
+  ).run(testWorkoutId.id);
   console.log('    ✗ FAILED: Invalid HR was accepted (constraint not working)\n');
   process.exit(1);
 } catch (error) {
@@ -274,10 +292,12 @@ try {
 // Test 6b: Invalid peak HR (should fail)
 console.log('  Test 6b: Attempting to insert invalid peak_hr (250 bpm)');
 try {
-  db.prepare(`
+  db.prepare(
+    `
     INSERT INTO vo2max_sessions (workout_id, protocol, duration_seconds, peak_hr)
     VALUES (?, '4x4', 1200, 250)
-  `).run(testWorkoutId.id);
+  `
+  ).run(testWorkoutId.id);
   console.log('    ✗ FAILED: Invalid peak HR was accepted\n');
   process.exit(1);
 } catch (error) {
@@ -292,10 +312,12 @@ try {
 // Test 6c: Invalid VO2max estimate (should fail)
 console.log('  Test 6c: Attempting to insert invalid estimated_vo2max (90.0)');
 try {
-  db.prepare(`
+  db.prepare(
+    `
     INSERT INTO vo2max_sessions (workout_id, protocol, duration_seconds, estimated_vo2max)
     VALUES (?, '4x4', 1200, 90.0)
-  `).run(testWorkoutId.id);
+  `
+  ).run(testWorkoutId.id);
   console.log('    ✗ FAILED: Invalid VO2max was accepted\n');
   process.exit(1);
 } catch (error) {
@@ -310,10 +332,12 @@ try {
 // Test 6d: Invalid duration (should fail)
 console.log('  Test 6d: Attempting to insert invalid duration_seconds (300 = 5 min)');
 try {
-  db.prepare(`
+  db.prepare(
+    `
     INSERT INTO vo2max_sessions (workout_id, protocol, duration_seconds)
     VALUES (?, '4x4', 300)
-  `).run(testWorkoutId.id);
+  `
+  ).run(testWorkoutId.id);
   console.log('    ✗ FAILED: Invalid duration was accepted\n');
   process.exit(1);
 } catch (error) {
@@ -328,11 +352,15 @@ try {
 // Test 6e: Valid data (should succeed)
 console.log('  Test 6e: Inserting valid VO2max session');
 try {
-  const result = db.prepare(`
+  const result = db
+    .prepare(
+      `
     INSERT INTO vo2max_sessions (workout_id, protocol, duration_seconds, average_hr, peak_hr, estimated_vo2max)
     VALUES (?, '4x4', 1200, 165, 185, 52.5)
     RETURNING id
-  `).get(testWorkoutId.id) as { id: number };
+  `
+    )
+    .get(testWorkoutId.id) as { id: number };
   console.log(`    ✓ PASSED: Valid data accepted (id: ${result.id})\n`);
 } catch (error) {
   console.log(`    ✗ FAILED: Valid data rejected: ${error}\n`);

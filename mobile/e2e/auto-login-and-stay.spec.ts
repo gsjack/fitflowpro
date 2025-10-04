@@ -15,14 +15,20 @@ test('auto login and keep dashboard open', async ({ page }) => {
   await page.waitForSelector('text=FitFlow Pro', { timeout: 10000 });
 
   // Try to login with existing user first
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(1000);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
 
   console.log('✓ Submitted login');
@@ -31,13 +37,16 @@ test('auto login and keep dashboard open', async ({ page }) => {
 
   // Check if logged in
   let bodyText = await page.textContent('body');
-  let isLoggedIn = bodyText?.includes('Home') || bodyText?.includes('Workout');
+  const isLoggedIn = bodyText?.includes('Home') || bodyText?.includes('Workout');
 
   if (!isLoggedIn) {
     console.log('Login failed, trying registration...');
 
     // Switch to register
-    const registerTab = page.locator('button').filter({ hasText: /Register/i }).first();
+    const registerTab = page
+      .locator('button')
+      .filter({ hasText: /Register/i })
+      .first();
     await registerTab.click();
     await page.waitForTimeout(1000);
 
@@ -62,11 +71,19 @@ test('auto login and keep dashboard open', async ({ page }) => {
   console.log('========================================');
   console.log('URL: http://localhost:8081');
   console.log('Status: Logged in');
-  console.log('Visible tabs:', bodyText?.includes('Home') ? '✓' : '✗', 'Home |',
-                               bodyText?.includes('Workout') ? '✓' : '✗', 'Workout |',
-                               bodyText?.includes('Analytics') ? '✓' : '✗', 'Analytics |',
-                               bodyText?.includes('Planner') ? '✓' : '✗', 'Planner |',
-                               bodyText?.includes('Settings') ? '✓' : '✗', 'Settings');
+  console.log(
+    'Visible tabs:',
+    bodyText?.includes('Home') ? '✓' : '✗',
+    'Home |',
+    bodyText?.includes('Workout') ? '✓' : '✗',
+    'Workout |',
+    bodyText?.includes('Analytics') ? '✓' : '✗',
+    'Analytics |',
+    bodyText?.includes('Planner') ? '✓' : '✗',
+    'Planner |',
+    bodyText?.includes('Settings') ? '✓' : '✗',
+    'Settings'
+  );
   console.log('========================================\n');
 
   // Keep browser open - wait indefinitely

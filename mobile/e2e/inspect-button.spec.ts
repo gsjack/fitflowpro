@@ -2,11 +2,11 @@ import { test } from '@playwright/test';
 
 test('inspect button element and click', async ({ page }) => {
   // Enable verbose logging
-  page.on('console', msg => {
+  page.on('console', (msg) => {
     console.log('[BROWSER]:', msg.text());
   });
 
-  page.on('pageerror', error => {
+  page.on('pageerror', (error) => {
     console.error('[PAGE ERROR]:', error.message);
     console.error('[STACK]:', error.stack);
   });
@@ -31,7 +31,7 @@ test('inspect button element and click', async ({ page }) => {
     const text = await button.textContent();
     const role = await button.getAttribute('role');
     const accessibilityRole = await button.getAttribute('accessibilityrole');
-    const tag = await button.evaluate(el => el.tagName);
+    const tag = await button.evaluate((el) => el.tagName);
 
     console.log(`\nButton ${i}:`);
     console.log(`  Tag: ${tag}`);
@@ -44,9 +44,10 @@ test('inspect button element and click', async ({ page }) => {
       console.log(`\n✓ This is the LOGIN button!`);
 
       // Get all event listeners (if possible)
-      const hasOnClick = await button.evaluate(el => {
+      const hasOnClick = await button.evaluate((el) => {
         const hasClickAttr = el.hasAttribute('onclick');
-        const hasClickListener = (el as any)._reactProps?.onPress || (el as any)._reactProps?.onClick;
+        const hasClickListener =
+          (el as any)._reactProps?.onPress || (el as any)._reactProps?.onClick;
         return { hasClickAttr, hasClickListener: !!hasClickListener };
       });
 
@@ -61,11 +62,11 @@ test('inspect button element and click', async ({ page }) => {
       await page.waitForTimeout(1000);
 
       console.log('Method 2: JavaScript click()');
-      await button.evaluate(el => (el as HTMLElement).click());
+      await button.evaluate((el) => (el as HTMLElement).click());
       await page.waitForTimeout(1000);
 
       console.log('Method 3: dispatchEvent');
-      await button.evaluate(el => {
+      await button.evaluate((el) => {
         el.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         el.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
         el.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));

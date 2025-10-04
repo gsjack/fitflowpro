@@ -90,7 +90,9 @@ export default function SetLogCard({
           <View style={styles.mainInputs}>
             {/* Weight Input */}
             <View style={styles.inputGroup}>
-              <Text variant="labelSmall" style={styles.inputLabel}>WEIGHT (KG)</Text>
+              <Text variant="labelSmall" style={styles.inputLabel}>
+                WEIGHT (KG)
+              </Text>
               <View style={styles.numberInputRow}>
                 <Button
                   mode="contained-tonal"
@@ -135,7 +137,9 @@ export default function SetLogCard({
 
             {/* Reps Input */}
             <View style={styles.inputGroup}>
-              <Text variant="labelSmall" style={styles.inputLabel}>REPS</Text>
+              <Text variant="labelSmall" style={styles.inputLabel}>
+                REPS
+              </Text>
               <View style={styles.numberInputRow}>
                 <Button
                   mode="contained-tonal"

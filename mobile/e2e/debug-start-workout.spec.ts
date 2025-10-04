@@ -19,14 +19,20 @@ test('debug workout start', async ({ page }) => {
 
   // Step 2: Login
   console.log('2. Logging in...');
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(500);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
   await page.waitForTimeout(3000);
 

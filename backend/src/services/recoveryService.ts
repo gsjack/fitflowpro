@@ -76,7 +76,8 @@ export function createAssessment(
 
   if (existing) {
     // Update existing assessment
-    db.prepare(`
+    db.prepare(
+      `
       UPDATE recovery_assessments
       SET sleep_quality = ?,
           muscle_soreness = ?,
@@ -85,7 +86,8 @@ export function createAssessment(
           volume_adjustment = ?,
           timestamp = ?
       WHERE id = ?
-    `).run(
+    `
+    ).run(
       sleepQuality,
       muscleSoreness,
       mentalMotivation,

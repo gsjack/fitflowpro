@@ -15,7 +15,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Card, Text, Button, SegmentedButtons, Portal, Dialog, Paragraph } from 'react-native-paper';
+import {
+  Card,
+  Text,
+  Button,
+  SegmentedButtons,
+  Portal,
+  Dialog,
+  Paragraph,
+} from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   RecoveryAssessment,
@@ -259,7 +267,9 @@ export default function RecoveryAssessmentForm({
                       style={[styles.scoreValue, { color: getScoreColor(totalScore) }]}
                     >
                       {totalScore}
-                      <Text variant="titleMedium" style={styles.scoreMax}>/15</Text>
+                      <Text variant="titleMedium" style={styles.scoreMax}>
+                        /15
+                      </Text>
                     </Text>
                   </View>
 
@@ -279,9 +289,14 @@ export default function RecoveryAssessmentForm({
                   <View style={styles.explanationBox}>
                     <Text variant="bodySmall" style={styles.explanationText}>
                       {totalScore >= 12 && '🎯 Great recovery! Proceed with your planned workout.'}
-                      {totalScore >= 9 && totalScore < 12 && '⚠️ Moderate recovery. Consider reducing volume by 1 set per exercise.'}
-                      {totalScore >= 6 && totalScore < 9 && '⚠️ Poor recovery. Reduce volume by 2 sets per exercise or focus on lighter work.'}
-                      {totalScore < 6 && '🛑 Very poor recovery. Consider taking a rest day or doing light active recovery only.'}
+                      {totalScore >= 9 &&
+                        totalScore < 12 &&
+                        '⚠️ Moderate recovery. Consider reducing volume by 1 set per exercise.'}
+                      {totalScore >= 6 &&
+                        totalScore < 9 &&
+                        '⚠️ Poor recovery. Reduce volume by 2 sets per exercise or focus on lighter work.'}
+                      {totalScore < 6 &&
+                        '🛑 Very poor recovery. Consider taking a rest day or doing light active recovery only.'}
                     </Text>
                   </View>
                 </View>
@@ -315,7 +330,8 @@ export default function RecoveryAssessmentForm({
           <Dialog.Title>Assessment Submitted</Dialog.Title>
           <Dialog.Content>
             <Paragraph>
-              Your recovery assessment has been saved. Your workout volume will be adjusted based on your recovery score.
+              Your recovery assessment has been saved. Your workout volume will be adjusted based on
+              your recovery score.
             </Paragraph>
           </Dialog.Content>
           <Dialog.Actions>

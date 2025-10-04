@@ -19,14 +19,20 @@ test('verify exercise names change - simple version', async ({ page }) => {
   await page.goto('http://localhost:8081', { waitUntil: 'networkidle' });
   await page.waitForSelector('text=FitFlow Pro', { timeout: 10000 });
 
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(500);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
   await page.waitForTimeout(3000);
   console.log('✓ Logged in\n');
@@ -35,7 +41,7 @@ test('verify exercise names change - simple version', async ({ page }) => {
   console.log('Step 2: Start workout from dashboard');
   const startWorkoutBtn = page.locator('button').filter({ hasText: /Start Workout/i });
 
-  if (await startWorkoutBtn.count() > 0) {
+  if ((await startWorkoutBtn.count()) > 0) {
     console.log('✓ Found "Start Workout" button, clicking...');
     await startWorkoutBtn.first().click();
     await page.waitForTimeout(3000);
@@ -59,13 +65,22 @@ test('verify exercise names change - simple version', async ({ page }) => {
     const bodyText = await page.textContent('body');
 
     // Try to find exercise name before "Set X"
-    const match = bodyText?.match(/(Leg Press|Overhead Press|Dumbbell Bench Press|Cable Lateral Raises|Rear Delt Flyes|Close-Grip Bench Press)\s*Set\s+\d+/);
+    const match = bodyText?.match(
+      /(Leg Press|Overhead Press|Dumbbell Bench Press|Cable Lateral Raises|Rear Delt Flyes|Close-Grip Bench Press)\s*Set\s+\d+/
+    );
     if (match) {
       return match[1];
     }
 
     // Fallback: just look for known exercise names
-    const exercises = ['Leg Press', 'Overhead Press', 'Dumbbell Bench Press', 'Cable Lateral Raises', 'Rear Delt Flyes', 'Close-Grip Bench Press'];
+    const exercises = [
+      'Leg Press',
+      'Overhead Press',
+      'Dumbbell Bench Press',
+      'Cable Lateral Raises',
+      'Rear Delt Flyes',
+      'Close-Grip Bench Press',
+    ];
     for (const ex of exercises) {
       if (bodyText?.includes(ex)) {
         return ex;
@@ -77,7 +92,8 @@ test('verify exercise names change - simple version', async ({ page }) => {
 
   console.log('Step 4: Log sets and capture exercise changes\n');
 
-  const exerciseSnapshots: Array<{ setNumber: number; exerciseName: string; screenshot: string }> = [];
+  const exerciseSnapshots: Array<{ setNumber: number; exerciseName: string; screenshot: string }> =
+    [];
 
   // Log 19 sets to cover 3 exercises (3 + 4 + 3 = 10 sets for first 3 exercises)
   // We'll capture at sets 1, 4, 8, 12, and 19
@@ -118,7 +134,10 @@ test('verify exercise names change - simple version', async ({ page }) => {
       }
 
       // Complete set
-      const completeBtn = page.locator('button').filter({ hasText: /Complete Set/i }).first();
+      const completeBtn = page
+        .locator('button')
+        .filter({ hasText: /Complete Set/i })
+        .first();
       if (await completeBtn.isVisible()) {
         await completeBtn.click();
 
@@ -131,7 +150,6 @@ test('verify exercise names change - simple version', async ({ page }) => {
         console.log(`   ⚠️  Complete button not visible at set ${setNum}`);
         break;
       }
-
     } catch (error) {
       console.log(`   ❌ Error at set ${setNum}: ${error}`);
       break;
@@ -144,17 +162,17 @@ test('verify exercise names change - simple version', async ({ page }) => {
   console.log('========================================\n');
 
   console.log('Exercise names captured:');
-  exerciseSnapshots.forEach(snap => {
+  exerciseSnapshots.forEach((snap) => {
     console.log(`  Set ${snap.setNumber}: ${snap.exerciseName}`);
   });
 
   console.log('\n📸 Screenshots saved:');
-  exerciseSnapshots.forEach(snap => {
+  exerciseSnapshots.forEach((snap) => {
     console.log(`  - ${snap.screenshot}`);
   });
 
   // Verify we got different exercise names
-  const uniqueExercises = new Set(exerciseSnapshots.map(s => s.exerciseName));
+  const uniqueExercises = new Set(exerciseSnapshots.map((s) => s.exerciseName));
 
   console.log(`\n✅ Unique exercises detected: ${uniqueExercises.size}`);
   console.log(`   Exercises: ${Array.from(uniqueExercises).join(', ')}\n`);

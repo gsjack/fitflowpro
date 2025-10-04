@@ -265,7 +265,11 @@ export default function AlternativeExerciseSuggestions({
           <Text variant="titleMedium" style={[styles.errorTitle, { color: theme.colors.error }]}>
             {error}
           </Text>
-          <Button mode="contained" onPress={() => void fetchAlternatives()} style={styles.retryButton}>
+          <Button
+            mode="contained"
+            onPress={() => void fetchAlternatives()}
+            style={styles.retryButton}
+          >
             Retry
           </Button>
           <Button mode="text" onPress={onCancel} style={styles.cancelButton}>

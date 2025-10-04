@@ -14,14 +14,20 @@ test('capture first 3 exercises with screenshots', async ({ page }) => {
   await page.goto('http://localhost:8081', { waitUntil: 'networkidle' });
   await page.waitForSelector('text=FitFlow Pro', { timeout: 10000 });
 
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(500);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
   await page.waitForTimeout(3000);
 
@@ -46,7 +52,10 @@ test('capture first 3 exercises with screenshots', async ({ page }) => {
     await rirButtons.last().click();
     await page.waitForTimeout(200);
 
-    const completeButton = page.locator('button').filter({ hasText: /Complete Set/i }).first();
+    const completeButton = page
+      .locator('button')
+      .filter({ hasText: /Complete Set/i })
+      .first();
     await completeButton.click();
     console.log(`  ✓ Set ${setNum}/3 logged`);
     await page.waitForTimeout(2000);
@@ -68,7 +77,10 @@ test('capture first 3 exercises with screenshots', async ({ page }) => {
     await rirButtons.last().click();
     await page.waitForTimeout(200);
 
-    const completeButton = page.locator('button').filter({ hasText: /Complete Set/i }).first();
+    const completeButton = page
+      .locator('button')
+      .filter({ hasText: /Complete Set/i })
+      .first();
     await completeButton.click();
     console.log(`  ✓ Set ${setNum}/4 logged`);
     await page.waitForTimeout(2000);

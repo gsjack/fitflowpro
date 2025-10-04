@@ -95,7 +95,12 @@ export default function ProgramVolumeOverview({ muscleGroups }: ProgramVolumeOve
             {mg.planned_weekly_sets} sets/week
           </Text>
         </View>
-        <VolumeWarningBadge zone={mg.zone} muscleGroup={mg.muscle_group} warning={mg.warning} compact />
+        <VolumeWarningBadge
+          zone={mg.zone}
+          muscleGroup={mg.muscle_group}
+          warning={mg.warning}
+          compact
+        />
       </View>
       <ProgressBar
         progress={getProgressValue(mg)}

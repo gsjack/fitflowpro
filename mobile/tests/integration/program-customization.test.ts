@@ -404,14 +404,20 @@ describe('Integration Test: Program Customization with Volume Validation (T023)'
 
     expect(mockDb.runAsync).toHaveBeenCalledWith(
       expect.stringContaining('UPDATE program_exercises'),
-      expect.arrayContaining([dumbbellRow.id, barbellRow.sets, barbellRow.reps, barbellRow.rir, barbellRow.id])
+      expect.arrayContaining([
+        dumbbellRow.id,
+        barbellRow.sets,
+        barbellRow.reps,
+        barbellRow.rir,
+        barbellRow.id,
+      ])
     );
 
     // Step 7: Update program timestamp
-    await mockDb.runAsync(
-      'UPDATE programs SET updated_at = ? WHERE id = ?',
-      [Date.now(), programId]
-    );
+    await mockDb.runAsync('UPDATE programs SET updated_at = ? WHERE id = ?', [
+      Date.now(),
+      programId,
+    ]);
 
     expect(mockDb.runAsync).toHaveBeenCalledWith(
       expect.stringContaining('UPDATE programs'),
@@ -443,7 +449,9 @@ describe('Integration Test: Program Customization with Volume Validation (T023)'
     expect(volumeWithoutCurl.biceps).toBe(8); // 4 * 2 = 8 sets/week (at MEV, not below)
 
     // Step 4: For a true MEV violation, test removing Pull-Ups instead
-    const exercisesWithoutPullups = initialPullAExercises.filter((ex) => ex.exercise_name !== 'Pull-Ups');
+    const exercisesWithoutPullups = initialPullAExercises.filter(
+      (ex) => ex.exercise_name !== 'Pull-Ups'
+    );
     const volumeWithoutPullups = calculateWeeklyVolume(calculateVolume(exercisesWithoutPullups));
 
     // Biceps would be: Barbell Curl (3) = 3 * 2 = 6 sets/week
@@ -493,10 +501,10 @@ describe('Integration Test: Program Customization with Volume Validation (T023)'
     expect(rearDeltValidation?.message).toContain('at/above MRV');
 
     // Step 5: Persist to database
-    await mockDb.runAsync(
-      'UPDATE program_exercises SET sets = ? WHERE id = ?',
-      [5, exercises[facePullsIndex].id]
-    );
+    await mockDb.runAsync('UPDATE program_exercises SET sets = ? WHERE id = ?', [
+      5,
+      exercises[facePullsIndex].id,
+    ]);
 
     expect(mockDb.runAsync).toHaveBeenCalledWith(
       expect.stringContaining('UPDATE program_exercises SET sets'),
@@ -576,10 +584,10 @@ describe('Integration Test: Program Customization with Volume Validation (T023)'
 
     // Step 3: Persist to database (batch update)
     for (const order of exerciseOrders) {
-      await mockDb.runAsync(
-        'UPDATE program_exercises SET order_index = ? WHERE id = ?',
-        [order.order_index, order.program_exercise_id]
-      );
+      await mockDb.runAsync('UPDATE program_exercises SET order_index = ? WHERE id = ?', [
+        order.order_index,
+        order.program_exercise_id,
+      ]);
     }
 
     expect(mockDb.runAsync).toHaveBeenCalledTimes(6);
@@ -613,7 +621,7 @@ describe('Integration Test: Program Customization with Volume Validation (T023)'
 
   it('AC-10: Should validate all muscle groups meet MEV after multiple changes', async () => {
     // Step 1: Make multiple changes
-    let exercises = [...initialPullAExercises];
+    const exercises = [...initialPullAExercises];
 
     // Change 1: Swap Barbell Row → Dumbbell Row
     const barbellRowIndex = exercises.findIndex((ex) => ex.exercise_name === 'Barbell Row');
@@ -670,10 +678,11 @@ describe('Integration Test: Program Customization with Volume Validation (T023)'
     let exercises = [...initialPullAExercises];
 
     // Remove multiple exercises to create violations
-    exercises = exercises.filter((ex) =>
-      ex.exercise_name !== 'Barbell Row' &&
-      ex.exercise_name !== 'Seated Cable Row' &&
-      ex.exercise_name !== 'Face Pulls'
+    exercises = exercises.filter(
+      (ex) =>
+        ex.exercise_name !== 'Barbell Row' &&
+        ex.exercise_name !== 'Seated Cable Row' &&
+        ex.exercise_name !== 'Face Pulls'
     );
 
     // Step 2: Calculate volume
@@ -738,9 +747,7 @@ describe('Integration Test: Program Customization with Volume Validation (T023)'
       {
         type: 'add_exercise',
         message: 'Add another lat exercise (e.g., Lat Pulldown)',
-        options: [
-          { exercise: 'Lat Pulldown', sets: 3, reps: '10-12', rir: 2 },
-        ],
+        options: [{ exercise: 'Lat Pulldown', sets: 3, reps: '10-12', rir: 2 }],
       },
       {
         type: 'swap_instead',

@@ -100,7 +100,7 @@ export async function createWorkout(
   const response = await fetch(`${API_BASE_URL}/api/workouts`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -147,7 +147,7 @@ export async function getWorkouts(
   const response = await fetch(url, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -179,7 +179,7 @@ export async function getWorkoutById(workoutId: number): Promise<Workout | null>
   const response = await fetch(`${API_BASE_URL}/api/workouts?workout_id=${workoutId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -212,7 +212,12 @@ export async function updateWorkoutStatus(
     throw new Error('Not authenticated');
   }
 
-  console.log('[workoutDb] Updating workout status via API:', { workoutId, status, totalVolumeKg, averageRir });
+  console.log('[workoutDb] Updating workout status via API:', {
+    workoutId,
+    status,
+    totalVolumeKg,
+    averageRir,
+  });
 
   const body: any = { status };
   if (totalVolumeKg !== undefined) body.total_volume_kg = totalVolumeKg;
@@ -221,7 +226,7 @@ export async function updateWorkoutStatus(
   const response = await fetch(`${API_BASE_URL}/api/workouts/${workoutId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
@@ -275,7 +280,7 @@ export async function logSet(
   const response = await fetch(`${API_BASE_URL}/api/sets`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -326,7 +331,7 @@ export async function getSetsForWorkout(workoutId: number): Promise<Set[]> {
   const response = await fetch(`${API_BASE_URL}/api/sets?workout_id=${workoutId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -368,7 +373,7 @@ export async function deleteSet(setId: number): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/api/sets/${setId}`, {
     method: 'DELETE',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -418,18 +423,21 @@ export async function getTodayWorkout(userId: number): Promise<Workout | null> {
     return null;
   }
 
-  console.log('[workoutDb] Fetching today\'s workout:', today);
+  console.log("[workoutDb] Fetching today's workout:", today);
 
-  const response = await fetch(`${API_BASE_URL}/api/workouts?start_date=${today}&end_date=${today}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
+  const response = await fetch(
+    `${API_BASE_URL}/api/workouts?start_date=${today}&end_date=${today}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 
   if (!response.ok) {
-    console.error('[workoutDb] Failed to fetch today\'s workout:', response.status);
+    console.error("[workoutDb] Failed to fetch today's workout:", response.status);
     return null;
   }
 

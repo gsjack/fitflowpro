@@ -37,6 +37,27 @@ export interface Workout {
 }
 
 /**
+ * Program exercise with denormalized exercise name
+ */
+interface ProgramExerciseWithName {
+  id: number;
+  program_day_id: number;
+  exercise_id: number;
+  order_index: number;
+  sets: number;
+  reps: string;
+  rir: number;
+  exercise_name: string;
+}
+
+/**
+ * Workout with exercises attached
+ */
+export interface WorkoutWithExercises extends Workout {
+  exercises: ProgramExerciseWithName[];
+}
+
+/**
  * Create a new workout session
  *
  * @param userId - ID of the user creating the workout
@@ -44,11 +65,7 @@ export interface Workout {
  * @param date - Date in ISO format (YYYY-MM-DD)
  * @returns The created workout object
  */
-export function createWorkout(
-  userId: number,
-  programDayId: number,
-  date: string
-): Workout {
+export function createWorkout(userId: number, programDayId: number, date: string): Workout {
   // Validate date format (basic check)
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     throw new Error('Invalid date format. Expected YYYY-MM-DD');
@@ -59,9 +76,7 @@ export function createWorkout(
   const workoutId = result.lastInsertRowid as number;
 
   // Return the created workout
-  const workout = db
-    .prepare('SELECT * FROM workouts WHERE id = ?')
-    .get(workoutId) as Workout;
+  const workout = db.prepare('SELECT * FROM workouts WHERE id = ?').get(workoutId) as Workout;
 
   return workout;
 }
@@ -97,16 +112,12 @@ export function listWorkouts(
   userId: number,
   startDate?: string,
   endDate?: string
-): any[] {
+): WorkoutWithExercises[] {
   let workouts: Workout[];
 
   // If both date filters provided, use date range query
   if (startDate && endDate) {
-    workouts = stmtGetWorkoutsByUserDateRange.all(
-      userId,
-      startDate,
-      endDate
-    ) as Workout[];
+    workouts = stmtGetWorkoutsByUserDateRange.all(userId, startDate, endDate) as Workout[];
   } else if (startDate) {
     // If only start date, filter in application layer
     const allWorkouts = stmtGetWorkoutsByUser.all(userId) as Workout[];
@@ -168,10 +179,9 @@ export function updateWorkoutStatus(
     }
 
     // Validate that program_day_id exists and belongs to user's program
-    const programDay = stmtValidateProgramDayOwnership.get(
-      programDayId,
-      userId
-    ) as { id: number } | undefined;
+    const programDay = stmtValidateProgramDayOwnership.get(programDayId, userId) as
+      | { id: number }
+      | undefined;
 
     if (!programDay) {
       throw new Error(

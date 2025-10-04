@@ -33,7 +33,6 @@ export default function GradientCard({
   accessibilityLabel,
   accessibilityRole,
 }: GradientCardProps) {
-
   return (
     <Card
       style={[styles.card, style]}

@@ -149,7 +149,9 @@ export function adjustTimer(deltaSeconds: number): void {
     timerState.remainingSeconds = 0;
   }
 
-  console.log(`[TimerService] Timer adjusted by ${deltaSeconds}s, remaining: ${timerState.remainingSeconds}s`);
+  console.log(
+    `[TimerService] Timer adjusted by ${deltaSeconds}s, remaining: ${timerState.remainingSeconds}s`
+  );
 }
 
 /**

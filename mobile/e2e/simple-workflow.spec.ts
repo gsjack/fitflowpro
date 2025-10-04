@@ -54,9 +54,8 @@ test('register new user and see dashboard', async ({ page }) => {
   console.log('  - Error:', bodyText?.includes('error') || bodyText?.includes('Error'));
 
   // Check if we see navigation tabs (indicates successful login)
-  const hasNavTabs = bodyText?.includes('Home') ||
-                     bodyText?.includes('Workout') ||
-                     bodyText?.includes('Analytics');
+  const hasNavTabs =
+    bodyText?.includes('Home') || bodyText?.includes('Workout') || bodyText?.includes('Analytics');
 
   if (hasNavTabs) {
     console.log('✅ SUCCESS! User registered and dashboard loaded');
@@ -81,7 +80,10 @@ test('login existing user', async ({ page }) => {
   console.log('✓ Auth screen loaded');
 
   // Make sure Login tab is selected
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(500);
 
@@ -93,7 +95,10 @@ test('login existing user', async ({ page }) => {
   await page.screenshot({ path: '/tmp/login-before-submit.png' });
 
   // Click the submit Login button (larger one at bottom, not the tab)
-  const submitButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const submitButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await submitButton.click();
   console.log('✓ Clicked Login button');
 
@@ -102,9 +107,8 @@ test('login existing user', async ({ page }) => {
   await page.screenshot({ path: '/tmp/login-after-submit.png', fullPage: true });
 
   const bodyText = await page.textContent('body');
-  const loggedIn = bodyText?.includes('Home') ||
-                   bodyText?.includes('Workout') ||
-                   bodyText?.includes('Analytics');
+  const loggedIn =
+    bodyText?.includes('Home') || bodyText?.includes('Workout') || bodyText?.includes('Analytics');
 
   if (loggedIn) {
     console.log('✅ Login successful!');

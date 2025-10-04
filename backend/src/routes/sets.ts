@@ -164,10 +164,7 @@ export default async function setRoutes(fastify: FastifyInstance) {
       ...logSetSchema,
       preHandler: authenticateJWT,
     },
-    async (
-      request: FastifyRequest<{ Body: LogSetBody }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Body: LogSetBody }>, reply: FastifyReply) => {
       try {
         const {
           workout_id,
@@ -208,10 +205,7 @@ export default async function setRoutes(fastify: FastifyInstance) {
         }
 
         // Handle database errors
-        if (
-          error instanceof Error &&
-          error.message.includes('FOREIGN KEY constraint failed')
-        ) {
+        if (error instanceof Error && error.message.includes('FOREIGN KEY constraint failed')) {
           return reply.status(400).send({
             error: 'Invalid workout_id or exercise_id',
           });

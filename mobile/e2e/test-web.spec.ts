@@ -44,9 +44,9 @@ test.describe('FitFlow Web App', () => {
     }
 
     // Check for import.meta syntax errors specifically
-    const hasSyntaxError = errors.some((err) =>
-      err.toLowerCase().includes('import.meta') ||
-      err.toLowerCase().includes('syntaxerror')
+    const hasSyntaxError = errors.some(
+      (err) =>
+        err.toLowerCase().includes('import.meta') || err.toLowerCase().includes('syntaxerror')
     );
     expect(hasSyntaxError).toBe(false);
 

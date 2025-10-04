@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 
 test('check network requests and bundle loading', async ({ page }) => {
   const requests: string[] = [];
-  const responses: Array<{url: string, status: number, type: string}> = [];
+  const responses: Array<{ url: string; status: number; type: string }> = [];
   const failures: string[] = [];
 
   page.on('request', (request) => {
@@ -13,7 +13,7 @@ test('check network requests and bundle loading', async ({ page }) => {
     responses.push({
       url: response.url(),
       status: response.status(),
-      type: response.headers()['content-type'] || 'unknown'
+      type: response.headers()['content-type'] || 'unknown',
     });
   });
 
@@ -50,7 +50,9 @@ test('check network requests and bundle loading', async ({ page }) => {
   failures.forEach((fail) => console.error(fail));
 
   console.log('\n========== BUNDLE LOADED? ==========');
-  const bundleLoaded = responses.some((res) => res.url.includes('index.ts.bundle') && res.status === 200);
+  const bundleLoaded = responses.some(
+    (res) => res.url.includes('index.ts.bundle') && res.status === 200
+  );
   console.log(`Bundle loaded: ${bundleLoaded}`);
 
   if (bundleLoaded) {

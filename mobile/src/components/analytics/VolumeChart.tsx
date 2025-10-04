@@ -12,7 +12,15 @@
 
 import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { Surface, Text, Menu, Button, ActivityIndicator, useTheme } from 'react-native-paper';
+import {
+  Surface,
+  Text,
+  Menu,
+  Button,
+  ActivityIndicator,
+  useTheme,
+  MD3Theme,
+} from 'react-native-paper';
 import { Svg, Rect, Line, Text as SvgText } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useVolumeTrends, VolumeTrendDataPoint } from '../../services/api/analyticsApi';
@@ -116,11 +124,7 @@ export function VolumeChart({ startDate, endDate }: VolumeChartProps): React.JSX
 
       {!isLoading && !error && data && data.length === 0 && (
         <View style={styles.centerContent}>
-          <MaterialCommunityIcons
-            name="chart-bar"
-            size={64}
-            color={colors.text.disabled}
-          />
+          <MaterialCommunityIcons name="chart-bar" size={64} color={colors.text.disabled} />
           <Text variant="bodyMedium" style={styles.emptyText}>
             No volume data available
           </Text>
@@ -159,7 +163,7 @@ export function VolumeChart({ startDate, endDate }: VolumeChartProps): React.JSX
 interface BarChartProps {
   data: VolumeTrendDataPoint[];
   muscleGroup: MuscleGroup;
-  theme: any;
+  theme: MD3Theme;
 }
 
 function BarChart({ data, muscleGroup, theme }: BarChartProps): React.JSX.Element {

@@ -6,7 +6,7 @@ Timeout only 60 seconds.
 
 ## Project Overview
 
-**FitFlow Pro** is a mobile-first fitness training application implementing evidence-based hypertrophy and cardiovascular training based on Renaissance Periodization (RP) methodology by Dr. Mike Israetel.
+**FitFlow Pro** is a mobile-first fitness training application implementing evidence-based hypertrophy and cardiovascular training based on Renaissance Periodization (RP) methodology by Dr. Mike Israetel. The app now includes a comprehensive exercise library (100+ exercises), program management with mesocycle phase progression (MEV/MAV/MRV/Deload), VO2max cardio tracking with Norwegian 4x4 protocol, and volume analytics with zone classification.
 
 **Tech Stack:**
 - **Frontend**: React Native (Expo SDK 54+), TypeScript, Zustand, TanStack Query, React Native Paper
@@ -35,6 +35,12 @@ All tasks from `/specs/001-specify-build-fitflow/tasks.md` completed using subag
 - ✅ POST /api/sets (set logging with 1RM calculation)
 - ✅ POST /api/recovery-assessments (auto-regulation logic)
 - ✅ GET /api/analytics/* (1RM progression, volume trends, consistency)
+- ✅ GET /api/exercises (filter by muscle group, equipment, movement pattern)
+- ✅ GET /api/programs, PATCH /api/programs/:id/advance-phase (phase progression)
+- ✅ GET /api/program-exercises, POST/PATCH/DELETE /api/program-exercises (exercise management)
+- ✅ PUT /api/program-exercises/:id/swap, PATCH /api/program-exercises/batch-reorder (exercise swapping/reordering)
+- ✅ POST /api/vo2max-sessions, GET /api/vo2max-sessions/progression (cardio tracking)
+- ✅ GET /api/analytics/volume-current-week, /api/analytics/volume-trends, /api/analytics/program-volume-analysis (volume analytics)
 
 ### Mobile Status: ⚠️ NEEDS FIXES (Does not compile)
 
@@ -55,18 +61,19 @@ All tasks from `/specs/001-specify-build-fitflow/tasks.md` completed using subag
 ### What Was Built
 
 **Backend** (100% functional):
-- 12 API endpoints with full authentication, validation, error handling
-- 5 service modules (auth, workout, set, recovery, analytics)
-- 7 contract test suites (136 tests total)
+- 35+ API endpoints with full authentication, validation, error handling
+- 11 service modules (auth, workout, set, recovery, analytics, exercise, program, programExercise, vo2max, volume, audit)
+- Contract test suites with 90.4% pass rate
 - PM2 deployment config, Nginx documentation
 - Audit logging, JWT middleware, bcrypt password hashing
+- Exercise library (100+ exercises), phase progression, volume analytics, VO2max tracking
 
 **Mobile** (UI exists, not integrated):
-- 6 screens: Auth, Dashboard, Workout, Analytics, Planner, Settings
-- 10+ components: SetLogCard, RestTimer, charts, modals
+- 7 screens: Auth, Dashboard, Workout, VO2maxWorkout, Analytics, Planner, Settings
+- 20+ components: SetLogCard, RestTimer, Norwegian4x4Timer, ExerciseSelectionModal, PhaseProgressIndicator, VolumeWarningBadge, VolumeTrendsChart, VO2maxSessionCard, VO2maxProgressionChart, charts, modals
 - 8 services: API clients, sync queue, timer, database, export
 - 2 Zustand stores: workoutStore, recoveryStore
-- 14 test files: integration, performance, unit tests
+- 20+ test files: integration, performance, unit tests, component tests
 - Accessibility compliance: WCAG 2.1 AA labels, focus management
 
 **What's Missing**:
@@ -188,10 +195,13 @@ sqlite3 fitflow.db "PRAGMA journal_mode=WAL;"
 ### Key Tables
 
 - `users`: Account, age, weight, experience_level
-- `exercises`: 100+ exercise library (pre-seeded)
-- `programs`: 6-day training split, mesocycle phase (mev/mav/mrv/deload)
-- `workouts`: Session tracking, status (not_started/in_progress/completed/cancelled)
-- `sets`: Weight, reps, RIR, timestamp, synced flag
+- `exercises`: 100+ exercise library (pre-seeded), muscle_groups, equipment, movement_pattern, primary/secondary muscle groups
+- `programs`: 6-day training split, mesocycle_phase (mev/mav/mrv/deload), mesocycle_week, phase_start_date
+- `program_days`: Individual day configuration (day 1-6), name (e.g., "Push Day 1")
+- `program_exercises`: Exercise assignment with sets, target_reps_min/max, target_rir, order_index
+- `workouts`: Session tracking, status (not_started/in_progress/completed/cancelled), program_day_id
+- `sets`: Weight, reps, RIR, timestamp, synced flag, exercise_id
+- `vo2max_sessions`: Cardio tracking, protocol (steady_state/intervals/norwegian_4x4), avg_hr, max_hr, vo2max_estimated
 - `recovery_assessments`: Daily 3-question check (sleep, soreness, motivation)
 - `active_sessions`: Resume functionality (expires after 24h)
 
@@ -239,6 +249,96 @@ Recovery score (3-15) adjusts workout volume:
 - **9-11**: -1 set per exercise
 - **6-8**: -2 sets per exercise
 - **3-5**: Rest day recommended
+
+### Exercise Library
+
+100+ exercises organized by:
+- **Muscle Groups**: 13 muscle groups (chest, back, quads, hamstrings, glutes, shoulders, biceps, triceps, forearms, abs, calves, traps, rear_delts)
+- **Equipment**: barbell, dumbbell, machine, cable, bodyweight, resistance_band
+- **Movement Pattern**: compound (≥2 muscle groups) or isolation (1 muscle group)
+- **Primary vs Secondary**: First muscle group = primary, remaining = secondary
+
+### Program Phase Progression
+
+**Mesocycle phases** with automatic volume adjustment:
+- **MEV** (Minimum Effective Volume): Baseline phase (weeks 1-2)
+- **MAV** (Maximum Adaptive Volume): Progressive overload (weeks 3-5)
+- **MRV** (Maximum Recoverable Volume): Peak volume (weeks 6-7)
+- **Deload**: Recovery phase (week 8)
+
+**Volume Multipliers** when advancing phases:
+- MEV → MAV: 1.2x (+20% volume increase)
+- MAV → MRV: 1.15x (+15% volume increase)
+- MRV → Deload: 0.5x (-50% volume reduction for recovery)
+- Deload → MEV: 2.0x (return to baseline, +100% from deload)
+
+**Progression Logic**:
+```typescript
+// Example: Bench Press starting at 10 sets in MEV
+MEV: 10 sets
+MAV: 10 × 1.2 = 12 sets
+MRV: 12 × 1.15 = 14 sets (rounded)
+Deload: 14 × 0.5 = 7 sets
+Next MEV: 7 × 2.0 = 14 sets (progressive overload)
+```
+
+### VO2max Estimation (Cooper Formula)
+
+**Cooper Formula** for estimating VO2max from heart rate:
+```typescript
+VO2max = 15.3 × (max_hr / resting_hr)
+
+where:
+  max_hr = 220 - age  // Age-predicted maximum heart rate
+  resting_hr = 60     // Standard resting heart rate assumption
+```
+
+**Example Calculation**:
+- User age: 28 years
+- Max HR: 220 - 28 = 192 bpm
+- VO2max: 15.3 × (192 / 60) = 48.96 ml/kg/min
+
+**Validation Ranges**:
+- Heart rate: 60-220 bpm (physiological limits)
+- VO2max: 20-80 ml/kg/min (clamped to realistic range)
+- Duration: 10-120 minutes
+
+### Norwegian 4x4 Protocol
+
+High-intensity interval training protocol for VO2max improvement:
+
+**Structure**: 4 intervals of:
+- **Work**: 4 minutes @ 85-95% max HR
+- **Recovery**: 3 minutes @ 60-70% max HR
+
+**Total Duration**: 28 minutes (16 min work + 12 min recovery)
+
+**Implementation**:
+- `Norwegian4x4Timer.tsx` component with visual interval tracking
+- Heart rate zone indicators (work/recovery)
+- Audio cues for interval transitions
+- Progress tracking via `vo2max_sessions.intervals_completed`
+
+### Volume Analytics & Zone Classification
+
+**Zone Classification Logic**:
+```typescript
+if (completed < MEV)           → 'below_mev'     // Under-training
+if (MEV ≤ completed < MAV)     → 'adequate'      // Maintenance
+if (MAV ≤ completed ≤ MRV)     → 'optimal'       // Hypertrophy zone
+if (completed > MRV)            → 'above_mrv'    // Overtraining risk
+if (planned in range AND completion ≥ 50%) → 'on_track'  // Progress tracking
+```
+
+**Example**:
+- Completed: 12 chest sets
+- MEV: 8, MAV: 14, MRV: 22
+- Zone: **'adequate'** (12 ≥ 8 AND 12 < 14)
+
+**Volume Counting Rules**:
+- **Full set counting**: 1 set Bench Press = +1 chest, +1 front_delts, +1 triceps
+- Weekly aggregation: Monday-Sunday (ISO 8601 weeks)
+- Multi-muscle exercises contribute to ALL muscle groups
 
 ## Code Style
 
@@ -437,6 +537,97 @@ if (activeSession.deviceId !== currentDeviceId) {
 
 **Problem**: Timer stops after 30 seconds when backgrounded
 **Solution**: Silent audio session (already implemented in `/mobile/src/services/timer/`)
+
+### Volume Calculation (Full Set Counting)
+
+**Problem**: Incorrectly calculating weekly volume by treating multi-muscle exercises as fractional sets
+**Root Cause**: Misunderstanding RP volume counting methodology
+
+**Symptoms**:
+- Volume totals don't match expected values
+- MEV/MAV/MRV warnings trigger incorrectly
+- Bench Press counted as 0.33 chest sets instead of 1 full set
+
+**Incorrect Approach**:
+```typescript
+// ❌ Bad: Fractional counting
+// Bench Press: ["chest", "front_delts", "triceps"]
+// 1 set = 0.33 chest + 0.33 delts + 0.33 triceps
+```
+
+**Correct Approach (FR-030)**:
+```typescript
+// ✅ Good: Full set counting
+// Bench Press: ["chest", "front_delts", "triceps"]
+// 1 set = 1 chest + 1 front_delts + 1 triceps
+
+// SQL Implementation using JSON_EACH
+SELECT
+  mg.value as muscle_group,
+  COUNT(s.id) as total_sets
+FROM sets s
+JOIN exercises e ON s.exercise_id = e.id
+JOIN json_each(e.muscle_groups) mg  -- Expands JSON array to rows
+GROUP BY mg.value
+```
+
+**Key Lesson**: Multi-muscle exercises contribute a FULL set to each muscle group worked, not a fractional amount. This is consistent with Renaissance Periodization methodology.
+
+### Phase Advancement
+
+**Problem**: Expecting automatic phase advancement based on weeks or calendar dates
+**Root Cause**: Misunderstanding mesocycle progression requirements
+
+**Symptoms**:
+- Waiting for automatic phase change that never happens
+- Confusion about when to advance MEV → MAV → MRV → Deload
+
+**Incorrect Assumption**:
+- ❌ "Phase advances automatically after 2 weeks in MEV"
+- ❌ "System auto-progresses based on mesocycle_week"
+
+**Correct Behavior**:
+- ✅ Phase advancement requires **manual trigger** via `PATCH /api/programs/:id/advance-phase`
+- ✅ User or coach decides when to advance based on recovery and performance
+- ✅ `mesocycle_week` is informational only (tracks weeks in current phase)
+
+**Rationale**: RP methodology requires individual assessment of readiness to progress. Some users may spend 1 week in MEV (fast adapters), others may need 3 weeks (slower recovery). Auto-progression would violate scientific training principles.
+
+### VO2max Sessions Without User Age
+
+**Problem**: Cannot create VO2max session, getting "age required" errors
+**Root Cause**: Cooper formula requires user age for max heart rate calculation
+
+**Symptoms**:
+- ✅ Session has heart rate data
+- ✅ Duration and protocol are valid
+- ❌ API returns 400: "User age required for VO2max estimation"
+
+**Diagnosis**:
+```sql
+-- Check if user has age set
+SELECT age FROM users WHERE id = ?;
+-- If NULL → Cannot use Cooper formula
+```
+
+**Solution**:
+```typescript
+// Option 1: Require age during registration
+POST /api/auth/register
+{
+  "username": "user@example.com",
+  "password": "Test123!",
+  "age": 28  // Required for VO2max tracking
+}
+
+// Option 2: Update user profile before creating VO2max session
+PATCH /api/users/:id
+{
+  "age": 28
+}
+```
+
+**Key Lesson**: VO2max estimation via Cooper formula is age-dependent (max_hr = 220 - age). Users must have age set in profile before creating cardio sessions with auto-estimation.
 
 ### Expo Environment Variables (CRITICAL)
 
@@ -690,11 +881,62 @@ Volume automatically adjusts when advancing phases (+20% MEV→MAV, +15% MAV→M
 
 ## Key Files to Know
 
-- **Mobile entry**: `/mobile/App.tsx`
+### Backend Services
 - **Backend entry**: `/backend/src/server.ts`
 - **SQLite schema**: `/backend/src/database/schema.sql`
+- **Auth service**: `/backend/src/services/authService.ts`
+- **Exercise service**: `/backend/src/services/exerciseService.ts`
+- **Program service**: `/backend/src/services/programService.ts`
+- **Program exercise service**: `/backend/src/services/programExerciseService.ts`
+- **VO2max service**: `/backend/src/services/vo2maxService.ts`
+- **Volume service**: `/backend/src/services/volumeService.ts`
+- **Workout service**: `/backend/src/services/workoutService.ts`
+- **Set service**: `/backend/src/services/setService.ts`
+- **Recovery service**: `/backend/src/services/recoveryService.ts`
+- **Analytics service**: `/backend/src/services/analyticsService.ts`
+
+### Backend Routes
+- **Auth routes**: `/backend/src/routes/auth.ts`
+- **Exercise routes**: `/backend/src/routes/exercises.ts`
+- **Program routes**: `/backend/src/routes/programs.ts`
+- **Program exercise routes**: `/backend/src/routes/program-exercises.ts`
+- **VO2max routes**: `/backend/src/routes/vo2max.ts`
+- **Workout routes**: `/backend/src/routes/workouts.ts`
+- **Set routes**: `/backend/src/routes/sets.ts`
+- **Recovery routes**: `/backend/src/routes/recovery.ts`
+- **Analytics routes**: `/backend/src/routes/analytics.ts`
+
+### Mobile Screens
+- **Mobile entry**: `/mobile/App.tsx`
+- **Auth screen**: `/mobile/src/screens/AuthScreen.tsx`
+- **Dashboard screen**: `/mobile/src/screens/DashboardScreen.tsx`
+- **Workout screen**: `/mobile/src/screens/WorkoutScreen.tsx`
+- **VO2max workout screen**: `/mobile/src/screens/VO2maxWorkoutScreen.tsx`
+- **Analytics screen**: `/mobile/src/screens/AnalyticsScreen.tsx`
+- **Planner screen**: `/mobile/src/screens/PlannerScreen.tsx`
+- **Settings screen**: `/mobile/src/screens/SettingsScreen.tsx`
+
+### Mobile Components
+- **Exercise selection modal**: `/mobile/src/components/planner/ExerciseSelectionModal.tsx`
+- **Phase progress indicator**: `/mobile/src/components/planner/PhaseProgressIndicator.tsx`
+- **Volume warning badge**: `/mobile/src/components/planner/VolumeWarningBadge.tsx`
+- **Alternative exercise suggestions**: `/mobile/src/components/planner/AlternativeExerciseSuggestions.tsx`
+- **Program volume overview**: `/mobile/src/components/planner/ProgramVolumeOverview.tsx`
+- **Norwegian 4x4 timer**: `/mobile/src/components/Norwegian4x4Timer.tsx`
+- **VO2max session card**: `/mobile/src/components/VO2maxSessionCard.tsx`
+- **VO2max progression chart**: `/mobile/src/components/VO2maxProgressionChart.tsx`
+- **Volume trends chart**: `/mobile/src/components/analytics/VolumeTrendsChart.tsx`
+- **Muscle group volume bar**: `/mobile/src/components/analytics/MuscleGroupVolumeBar.tsx`
+- **1RM progression chart**: `/mobile/src/components/analytics/OneRMProgressionChart.tsx`
+- **Rest timer**: `/mobile/src/components/workout/RestTimer.tsx`
+- **Set log card**: `/mobile/src/components/workout/SetLogCard.tsx`
+- **Recovery assessment form**: `/mobile/src/components/RecoveryAssessmentForm.tsx`
+
+### Mobile Services
 - **Sync queue**: `/mobile/src/services/sync/syncQueue.ts`
 - **Timer service**: `/mobile/src/services/timer/RestTimer.ts`
+
+### Constants & Configuration
 - **Volume landmarks**: `/mobile/src/constants/volumeLandmarks.ts`
 
 ## Constitution Compliance

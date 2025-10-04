@@ -85,7 +85,7 @@ test.describe('Visual Validation - Screenshots & Logs', () => {
     const workoutResponse = await fetch(`${BACKEND_URL}/api/workouts`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -105,7 +105,7 @@ test.describe('Visual Validation - Screenshots & Logs', () => {
     const setResponse = await fetch(`${BACKEND_URL}/api/sets`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -130,7 +130,7 @@ test.describe('Visual Validation - Screenshots & Logs', () => {
     const recoveryResponse = await fetch(`${BACKEND_URL}/api/recovery-assessments`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -151,7 +151,7 @@ test.describe('Visual Validation - Screenshots & Logs', () => {
     const completeResponse = await fetch(`${BACKEND_URL}/api/workouts/${workout.id}`, {
       method: 'PATCH',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ status: 'completed' }),
@@ -173,13 +173,13 @@ test.describe('Visual Validation - Screenshots & Logs', () => {
     console.log(`📊 Screenshots: 3`);
 
     console.log('\n🌐 Network Activity:');
-    const backendRequests = networkRequests.filter(r => r.url.includes('localhost:3000'));
-    backendRequests.slice(0, 10).forEach(req => {
+    const backendRequests = networkRequests.filter((r) => r.url.includes('localhost:3000'));
+    backendRequests.slice(0, 10).forEach((req) => {
       console.log(`  ${req.method} ${req.url.replace(BACKEND_URL, '')} → ${req.status}`);
     });
 
     console.log('\n📝 Console Logs (last 10):');
-    consoleLogs.slice(-10).forEach(log => {
+    consoleLogs.slice(-10).forEach((log) => {
       console.log(`  ${log}`);
     });
 

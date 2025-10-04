@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 
-test('show dashboard with today\'s workout details', async ({ page }) => {
+test("show dashboard with today's workout details", async ({ page }) => {
   test.setTimeout(300000); // 5 minutes
 
   await page.goto('http://localhost:8081', {
@@ -9,14 +9,20 @@ test('show dashboard with today\'s workout details', async ({ page }) => {
   });
 
   // Login
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(1000);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
 
   console.log('✓ Logging in...');
@@ -26,7 +32,7 @@ test('show dashboard with today\'s workout details', async ({ page }) => {
   await page.screenshot({ path: '/tmp/dashboard-current.png', fullPage: true });
 
   console.log('\n========================================');
-  console.log('✅ DASHBOARD WITH TODAY\'S WORKOUT');
+  console.log("✅ DASHBOARD WITH TODAY'S WORKOUT");
   console.log('========================================');
   console.log('URL: http://localhost:8081');
   console.log('Browser: Firefox (headed mode)');

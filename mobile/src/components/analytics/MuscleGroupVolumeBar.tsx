@@ -161,11 +161,7 @@ export function MuscleGroupVolumeBar({
           </View>
 
           {/* Progress Bar */}
-          <ProgressBar
-            progress={progress}
-            color={zoneColor}
-            style={styles.progressBar}
-          />
+          <ProgressBar progress={progress} color={zoneColor} style={styles.progressBar} />
 
           {/* Threshold Labels (below bar) */}
           <View style={styles.thresholdLabels}>

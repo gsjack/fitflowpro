@@ -194,11 +194,7 @@ export default async function authRoutes(fastify: FastifyInstance) {
         const { username, password } = request.body;
 
         // Call authentication service
-        const result = await loginUser(
-          username,
-          password,
-          (payload) => fastify.jwt.sign(payload)
-        );
+        const result = await loginUser(username, password, (payload) => fastify.jwt.sign(payload));
 
         // Log successful login
         const ipAddress = request.ip || 'unknown';

@@ -2,9 +2,9 @@ import { test } from '@playwright/test';
 
 test('debug delete user functionality', async ({ page }) => {
   // Listen to everything
-  page.on('console', msg => console.log('[BROWSER]', msg.text()));
-  page.on('request', req => console.log('[REQUEST]', req.method(), req.url()));
-  page.on('response', res => console.log('[RESPONSE]', res.status(), res.url()));
+  page.on('console', (msg) => console.log('[BROWSER]', msg.text()));
+  page.on('request', (req) => console.log('[REQUEST]', req.method(), req.url()));
+  page.on('response', (res) => console.log('[RESPONSE]', res.status(), res.url()));
 
   // Create a test user first (not demo user)
   console.log('[TEST] Creating test user...');
@@ -31,18 +31,20 @@ test('debug delete user functionality', async ({ page }) => {
 
   // Try to find and fill age/weight fields
   const ageInput = page.locator('input[placeholder*="age" i]');
-  if (await ageInput.count() > 0) {
+  if ((await ageInput.count()) > 0) {
     await ageInput.fill('30');
     console.log('[TEST] Filled age field');
   }
 
   const weightInput = page.locator('input[placeholder*="weight" i]');
-  if (await weightInput.count() > 0) {
+  if ((await weightInput.count()) > 0) {
     await weightInput.fill('75');
     console.log('[TEST] Filled weight field');
   }
 
-  const registerButton = page.locator('button').filter({ hasText: /create.*account|register|sign.*up/i });
+  const registerButton = page
+    .locator('button')
+    .filter({ hasText: /create.*account|register|sign.*up/i });
   console.log('[TEST] Clicking register button...');
   await registerButton.first().click();
   await page.waitForTimeout(3000);
@@ -84,7 +86,9 @@ test('debug delete user functionality', async ({ page }) => {
     }
 
     // Look for confirm button in dialog
-    const confirmButton = page.locator('button').filter({ hasText: /delete.*forever|confirm|delete/i });
+    const confirmButton = page
+      .locator('button')
+      .filter({ hasText: /delete.*forever|confirm|delete/i });
     const confirmCount = await confirmButton.count();
     console.log('[TEST] Found', confirmCount, 'confirmation buttons');
 
@@ -100,7 +104,10 @@ test('debug delete user functionality', async ({ page }) => {
     const currentUrl = page.url();
     console.log('[TEST] Current URL:', currentUrl);
 
-    const emailVisible = await page.locator('input[type="email"]').isVisible().catch(() => false);
+    const emailVisible = await page
+      .locator('input[type="email"]')
+      .isVisible()
+      .catch(() => false);
     console.log('[TEST] Email input visible:', emailVisible);
 
     if (emailVisible) {

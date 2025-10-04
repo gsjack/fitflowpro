@@ -2,9 +2,13 @@ import { test, expect } from '@playwright/test';
 
 test('complete logout flow works correctly', async ({ page }) => {
   // Listen to logs
-  page.on('console', msg => {
+  page.on('console', (msg) => {
     const text = msg.text();
-    if (text.includes('[AppNavigator]') || text.includes('[SettingsScreen]') || text.includes('[authApi]')) {
+    if (
+      text.includes('[AppNavigator]') ||
+      text.includes('[SettingsScreen]') ||
+      text.includes('[authApi]')
+    ) {
       console.log('[BROWSER]', text);
     }
   });

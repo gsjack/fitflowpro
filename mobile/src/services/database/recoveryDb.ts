@@ -93,7 +93,7 @@ export async function createAssessment(
     const response = await fetch(`${API_BASE_URL}/api/recovery-assessments`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -143,7 +143,7 @@ export async function getTodayAssessment(userId: number): Promise<RecoveryAssess
     const response = await fetch(`${API_BASE_URL}/api/recovery-assessments/${userId}/today`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     });
@@ -158,10 +158,10 @@ export async function getTodayAssessment(userId: number): Promise<RecoveryAssess
     }
 
     const assessment = await response.json();
-    console.log('[RecoveryDB] Fetched today\'s assessment from API:', assessment);
+    console.log("[RecoveryDB] Fetched today's assessment from API:", assessment);
     return assessment;
   } catch (error) {
-    console.error('[RecoveryDB] Error fetching today\'s assessment:', error);
+    console.error("[RecoveryDB] Error fetching today's assessment:", error);
     return null;
   }
 }
@@ -183,13 +183,16 @@ export async function getAssessmentByDate(
       return null;
     }
 
-    const response = await fetch(`${API_BASE_URL}/api/recovery-assessments/${userId}?date=${date}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/api/recovery-assessments/${userId}?date=${date}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     if (response.status === 404) {
       return null;
@@ -234,7 +237,7 @@ export async function getRecentAssessment(
       {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       }

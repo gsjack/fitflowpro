@@ -1,0 +1,162 @@
+TAP version 14
+# Subtest: Scenario 1: Exercise Swap
+{"level":30,"time":1759552508617,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552508837,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":218.25044599967077,"msg":"request completed"}
+{"level":30,"time":1759552508837,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509040,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":202.1657410003245,"msg":"request completed"}
+    # Subtest: AC-1: View current program with exercises
+        ok 1 - Returns 200 OK
+        ok 2 - Program has id
+        ok 3 - Program has program_days array
+        ok 4 - Program has at least one day
+        ok 5 - Program day has exercises array
+        ok 6 - Program day has at least one exercise
+        ok 7 - Exercise has id
+        ok 8 - Exercise has name
+        ok 9 - Exercise has target_sets
+        ok 10 - Exercise has target_rep_range
+        ok 11 - Exercise has target_rir
+        1..11
+    ok 1 - AC-1: View current program with exercises # time=6.537ms
+    
+    # Subtest: AC-2 & AC-3: Get alternative exercises for swap
+        ok 1 - Can fetch current exercise details
+        ok 2 - Returns alternative exercises
+        ok 3 - Response has exercises array
+        ok 4 - At least one alternative exercise exists
+        ok 5 - Alternative exercise Barbell Back Squat is in same muscle group
+        ok 6 - Alternative exercise Bulgarian Split Squat is in same muscle group
+        ok 7 - Alternative exercise Front Squat is in same muscle group
+        ok 8 - Alternative exercise Hack Squat is in same muscle group
+        ok 9 - Alternative exercise Leg Extension is in same muscle group
+        ok 10 - Alternative exercise Leg Press is in same muscle group
+        not ok 11 - Alternative exercise Sumo Deadlift is in same muscle group
+          ---
+          compare: ===
+          at:
+            fileName: tests/scenarios/scenario1-exercise-swap.test.ts
+            lineNumber: 145
+            columnNumber: 9
+            isToplevel: true
+          stack: |
+            tests/scenarios/scenario1-exercise-swap.test.ts:145:9
+            Array.forEach
+            Test.<anonymous> (tests/scenarios/scenario1-exercise-swap.test.ts:144:28)
+          source: |2
+                // Verify all alternatives are in the same muscle group
+                alternatives.exercises.forEach((exercise: any) => {
+                  t.equal(
+            --------^
+                    exercise.primary_muscle_group,
+                    muscleGroup,
+          diff: |
+            --- expected
+            +++ actual
+            @@ -1,1 +1,1 @@
+            -quads
+            +hamstrings
+          ...
+        
+        ok 12 - Alternative exercise Trap Bar Deadlift is in same muscle group
+        ok 13 - Alternative exercise Walking Lunges is in same muscle group
+        1..13
+    not ok 2 - AC-2 & AC-3: Get alternative exercises for swap # time=23.462ms
+      ---
+      at:
+        fileName: tests/scenarios/scenario1-exercise-swap.test.ts
+        lineNumber: 114
+        columnNumber: 11
+        typeName: Test
+      source: >2
+      
+          // AC-2 & AC-3: Get alternative exercises (same muscle group)
+          await t.test('AC-2 & AC-3: Get alternative exercises for swap', async (t) => {
+        ----------^
+            // First, get the current exercise to find its muscle group
+            const currentExerciseResponse = await app.inject({
+      ...
+    
+    # Subtest: AC-4: Swap exercise with alternative
+        ok 1 - Found an alternative exercise for swapping
+        ok 2 - Swap request succeeds
+        ok 3 - Swap confirmed
+        ok 4 - Has old exercise name
+        ok 5 - Has new exercise name
+        ok 6 - New exercise name matches
+        1..6
+    ok 3 - AC-4: Swap exercise with alternative # time=4.122ms
+    
+    # Subtest: AC-5: Program reflects swapped exercise
+        ok 1 - Returns 200 OK
+        ok 2 - Swapped exercise still exists in program
+        ok 3 - Exercise ID has changed
+        1..3
+    ok 4 - AC-5: Program reflects swapped exercise # time=2.378ms
+    
+{"level":30,"time":1759552509040,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509044,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":3.7542060003615916,"msg":"request completed"}
+{"level":30,"time":1759552509045,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509046,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":1.093303999863565,"msg":"request completed"}
+{"level":30,"time":1759552509053,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises/25","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509055,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.3485750001855195,"msg":"request completed"}
+{"level":30,"time":1759552509055,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509057,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":1.5198269998654723,"msg":"request completed"}
+{"level":30,"time":1759552509079,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"GET","url":"/api/exercises/25","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509080,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":0.5180870001204312,"msg":"request completed"}
+{"level":30,"time":1759552509080,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509081,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":0.45082899974659085,"msg":"request completed"}
+{"level":30,"time":1759552509081,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"PUT","url":"/api/program-exercises/8926/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509082,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":200},"responseTime":1.0657160002738237,"msg":"request completed"}
+{"level":30,"time":1759552509084,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509085,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":200},"responseTime":1.1146049997769296,"msg":"request completed"}
+{"level":30,"time":1759552509087,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509123,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":200},"responseTime":35.64879000000656,"msg":"request completed"}
+{"level":30,"time":1759552509123,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"GET","url":"/api/exercises/28","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509124,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":200},"responseTime":0.4541810001246631,"msg":"request completed"}
+{"level":30,"time":1759552509124,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509124,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":200},"responseTime":0.47199100023135543,"msg":"request completed"}
+{"level":30,"time":1759552509125,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"PUT","url":"/api/program-exercises/8926/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+    # Subtest: AC-6: Volume warning logic
+        ok 1 - No volume warning (swap maintains volume)
+        1..1
+    ok 5 - AC-6: Volume warning logic # time=39.066ms
+    
+    # Subtest: AC-7: Order index preserved after swap
+        ok 1 - Returns 200 OK
+        ok 2 - Order index remains unchanged after swap
+        1..2
+    ok 6 - AC-7: Order index preserved after swap # time=29.27ms
+    
+    # Subtest: AC-8: Swapped exercise persists
+        ok 1 - Returns 200 OK after refresh
+        ok 2 - Exercise ID persists after refresh
+        ok 3 - Order index persists after refresh
+        ok 4 - Target sets persists after refresh
+        1..4
+    ok 7 - AC-8: Swapped exercise persists # time=57.654ms
+    
+    1..7
+not ok 1 - Scenario 1: Exercise Swap # time=791ms
+  ---
+  at:
+    fileName: tests/scenarios/scenario1-exercise-swap.test.ts
+    lineNumber: 21
+    columnNumber: 5
+    isToplevel: true
+  source: |
+    import buildApp from '../../src/server.js';
+  
+    tap.test('Scenario 1: Exercise Swap', async (t) => {
+    ----^
+      const app = await buildApp();
+  ...
+
+{"level":30,"time":1759552509126,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":0.7915169997140765,"msg":"request completed"}
+{"level":30,"time":1759552509127,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509155,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":28.308906000107527,"msg":"request completed"}
+{"level":30,"time":1759552509157,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509183,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":200},"responseTime":25.82987100025639,"msg":"request completed"}
+{"level":30,"time":1759552509183,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552509213,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":30.138201999943703,"msg":"request completed"}
+1..1
+Database connection closed

@@ -6,10 +6,7 @@
  */
 
 import bcrypt from 'bcrypt';
-import {
-  stmtGetUserByUsername,
-  stmtCreateUser,
-} from '../database/db.js';
+import { stmtGetUserByUsername, stmtCreateUser } from '../database/db.js';
 import { createDefaultProgram } from './programService.js';
 
 // Bcrypt cost factor (constitutional requirement)

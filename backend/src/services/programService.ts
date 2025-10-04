@@ -30,6 +30,43 @@ interface ProgramExercise {
 }
 
 /**
+ * Stored program from database
+ */
+export interface Program {
+  id: number;
+  user_id: number;
+  name: string;
+  created_at: number;
+}
+
+/**
+ * Program day from database
+ */
+export interface ProgramDayRecord {
+  id: number;
+  program_id: number;
+  day_of_week: number;
+  day_name: string;
+  day_type: 'strength' | 'vo2max';
+}
+
+/**
+ * Program exercise with exercise details
+ */
+export interface ProgramExerciseWithDetails {
+  id: number;
+  program_day_id: number;
+  exercise_id: number;
+  order_index: number;
+  sets: number;
+  reps: string;
+  rir: number;
+  exercise_name: string;
+  muscle_groups: string;
+  equipment: string;
+}
+
+/**
  * Default 6-day program structure
  */
 const DEFAULT_PROGRAM_DAYS: ProgramDay[] = [
@@ -60,7 +97,7 @@ const getProgramExerciseTemplate = (programDayIds: number[]): ProgramExercise[] 
   return [
     // Day 1: Push A (Chest-Focused)
     { program_day_id: day1, exercise_id: 25, order_index: 1, sets: 3, reps: '6-8', rir: 3 }, // Barbell Back Squat
-    { program_day_id: day1, exercise_id: 1, order_index: 2, sets: 4, reps: '6-8', rir: 3 },  // Barbell Bench Press
+    { program_day_id: day1, exercise_id: 1, order_index: 2, sets: 4, reps: '6-8', rir: 3 }, // Barbell Bench Press
     { program_day_id: day1, exercise_id: 5, order_index: 3, sets: 3, reps: '8-10', rir: 2 }, // Incline Dumbbell Press
     { program_day_id: day1, exercise_id: 7, order_index: 4, sets: 3, reps: '12-15', rir: 1 }, // Cable Flyes
     { program_day_id: day1, exercise_id: 20, order_index: 5, sets: 4, reps: '12-15', rir: 1 }, // Lateral Raises
@@ -191,12 +228,12 @@ export function createDefaultProgram(userId: number): number {
  * @param userId - The user ID
  * @returns Program details or null if no program exists
  */
-export function getUserProgram(userId: number): any | null {
+export function getUserProgram(userId: number): Program | null {
   const stmt = db.prepare(`
     SELECT * FROM programs WHERE user_id = ? ORDER BY created_at DESC LIMIT 1
   `);
 
-  return stmt.get(userId) || null;
+  return (stmt.get(userId) as Program | undefined) || null;
 }
 
 /**
@@ -205,12 +242,12 @@ export function getUserProgram(userId: number): any | null {
  * @param programId - The program ID
  * @returns Array of program days
  */
-export function getProgramDays(programId: number): any[] {
+export function getProgramDays(programId: number): ProgramDayRecord[] {
   const stmt = db.prepare(`
     SELECT * FROM program_days WHERE program_id = ? ORDER BY day_of_week
   `);
 
-  return stmt.all(programId);
+  return stmt.all(programId) as ProgramDayRecord[];
 }
 
 /**
@@ -219,7 +256,7 @@ export function getProgramDays(programId: number): any[] {
  * @param programDayId - The program day ID
  * @returns Array of program exercises with exercise details
  */
-export function getProgramDayExercises(programDayId: number): any[] {
+export function getProgramDayExercises(programDayId: number): ProgramExerciseWithDetails[] {
   const stmt = db.prepare(`
     SELECT
       pe.*,
@@ -331,10 +368,11 @@ export function advancePhase(
     }
 
     // 3. Update all program exercises across all program days
-    const programDayIds = db
-      .prepare('SELECT id FROM program_days WHERE program_id = ?')
-      .all(programId)
-      .map((row: any) => row.id);
+    const programDayIds = (
+      db.prepare('SELECT id FROM program_days WHERE program_id = ?').all(programId) as Array<{
+        id: number;
+      }>
+    ).map((row) => row.id);
 
     let exercisesUpdated = 0;
 

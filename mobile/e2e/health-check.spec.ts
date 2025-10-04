@@ -65,8 +65,8 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
         password: 'TestPassword123!',
         age: 30,
         weight_kg: 80,
-        experience_level: 'intermediate'
-      }
+        experience_level: 'intermediate',
+      },
     });
 
     expect(registerResponse.ok()).toBeTruthy();
@@ -86,7 +86,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
       data: {
         username,
         password: 'TestPassword123!',
-      }
+      },
     });
 
     const { token } = await registerResponse.json();
@@ -99,7 +99,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
       data: {
         username,
         password: 'TestPassword123!',
-      }
+      },
     });
 
     expect(loginResponse.ok()).toBeTruthy();
@@ -119,7 +119,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
         password: 'TestPassword123!',
         age: 25,
         weight_kg: 75,
-      }
+      },
     });
 
     const { token, user_id } = await registerResponse.json();
@@ -127,7 +127,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
     // Create a workout
     const workoutResponse = await request.post(`${BACKEND_URL}/api/workouts`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       data: {
@@ -135,7 +135,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
         program_day_id: 1,
         date: new Date().toISOString().split('T')[0],
         status: 'in_progress',
-      }
+      },
     });
 
     expect(workoutResponse.ok()).toBeTruthy();
@@ -148,7 +148,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
     // Create a set
     const setResponse = await request.post(`${BACKEND_URL}/api/sets`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       data: {
@@ -159,7 +159,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
         reps: 8,
         rir: 2,
         timestamp: Date.now(),
-      }
+      },
     });
 
     expect(setResponse.ok()).toBeTruthy();
@@ -179,7 +179,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
       data: {
         username,
         password: 'TestPassword123!',
-      }
+      },
     });
 
     const { token } = await registerResponse.json();
@@ -187,7 +187,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
     // Submit recovery assessment
     const recoveryResponse = await request.post(`${BACKEND_URL}/api/recovery-assessments`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       data: {
@@ -195,7 +195,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
         sleep_quality: 4,
         muscle_soreness: 3,
         mental_motivation: 4,
-      }
+      },
     });
 
     expect(recoveryResponse.ok()).toBeTruthy();
@@ -215,7 +215,7 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
       data: {
         username,
         password: 'TestPassword123!',
-      }
+      },
     });
 
     const { token, user_id } = await registerResponse.json();
@@ -225,8 +225,8 @@ test.describe('FitFlow Pro - Health Check Suite', () => {
       `${BACKEND_URL}/api/analytics/consistency?user_id=${user_id}`,
       {
         headers: {
-          'Authorization': `Bearer ${token}`,
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
 
@@ -252,7 +252,7 @@ test.describe('Critical Path - Complete Workout Flow', () => {
 
     console.log('  📝 Step 1: Registering user...');
     const registerResponse = await request.post(`${BACKEND_URL}/api/auth/register`, {
-      data: { username, password, age: 28, weight_kg: 82, experience_level: 'advanced' }
+      data: { username, password, age: 28, weight_kg: 82, experience_level: 'advanced' },
     });
     expect(registerResponse.ok()).toBeTruthy();
     const { token, user_id } = await registerResponse.json();
@@ -261,13 +261,13 @@ test.describe('Critical Path - Complete Workout Flow', () => {
     // Step 2: Create workout
     console.log('  🏋️  Step 2: Creating workout session...');
     const workoutResponse = await request.post(`${BACKEND_URL}/api/workouts`, {
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       data: {
         user_id,
         program_day_id: 1,
         date: new Date().toISOString().split('T')[0],
         status: 'in_progress',
-      }
+      },
     });
     expect(workoutResponse.ok()).toBeTruthy();
     const workout = await workoutResponse.json();
@@ -285,29 +285,28 @@ test.describe('Critical Path - Complete Workout Flow', () => {
 
     for (let i = 0; i < sets.length; i++) {
       const setResponse = await request.post(`${BACKEND_URL}/api/sets`, {
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         data: {
           workout_id: workout.id,
           exercise_id: 1,
           set_number: i + 1,
           timestamp: Date.now(),
-          ...sets[i]
-        }
+          ...sets[i],
+        },
       });
       expect(setResponse.ok()).toBeTruthy();
       const set = await setResponse.json();
-      console.log(`  ✓ Set ${i + 1}: ${set.weight_kg}kg × ${set.reps} @ RIR ${set.rir} → Est. 1RM: ${set.estimated_1rm}kg`);
+      console.log(
+        `  ✓ Set ${i + 1}: ${set.weight_kg}kg × ${set.reps} @ RIR ${set.rir} → Est. 1RM: ${set.estimated_1rm}kg`
+      );
     }
 
     // Step 4: Complete workout
     console.log('  🏁 Step 4: Completing workout...');
-    const completeResponse = await request.patch(
-      `${BACKEND_URL}/api/workouts/${workout.id}`,
-      {
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        data: { status: 'completed' }
-      }
-    );
+    const completeResponse = await request.patch(`${BACKEND_URL}/api/workouts/${workout.id}`, {
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      data: { status: 'completed' },
+    });
     expect(completeResponse.ok()).toBeTruthy();
 
     console.log('  ✅ CRITICAL PATH SUCCESSFUL: Full workout flow validated!\\n');

@@ -49,9 +49,7 @@ const initializeSchema = (): void => {
 const isInitialized = (): boolean => {
   try {
     const result = db
-      .prepare(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='users'"
-      )
+      .prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='users'")
       .get();
     return !!result;
   } catch {
@@ -258,11 +256,7 @@ export const stmtGetAuditLogsByUser: Statement = db.prepare(`
  * Calculate estimated 1RM using Epley formula with RIR adjustment
  * Formula: 1RM = weight × (1 + (reps - rir) / 30)
  */
-export const calculateOneRepMax = (
-  weight: number,
-  reps: number,
-  rir: number
-): number => {
+export const calculateOneRepMax = (weight: number, reps: number, rir: number): number => {
   return weight * (1 + (reps - rir) / 30);
 };
 
@@ -282,18 +276,13 @@ export const calculateVolumeAdjustment = (
 /**
  * Execute query with performance timing
  */
-export const executeWithTiming = <T>(
-  name: string,
-  fn: () => T
-): T => {
+export const executeWithTiming = <T>(name: string, fn: () => T): T => {
   const start = Date.now();
   const result = fn();
   const duration = Date.now() - start;
 
   if (duration > 5) {
-    console.warn(
-      `[PERFORMANCE WARNING] Query "${name}" took ${duration}ms (target: <5ms)`
-    );
+    console.warn(`[PERFORMANCE WARNING] Query "${name}" took ${duration}ms (target: <5ms)`);
   }
 
   return result;
@@ -313,10 +302,7 @@ export const transaction = <T>(fn: () => T): T => {
 /**
  * Batch insert with transaction
  */
-export const batchInsert = <T>(
-  stmt: Database.Statement,
-  records: T[]
-): void => {
+export const batchInsert = <T>(stmt: Database.Statement, records: T[]): void => {
   const insert = db.transaction((items: T[]) => {
     for (const item of items) {
       stmt.run(item);

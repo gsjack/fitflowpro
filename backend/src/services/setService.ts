@@ -90,11 +90,17 @@ export function logSet(
         `SELECT id, weight_kg, reps, rir FROM sets
          WHERE workout_id = ? AND id = ?`
       )
-      .get(workoutId, localId) as { id: number; weight_kg: number; reps: number; rir: number } | undefined;
+      .get(workoutId, localId) as
+      | { id: number; weight_kg: number; reps: number; rir: number }
+      | undefined;
 
     if (existingSet) {
       // Set already exists, return existing ID with calculated 1RM
-      const estimated1RM = calculateOneRepMax(existingSet.weight_kg, existingSet.reps, existingSet.rir);
+      const estimated1RM = calculateOneRepMax(
+        existingSet.weight_kg,
+        existingSet.reps,
+        existingSet.rir
+      );
       return {
         id: existingSet.id,
         localId: localId,

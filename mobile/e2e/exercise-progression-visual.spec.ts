@@ -26,7 +26,10 @@ test('verify exercises change in UI during workout', async ({ page }) => {
   await page.waitForTimeout(1000);
 
   // Click Register tab
-  const registerTab = page.locator('button').filter({ hasText: /^Register$/i }).first();
+  const registerTab = page
+    .locator('button')
+    .filter({ hasText: /^Register$/i })
+    .first();
   await registerTab.click();
   await page.waitForTimeout(500);
 
@@ -63,7 +66,7 @@ test('verify exercises change in UI during workout', async ({ page }) => {
 
   // Try to click Start Workout button
   const startButton = page.locator('button').filter({ hasText: /Start Workout/i });
-  if (await startButton.count() > 0) {
+  if ((await startButton.count()) > 0) {
     await startButton.click();
     console.log('✓ Clicked "Start Workout" button');
     await page.waitForTimeout(1000);
@@ -94,7 +97,7 @@ test('verify exercises change in UI during workout', async ({ page }) => {
     // Take screenshot before logging sets
     await page.screenshot({
       path: `/tmp/exercise-${exerciseNum}-before.png`,
-      fullPage: true
+      fullPage: true,
     });
 
     // Determine number of sets (usually 3, but exercise 2 might be 4)
@@ -127,7 +130,10 @@ test('verify exercises change in UI during workout', async ({ page }) => {
       await page.waitForTimeout(300);
 
       // Click "Complete Set" or "Log Set" button
-      const completeButton = page.locator('button').filter({ hasText: /(Complete Set|Log Set)/i }).first();
+      const completeButton = page
+        .locator('button')
+        .filter({ hasText: /(Complete Set|Log Set)/i })
+        .first();
       await completeButton.click();
 
       console.log(`   ✓ Set ${setNum}/${setsToLog} logged`);
@@ -138,7 +144,7 @@ test('verify exercises change in UI during workout', async ({ page }) => {
     // Take screenshot after logging all sets
     await page.screenshot({
       path: `/tmp/exercise-${exerciseNum}-after.png`,
-      fullPage: true
+      fullPage: true,
     });
 
     console.log(`✓ Completed all sets for this exercise`);
@@ -167,7 +173,7 @@ test('verify exercises change in UI during workout', async ({ page }) => {
   console.log('   Expected: Exercise 1 → Exercise 2 → Exercise 3\n');
 
   // Check that we got different exercise names
-  const uniqueNames = new Set(exercisesData.map(e => e.name));
+  const uniqueNames = new Set(exercisesData.map((e) => e.name));
   if (uniqueNames.size >= 2) {
     console.log('✅ SUCCESS: Multiple different exercises detected in UI\n');
   } else {

@@ -43,6 +43,15 @@ export interface ProgramExercise {
 }
 
 /**
+ * Program exercise with exercise details
+ */
+export interface ProgramExerciseWithDetails extends ProgramExercise {
+  exercise_name: string;
+  muscle_groups: string;
+  equipment: string;
+}
+
+/**
  * Filters for getting program exercises
  */
 export interface ProgramExerciseFilters {
@@ -85,7 +94,9 @@ export interface ExerciseReorderItem {
  * @param filters - Optional filters (program_day_id or exercise_id)
  * @returns Array of program exercises with exercise details
  */
-export function getProgramExercises(filters: ProgramExerciseFilters = {}): any[] {
+export function getProgramExercises(
+  filters: ProgramExerciseFilters = {}
+): ProgramExerciseWithDetails[] {
   let query = `
     SELECT
       pe.*,
@@ -97,7 +108,7 @@ export function getProgramExercises(filters: ProgramExerciseFilters = {}): any[]
     WHERE 1=1
   `;
 
-  const params: any[] = [];
+  const params: number[] = [];
 
   if (filters.program_day_id !== undefined) {
     query += ' AND pe.program_day_id = ?';
@@ -112,7 +123,7 @@ export function getProgramExercises(filters: ProgramExerciseFilters = {}): any[]
   query += ' ORDER BY pe.order_index';
 
   const stmt = db.prepare(query);
-  return stmt.all(...params);
+  return stmt.all(...params) as ProgramExerciseWithDetails[];
 }
 
 /**
@@ -168,7 +179,12 @@ export function createProgramExercise(data: CreateProgramExerciseData): {
   const programExerciseId = insertResult.lastInsertRowid as number;
 
   // Calculate volume warning
-  const volumeWarning = calculateVolumeWarning(data.program_day_id, 'add', data.target_sets, exercise);
+  const volumeWarning = calculateVolumeWarning(
+    data.program_day_id,
+    'add',
+    data.target_sets,
+    exercise
+  );
 
   return {
     program_exercise_id: programExerciseId,
@@ -190,14 +206,14 @@ export function updateProgramExercise(
 ): { updated: boolean; volume_warning: string | null } {
   // Check if program exercise exists
   const checkStmt = db.prepare('SELECT * FROM program_exercises WHERE id = ?');
-  const programExercise = checkStmt.get(id) as any;
+  const programExercise = checkStmt.get(id) as ProgramExercise | undefined;
   if (!programExercise) {
     throw new Error(`Program exercise with ID ${id} not found`);
   }
 
   // Build dynamic update query
   const updates: string[] = [];
-  const params: any[] = [];
+  const params: (string | number)[] = [];
 
   if (data.target_sets !== undefined) {
     updates.push('sets = ?');
@@ -301,7 +317,10 @@ export function deleteProgramExercise(id: number): {
  * @returns Object with swapped=true, old_exercise_name, new_exercise_name
  * @throws Error if exercises are incompatible or don't exist
  */
-export function swapExercise(programExerciseId: number, newExerciseId: number): {
+export function swapExercise(
+  programExerciseId: number,
+  newExerciseId: number
+): {
   swapped: boolean;
   old_exercise_name: string;
   new_exercise_name: string;
@@ -359,7 +378,7 @@ export function swapExercise(programExerciseId: number, newExerciseId: number): 
  * @returns Object with reordered=true
  */
 export function reorderExercises(
-  programDayId: number,
+  _programDayId: number,
   newOrder: ExerciseReorderItem[]
 ): { reordered: boolean } {
   // Execute as transaction for atomicity
@@ -390,7 +409,7 @@ function calculateVolumeWarning(
   programDayId: number,
   operation: 'add' | 'update' | 'delete',
   sets: number,
-  exercise: any,
+  exercise: { muscle_groups: string },
   oldSets?: number
 ): string | null {
   // Get program_id from program_day_id
@@ -467,7 +486,7 @@ function calculateVolumeWarning(
 function checkVolumeThresholds(
   muscleVolume: Record<string, number>,
   muscleGroups: string[],
-  sets: number,
+  _sets: number,
   operation: 'add' | 'update' | 'delete'
 ): string | null {
   const warnings: string[] = [];

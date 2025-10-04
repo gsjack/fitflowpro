@@ -4,7 +4,7 @@ import * as path from 'path';
 
 test.beforeAll(() => {
   const dirs = ['/tmp/screenshots/after', '/tmp/screenshots/before'];
-  dirs.forEach(dir => {
+  dirs.forEach((dir) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
@@ -23,7 +23,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
   console.log('📸 Capturing: Login Screen');
   await page.screenshot({
     path: '/tmp/screenshots/after/01-login.png',
-    fullPage: true
+    fullPage: true,
   });
 
   // Fill login credentials
@@ -33,7 +33,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
   // Capture filled form
   await page.screenshot({
     path: '/tmp/screenshots/after/01-login-filled.png',
-    fullPage: true
+    fullPage: true,
   });
 
   // Click login button (last "Login" button is the submit button)
@@ -48,11 +48,11 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
   console.log('📸 Capturing: Dashboard Screen');
   await page.screenshot({
     path: '/tmp/screenshots/after/02-dashboard.png',
-    fullPage: true
+    fullPage: true,
   });
 
   // Check if we're logged in by looking for dashboard elements
-  const hasDashboard = await page.locator('text=/today.*workout|recovery/i').count() > 0;
+  const hasDashboard = (await page.locator('text=/today.*workout|recovery/i').count()) > 0;
   console.log(`Dashboard loaded: ${hasDashboard}`);
 
   if (!hasDashboard) {
@@ -69,7 +69,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
     await page.waitForTimeout(1500);
     await page.screenshot({
       path: '/tmp/screenshots/after/03-workout.png',
-      fullPage: true
+      fullPage: true,
     });
   } else {
     console.log('⚠️  Workout tab not found, looking for alternative...');
@@ -83,7 +83,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
         await page.waitForTimeout(1500);
         await page.screenshot({
           path: '/tmp/screenshots/after/03-workout.png',
-          fullPage: true
+          fullPage: true,
         });
         break;
       }
@@ -98,7 +98,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
     await page.waitForTimeout(1500);
     await page.screenshot({
       path: '/tmp/screenshots/after/04-analytics.png',
-      fullPage: true
+      fullPage: true,
     });
   } else {
     console.log('⚠️  Analytics tab not found, looking for alternative...');
@@ -111,7 +111,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
         await page.waitForTimeout(1500);
         await page.screenshot({
           path: '/tmp/screenshots/after/04-analytics.png',
-          fullPage: true
+          fullPage: true,
         });
         break;
       }
@@ -126,7 +126,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
     await page.waitForTimeout(1500);
     await page.screenshot({
       path: '/tmp/screenshots/after/05-planner.png',
-      fullPage: true
+      fullPage: true,
     });
   } else {
     console.log('⚠️  Planner tab not found, looking for alternative...');
@@ -139,7 +139,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
         await page.waitForTimeout(1500);
         await page.screenshot({
           path: '/tmp/screenshots/after/05-planner.png',
-          fullPage: true
+          fullPage: true,
         });
         break;
       }
@@ -154,7 +154,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
     await page.waitForTimeout(1500);
     await page.screenshot({
       path: '/tmp/screenshots/after/06-settings.png',
-      fullPage: true
+      fullPage: true,
     });
   } else {
     console.log('⚠️  Settings tab not found, looking for alternative...');
@@ -167,7 +167,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
         await page.waitForTimeout(1500);
         await page.screenshot({
           path: '/tmp/screenshots/after/06-settings.png',
-          fullPage: true
+          fullPage: true,
         });
         break;
       }
@@ -182,7 +182,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
     await page.waitForTimeout(1500);
     await page.screenshot({
       path: '/tmp/screenshots/after/07-dashboard-final.png',
-      fullPage: true
+      fullPage: true,
     });
   }
 
@@ -194,7 +194,7 @@ test('capture all screens for comprehensive UI review', async ({ page }) => {
   if (fs.existsSync(screenshotDir)) {
     const files = fs.readdirSync(screenshotDir);
     console.log('Captured screenshots:');
-    files.forEach(file => {
+    files.forEach((file) => {
       const stats = fs.statSync(path.join(screenshotDir, file));
       console.log(`  ✓ ${file} (${(stats.size / 1024).toFixed(1)} KB)`);
     });

@@ -100,10 +100,7 @@ export default async function recoveryRoutes(fastify: FastifyInstance) {
       ...createAssessmentSchema,
       preHandler: authenticateJWT,
     },
-    async (
-      request: FastifyRequest<{ Body: CreateAssessmentBody }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Body: CreateAssessmentBody }>, reply: FastifyReply) => {
       try {
         const { date, sleep_quality, muscle_soreness, mental_motivation } = request.body;
 
@@ -134,20 +131,14 @@ export default async function recoveryRoutes(fastify: FastifyInstance) {
         }
 
         // Handle database errors
-        if (
-          error instanceof Error &&
-          error.message.includes('FOREIGN KEY constraint failed')
-        ) {
+        if (error instanceof Error && error.message.includes('FOREIGN KEY constraint failed')) {
           return reply.status(400).send({
             error: 'Invalid user_id',
           });
         }
 
         // Handle unique constraint violations (duplicate assessment for date)
-        if (
-          error instanceof Error &&
-          error.message.includes('UNIQUE constraint failed')
-        ) {
+        if (error instanceof Error && error.message.includes('UNIQUE constraint failed')) {
           return reply.status(400).send({
             error: 'Recovery assessment already exists for this date',
           });
@@ -175,10 +166,7 @@ export default async function recoveryRoutes(fastify: FastifyInstance) {
     {
       preHandler: authenticateJWT,
     },
-    async (
-      request: FastifyRequest<{ Params: { userId: string } }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Params: { userId: string } }>, reply: FastifyReply) => {
       try {
         const userId = parseInt(request.params.userId);
 

@@ -5,11 +5,7 @@
  * Uses prepared statements from db.ts for optimal performance.
  */
 
-import {
-  stmt1RMProgression,
-  stmtVolumeTrends,
-  stmtConsistencyMetrics,
-} from '../database/db.js';
+import { stmt1RMProgression, stmtVolumeTrends, stmtConsistencyMetrics } from '../database/db.js';
 
 /**
  * Volume landmarks for muscle groups (from mobile constants)

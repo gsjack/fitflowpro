@@ -5,10 +5,7 @@
  */
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import {
-  get1RMProgression,
-  getConsistencyMetrics,
-} from '../services/analyticsService.js';
+import { get1RMProgression, getConsistencyMetrics } from '../services/analyticsService.js';
 import {
   getCurrentWeekVolume,
   getVolumeHistory,
@@ -241,10 +238,24 @@ export default async function analyticsRoutes(fastify: FastifyInstance) {
         // Validate muscle_group parameter
         if (muscle_group) {
           const validMuscleGroups = [
-            'chest', 'back', 'shoulders', 'quads', 'hamstrings',
-            'glutes', 'biceps', 'triceps', 'calves', 'abs',
-            'back_lats', 'back_traps', 'shoulders_front', 'shoulders_side', 'shoulders_rear',
-            'front_delts', 'side_delts', 'rear_delts'
+            'chest',
+            'back',
+            'shoulders',
+            'quads',
+            'hamstrings',
+            'glutes',
+            'biceps',
+            'triceps',
+            'calves',
+            'abs',
+            'back_lats',
+            'back_traps',
+            'shoulders_front',
+            'shoulders_side',
+            'shoulders_rear',
+            'front_delts',
+            'side_delts',
+            'rear_delts',
           ];
 
           if (!validMuscleGroups.includes(muscle_group)) {

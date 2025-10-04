@@ -15,7 +15,14 @@
 
 import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Surface, Text, Chip, ActivityIndicator, useTheme } from 'react-native-paper';
+import {
+  Surface,
+  Text,
+  Chip,
+  ActivityIndicator,
+  useTheme,
+  MD3Theme,
+} from 'react-native-paper';
 import { Svg, Line, Circle, Text as SvgText, Polyline } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { format, parseISO } from 'date-fns';
@@ -213,7 +220,7 @@ interface LineChartProps {
   data: Array<{ weekStart: string; totalSets: number }>;
   landmarks: { mev: number; mav: number; mrv: number } | null;
   muscleGroup: MuscleGroup | undefined;
-  theme: any;
+  theme: MD3Theme;
 }
 
 function LineChart({ data, landmarks, muscleGroup, theme }: LineChartProps): React.JSX.Element {
@@ -285,7 +292,13 @@ function LineChart({ data, landmarks, muscleGroup, theme }: LineChartProps): Rea
               strokeWidth="1"
               strokeDasharray={tick.value === 0 || tick.value === maxValue ? undefined : '5,5'}
             />
-            <SvgText x={PADDING.left - 10} y={tick.y + 5} fontSize="10" fill="#666" textAnchor="end">
+            <SvgText
+              x={PADDING.left - 10}
+              y={tick.y + 5}
+              fontSize="10"
+              fill="#666"
+              textAnchor="end"
+            >
               {tick.value}
             </SvgText>
           </React.Fragment>
@@ -298,15 +311,11 @@ function LineChart({ data, landmarks, muscleGroup, theme }: LineChartProps): Rea
             <Line
               x1={PADDING.left}
               y1={
-                PADDING.top +
-                chartHeight -
-                ((landmarks.mev - minValue) / valueRange) * chartHeight
+                PADDING.top + chartHeight - ((landmarks.mev - minValue) / valueRange) * chartHeight
               }
               x2={CHART_WIDTH - PADDING.right}
               y2={
-                PADDING.top +
-                chartHeight -
-                ((landmarks.mev - minValue) / valueRange) * chartHeight
+                PADDING.top + chartHeight - ((landmarks.mev - minValue) / valueRange) * chartHeight
               }
               stroke={colors.success.main}
               strokeWidth="2"
@@ -317,15 +326,11 @@ function LineChart({ data, landmarks, muscleGroup, theme }: LineChartProps): Rea
             <Line
               x1={PADDING.left}
               y1={
-                PADDING.top +
-                chartHeight -
-                ((landmarks.mav - minValue) / valueRange) * chartHeight
+                PADDING.top + chartHeight - ((landmarks.mav - minValue) / valueRange) * chartHeight
               }
               x2={CHART_WIDTH - PADDING.right}
               y2={
-                PADDING.top +
-                chartHeight -
-                ((landmarks.mav - minValue) / valueRange) * chartHeight
+                PADDING.top + chartHeight - ((landmarks.mav - minValue) / valueRange) * chartHeight
               }
               stroke={colors.warning.main}
               strokeWidth="2"
@@ -336,15 +341,11 @@ function LineChart({ data, landmarks, muscleGroup, theme }: LineChartProps): Rea
             <Line
               x1={PADDING.left}
               y1={
-                PADDING.top +
-                chartHeight -
-                ((landmarks.mrv - minValue) / valueRange) * chartHeight
+                PADDING.top + chartHeight - ((landmarks.mrv - minValue) / valueRange) * chartHeight
               }
               x2={CHART_WIDTH - PADDING.right}
               y2={
-                PADDING.top +
-                chartHeight -
-                ((landmarks.mrv - minValue) / valueRange) * chartHeight
+                PADDING.top + chartHeight - ((landmarks.mrv - minValue) / valueRange) * chartHeight
               }
               stroke={colors.error.main}
               strokeWidth="2"
@@ -355,7 +356,12 @@ function LineChart({ data, landmarks, muscleGroup, theme }: LineChartProps): Rea
         )}
 
         {/* Line chart */}
-        <Polyline points={polylinePoints} fill="none" stroke={theme.colors.primary} strokeWidth="3" />
+        <Polyline
+          points={polylinePoints}
+          fill="none"
+          stroke={theme.colors.primary}
+          strokeWidth="3"
+        />
 
         {/* Data points */}
         {points.map((point, index) => (

@@ -96,7 +96,8 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      const { muscle_group, equipment, movement_pattern, difficulty } = request.query as ExerciseQueryParams;
+      const { muscle_group, equipment, movement_pattern, difficulty } =
+        request.query as ExerciseQueryParams;
       try {
         const filters: ExerciseFilters = {
           muscle_group,
@@ -111,11 +112,12 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
           exercises,
           count: exercises.length,
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         // Handle validation errors (e.g., invalid muscle_group)
-        if (error.message?.includes('Invalid muscle_group')) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('Invalid muscle_group')) {
           return reply.status(400).send({
-            error: error.message,
+            error: errorMessage,
           });
         }
 
@@ -197,7 +199,7 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
         }
 
         return reply.status(200).send(exercise);
-      } catch (error: any) {
+      } catch (error: unknown) {
         request.log.error(error);
         return reply.status(500).send({
           error: 'Failed to retrieve exercise',

@@ -10,7 +10,16 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, Vibration, Platform } from 'react-native';
-import { Card, Text, Button, ProgressBar, Portal, Dialog, Paragraph, TextInput } from 'react-native-paper';
+import {
+  Card,
+  Text,
+  Button,
+  ProgressBar,
+  Portal,
+  Dialog,
+  Paragraph,
+  TextInput,
+} from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as timerService from '../services/timer/timerService';
 import { colors } from '../theme/colors';
@@ -58,10 +67,10 @@ export default function Norwegian4x4Timer({ onComplete, onCancel }: Norwegian4x4
 
   // Calculate progress
   const totalProgress = elapsedSeconds / TOTAL_DURATION;
-  const phaseProgress = (currentPhase === 'work'
-    ? (WORK_DURATION - remainingSeconds) / WORK_DURATION
-    : (RECOVERY_DURATION - remainingSeconds) / RECOVERY_DURATION
-  );
+  const phaseProgress =
+    currentPhase === 'work'
+      ? (WORK_DURATION - remainingSeconds) / WORK_DURATION
+      : (RECOVERY_DURATION - remainingSeconds) / RECOVERY_DURATION;
 
   useEffect(() => {
     // Start first interval
@@ -136,9 +145,10 @@ export default function Norwegian4x4Timer({ onComplete, onCancel }: Norwegian4x4
   const handleComplete = async () => {
     await timerService.stopTimer();
 
-    const avgHR = hrReadings.length > 0
-      ? Math.round(hrReadings.reduce((a, b) => a + b, 0) / hrReadings.length)
-      : undefined;
+    const avgHR =
+      hrReadings.length > 0
+        ? Math.round(hrReadings.reduce((a, b) => a + b, 0) / hrReadings.length)
+        : undefined;
 
     onComplete({
       duration_minutes: Math.floor(elapsedSeconds / 60),
@@ -275,9 +285,11 @@ export default function Norwegian4x4Timer({ onComplete, onCancel }: Norwegian4x4
               </View>
               {peakHR > 0 && (
                 <Text variant="bodySmall" style={styles.hrStats}>
-                  Peak: {peakHR} bpm | Avg: {hrReadings.length > 0
+                  Peak: {peakHR} bpm | Avg:{' '}
+                  {hrReadings.length > 0
                     ? Math.round(hrReadings.reduce((a, b) => a + b, 0) / hrReadings.length)
-                    : '-'} bpm
+                    : '-'}{' '}
+                  bpm
                 </Text>
               )}
             </View>

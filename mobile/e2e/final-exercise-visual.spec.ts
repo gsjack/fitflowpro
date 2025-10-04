@@ -17,14 +17,20 @@ test('verify exercises change visually during workout', async ({ page }) => {
   await page.goto('http://localhost:8081', { waitUntil: 'networkidle' });
   await page.waitForSelector('text=FitFlow Pro', { timeout: 10000 });
 
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(500);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
   console.log('✓ Logged in');
   await page.waitForTimeout(2000);

@@ -2,13 +2,13 @@ import { test } from '@playwright/test';
 
 test('debug logout functionality', async ({ page }) => {
   // Listen to console
-  page.on('console', msg => console.log('[BROWSER]', msg.text()));
+  page.on('console', (msg) => console.log('[BROWSER]', msg.text()));
 
   // Listen to network
-  page.on('request', req => {
+  page.on('request', (req) => {
     console.log('[REQUEST]', req.method(), req.url());
   });
-  page.on('response', res => {
+  page.on('response', (res) => {
     console.log('[RESPONSE]', res.status(), res.url());
   });
 

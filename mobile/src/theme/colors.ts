@@ -8,30 +8,30 @@
 export const colors = {
   // Background Colors
   background: {
-    primary: '#0A0E27',      // Deep blue-black (main background)
-    secondary: '#1A1F3A',    // Elevated cards/surfaces
-    tertiary: '#252B4A',     // Higher elevation (modals, bottom sheets)
+    primary: '#0A0E27', // Deep blue-black (main background)
+    secondary: '#1A1F3A', // Elevated cards/surfaces
+    tertiary: '#252B4A', // Higher elevation (modals, bottom sheets)
   },
 
   // Primary Brand Colors
   primary: {
-    main: '#4C6FFF',         // Electric blue (primary actions)
-    light: '#6B88FF',        // Lighter variant for hover states
-    dark: '#3A55CC',         // Darker variant for pressed states
+    main: '#4C6FFF', // Electric blue (primary actions)
+    light: '#6B88FF', // Lighter variant for hover states
+    dark: '#3A55CC', // Darker variant for pressed states
     gradient: ['#4C6FFF', '#7B3FFF'], // Gradient for hero elements
   },
 
   // Success/Progress Colors
   success: {
-    main: '#00D9A3',         // Mint green (completed sets, positive metrics)
+    main: '#00D9A3', // Mint green (completed sets, positive metrics)
     light: '#33E3B5',
     dark: '#00A67D',
-    bg: '#00D9A320',         // 20% opacity background
+    bg: '#00D9A320', // 20% opacity background
   },
 
   // Warning/Attention Colors
   warning: {
-    main: '#FFB800',         // Amber (caution, moderate alerts)
+    main: '#FFB800', // Amber (caution, moderate alerts)
     light: '#FFC933',
     dark: '#CC9300',
     bg: '#FFB80020',
@@ -39,7 +39,7 @@ export const colors = {
 
   // Error/Danger Colors
   error: {
-    main: '#FF4757',         // Red (errors, cancelled workouts)
+    main: '#FF4757', // Red (errors, cancelled workouts)
     light: '#FF6B7A',
     dark: '#CC3946',
     bg: '#FF475720',
@@ -47,45 +47,45 @@ export const colors = {
 
   // Muscle Group Colors (for volume charts)
   muscle: {
-    chest: '#FF6B9D',        // Pink-red
-    back: '#4C6FFF',         // Electric blue
-    shoulders: '#FFB800',     // Amber
-    arms: '#00D9A3',         // Mint green
-    legs: '#FF8A3D',         // Orange
-    abs: '#9B59B6',          // Purple
+    chest: '#FF6B9D', // Pink-red
+    back: '#4C6FFF', // Electric blue
+    shoulders: '#FFB800', // Amber
+    arms: '#00D9A3', // Mint green
+    legs: '#FF8A3D', // Orange
+    abs: '#9B59B6', // Purple
   },
 
   // Text Colors
   text: {
-    primary: '#FFFFFF',       // White (main text)
-    secondary: '#A0A6C8',     // Light blue-gray (secondary text)
-    tertiary: '#6B7299',      // Darker blue-gray (captions, hints)
-    disabled: '#4A5080',      // Very subtle (disabled states)
+    primary: '#FFFFFF', // White (main text)
+    secondary: '#A0A6C8', // Light blue-gray (secondary text)
+    tertiary: '#6B7299', // Darker blue-gray (captions, hints)
+    disabled: '#4A5080', // Very subtle (disabled states)
   },
 
   // Status Colors
   status: {
-    notStarted: '#6B7299',    // Gray
-    inProgress: '#4C6FFF',    // Blue
-    completed: '#00D9A3',     // Green
-    cancelled: '#FF4757',     // Red
+    notStarted: '#6B7299', // Gray
+    inProgress: '#4C6FFF', // Blue
+    completed: '#00D9A3', // Green
+    cancelled: '#FF4757', // Red
   },
 
   // Chart Colors
   chart: {
-    grid: '#252B4A',          // Grid lines
-    axis: '#4A5080',          // Axis lines/labels
-    tooltip: '#1A1F3A',       // Tooltip background
+    grid: '#252B4A', // Grid lines
+    axis: '#4A5080', // Axis lines/labels
+    tooltip: '#1A1F3A', // Tooltip background
     gradientStart: '#4C6FFF40', // Chart gradient fill start
-    gradientEnd: '#4C6FFF00',   // Chart gradient fill end (transparent)
+    gradientEnd: '#4C6FFF00', // Chart gradient fill end (transparent)
   },
 
   // Special Effects
   effects: {
-    glow: '#4C6FFF40',        // Glow effect for focus states
-    shimmer: '#FFFFFF20',     // Shimmer for loading states
-    overlay: '#0A0E2780',     // Modal/sheet overlay (50% opacity)
-    divider: '#252B4A',       // Divider lines
+    glow: '#4C6FFF40', // Glow effect for focus states
+    shimmer: '#FFFFFF20', // Shimmer for loading states
+    overlay: '#0A0E2780', // Modal/sheet overlay (50% opacity)
+    divider: '#252B4A', // Divider lines
   },
 };
 

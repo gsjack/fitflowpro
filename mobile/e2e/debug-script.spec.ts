@@ -25,7 +25,7 @@ test('check if script tag loads', async ({ page }) => {
       src: s.src,
       defer: s.defer,
       async: s.async,
-      loaded: (s as any).loaded || 'unknown'
+      loaded: (s as any).loaded || 'unknown',
     }));
   });
 

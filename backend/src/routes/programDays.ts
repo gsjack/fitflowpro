@@ -242,7 +242,9 @@ export default async function programDaysRoutes(fastify: FastifyInstance) {
           WHERE program_id = ? AND day_of_week = ?
         `);
 
-        const programDay = programDayStmt.get(program.id, targetDayOfWeek) as Omit<RecommendedProgramDayResponse, 'exercises'> | undefined;
+        const programDay = programDayStmt.get(program.id, targetDayOfWeek) as
+          | Omit<RecommendedProgramDayResponse, 'exercises'>
+          | undefined;
 
         if (!programDay) {
           return reply.status(404).send({

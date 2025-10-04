@@ -13,7 +13,15 @@
 
 import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { Surface, Text, Menu, Button, ActivityIndicator, useTheme } from 'react-native-paper';
+import {
+  Surface,
+  Text,
+  Menu,
+  Button,
+  ActivityIndicator,
+  useTheme,
+  MD3Theme,
+} from 'react-native-paper';
 import { Svg, Line, Circle, Text as SvgText, Polyline } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { use1RMProgression, OneRMDataPoint } from '../../services/api/analyticsApi';
@@ -133,7 +141,7 @@ export function OneRMProgressionChart({
  */
 interface LineChartProps {
   data: OneRMDataPoint[];
-  theme: any;
+  theme: MD3Theme;
 }
 
 function LineChart({ data, theme }: LineChartProps): React.JSX.Element {

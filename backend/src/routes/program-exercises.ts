@@ -107,7 +107,7 @@ export default async function programExerciseRoutes(fastify: FastifyInstance) {
         const query = request.query as { program_day_id?: string; exercise_id?: string };
 
         // Build filters
-        const filters: any = {};
+        const filters: { program_day_id?: number; exercise_id?: number } = {};
 
         if (query.program_day_id) {
           const programDayId = parseInt(query.program_day_id, 10);
@@ -157,9 +157,16 @@ export default async function programExerciseRoutes(fastify: FastifyInstance) {
         const body = request.body as CreateProgramExerciseRequest;
 
         // Validate required fields
-        if (!body.program_day_id || !body.exercise_id || body.target_sets === undefined || !body.target_rep_range || body.target_rir === undefined) {
+        if (
+          !body.program_day_id ||
+          !body.exercise_id ||
+          body.target_sets === undefined ||
+          !body.target_rep_range ||
+          body.target_rir === undefined
+        ) {
           return reply.status(400).send({
-            error: 'Missing required fields: program_day_id, exercise_id, target_sets, target_rep_range, target_rir',
+            error:
+              'Missing required fields: program_day_id, exercise_id, target_sets, target_rep_range, target_rir',
           });
         }
 
@@ -202,11 +209,12 @@ export default async function programExerciseRoutes(fastify: FastifyInstance) {
         });
 
         return reply.status(201).send(result);
-      } catch (error: any) {
+      } catch (error: unknown) {
         // Check for specific error messages from service
-        if (error.message?.includes('not found')) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('not found')) {
           return reply.status(404).send({
-            error: error.message,
+            error: errorMessage,
           });
         }
 
@@ -243,7 +251,7 @@ export default async function programExerciseRoutes(fastify: FastifyInstance) {
 
         // Get program exercise
         const exercises = programExerciseService.getProgramExercises({});
-        const programExercise = exercises.find((ex: any) => ex.id === programExerciseId);
+        const programExercise = exercises.find((ex) => ex.id === programExerciseId);
 
         if (!programExercise) {
           return reply.status(404).send({
@@ -313,10 +321,11 @@ export default async function programExerciseRoutes(fastify: FastifyInstance) {
         const result = programExerciseService.updateProgramExercise(programExerciseId, body);
 
         return reply.status(200).send(result);
-      } catch (error: any) {
-        if (error.message?.includes('not found')) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('not found')) {
           return reply.status(404).send({
-            error: error.message,
+            error: errorMessage,
           });
         }
 
@@ -357,10 +366,11 @@ export default async function programExerciseRoutes(fastify: FastifyInstance) {
         const result = programExerciseService.deleteProgramExercise(programExerciseId);
 
         return reply.status(200).send(result);
-      } catch (error: any) {
-        if (error.message?.includes('not found')) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('not found')) {
           return reply.status(404).send({
-            error: error.message,
+            error: errorMessage,
           });
         }
 
@@ -410,16 +420,17 @@ export default async function programExerciseRoutes(fastify: FastifyInstance) {
         const result = programExerciseService.swapExercise(programExerciseId, body.new_exercise_id);
 
         return reply.status(200).send(result);
-      } catch (error: any) {
-        if (error.message?.includes('not found')) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('not found')) {
           return reply.status(404).send({
-            error: error.message,
+            error: errorMessage,
           });
         }
 
-        if (error.message?.includes('incompatible')) {
+        if (errorMessage.includes('incompatible')) {
           return reply.status(400).send({
-            error: error.message,
+            error: errorMessage,
           });
         }
 

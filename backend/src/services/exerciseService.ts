@@ -71,7 +71,7 @@ export function getExercises(filters: ExerciseFilters = {}): Exercise[] {
 
   // Build WHERE clause dynamically
   const conditions: string[] = [];
-  const params: any[] = [];
+  const params: (string | number)[] = [];
 
   // Filter by muscle group (check both primary and secondary)
   if (filters.muscle_group) {
@@ -82,9 +82,7 @@ export function getExercises(filters: ExerciseFilters = {}): Exercise[] {
       );
       params.push('lats', 'mid_back', '%"lats"%', '%"mid_back"%');
     } else {
-      conditions.push(
-        '(primary_muscle_group = ? OR secondary_muscle_groups LIKE ?)'
-      );
+      conditions.push('(primary_muscle_group = ? OR secondary_muscle_groups LIKE ?)');
       params.push(filters.muscle_group);
       params.push(`%"${filters.muscle_group}"%`); // JSON array contains check
     }

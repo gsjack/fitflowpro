@@ -10,7 +10,17 @@
 
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Card, Text, Badge, IconButton, Menu, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
+import {
+  Card,
+  Text,
+  Badge,
+  IconButton,
+  Menu,
+  Portal,
+  Dialog,
+  Paragraph,
+  Button,
+} from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { VO2maxSession } from '../services/api/vo2maxApi';
 import { colors } from '../theme/colors';
@@ -101,12 +111,7 @@ export default function VO2maxSessionCard({
 
   return (
     <>
-      <Card
-        style={styles.card}
-        elevation={3}
-        onPress={onPress}
-        mode="elevated"
-      >
+      <Card style={styles.card} elevation={3} onPress={onPress} mode="elevated">
         <LinearGradient
           colors={cardGradient}
           start={{ x: 0, y: 0 }}
@@ -141,12 +146,18 @@ export default function VO2maxSessionCard({
             {/* Protocol Badge + Status */}
             <View style={styles.badgeRow}>
               <Badge
-                style={[styles.protocolBadge, { backgroundColor: getProtocolColor(session.protocol_type) }]}
+                style={[
+                  styles.protocolBadge,
+                  { backgroundColor: getProtocolColor(session.protocol_type) },
+                ]}
               >
                 {getProtocolLabel(session.protocol_type)}
               </Badge>
               <Badge
-                style={[styles.statusBadge, { backgroundColor: getCompletionColor(session.completion_status) }]}
+                style={[
+                  styles.statusBadge,
+                  { backgroundColor: getCompletionColor(session.completion_status) },
+                ]}
               >
                 {session.completion_status === 'completed' ? 'Completed' : 'Incomplete'}
               </Badge>
@@ -201,7 +212,9 @@ export default function VO2maxSessionCard({
               <View style={styles.hrRow}>
                 {session.average_heart_rate && (
                   <View style={styles.hrItem}>
-                    <Text variant="bodySmall" style={styles.hrLabel}>Avg HR:</Text>
+                    <Text variant="bodySmall" style={styles.hrLabel}>
+                      Avg HR:
+                    </Text>
                     <Text variant="bodyMedium" style={styles.hrValue}>
                       {session.average_heart_rate} bpm
                     </Text>
@@ -209,7 +222,9 @@ export default function VO2maxSessionCard({
                 )}
                 {session.peak_heart_rate && (
                   <View style={styles.hrItem}>
-                    <Text variant="bodySmall" style={styles.hrLabel}>Peak HR:</Text>
+                    <Text variant="bodySmall" style={styles.hrLabel}>
+                      Peak HR:
+                    </Text>
                     <Text variant="bodyMedium" style={styles.hrValue}>
                       {session.peak_heart_rate} bpm
                     </Text>
@@ -221,8 +236,12 @@ export default function VO2maxSessionCard({
             {/* RPE */}
             {session.rpe && (
               <View style={styles.rpeRow}>
-                <Text variant="bodySmall" style={styles.rpeLabel}>RPE:</Text>
-                <View style={[styles.rpeBadge, { backgroundColor: getRPEColor(session.rpe) + '30' }]}>
+                <Text variant="bodySmall" style={styles.rpeLabel}>
+                  RPE:
+                </Text>
+                <View
+                  style={[styles.rpeBadge, { backgroundColor: getRPEColor(session.rpe) + '30' }]}
+                >
                   <Text style={styles.rpeEmoji}>{getRPEEmoji(session.rpe)}</Text>
                   <Text
                     variant="bodyMedium"

@@ -10,7 +10,14 @@ import { PaperProvider } from 'react-native-paper';
 import VolumeWarningBadge from '../VolumeWarningBadge';
 
 describe('VolumeWarningBadge', () => {
-  const renderWithProvider = (props: any) => {
+  interface TestProps {
+    volume?: number;
+    mev?: number;
+    mav?: number;
+    mrv?: number;
+  }
+
+  const renderWithProvider = (props: TestProps) => {
     return render(
       <PaperProvider>
         <VolumeWarningBadge {...props} />

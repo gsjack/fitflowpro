@@ -33,20 +33,23 @@ test.describe('FitFlow E2E Workflows', () => {
 
     // Optional fields
     const ageInput = page.locator('input').filter({ hasText: /age/i }).or(page.getByLabel(/age/i));
-    if (await ageInput.count() > 0) {
+    if ((await ageInput.count()) > 0) {
       await ageInput.first().fill('30');
       console.log('✓ Filled age: 30');
     }
 
-    const weightInput = page.locator('input').filter({ hasText: /weight/i }).or(page.getByLabel(/weight/i));
-    if (await weightInput.count() > 0) {
+    const weightInput = page
+      .locator('input')
+      .filter({ hasText: /weight/i })
+      .or(page.getByLabel(/weight/i));
+    if ((await weightInput.count()) > 0) {
       await weightInput.first().fill('75');
       console.log('✓ Filled weight: 75kg');
     }
 
     // Select experience level - try to find "Intermediate" button
     const intermediateButton = page.getByRole('button', { name: /intermediate/i });
-    if (await intermediateButton.count() > 0) {
+    if ((await intermediateButton.count()) > 0) {
       await intermediateButton.first().click();
       console.log('✓ Selected experience: Intermediate');
     }
@@ -66,7 +69,11 @@ test.describe('FitFlow E2E Workflows', () => {
     // Check if we're on dashboard or still on auth screen
     const bodyText = await page.textContent('body');
 
-    if (bodyText?.includes('Dashboard') || bodyText?.includes('FitFlow Pro') || bodyText?.includes('Home')) {
+    if (
+      bodyText?.includes('Dashboard') ||
+      bodyText?.includes('FitFlow Pro') ||
+      bodyText?.includes('Home')
+    ) {
       console.log('✓ Registration successful - Dashboard loaded');
     } else if (bodyText?.includes('email already exists')) {
       console.log('⚠ Email already exists - trying login instead');
@@ -92,9 +99,10 @@ test.describe('FitFlow E2E Workflows', () => {
 
     // Verify we're logged in by checking for navigation tabs or dashboard elements
     const finalBodyText = await page.textContent('body');
-    const hasNavigation = finalBodyText?.includes('Home') ||
-                          finalBodyText?.includes('Workout') ||
-                          finalBodyText?.includes('Analytics');
+    const hasNavigation =
+      finalBodyText?.includes('Home') ||
+      finalBodyText?.includes('Workout') ||
+      finalBodyText?.includes('Analytics');
 
     console.log('Has navigation tabs:', hasNavigation);
     expect(hasNavigation).toBe(true);
@@ -135,9 +143,10 @@ test.describe('FitFlow E2E Workflows', () => {
     await page.screenshot({ path: '/tmp/dashboard-after-login.png', fullPage: true });
 
     const bodyText = await page.textContent('body');
-    const loggedIn = bodyText?.includes('Home') ||
-                     bodyText?.includes('Workout') ||
-                     bodyText?.includes('Dashboard');
+    const loggedIn =
+      bodyText?.includes('Home') ||
+      bodyText?.includes('Workout') ||
+      bodyText?.includes('Dashboard');
 
     console.log('Logged in:', loggedIn);
 

@@ -10,14 +10,20 @@ test('quick visual - verify exercise progression', async ({ page }) => {
   console.log('✓ Loaded app');
   await page.waitForTimeout(2000);
 
-  const loginTab = page.locator('button').filter({ hasText: /^Login$/i }).first();
+  const loginTab = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .first();
   await loginTab.click();
   await page.waitForTimeout(500);
 
   await page.locator('input[type="email"]').fill('demo@fitflow.test');
   await page.locator('input[type="password"]').fill('Password123');
 
-  const loginButton = page.locator('button').filter({ hasText: /^Login$/i }).last();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^Login$/i })
+    .last();
   await loginButton.click();
   console.log('✓ Logged in');
   await page.waitForTimeout(2000);
@@ -29,7 +35,7 @@ test('quick visual - verify exercise progression', async ({ page }) => {
   await page.waitForTimeout(2000);
 
   // Check if there's an active workout, if not, look for completed state
-  const hasActiveWorkout = await page.locator('text=/Exercise \\d+\\/6:/').count() > 0;
+  const hasActiveWorkout = (await page.locator('text=/Exercise \\d+\\/6:/').count()) > 0;
   if (!hasActiveWorkout) {
     console.log('⚠️  No active workout found - workout may be completed');
     console.log('   Checking current page state...');
@@ -49,7 +55,10 @@ test('quick visual - verify exercise progression', async ({ page }) => {
   for (let i = 1; i <= 3; i++) {
     await page.locator('input[placeholder="Weight (kg)"]').fill('100');
     await page.locator('input[placeholder="Reps"]').fill('10');
-    await page.locator('button').filter({ hasText: /^Log Set$/i }).click();
+    await page
+      .locator('button')
+      .filter({ hasText: /^Log Set$/i })
+      .click();
     await page.waitForTimeout(800);
   }
   console.log('   ✓ Logged 3 sets');
@@ -63,7 +72,10 @@ test('quick visual - verify exercise progression', async ({ page }) => {
   for (let i = 1; i <= 3; i++) {
     await page.locator('input[placeholder="Weight (kg)"]').fill('50');
     await page.locator('input[placeholder="Reps"]').fill('12');
-    await page.locator('button').filter({ hasText: /^Log Set$/i }).click();
+    await page
+      .locator('button')
+      .filter({ hasText: /^Log Set$/i })
+      .click();
     await page.waitForTimeout(800);
   }
   console.log('   ✓ Logged 3 sets');

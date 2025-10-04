@@ -160,20 +160,13 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
       ...createWorkoutSchema,
       preHandler: authenticateJWT,
     },
-    async (
-      request: FastifyRequest<{ Body: CreateWorkoutBody }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Body: CreateWorkoutBody }>, reply: FastifyReply) => {
       try {
         const { program_day_id, date } = request.body;
         const authenticatedUser = (request as AuthenticatedRequest).user;
 
         // Create workout for authenticated user
-        const workout = createWorkout(
-          authenticatedUser.userId,
-          program_day_id,
-          date
-        );
+        const workout = createWorkout(authenticatedUser.userId, program_day_id, date);
 
         return reply.status(201).send(workout);
       } catch (error) {
@@ -209,10 +202,7 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
       ...listWorkoutsSchema,
       preHandler: authenticateJWT,
     },
-    async (
-      request: FastifyRequest<{ Querystring: ListWorkoutsQuery }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Querystring: ListWorkoutsQuery }>, reply: FastifyReply) => {
       try {
         const { start_date, end_date, workout_id } = request.query;
         const authenticatedUser = (request as AuthenticatedRequest).user;
@@ -231,16 +221,21 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
           }
 
           // Get program_day info and exercises
-          const programDay = db.prepare('SELECT day_name, day_type FROM program_days WHERE id = ?')
+          const programDay = db
+            .prepare('SELECT day_name, day_type FROM program_days WHERE id = ?')
             .get(workout.program_day_id) as any;
 
-          const exercises = db.prepare(`
+          const exercises = db
+            .prepare(
+              `
             SELECT pe.*, e.name as exercise_name
             FROM program_exercises pe
             JOIN exercises e ON pe.exercise_id = e.id
             WHERE pe.program_day_id = ?
             ORDER BY pe.order_index ASC
-          `).all(workout.program_day_id);
+          `
+            )
+            .all(workout.program_day_id);
 
           const workoutWithDetails = {
             ...workout,
@@ -253,11 +248,7 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
         }
 
         // Otherwise, list workouts with date filters
-        const workouts = listWorkouts(
-          authenticatedUser.userId,
-          start_date,
-          end_date
-        );
+        const workouts = listWorkouts(authenticatedUser.userId, start_date, end_date);
 
         return reply.status(200).send(workouts);
       } catch (error) {
@@ -304,7 +295,8 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
             },
             program_day_id: {
               type: 'integer',
-              description: 'Change the program day for this workout (only allowed if status is not_started)',
+              description:
+                'Change the program day for this workout (only allowed if status is not_started)',
             },
           },
           minProperties: 1, // Require at least one property

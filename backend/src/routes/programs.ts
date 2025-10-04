@@ -217,11 +217,11 @@ export default async function programRoutes(fastify: FastifyInstance) {
         const programDays = getProgramDays(program.id);
 
         // Get exercises for each program day
-        const programDaysWithExercises = programDays.map((day: any) => {
+        const programDaysWithExercises = programDays.map((day) => {
           const exercises = getProgramDayExercises(day.id);
 
           // Transform to match contract schema
-          const transformedExercises = exercises.map((ex: any) => ({
+          const transformedExercises = exercises.map((ex) => ({
             id: ex.id,
             program_day_id: ex.program_day_id,
             exercise_id: ex.exercise_id,

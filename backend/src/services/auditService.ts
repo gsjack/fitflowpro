@@ -33,13 +33,7 @@ export function logAuthEvent(
   timestamp: number,
   details?: string
 ): void {
-  stmtCreateAuditLog.run(
-    userId,
-    eventType,
-    ipAddress,
-    timestamp,
-    details ?? null
-  );
+  stmtCreateAuditLog.run(userId, eventType, ipAddress, timestamp, details ?? null);
 }
 
 /**
@@ -57,13 +51,7 @@ export function logDataExport(
   ipAddress?: string
 ): void {
   const details = JSON.stringify({ export_type: exportType });
-  stmtCreateAuditLog.run(
-    userId,
-    'data_export',
-    ipAddress ?? 'unknown',
-    timestamp,
-    details
-  );
+  stmtCreateAuditLog.run(userId, 'data_export', ipAddress ?? 'unknown', timestamp, details);
 }
 
 /**
@@ -81,13 +69,7 @@ export function logAccountDeletion(
   reason?: string
 ): void {
   const details = JSON.stringify({ reason: reason ?? 'user_initiated' });
-  stmtCreateAuditLog.run(
-    userId,
-    'account_deletion',
-    ipAddress ?? 'unknown',
-    timestamp,
-    details
-  );
+  stmtCreateAuditLog.run(userId, 'account_deletion', ipAddress ?? 'unknown', timestamp, details);
 }
 
 /**

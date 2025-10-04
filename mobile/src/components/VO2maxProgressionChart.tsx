@@ -103,7 +103,7 @@ export default function VO2maxProgressionChart({
         {/* Date Range Selector */}
         <SegmentedButtons
           value={dateRange}
-          onValueChange={(value) => setDateRange(value as DateRange)}
+          onValueChange={(value) => setDateRange(value)}
           density="small"
           buttons={[
             { value: '1M', label: '1M' },
@@ -176,7 +176,10 @@ export default function VO2maxProgressionChart({
                 <Text variant="bodySmall" style={styles.statLabel}>
                   Latest
                 </Text>
-                <Text variant="titleLarge" style={[styles.statValue, { color: colors.primary.main }]}>
+                <Text
+                  variant="titleLarge"
+                  style={[styles.statValue, { color: colors.primary.main }]}
+                >
                   {stats.latest.toFixed(1)}
                 </Text>
                 <Text variant="bodySmall" style={styles.statUnit}>

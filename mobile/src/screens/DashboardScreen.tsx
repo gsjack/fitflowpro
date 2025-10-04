@@ -8,7 +8,18 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Alert, RefreshControl } from 'react-native';
-import { Card, Button, Text, Chip, ActivityIndicator, SegmentedButtons, Dialog, Portal, List, IconButton } from 'react-native-paper';
+import {
+  Card,
+  Button,
+  Text,
+  Chip,
+  ActivityIndicator,
+  SegmentedButtons,
+  Dialog,
+  Portal,
+  List,
+  IconButton,
+} from 'react-native-paper';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { useRecoveryStore, getRecoveryMessage } from '../stores/recoveryStore';
 import * as workoutDb from '../services/database/workoutDb';
@@ -57,7 +68,9 @@ export default function DashboardScreen({
 }: DashboardScreenProps) {
   const [loading, setLoading] = useState(true);
   const [todayWorkout, setTodayWorkout] = useState<Workout | null>(null);
-  const [recommendedProgramDay, setRecommendedProgramDay] = useState<RecommendedProgramDay | null>(null);
+  const [recommendedProgramDay, setRecommendedProgramDay] = useState<RecommendedProgramDay | null>(
+    null
+  );
 
   // Recovery assessment state
   const [sleepQuality, setSleepQuality] = useState<string>('');
@@ -72,7 +85,8 @@ export default function DashboardScreen({
   const [swapping, setSwapping] = useState(false);
 
   useWorkoutStore();
-  const { todayAssessment, volumeAdjustment, getTodayAssessment, submitAssessment } = useRecoveryStore();
+  const { todayAssessment, volumeAdjustment, getTodayAssessment, submitAssessment } =
+    useRecoveryStore();
 
   // T090: Add volume tracking data fetching with TanStack Query
   const {
@@ -126,10 +140,7 @@ export default function DashboardScreen({
   // T091: Pull-to-refresh handler
   const handleRefresh = async () => {
     // Refresh both dashboard data and volume data
-    await Promise.all([
-      loadDashboardData(),
-      refetchVolume(),
-    ]);
+    await Promise.all([loadDashboardData(), refetchVolume()]);
   };
 
   const handleStartWorkout = async () => {
@@ -253,7 +264,7 @@ export default function DashboardScreen({
           {new Date().toLocaleDateString('en-US', {
             weekday: 'long',
             month: 'long',
-            day: 'numeric'
+            day: 'numeric',
           })}
         </Text>
 
@@ -343,7 +354,9 @@ export default function DashboardScreen({
                 accessibilityLabel="Submit recovery assessment"
                 compact
               >
-                {allQuestionsAnswered ? `Submit (${parseInt(sleepQuality) + parseInt(muscleSoreness) + parseInt(mentalMotivation)}/15)` : 'Submit'}
+                {allQuestionsAnswered
+                  ? `Submit (${parseInt(sleepQuality) + parseInt(muscleSoreness) + parseInt(mentalMotivation)}/15)`
+                  : 'Submit'}
               </Button>
             </View>
           </View>
@@ -432,7 +445,8 @@ export default function DashboardScreen({
                   </View>
                 ))}
                 <Text variant="bodySmall" style={styles.exerciseSummary}>
-                  {todayWorkout.exercises.length} exercises • {todayWorkout.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
+                  {todayWorkout.exercises.length} exercises •{' '}
+                  {todayWorkout.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
                 </Text>
               </View>
             )}
@@ -538,7 +552,8 @@ export default function DashboardScreen({
                   </View>
                 ))}
                 <Text variant="bodySmall" style={styles.exerciseSummary}>
-                  {recommendedProgramDay.exercises.length} exercises • {recommendedProgramDay.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
+                  {recommendedProgramDay.exercises.length} exercises •{' '}
+                  {recommendedProgramDay.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
                 </Text>
               </View>
             )}
@@ -674,10 +689,7 @@ export default function DashboardScreen({
                       }
                       onPress={() => !isCurrentDay && handleSwapWorkout(day.id)}
                       disabled={swapping || isCurrentDay}
-                      style={[
-                        styles.programDayItem,
-                        isCurrentDay && styles.currentProgramDay,
-                      ]}
+                      style={[styles.programDayItem, isCurrentDay && styles.currentProgramDay]}
                     />
                   );
                 })}
@@ -685,10 +697,7 @@ export default function DashboardScreen({
             )}
           </Dialog.Content>
           <Dialog.Actions>
-            <Button
-              onPress={() => setShowSwapDialog(false)}
-              disabled={swapping}
-            >
+            <Button onPress={() => setShowSwapDialog(false)} disabled={swapping}>
               Cancel
             </Button>
           </Dialog.Actions>

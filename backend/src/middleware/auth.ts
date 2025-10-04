@@ -28,10 +28,7 @@ export interface AuthenticatedRequest extends FastifyRequest {
  * OR
  * fastify.get('/protected', { preHandler: authenticateJWT }, handler)
  */
-export async function authenticateJWT(
-  request: FastifyRequest,
-  reply: FastifyReply
-): Promise<void> {
+export async function authenticateJWT(request: FastifyRequest, reply: FastifyReply): Promise<void> {
   try {
     // Verify JWT token - Fastify JWT plugin automatically checks Authorization header
     await request.jwtVerify();

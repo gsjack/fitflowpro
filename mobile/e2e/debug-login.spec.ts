@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 
 test('debug login flow - comprehensive investigation', async ({ page }) => {
   // Listen to console messages
-  page.on('console', msg => {
+  page.on('console', (msg) => {
     const type = msg.type();
     const text = msg.text();
     console.log(`[BROWSER ${type.toUpperCase()}]:`, text);
   });
 
   // Listen to network requests
-  page.on('request', request => {
+  page.on('request', (request) => {
     const url = request.url();
     if (url.includes('api') || url.includes('3000')) {
       console.log('[REQUEST]:', request.method(), url);
@@ -20,7 +20,7 @@ test('debug login flow - comprehensive investigation', async ({ page }) => {
     }
   });
 
-  page.on('response', async response => {
+  page.on('response', async (response) => {
     const url = response.url();
     if (url.includes('api') || url.includes('3000')) {
       console.log('[RESPONSE]:', response.status(), url);
@@ -36,7 +36,7 @@ test('debug login flow - comprehensive investigation', async ({ page }) => {
   });
 
   // Listen to page errors
-  page.on('pageerror', error => {
+  page.on('pageerror', (error) => {
     console.error('[PAGE ERROR]:', error.message);
   });
 
@@ -50,7 +50,9 @@ test('debug login flow - comprehensive investigation', async ({ page }) => {
   console.log('Screenshot saved: debug-01-initial.png');
 
   // Check if login form is visible
-  const emailInput = page.locator('input[type="email"]').or(page.locator('input[placeholder*="mail" i]'));
+  const emailInput = page
+    .locator('input[type="email"]')
+    .or(page.locator('input[placeholder*="mail" i]'));
   const passwordInput = page.locator('input[type="password"]');
 
   await expect(emailInput).toBeVisible({ timeout: 5000 });
@@ -97,7 +99,10 @@ test('debug login flow - comprehensive investigation', async ({ page }) => {
 
   if (!loginButton) {
     console.error('\n❌ LOGIN BUTTON NOT FOUND\n');
-    await page.screenshot({ path: '/tmp/screenshots/debug-03-button-not-found.png', fullPage: true });
+    await page.screenshot({
+      path: '/tmp/screenshots/debug-03-button-not-found.png',
+      fullPage: true,
+    });
     throw new Error('Login button not found');
   }
 
@@ -139,8 +144,8 @@ test('debug login flow - comprehensive investigation', async ({ page }) => {
   }
 
   // Check if we see dashboard
-  const hasDashboard = await page.locator('text=/dashboard/i').count() > 0;
-  const hasWorkout = await page.locator('text=/workout/i').count() > 0;
+  const hasDashboard = (await page.locator('text=/dashboard/i').count()) > 0;
+  const hasWorkout = (await page.locator('text=/workout/i').count()) > 0;
   console.log('Has Dashboard text:', hasDashboard);
   console.log('Has Workout text:', hasWorkout);
 

@@ -22,7 +22,14 @@ describe('PhaseProgressIndicator', () => {
     vi.clearAllMocks();
   });
 
-  const renderWithProvider = (props: any) => {
+  interface TestProps {
+    currentPhase?: 'mev' | 'mav' | 'mrv' | 'deload';
+    currentWeek?: number;
+    totalWeeks?: number;
+    onAdvancePhase?: () => void;
+  }
+
+  const renderWithProvider = (props: TestProps) => {
     return render(
       <PaperProvider>
         <PhaseProgressIndicator {...props} />

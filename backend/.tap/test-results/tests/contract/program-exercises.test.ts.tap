@@ -1,22 +1,22 @@
 TAP version 14
 # Subtest: Program Exercise Editor Endpoints Contract Tests
-{"level":30,"time":1759550015316,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015572,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":254.3427640000591,"msg":"request completed"}
-{"level":30,"time":1759550015573,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015788,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":215.0396699999692,"msg":"request completed"}
-{"level":30,"time":1759550015789,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=barbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015794,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":5.216550000011921,"msg":"request completed"}
-{"level":30,"time":1759550015795,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=dumbbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015795,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":0.6528979999711737,"msg":"request completed"}
-{"level":30,"time":1759550015796,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises?muscle_group=back","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015796,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":0.6220970000140369,"msg":"request completed"}
-{"level":30,"time":1759550015797,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015797,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","msg":"Route POST:/api/programs not found"}
-{"level":30,"time":1759550015798,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":404},"responseTime":0.6389300000155345,"msg":"request completed"}
-{"level":30,"time":1759550015798,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015798,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","msg":"Route POST:/api/program-days not found"}
-{"level":30,"time":1759550015798,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":404},"responseTime":0.4993820000672713,"msg":"request completed"}
-{"level":30,"time":1759550015801,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531281,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531514,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":231.2321270001121,"msg":"request completed"}
+{"level":30,"time":1759552531515,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531741,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":225.436863000039,"msg":"request completed"}
+{"level":30,"time":1759552531741,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=barbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531745,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":3.8727279999293387,"msg":"request completed"}
+{"level":30,"time":1759552531746,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=dumbbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531746,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":0.7707739998586476,"msg":"request completed"}
+{"level":30,"time":1759552531747,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises?muscle_group=back","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531748,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.065506000071764,"msg":"request completed"}
+{"level":30,"time":1759552531749,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531750,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","msg":"Route POST:/api/programs not found"}
+{"level":30,"time":1759552531750,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":404},"responseTime":0.789282999932766,"msg":"request completed"}
+{"level":30,"time":1759552531751,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531751,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","msg":"Route POST:/api/program-days not found"}
+{"level":30,"time":1759552531751,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":404},"responseTime":0.5482580000534654,"msg":"request completed"}
+{"level":30,"time":1759552531754,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T009: POST /api/program-exercises
         # Subtest: should add exercise to program day (201)
             not ok 1 - Returns 201 Created
@@ -87,7 +87,7 @@ TAP version 14
               ...
             
             1..3
-        not ok 1 - should add exercise to program day (201) # time=39.497ms
+        not ok 1 - should add exercise to program day (201) # time=45.645ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -103,8 +103,8 @@ TAP version 14
                     method: 'POST',
           ...
         
-{"level":30,"time":1759550015802,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":404},"responseTime":1.350635000038892,"msg":"request completed"}
-{"level":30,"time":1759550015845,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531756,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":404},"responseTime":1.4804370002821088,"msg":"request completed"}
+{"level":30,"time":1759552531805,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should allow duplicate exercises for drop sets (201)
             not ok 1 - Returns 201 Created (allows duplicates)
               ---
@@ -156,7 +156,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 2 - should allow duplicate exercises for drop sets (201) # time=11.403ms
+        not ok 2 - should allow duplicate exercises for drop sets (201) # time=13.24ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -172,13 +172,13 @@ TAP version 14
                     method: 'POST',
           ...
         
-{"level":30,"time":1759550015846,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":404},"responseTime":0.879192000022158,"msg":"request completed"}
-{"level":30,"time":1759550015860,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015860,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015860,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015860,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015861,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550015861,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531806,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":404},"responseTime":0.9001210001297295,"msg":"request completed"}
+{"level":30,"time":1759552531830,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531830,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531831,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531831,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531831,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531832,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return volume warning when exceeding MRV (201)
             not ok 1 - Returns volume warning for MRV
               ---
@@ -198,7 +198,7 @@ TAP version 14
               ...
             
             1..1
-        not ok 3 - should return volume warning when exceeding MRV (201) # time=8.757ms
+        not ok 3 - should return volume warning when exceeding MRV (201) # time=12.243ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -214,13 +214,13 @@ TAP version 14
                   const promises = [];
           ...
         
-{"level":30,"time":1759550015862,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":404},"responseTime":1.6397179999621585,"msg":"request completed"}
-{"level":30,"time":1759550015862,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":404},"responseTime":1.9095940000843257,"msg":"request completed"}
-{"level":30,"time":1759550015862,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":404},"responseTime":2.1096959999995306,"msg":"request completed"}
-{"level":30,"time":1759550015863,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":404},"responseTime":2.342483999906108,"msg":"request completed"}
-{"level":30,"time":1759550015863,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":404},"responseTime":2.6202519999351352,"msg":"request completed"}
-{"level":30,"time":1759550015864,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":404},"responseTime":2.9014429999515414,"msg":"request completed"}
-{"level":30,"time":1759550015872,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531833,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":404},"responseTime":3.0140230003744364,"msg":"request completed"}
+{"level":30,"time":1759552531834,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":404},"responseTime":3.2839620001614094,"msg":"request completed"}
+{"level":30,"time":1759552531834,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":404},"responseTime":3.650491999927908,"msg":"request completed"}
+{"level":30,"time":1759552531835,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":404},"responseTime":4.030989999882877,"msg":"request completed"}
+{"level":30,"time":1759552531835,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":404},"responseTime":4.535526999738067,"msg":"request completed"}
+{"level":30,"time":1759552531836,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":404},"responseTime":4.058088999707252,"msg":"request completed"}
+{"level":30,"time":1759552531846,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should accept optional order_index (201)
             not ok 1 - Returns 201 Created
               ---
@@ -272,7 +272,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 4 - should accept optional order_index (201) # time=12.131ms
+        not ok 4 - should accept optional order_index (201) # time=14.426ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -288,79 +288,79 @@ TAP version 14
                     method: 'POST',
           ...
         
-{"level":30,"time":1759550015872,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":404},"responseTime":0.8584480000426993,"msg":"request completed"}
-{"level":30,"time":1759550015889,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531847,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":404},"responseTime":1.0813609999604523,"msg":"request completed"}
+{"level":30,"time":1759552531863,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_sets (< 1)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 400 for invalid target_sets (< 1) # time=2.187ms
+        ok 5 - should return 400 for invalid target_sets (< 1) # time=1.997ms
         
-{"level":30,"time":1759550015890,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":400},"responseTime":0.743625000002794,"msg":"request completed"}
-{"level":30,"time":1759550015892,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531864,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":400},"responseTime":0.6941569996997714,"msg":"request completed"}
+{"level":30,"time":1759552531866,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_sets (> 10)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 6 - should return 400 for invalid target_sets (> 10) # time=2.055ms
+        ok 6 - should return 400 for invalid target_sets (> 10) # time=1.791ms
         
-{"level":30,"time":1759550015893,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":400},"responseTime":0.6299200000939891,"msg":"request completed"}
-{"level":30,"time":1759550015895,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531867,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":400},"responseTime":0.5994529998861253,"msg":"request completed"}
+{"level":30,"time":1759552531869,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rep_range format
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 7 - should return 400 for invalid target_rep_range format # time=1.9ms
+        ok 7 - should return 400 for invalid target_rep_range format # time=1.641ms
         
-{"level":30,"time":1759550015896,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":400},"responseTime":0.7508179999422282,"msg":"request completed"}
-{"level":30,"time":1759550015898,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531869,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":400},"responseTime":0.683332999702543,"msg":"request completed"}
+{"level":30,"time":1759552531871,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rir (< 0)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 8 - should return 400 for invalid target_rir (< 0) # time=1.617ms
+        ok 8 - should return 400 for invalid target_rir (< 0) # time=4.221ms
         
-{"level":30,"time":1759550015898,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":400},"responseTime":0.6451459999661893,"msg":"request completed"}
-{"level":30,"time":1759550015900,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531874,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":400},"responseTime":3.1426019999198616,"msg":"request completed"}
+{"level":30,"time":1759552531876,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rir (> 4)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 9 - should return 400 for invalid target_rir (> 4) # time=1.836ms
+        ok 9 - should return 400 for invalid target_rir (> 4) # time=1.82ms
         
-{"level":30,"time":1759550015901,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":400},"responseTime":0.6853050000499934,"msg":"request completed"}
-{"level":30,"time":1759550015903,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing required fields
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
+{"level":30,"time":1759552531877,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":400},"responseTime":0.6971609997563064,"msg":"request completed"}
+{"level":30,"time":1759552531879,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
             1..2
-        ok 10 - should return 400 for missing required fields # time=5.226ms
+        ok 10 - should return 400 for missing required fields # time=1.677ms
         
-{"level":30,"time":1759550015907,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":400},"responseTime":4.008603999973275,"msg":"request completed"}
-{"level":30,"time":1759550015909,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531880,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":400},"responseTime":0.5727719999849796,"msg":"request completed"}
+{"level":30,"time":1759552531881,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent program_day_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 11 - should return 404 for non-existent program_day_id # time=2.044ms
+        ok 11 - should return 404 for non-existent program_day_id # time=1.959ms
         
-{"level":30,"time":1759550015909,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":404},"responseTime":0.71987800009083,"msg":"request completed"}
-{"level":30,"time":1759550015911,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531882,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":404},"responseTime":0.8540260000154376,"msg":"request completed"}
+{"level":30,"time":1759552531884,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 12 - should return 404 for non-existent exercise_id # time=1.83ms
+        ok 12 - should return 404 for non-existent exercise_id # time=1.565ms
         
-{"level":30,"time":1759550015912,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":404},"responseTime":0.7282589999958873,"msg":"request completed"}
-{"level":30,"time":1759550015914,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531885,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":404},"responseTime":0.5995220001786947,"msg":"request completed"}
+{"level":30,"time":1759552531886,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 13 - should return 401 without authentication # time=2.475ms
+        ok 13 - should return 401 without authentication # time=1.503ms
         
         1..13
-    not ok 1 - T009: POST /api/program-exercises # time=117.568ms
+    not ok 1 - T009: POST /api/program-exercises # time=135.912ms
       ---
       at:
         fileName: tests/contract/program-exercises.test.ts
@@ -376,8 +376,6 @@ TAP version 14
               const response = await app.inject({
       ...
     
-{"level":30,"time":1759550015915,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":401},"responseTime":1.381645999965258,"msg":"request completed"}
-{"level":30,"time":1759550015921,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T010: PATCH /api/program-exercises/:id
         # Subtest: should update target_sets (200)
             not ok 1 - Returns 200 OK
@@ -397,6 +395,8 @@ TAP version 14
                 --------^
                       const body = response.json();
                       t.equal(body.updated, true, 'Returns updated=true');
+{"level":30,"time":1759552531887,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":401},"responseTime":0.8628960000351071,"msg":"request completed"}
+{"level":30,"time":1759552531891,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
               diff: |
                 --- expected
                 +++ actual
@@ -448,7 +448,7 @@ TAP version 14
               ...
             
             1..3
-        not ok 1 - should update target_sets (200) # time=17.186ms
+        not ok 1 - should update target_sets (200) # time=14.467ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -464,8 +464,8 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550015922,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":404},"responseTime":0.9311549999983981,"msg":"request completed"}
-{"level":30,"time":1759550015942,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531892,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":404},"responseTime":1.03233200032264,"msg":"request completed"}
+{"level":30,"time":1759552531909,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should update target_rep_range (200)
             not ok 1 - Returns 200 OK
               ---
@@ -517,7 +517,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 2 - should update target_rep_range (200) # time=10.309ms
+        not ok 2 - should update target_rep_range (200) # time=10.217ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -533,8 +533,8 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550015943,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":404},"responseTime":0.8816360000055283,"msg":"request completed"}
-{"level":30,"time":1759550015955,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531910,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":404},"responseTime":0.7957080001942813,"msg":"request completed"}
+{"level":30,"time":1759552531922,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should update target_rir (200)
             not ok 1 - Returns 200 OK
               ---
@@ -586,7 +586,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 3 - should update target_rir (200) # time=12.667ms
+        not ok 3 - should update target_rir (200) # time=8.942ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -602,8 +602,8 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550015956,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":404},"responseTime":1.0168530000373721,"msg":"request completed"}
-{"level":30,"time":1759550015974,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531923,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":404},"responseTime":0.6582590001635253,"msg":"request completed"}
+{"level":30,"time":1759552531933,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should update multiple fields at once (200)
             not ok 1 - Returns 200 OK
               ---
@@ -655,7 +655,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 4 - should update multiple fields at once (200) # time=11.87ms
+        not ok 4 - should update multiple fields at once (200) # time=9.036ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -671,8 +671,8 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550015975,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":404},"responseTime":0.8512539999792352,"msg":"request completed"}
-{"level":30,"time":1759550015990,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531934,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":404},"responseTime":0.6864049998112023,"msg":"request completed"}
+{"level":30,"time":1759552531946,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_sets
             not ok 1 - Returns 400 Bad Request
               ---
@@ -701,7 +701,7 @@ TAP version 14
             
             ok 2 - Returns error message
             1..2
-        not ok 5 - should return 400 for invalid target_sets # time=7.734ms
+        not ok 5 - should return 400 for invalid target_sets # time=5.891ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -717,8 +717,8 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550015992,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":404},"responseTime":1.131535999942571,"msg":"request completed"}
-{"level":30,"time":1759550016003,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531946,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":404},"responseTime":0.7146909995935857,"msg":"request completed"}
+{"level":30,"time":1759552531955,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rep_range format
             not ok 1 - Returns 400 Bad Request
               ---
@@ -747,7 +747,7 @@ TAP version 14
             
             ok 2 - Returns error message
             1..2
-        not ok 6 - should return 400 for invalid target_rep_range format # time=8.448ms
+        not ok 6 - should return 400 for invalid target_rep_range format # time=9.603ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -763,8 +763,8 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550016004,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":404},"responseTime":1.468462000018917,"msg":"request completed"}
-{"level":30,"time":1759550016018,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531955,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":404},"responseTime":0.8654799996875226,"msg":"request completed"}
+{"level":30,"time":1759552531967,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rir
             not ok 1 - Returns 400 Bad Request
               ---
@@ -793,7 +793,7 @@ TAP version 14
             
             ok 2 - Returns error message
             1..2
-        not ok 7 - should return 400 for invalid target_rir # time=7.371ms
+        not ok 7 - should return 400 for invalid target_rir # time=6.149ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -809,23 +809,23 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550016019,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","res":{"statusCode":404},"responseTime":1.0159449999919161,"msg":"request completed"}
-{"level":30,"time":1759550016029,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","req":{"method":"PATCH","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531967,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","res":{"statusCode":404},"responseTime":0.8165910001844168,"msg":"request completed"}
+{"level":30,"time":1759552531975,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","req":{"method":"PATCH","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent program_exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 8 - should return 404 for non-existent program_exercise_id # time=2.775ms
+        ok 8 - should return 404 for non-existent program_exercise_id # time=2.198ms
         
-{"level":30,"time":1759550016030,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","res":{"statusCode":404},"responseTime":1.2629819998983294,"msg":"request completed"}
-{"level":30,"time":1759550016032,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531976,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","res":{"statusCode":404},"responseTime":0.8863620003685355,"msg":"request completed"}
+{"level":30,"time":1759552531978,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 9 - should return 401 without authentication # time=1.476ms
+        ok 9 - should return 401 without authentication # time=1.423ms
         
         1..9
-    not ok 2 - T010: PATCH /api/program-exercises/:id # time=113.914ms
+    not ok 2 - T010: PATCH /api/program-exercises/:id # time=89.857ms
       ---
       at:
         fileName: tests/contract/program-exercises.test.ts
@@ -841,8 +841,8 @@ TAP version 14
               const response = await app.inject({
       ...
     
-{"level":30,"time":1759550016033,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","res":{"statusCode":401},"responseTime":0.6226549999555573,"msg":"request completed"}
-{"level":30,"time":1759550016037,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531979,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","res":{"statusCode":401},"responseTime":0.4840040002018213,"msg":"request completed"}
+{"level":30,"time":1759552531983,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T012: PUT /api/program-exercises/:id/swap
         # Subtest: should swap exercise with compatible alternative (200)
             not ok 1 - Returns 200 OK
@@ -964,7 +964,7 @@ TAP version 14
               ...
             
             1..5
-        not ok 1 - should swap exercise with compatible alternative (200) # time=18.448ms
+        not ok 1 - should swap exercise with compatible alternative (200) # time=15.937ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -980,8 +980,8 @@ TAP version 14
                     method: 'PUT',
           ...
         
-{"level":30,"time":1759550016038,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","res":{"statusCode":404},"responseTime":1.011754999984987,"msg":"request completed"}
-{"level":30,"time":1759550016057,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552531984,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","res":{"statusCode":404},"responseTime":0.8187549998983741,"msg":"request completed"}
+{"level":30,"time":1759552532002,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for incompatible muscle groups
             not ok 1 - Returns 400 Bad Request
               ---
@@ -1027,7 +1027,7 @@ TAP version 14
               ...
             
             1..3
-        not ok 2 - should return 400 for incompatible muscle groups # time=7.03ms
+        not ok 2 - should return 400 for incompatible muscle groups # time=7.179ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -1043,39 +1043,39 @@ TAP version 14
                     method: 'PUT',
           ...
         
-{"level":30,"time":1759550016058,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","res":{"statusCode":404},"responseTime":0.7430660000536591,"msg":"request completed"}
-{"level":30,"time":1759550016067,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532003,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","res":{"statusCode":404},"responseTime":1.2476540002971888,"msg":"request completed"}
+{"level":30,"time":1759552532012,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing new_exercise_id
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 3 - should return 400 for missing new_exercise_id # time=1.779ms
+        ok 3 - should return 400 for missing new_exercise_id # time=1.798ms
         
-{"level":30,"time":1759550016068,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","res":{"statusCode":400},"responseTime":0.6801370000466704,"msg":"request completed"}
-{"level":30,"time":1759550016070,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","req":{"method":"PUT","url":"/api/program-exercises/99999/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532012,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","res":{"statusCode":400},"responseTime":0.6825639996677637,"msg":"request completed"}
+{"level":30,"time":1759552532014,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","req":{"method":"PUT","url":"/api/program-exercises/99999/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent program_exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 404 for non-existent program_exercise_id # time=1.537ms
+        ok 4 - should return 404 for non-existent program_exercise_id # time=2.059ms
         
-{"level":30,"time":1759550016070,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","res":{"statusCode":404},"responseTime":0.6116209999890998,"msg":"request completed"}
-{"level":30,"time":1759550016072,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532015,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","res":{"statusCode":404},"responseTime":0.8721839999780059,"msg":"request completed"}
+{"level":30,"time":1759552532017,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent new_exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 404 for non-existent new_exercise_id # time=1.313ms
+        ok 5 - should return 404 for non-existent new_exercise_id # time=1.686ms
         
-{"level":30,"time":1759550016072,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","res":{"statusCode":404},"responseTime":0.5197769999504089,"msg":"request completed"}
-{"level":30,"time":1759550016073,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532018,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","res":{"statusCode":404},"responseTime":0.7020499999634922,"msg":"request completed"}
+{"level":30,"time":1759552532019,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 6 - should return 401 without authentication # time=0.98ms
+        ok 6 - should return 401 without authentication # time=1.26ms
         
         1..6
-    not ok 3 - T012: PUT /api/program-exercises/:id/swap # time=39.29ms
+    not ok 3 - T012: PUT /api/program-exercises/:id/swap # time=38.366ms
       ---
       at:
         fileName: tests/contract/program-exercises.test.ts
@@ -1091,12 +1091,14 @@ TAP version 14
               const response = await app.inject({
       ...
     
-{"level":30,"time":1759550016074,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","res":{"statusCode":401},"responseTime":0.37045099993702024,"msg":"request completed"}
-{"level":30,"time":1759550016078,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016079,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","res":{"statusCode":404},"responseTime":1.2353940000757575,"msg":"request completed"}
-{"level":30,"time":1759550016079,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016080,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","res":{"statusCode":404},"responseTime":0.44364700000733137,"msg":"request completed"}
-{"level":30,"time":1759550016080,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532020,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","res":{"statusCode":401},"responseTime":0.48581899981945753,"msg":"request completed"}
+{"level":30,"time":1759552532024,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532025,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","res":{"statusCode":404},"responseTime":1.562780000269413,"msg":"request completed"}
+{"level":30,"time":1759552532026,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532027,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","res":{"statusCode":404},"responseTime":0.7587609998881817,"msg":"request completed"}
+{"level":30,"time":1759552532027,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532028,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","res":{"statusCode":404},"responseTime":0.7253069998696446,"msg":"request completed"}
+{"level":30,"time":1759552532029,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T013: PATCH /api/program-exercises/batch-reorder
         # Subtest: should reorder exercises (200)
             not ok 1 - Returns 200 OK
@@ -1142,7 +1144,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 1 - should reorder exercises (200) # time=7.569ms
+        not ok 1 - should reorder exercises (200) # time=7.45ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -1158,10 +1160,8 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550016080,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","res":{"statusCode":404},"responseTime":0.402369000017643,"msg":"request completed"}
-{"level":30,"time":1759550016081,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016081,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","res":{"statusCode":404},"responseTime":0.5894799999659881,"msg":"request completed"}
-{"level":30,"time":1759550016091,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532030,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","res":{"statusCode":404},"responseTime":0.9916840000078082,"msg":"request completed"}
+{"level":30,"time":1759552532038,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should handle partial reordering (200)
             not ok 1 - Returns 200 OK
               ---
@@ -1188,7 +1188,7 @@ TAP version 14
               ...
             
             1..1
-        not ok 2 - should handle partial reordering (200) # time=7.374ms
+        not ok 2 - should handle partial reordering (200) # time=6.13ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -1204,32 +1204,32 @@ TAP version 14
                     method: 'PATCH',
           ...
         
-{"level":30,"time":1759550016094,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","res":{"statusCode":404},"responseTime":2.429300000076182,"msg":"request completed"}
-{"level":30,"time":1759550016101,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532040,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","res":{"statusCode":404},"responseTime":2.187235999852419,"msg":"request completed"}
+{"level":30,"time":1759552532047,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing program_day_id
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 3 - should return 400 for missing program_day_id # time=1.78ms
+        ok 3 - should return 400 for missing program_day_id # time=1.651ms
         
-{"level":30,"time":1759550016102,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","res":{"statusCode":400},"responseTime":0.6676349999615923,"msg":"request completed"}
-{"level":30,"time":1759550016104,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532047,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","res":{"statusCode":400},"responseTime":0.6486210003495216,"msg":"request completed"}
+{"level":30,"time":1759552532049,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing exercise_order
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 400 for missing exercise_order # time=1.611ms
+        ok 4 - should return 400 for missing exercise_order # time=1.313ms
         
-{"level":30,"time":1759550016105,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","res":{"statusCode":400},"responseTime":0.7044420000165701,"msg":"request completed"}
-{"level":30,"time":1759550016107,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532049,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","res":{"statusCode":400},"responseTime":0.5048859999515116,"msg":"request completed"}
+{"level":30,"time":1759552532051,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid exercise_order format
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 400 for invalid exercise_order format # time=2.223ms
+        ok 5 - should return 400 for invalid exercise_order format # time=1.083ms
         
-{"level":30,"time":1759550016107,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","res":{"statusCode":400},"responseTime":0.6440969998948276,"msg":"request completed"}
-{"level":30,"time":1759550016109,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532051,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","res":{"statusCode":400},"responseTime":0.446148999966681,"msg":"request completed"}
+{"level":30,"time":1759552532052,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for negative order_index
             not ok 1 - Returns 400 Bad Request
               ---
@@ -1258,7 +1258,7 @@ TAP version 14
             
             ok 2 - Returns error message
             1..2
-        not ok 6 - should return 400 for negative order_index # time=4.34ms
+        not ok 6 - should return 400 for negative order_index # time=3.604ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -1274,15 +1274,15 @@ TAP version 14
                     method: 'PATCH',
           ...
         
+{"level":30,"time":1759552532053,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","res":{"statusCode":404},"responseTime":0.5975659997202456,"msg":"request completed"}
+{"level":30,"time":1759552532057,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-{"level":30,"time":1759550016110,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","res":{"statusCode":404},"responseTime":0.5982800000347197,"msg":"request completed"}
-{"level":30,"time":1759550016116,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-        ok 7 - should return 401 without authentication # time=1.348ms
+        ok 7 - should return 401 without authentication # time=0.971ms
         
         1..7
-    not ok 4 - T013: PATCH /api/program-exercises/batch-reorder # time=40.158ms
+    not ok 4 - T013: PATCH /api/program-exercises/batch-reorder # time=35.308ms
       ---
       at:
         fileName: tests/contract/program-exercises.test.ts
@@ -1298,8 +1298,8 @@ TAP version 14
             let exerciseId1: number;
       ...
     
-{"level":30,"time":1759550016116,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","res":{"statusCode":401},"responseTime":0.47116499999538064,"msg":"request completed"}
-{"level":30,"time":1759550016120,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532058,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","res":{"statusCode":401},"responseTime":0.35640200041234493,"msg":"request completed"}
+{"level":30,"time":1759552532061,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T011: DELETE /api/program-exercises/:id
         # Subtest: should delete program exercise (200)
             not ok 1 - Returns 200 OK
@@ -1370,7 +1370,7 @@ TAP version 14
               ...
             
             1..3
-        not ok 1 - should delete program exercise (200) # time=9.814ms
+        not ok 1 - should delete program exercise (200) # time=9.47ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -1386,15 +1386,15 @@ TAP version 14
                     method: 'DELETE',
           ...
         
-{"level":30,"time":1759550016121,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","res":{"statusCode":404},"responseTime":1.0197860000189394,"msg":"request completed"}
-{"level":30,"time":1759550016122,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016122,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","res":{"statusCode":404},"responseTime":0.4532850000541657,"msg":"request completed"}
-{"level":30,"time":1759550016136,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016136,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","msg":"Route POST:/api/program-days not found"}
-{"level":30,"time":1759550016136,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","res":{"statusCode":404},"responseTime":0.519706999999471,"msg":"request completed"}
-{"level":30,"time":1759550016137,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016137,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","res":{"statusCode":400},"responseTime":0.6074999999254942,"msg":"request completed"}
-{"level":30,"time":1759550016137,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532062,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","res":{"statusCode":404},"responseTime":1.1336019998416305,"msg":"request completed"}
+{"level":30,"time":1759552532062,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532063,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","res":{"statusCode":404},"responseTime":0.4974830001592636,"msg":"request completed"}
+{"level":30,"time":1759552532074,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532074,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","msg":"Route POST:/api/program-days not found"}
+{"level":30,"time":1759552532075,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","res":{"statusCode":404},"responseTime":0.384269000031054,"msg":"request completed"}
+{"level":30,"time":1759552532075,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532075,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","res":{"statusCode":400},"responseTime":0.46493700006976724,"msg":"request completed"}
+{"level":30,"time":1759552532075,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return volume warning when dropping below MEV (200)
             not ok 1 - Returns 200 OK
               ---
@@ -1439,7 +1439,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 2 - should return volume warning when dropping below MEV (200) # time=8.927ms
+        not ok 2 - should return volume warning when dropping below MEV (200) # time=8.796ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -1459,21 +1459,21 @@ TAP version 14
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 3 - should return 404 for non-existent program_exercise_id # time=1.81ms
+        ok 3 - should return 404 for non-existent program_exercise_id # time=1.947ms
         
         # Subtest: should return 404 when deleting already deleted exercise
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 404 when deleting already deleted exercise # time=1.427ms
+        ok 4 - should return 404 when deleting already deleted exercise # time=1.698ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 5 - should return 401 without authentication # time=0.756ms
+        ok 5 - should return 401 without authentication # time=1.06ms
         
         1..5
-    not ok 5 - T011: DELETE /api/program-exercises/:id # time=32.664ms
+    not ok 5 - T011: DELETE /api/program-exercises/:id # time=31.814ms
       ---
       at:
         fileName: tests/contract/program-exercises.test.ts
@@ -1489,7 +1489,7 @@ TAP version 14
       ...
     
     1..5
-not ok 1 - Program Exercise Editor Endpoints Contract Tests # time=1151.448ms
+not ok 1 - Program Exercise Editor Endpoints Contract Tests # time=1095.005ms
   ---
   at:
     fileName: tests/contract/program-exercises.test.ts
@@ -1504,14 +1504,14 @@ not ok 1 - Program Exercise Editor Endpoints Contract Tests # time=1151.448ms
       const app = await buildApp();
   ...
 
-{"level":30,"time":1759550016138,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","res":{"statusCode":400},"responseTime":0.4136840000282973,"msg":"request completed"}
-{"level":30,"time":1759550016138,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016138,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","res":{"statusCode":404},"responseTime":0.303959000040777,"msg":"request completed"}
-{"level":30,"time":1759550016147,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","req":{"method":"DELETE","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016148,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","res":{"statusCode":404},"responseTime":0.6586949999909848,"msg":"request completed"}
-{"level":30,"time":1759550016149,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016150,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","res":{"statusCode":404},"responseTime":0.5150269999867305,"msg":"request completed"}
-{"level":30,"time":1759550016151,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","req":{"method":"DELETE","url":"/api/program-exercises/1","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759550016152,"pid":16125,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","res":{"statusCode":401},"responseTime":0.19919399998616427,"msg":"request completed"}
+{"level":30,"time":1759552532076,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","res":{"statusCode":400},"responseTime":0.39900599978864193,"msg":"request completed"}
+{"level":30,"time":1759552532076,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532076,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","res":{"statusCode":404},"responseTime":0.34725299989804626,"msg":"request completed"}
+{"level":30,"time":1759552532085,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","req":{"method":"DELETE","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532086,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","res":{"statusCode":404},"responseTime":0.6879420001059771,"msg":"request completed"}
+{"level":30,"time":1759552532088,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532089,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","res":{"statusCode":404},"responseTime":0.6106970002874732,"msg":"request completed"}
+{"level":30,"time":1759552532091,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","req":{"method":"DELETE","url":"/api/program-exercises/1","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759552532091,"pid":46128,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","res":{"statusCode":401},"responseTime":0.2975259996019304,"msg":"request completed"}
 1..1
 Database connection closed

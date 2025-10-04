@@ -15,7 +15,15 @@
 
 import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, Dimensions, Alert } from 'react-native';
-import { Surface, Text, Button, ActivityIndicator, useTheme, Chip } from 'react-native-paper';
+import {
+  Surface,
+  Text,
+  Button,
+  ActivityIndicator,
+  useTheme,
+  Chip,
+  MD3Theme,
+} from 'react-native-paper';
 import { Svg, Line, Circle, Text as SvgText, Polyline } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { format, parseISO, subWeeks } from 'date-fns';
@@ -190,9 +198,7 @@ export function OneRMProgressionChartEnhanced({
         </View>
       )}
 
-      {!isLoading && !error && data && data.length > 0 && (
-        <LineChart data={data} theme={theme} />
-      )}
+      {!isLoading && !error && data && data.length > 0 && <LineChart data={data} theme={theme} />}
 
       {/* Summary Stats */}
       {statistics && (
@@ -239,7 +245,7 @@ export function OneRMProgressionChartEnhanced({
  */
 interface LineChartProps {
   data: OneRMDataPoint[];
-  theme: any;
+  theme: MD3Theme;
 }
 
 function LineChart({ data, theme }: LineChartProps): React.JSX.Element {
@@ -278,10 +284,7 @@ function LineChart({ data, theme }: LineChartProps): React.JSX.Element {
     // Calculate trend points
     const trendStart = {
       x: points[0].x,
-      y:
-        PADDING.top +
-        chartHeight -
-        ((intercept - minValue) / valueRange) * chartHeight,
+      y: PADDING.top + chartHeight - ((intercept - minValue) / valueRange) * chartHeight,
     };
     const trendEnd = {
       x: points[points.length - 1].x,

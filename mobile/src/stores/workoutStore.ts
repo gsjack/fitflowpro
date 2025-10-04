@@ -77,7 +77,10 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
 
       if (!workout) {
         // Create workout first
-        console.log('[WorkoutStore] No workout found, creating new workout:', { programDayId, date });
+        console.log('[WorkoutStore] No workout found, creating new workout:', {
+          programDayId,
+          date,
+        });
         await workoutDb.createWorkout(userId, programDayId, date);
         workout = await workoutDb.getTodayWorkout(userId);
 
@@ -87,7 +90,12 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
 
         console.log('[WorkoutStore] Created new workout:', workout.id);
       } else {
-        console.log('[WorkoutStore] Found existing workout:', workout.id, 'Status:', workout.status);
+        console.log(
+          '[WorkoutStore] Found existing workout:',
+          workout.id,
+          'Status:',
+          workout.status
+        );
       }
 
       // Update workout status to in_progress via API
@@ -101,7 +109,11 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
       let startExerciseIndex = 0;
       const workoutWithExercises = await workoutDb.getWorkoutById(workout.id);
 
-      if (workoutWithExercises?.exercises && workoutWithExercises.exercises.length > 0 && sets.length > 0) {
+      if (
+        workoutWithExercises?.exercises &&
+        workoutWithExercises.exercises.length > 0 &&
+        sets.length > 0
+      ) {
         const setsPerExercise = new Map<number, number>();
         sets.forEach((set) => {
           const count = setsPerExercise.get(set.exercise_id) || 0;
@@ -146,7 +158,12 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
         totalVolumeKg,
       });
 
-      console.log('[WorkoutStore] Workout started:', workout.id, 'at exercise index:', startExerciseIndex);
+      console.log(
+        '[WorkoutStore] Workout started:',
+        workout.id,
+        'at exercise index:',
+        startExerciseIndex
+      );
     } catch (error) {
       console.error('[WorkoutStore] Failed to start workout:', error);
       throw error;
@@ -231,9 +248,10 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
 
     try {
       // Calculate average RIR
-      const averageRir = completedSets.length > 0
-        ? completedSets.reduce((sum, set) => sum + set.rir, 0) / completedSets.length
-        : 0;
+      const averageRir =
+        completedSets.length > 0
+          ? completedSets.reduce((sum, set) => sum + set.rir, 0) / completedSets.length
+          : 0;
 
       // Update workout status to completed via API with metrics
       await workoutDb.updateWorkoutStatus(
@@ -243,8 +261,14 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
         averageRir
       );
 
-      console.log('[WorkoutStore] Workout completed:', currentWorkout.id,
-        'Volume:', totalVolumeKg, 'kg, Avg RIR:', averageRir.toFixed(2));
+      console.log(
+        '[WorkoutStore] Workout completed:',
+        currentWorkout.id,
+        'Volume:',
+        totalVolumeKg,
+        'kg, Avg RIR:',
+        averageRir.toFixed(2)
+      );
 
       // Clear current workout state
       set({
@@ -321,12 +345,15 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
       // Calculate current exercise index from completed sets
       let resumeExerciseIndex = 0;
       if (workout.exercises && workout.exercises.length > 0) {
-        console.log('[WorkoutStore] Exercises:', workout.exercises.map(e => ({
-          id: e.exercise_id,
-          name: e.exercise_name,
-          sets: e.sets,
-          order: e.order_index
-        })));
+        console.log(
+          '[WorkoutStore] Exercises:',
+          workout.exercises.map((e) => ({
+            id: e.exercise_id,
+            name: e.exercise_name,
+            sets: e.sets,
+            order: e.order_index,
+          }))
+        );
 
         // Count completed sets per exercise
         const setsPerExercise = new Map<number, number>();
@@ -342,11 +369,15 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
           const exercise = workout.exercises[i];
           const completedSetsCount = setsPerExercise.get(exercise.exercise_id) || 0;
 
-          console.log(`[WorkoutStore] Exercise ${i}: ${exercise.exercise_name} - ${completedSetsCount}/${exercise.sets} sets`);
+          console.log(
+            `[WorkoutStore] Exercise ${i}: ${exercise.exercise_name} - ${completedSetsCount}/${exercise.sets} sets`
+          );
 
           if (completedSetsCount < exercise.sets) {
             resumeExerciseIndex = i;
-            console.log(`[WorkoutStore] Found incomplete exercise at index ${i}: ${exercise.exercise_name}`);
+            console.log(
+              `[WorkoutStore] Found incomplete exercise at index ${i}: ${exercise.exercise_name}`
+            );
             break;
           }
 
@@ -383,7 +414,12 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
         totalVolumeKg,
       });
 
-      console.log('[WorkoutStore] Workout resumed:', workoutId, 'at exercise index:', resumeExerciseIndex);
+      console.log(
+        '[WorkoutStore] Workout resumed:',
+        workoutId,
+        'at exercise index:',
+        resumeExerciseIndex
+      );
     } catch (error) {
       console.error('[WorkoutStore] Failed to resume workout:', error);
       throw error;

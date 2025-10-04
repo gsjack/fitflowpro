@@ -14,9 +14,7 @@ import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Surface, Text, SegmentedButtons, ActivityIndicator } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {
-  useConsistencyMetrics,
-} from '../services/api/analyticsApi';
+import { useConsistencyMetrics } from '../services/api/analyticsApi';
 import { OneRMProgressionChart } from '../components/analytics/OneRMProgressionChart';
 import { VolumeChart } from '../components/analytics/VolumeChart';
 import { VolumeTrendsChart } from '../components/analytics/VolumeTrendsChart';
@@ -54,7 +52,7 @@ export function AnalyticsScreen(): React.JSX.Element {
       <Surface style={styles.tabContainer} elevation={0}>
         <SegmentedButtons
           value={activeTab}
-          onValueChange={(value) => setActiveTab(value as AnalyticsTab)}
+          onValueChange={(value) => setActiveTab(value)}
           buttons={[
             {
               value: 'strength',
@@ -193,12 +191,10 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
   if (!data) {
     return (
       <View style={styles.centerContent}>
-        <MaterialCommunityIcons
-          name="chart-line-variant"
-          size={64}
-          color={colors.text.disabled}
-        />
-        <Text variant="titleMedium" style={styles.emptyText}>No data available</Text>
+        <MaterialCommunityIcons name="chart-line-variant" size={64} color={colors.text.disabled} />
+        <Text variant="titleMedium" style={styles.emptyText}>
+          No data available
+        </Text>
         <Text variant="bodyMedium" style={styles.emptySubtext}>
           Complete workouts to see your performance stats
         </Text>

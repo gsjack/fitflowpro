@@ -98,7 +98,7 @@ export async function getExerciseById(exerciseId: number): Promise<Exercise | nu
   const response = await fetch(`${API_BASE_URL}/api/exercises/${exerciseId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -129,7 +129,7 @@ export async function getUserProgram(userId: number): Promise<Program | null> {
   const response = await fetch(`${API_BASE_URL}/api/programs`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -160,7 +160,7 @@ export async function getProgramDays(programId: number): Promise<ProgramDay[]> {
   const response = await fetch(`${API_BASE_URL}/api/program-days?program_id=${programId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -190,7 +190,7 @@ export async function getAllExercises(): Promise<Exercise[]> {
   const response = await fetch(`${API_BASE_URL}/api/exercises`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -229,7 +229,7 @@ export async function searchExercises(
   const response = await fetch(url, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
   });
@@ -262,7 +262,7 @@ export async function updateExerciseOrder(
   const response = await fetch(`${API_BASE_URL}/api/program-exercises/${exerciseId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ order_index: newOrderIndex }),
@@ -296,7 +296,7 @@ export async function swapExercise(
   const response = await fetch(`${API_BASE_URL}/api/program-exercises/${programExerciseId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ exercise_id: newExerciseId }),

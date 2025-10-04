@@ -52,7 +52,7 @@ test('complete workout via API only (fast)', async ({ request }) => {
   console.log(`  Token: ${token.substring(0, 20)}...`);
 
   // ===== STEP 2: Get today's workout =====
-  console.log('\n📋 Step 2: Fetching today\'s workout...');
+  console.log("\n📋 Step 2: Fetching today's workout...");
   const fetchStart = Date.now();
 
   const today = '2025-10-02'; // Current date
@@ -82,7 +82,9 @@ test('complete workout via API only (fast)', async ({ request }) => {
   // Verify exercises match expected
   for (let i = 0; i < workout.exercises.length; i++) {
     const exercise = workout.exercises[i];
-    console.log(`    ${i + 1}. ${exercise.exercise_name}: ${exercise.sets} sets × ${exercise.reps} reps @ RIR ${exercise.rir}`);
+    console.log(
+      `    ${i + 1}. ${exercise.exercise_name}: ${exercise.sets} sets × ${exercise.reps} reps @ RIR ${exercise.rir}`
+    );
   }
 
   // ===== STEP 3: Create new workout if status is not in_progress =====
@@ -109,13 +111,10 @@ test('complete workout via API only (fast)', async ({ request }) => {
     console.log(`  New Workout ID: ${workoutId}`);
 
     // Update status to in_progress
-    const updateResponse = await request.patch(
-      `${API_BASE_URL}/api/workouts/${workoutId}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        data: { status: 'in_progress' },
-      }
-    );
+    const updateResponse = await request.patch(`${API_BASE_URL}/api/workouts/${workoutId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      data: { status: 'in_progress' },
+    });
     expect(updateResponse.ok()).toBeTruthy();
     console.log('✓ Workout marked as in_progress');
   } else {
@@ -159,7 +158,9 @@ test('complete workout via API only (fast)', async ({ request }) => {
       setTimes.push(setDuration);
       totalSets++;
 
-      console.log(`  Set ${setNum}/${exercise.sets}: ${exerciseData.weight}kg × ${exerciseData.reps} reps @ RIR ${exerciseData.rir} → ${setDuration}ms`);
+      console.log(
+        `  Set ${setNum}/${exercise.sets}: ${exerciseData.weight}kg × ${exerciseData.reps} reps @ RIR ${exerciseData.rir} → ${setDuration}ms`
+      );
     }
 
     console.log(`✓ Completed ${exercise.exercise_name}\n`);
@@ -181,13 +182,10 @@ test('complete workout via API only (fast)', async ({ request }) => {
   console.log('\n🏁 Step 5: Completing workout...');
   const completeStart = Date.now();
 
-  const completeResponse = await request.patch(
-    `${API_BASE_URL}/api/workouts/${workoutId}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-      data: { status: 'completed' },
-    }
-  );
+  const completeResponse = await request.patch(`${API_BASE_URL}/api/workouts/${workoutId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+    data: { status: 'completed' },
+  });
 
   expect(completeResponse.ok()).toBeTruthy();
   const completeDuration = Date.now() - completeStart;

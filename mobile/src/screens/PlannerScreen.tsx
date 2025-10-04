@@ -221,10 +221,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
     return (
       <ScaleDecorator>
         <Card
-          style={[
-            styles.exerciseCard,
-            isActive && styles.exerciseCardDragging,
-          ]}
+          style={[styles.exerciseCard, isActive && styles.exerciseCardDragging]}
           elevation={isActive ? 5 : 2}
           onLongPress={drag}
           disabled={isActive || isOffline}

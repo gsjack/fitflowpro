@@ -162,7 +162,10 @@ async function startBackgroundAudio(): Promise<void> {
 
     console.log('[RestTimer] Background audio not configured (foreground-only mode)');
   } catch (error) {
-    console.warn('[RestTimer] Failed to start background audio (timer will still work in foreground):', error);
+    console.warn(
+      '[RestTimer] Failed to start background audio (timer will still work in foreground):',
+      error
+    );
   }
 }
 

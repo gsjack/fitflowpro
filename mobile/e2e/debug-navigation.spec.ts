@@ -3,25 +3,25 @@ import { test, expect } from '@playwright/test';
 test('debug navigation after login', async ({ page }) => {
   // Capture console messages
   const consoleMessages: string[] = [];
-  page.on('console', msg => {
+  page.on('console', (msg) => {
     const text = msg.text();
     consoleMessages.push(`[${msg.type()}] ${text}`);
     console.log(`Browser Console [${msg.type()}]:`, text);
   });
 
   // Capture page errors
-  page.on('pageerror', error => {
+  page.on('pageerror', (error) => {
     console.error('Browser Error:', error.message);
   });
 
   // Capture network requests
-  page.on('request', request => {
+  page.on('request', (request) => {
     if (request.url().includes('/api/')) {
       console.log('Request:', request.method(), request.url());
     }
   });
 
-  page.on('response', response => {
+  page.on('response', (response) => {
     if (response.url().includes('/api/')) {
       console.log('Response:', response.status(), response.url());
     }
@@ -47,7 +47,10 @@ test('debug navigation after login', async ({ page }) => {
   await passwordInput.fill('Password123');
 
   console.log('Form filled, clicking login...');
-  const loginButton = page.locator('button').filter({ hasText: /^login$/i }).first();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^login$/i })
+    .first();
   await loginButton.click();
 
   // Wait and check for navigation

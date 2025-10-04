@@ -23,21 +23,25 @@ test('capture UI screenshots for visual design review', async ({ page }) => {
   console.log('Filling login form...');
 
   // Try different selectors for email input
-  const emailInput = page.locator('input[type="email"]').or(
-    page.locator('input[placeholder*="mail" i]')
-  ).or(
-    page.locator('input').filter({ hasText: /email/i })
-  ).first();
+  const emailInput = page
+    .locator('input[type="email"]')
+    .or(page.locator('input[placeholder*="mail" i]'))
+    .or(page.locator('input').filter({ hasText: /email/i }))
+    .first();
 
-  const passwordInput = page.locator('input[type="password"]').or(
-    page.locator('input[placeholder*="password" i]')
-  ).first();
+  const passwordInput = page
+    .locator('input[type="password"]')
+    .or(page.locator('input[placeholder*="password" i]'))
+    .first();
 
   await emailInput.fill('demo@fitflow.test');
   await passwordInput.fill('Password123');
 
   // Find login button - try multiple strategies
-  const loginButton = page.locator('button').filter({ hasText: /^(login|sign in)$/i }).first();
+  const loginButton = page
+    .locator('button')
+    .filter({ hasText: /^(login|sign in)$/i })
+    .first();
 
   console.log('Clicking login button...');
   await loginButton.click();
@@ -60,7 +64,10 @@ test('capture UI screenshots for visual design review', async ({ page }) => {
 
   // Try to navigate to workout tab
   console.log('Navigating to workout screen...');
-  const workoutTab = page.locator('button, [role="tab"]').filter({ hasText: /workout/i }).first();
+  const workoutTab = page
+    .locator('button, [role="tab"]')
+    .filter({ hasText: /workout/i })
+    .first();
 
   if (await workoutTab.isVisible()) {
     await workoutTab.click();
@@ -75,7 +82,10 @@ test('capture UI screenshots for visual design review', async ({ page }) => {
 
   // Try to navigate to analytics tab
   console.log('Navigating to analytics screen...');
-  const analyticsTab = page.locator('button, [role="tab"]').filter({ hasText: /analytics/i }).first();
+  const analyticsTab = page
+    .locator('button, [role="tab"]')
+    .filter({ hasText: /analytics/i })
+    .first();
 
   if (await analyticsTab.isVisible()) {
     await analyticsTab.click();
@@ -90,7 +100,10 @@ test('capture UI screenshots for visual design review', async ({ page }) => {
 
   // Try to navigate to settings
   console.log('Looking for settings...');
-  const settingsTab = page.locator('button, [role="tab"]').filter({ hasText: /settings/i }).first();
+  const settingsTab = page
+    .locator('button, [role="tab"]')
+    .filter({ hasText: /settings/i })
+    .first();
 
   if (await settingsTab.isVisible()) {
     await settingsTab.click();
