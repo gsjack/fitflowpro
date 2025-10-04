@@ -374,17 +374,7 @@ export default function DashboardScreen({
                 : gradients.hero
           }
           style={styles.workoutCard}
-          onPress={
-            todayWorkout.status === 'not_started' || todayWorkout.status === 'in_progress'
-              ? handleStartWorkout
-              : undefined
-          }
           accessibilityLabel={`Today's workout: ${todayWorkout.day_name || 'Workout'}`}
-          accessibilityRole={
-            todayWorkout.status === 'not_started' || todayWorkout.status === 'in_progress'
-              ? 'button'
-              : 'none'
-          }
         >
           <View style={styles.workoutCardContent}>
             {/* Header with Status */}
@@ -511,9 +501,7 @@ export default function DashboardScreen({
         <GradientCard
           gradient={gradients.hero}
           style={styles.workoutCard}
-          onPress={handleStartWorkout}
           accessibilityLabel={`Recommended workout: ${recommendedProgramDay.day_name}`}
-          accessibilityRole="button"
         >
           <View style={styles.workoutCardContent}>
             {/* Header with Recommended Label */}
