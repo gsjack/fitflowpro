@@ -1,0 +1,42 @@
+{
+  "screenshots": [
+    {
+      "name": "AuthScreen - Login Tab",
+      "path": "/home/asigator/fitness2025/mobile/screenshots/post-implementation/01-auth-login.png",
+      "timestamp": "2025-10-04T15:15:43.981Z"
+    }
+  ],
+  "errors": [
+    {
+      "screen": "Login Process",
+      "error": "locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], input[placeholder*=\"mail\" i]').first()\u001b[22m\n"
+    }
+  ],
+  "skipped": [
+    {
+      "screen": "AuthScreen - Register Tab",
+      "reason": "Register tab button not found"
+    },
+    {
+      "screen": "DashboardScreen",
+      "reason": "Dashboard tab not found"
+    },
+    {
+      "screen": "AnalyticsScreen",
+      "reason": "Analytics tab not found"
+    },
+    {
+      "screen": "PlannerScreen",
+      "reason": "Planner tab not found"
+    },
+    {
+      "screen": "SettingsScreen",
+      "reason": "Settings tab not found"
+    },
+    {
+      "screen": "WorkoutScreen",
+      "reason": "Could not navigate to Workout screen"
+    }
+  ],
+  "totalCount": 1
+}

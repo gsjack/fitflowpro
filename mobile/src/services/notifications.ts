@@ -11,22 +11,26 @@
  * Uses expo-av for sound playback.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Audio } from 'expo-av';
 
 /**
  * Configure notification handler behavior
  * Shows notifications even when app is in foreground
+ * Only works on native platforms (iOS/Android)
  */
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
+if (Platform.OS !== 'web') {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+      shouldShowBanner: true,
+      shouldShowList: true,
+    }),
+  });
+}
 
 /**
  * Send a local notification
@@ -40,6 +44,12 @@ export async function sendNotification(
   body: string,
   data?: Record<string, any>
 ): Promise<void> {
+  // Notifications not supported on web
+  if (Platform.OS === 'web') {
+    console.log(`[Notifications] Web notification: ${title} - ${body}`);
+    return;
+  }
+
   try {
     // Request permissions if not granted
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -79,6 +89,12 @@ export async function sendNotification(
  * @param soundFile - Sound file name (e.g., 'beep.mp3')
  */
 export async function playSound(soundFile: string): Promise<void> {
+  // Sound playback not supported on web
+  if (Platform.OS === 'web') {
+    console.log(`[Notifications] Web sound playback: ${soundFile}`);
+    return;
+  }
+
   try {
     // Configure audio mode for playback
     await Audio.setAudioModeAsync({
@@ -112,6 +128,10 @@ export async function playSound(soundFile: string): Promise<void> {
  * Used when user completes workout early or navigates away.
  */
 export async function cancelAllNotifications(): Promise<void> {
+  if (Platform.OS === 'web') {
+    return;
+  }
+
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
   } catch (error) {
@@ -134,6 +154,11 @@ export async function scheduleNotification(
   delaySeconds: number,
   data?: Record<string, any>
 ): Promise<string | null> {
+  if (Platform.OS === 'web') {
+    console.log(`[Notifications] Web scheduled notification: ${title} in ${delaySeconds}s`);
+    return null;
+  }
+
   try {
     // Request permissions if not granted
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -176,6 +201,10 @@ export async function scheduleNotification(
  * @param identifier - Notification identifier returned from scheduleNotification
  */
 export async function cancelNotification(identifier: string): Promise<void> {
+  if (Platform.OS === 'web') {
+    return;
+  }
+
   try {
     await Notifications.cancelScheduledNotificationAsync(identifier);
   } catch (error) {

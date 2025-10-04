@@ -11,7 +11,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import {
   Card,
   Button,
@@ -27,6 +27,7 @@ import {
 } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import NetInfo from '@react-native-community/netinfo';
+import * as Haptics from 'expo-haptics';
 import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
@@ -48,6 +49,8 @@ import ProgramVolumeOverview, {
 } from '../components/planner/ProgramVolumeOverview';
 import ExerciseSelectionModal from '../components/planner/ExerciseSelectionModal';
 import OfflineOverlay from '../components/common/OfflineOverlay';
+import { ExerciseListSkeleton } from '../components/skeletons';
+import ProgramCreationWizard from '../components/planner/ProgramCreationWizard';
 
 interface PlannerScreenProps {
   userId?: number; // Optional for demo purposes
@@ -89,6 +92,9 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   // Add exercise modal state
   const [addExerciseModalVisible, setAddExerciseModalVisible] = useState(false);
 
+  // Program creation wizard state
+  const [wizardVisible, setWizardVisible] = useState(false);
+
   // Snackbar state
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -128,6 +134,11 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
     if (!selectedExerciseId) return;
 
     try {
+      // Haptic feedback on swap (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      }
+
       const result = await swapExerciseMutation(selectedExerciseId, newExercise.id);
 
       console.log(
@@ -159,6 +170,11 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
     if (!selectedDayId) return;
 
     try {
+      // Haptic feedback on reorder completion (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
+
       // Build reorder array
       const reorderItems: ReorderItem[] = data.map((item, index) => ({
         program_exercise_id: item.id,
@@ -229,6 +245,11 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
     if (!exerciseToDelete) return;
 
     try {
+      // Haptic feedback on deletion (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      }
+
       await deleteExerciseMutation(exerciseToDelete.id);
 
       console.log(`[PlannerScreen] Deleted ${exerciseToDelete.name}`);
@@ -252,6 +273,11 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
     if (!selectedDayId) return;
 
     try {
+      // Haptic feedback on exercise addition (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      }
+
       // Calculate next order_index
       const nextOrderIndex = selectedDayExercises.length;
 
@@ -290,6 +316,31 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   };
 
   /**
+   * Handle program creation via wizard
+   */
+  const handleCreateProgram = async () => {
+    try {
+      // Import createProgram function dynamically to avoid circular dependencies
+      const { createProgram } = await import('../services/api/programApi');
+
+      await createProgram();
+
+      console.log('[PlannerScreen] Program created successfully');
+    } catch (error) {
+      console.error('[PlannerScreen] Error creating program:', error);
+      throw error; // Let wizard handle error display
+    }
+  };
+
+  /**
+   * Handle program creation success
+   */
+  const handleProgramCreated = () => {
+    showSnackbar('Program created! Welcome to FitFlow Pro!');
+    // Program data will refresh automatically via TanStack Query
+  };
+
+  /**
    * Get selected day's exercises
    */
   const selectedDayExercises =
@@ -309,18 +360,6 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
           elevation={isActive ? 5 : 2}
         >
           <Card.Content style={styles.exerciseCardContent}>
-            <TouchableOpacity
-              onLongPress={drag}
-              disabled={isActive}
-              style={styles.dragHandle}
-              activeOpacity={0.6}
-            >
-              <MaterialCommunityIcons
-                name="drag-horizontal-variant"
-                size={24}
-                color={colors.text.secondary}
-              />
-            </TouchableOpacity>
             <View style={styles.exerciseInfo}>
               <Text variant="bodyLarge" style={styles.exerciseName}>
                 {item.exercise_name}
@@ -329,20 +368,24 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
                 <View style={styles.setAdjuster}>
                   <IconButton
                     icon="minus"
-                    size={16}
+                    size={20}
                     onPress={() => handleAdjustSets(item.id, item.target_sets - 1)}
                     disabled={isOffline || item.target_sets <= 1}
                     style={styles.setButton}
+                    containerStyle={styles.iconButtonContainer}
+                    accessibilityLabel="Decrease sets"
                   />
                   <Text variant="bodySmall" style={styles.exerciseDetails}>
                     {item.target_sets} sets
                   </Text>
                   <IconButton
                     icon="plus"
-                    size={16}
+                    size={20}
                     onPress={() => handleAdjustSets(item.id, item.target_sets + 1)}
                     disabled={isOffline || item.target_sets >= 10}
                     style={styles.setButton}
+                    containerStyle={styles.iconButtonContainer}
+                    accessibilityLabel="Increase sets"
                   />
                 </View>
                 <Text variant="bodySmall" style={styles.exerciseDetails}>
@@ -356,9 +399,10 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
               anchor={
                 <IconButton
                   icon="dots-vertical"
-                  size={20}
+                  size={24}
                   onPress={() => setMenuVisible(item.id)}
                   disabled={isOffline}
+                  containerStyle={styles.iconButtonContainer}
                   accessibilityLabel={`Options for ${item.exercise_name}`}
                   accessibilityHint="Show exercise options menu"
                   accessibilityRole="button"
@@ -382,6 +426,21 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
                 title="Remove Exercise"
               />
             </Menu>
+            <TouchableOpacity
+              onLongPress={drag}
+              disabled={isActive}
+              style={styles.dragHandle}
+              activeOpacity={0.6}
+              accessibilityLabel="Drag to reorder exercise"
+              accessibilityHint="Long press and drag to change exercise order"
+              accessibilityRole="button"
+            >
+              <MaterialCommunityIcons
+                name="drag-horizontal-variant"
+                size={28}
+                color={colors.text.primary} // FIX P0-7: Changed from secondary to primary for better contrast (≥3:1)
+              />
+            </TouchableOpacity>
           </Card.Content>
         </Card>
       </ScaleDecorator>
@@ -400,8 +459,17 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   // Loading state
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.listContent}>
+          <Card style={styles.card}>
+            <Card.Content>
+              <Text variant="titleMedium" style={styles.sectionTitle}>
+                Training Days
+              </Text>
+            </Card.Content>
+          </Card>
+          <ExerciseListSkeleton count={5} />
+        </ScrollView>
       </View>
     );
   }
@@ -413,16 +481,30 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
         <Card style={styles.emptyCard}>
           <Card.Content style={styles.emptyCardContent}>
             <MaterialCommunityIcons
-              name="calendar-blank-outline"
-              size={64}
+              name="calendar-check-outline"
+              size={80}
               color={colors.text.disabled}
             />
-            <Text variant="titleMedium" style={styles.emptyTitle}>
+            <Text variant="headlineMedium" style={styles.emptyTitle}>
               No Active Program
             </Text>
             <Text variant="bodyMedium" style={styles.emptySubtitle}>
-              Create a training program to start planning your workouts
+              Create your personalized training program based on Renaissance Periodization principles
             </Text>
+            <Text variant="bodySmall" style={styles.emptyHelperText}>
+              Your program will automatically progress through MEV → MAV → MRV phases
+            </Text>
+            <Button
+              mode="contained"
+              icon="plus-circle"
+              onPress={() => setWizardVisible(true)}
+              disabled={isOffline}
+              style={styles.createProgramButton}
+              contentStyle={styles.createProgramButtonContent}
+              accessibilityLabel="Create training program"
+            >
+              Create Your First Program
+            </Button>
           </Card.Content>
         </Card>
       </View>
@@ -584,6 +666,14 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
           excludeExercises={[]}
         />
 
+        {/* Program Creation Wizard */}
+        <ProgramCreationWizard
+          visible={wizardVisible}
+          onDismiss={() => setWizardVisible(false)}
+          onProgramCreated={handleProgramCreated}
+          onCreateProgram={handleCreateProgram}
+        />
+
         {/* Snackbar */}
         <Snackbar
           visible={snackbarVisible}
@@ -670,6 +760,19 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     textAlign: 'center',
   },
+  emptyHelperText: {
+    marginTop: 12,
+    color: colors.text.tertiary,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+  createProgramButton: {
+    marginTop: 24,
+    borderRadius: 8,
+  },
+  createProgramButtonContent: {
+    height: 48,
+  },
   sectionTitle: {
     fontWeight: 'bold',
     marginBottom: 12,
@@ -697,17 +800,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 8,
+    justifyContent: 'space-between',
   },
   dragHandle: {
-    marginRight: 12,
+    marginLeft: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 8,
-    minWidth: 40,
-    minHeight: 40,
+    padding: 12,
+    minWidth: 52,
+    minHeight: 52,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)', // FIX P0-7: Subtle background for better discoverability
+    borderRadius: 8,
   },
   exerciseInfo: {
     flex: 1,
+    marginRight: 8,
   },
   exerciseName: {
     fontWeight: '600',
@@ -732,6 +839,10 @@ const styles = StyleSheet.create({
   },
   setButton: {
     margin: 0,
+  },
+  iconButtonContainer: {
+    minWidth: 48,
+    minHeight: 48,
   },
   emptyText: {
     color: colors.text.secondary,

@@ -167,15 +167,24 @@ function MainAppTabs({ onLogout }: { onLogout: () => void }) {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary.main,
-        tabBarInactiveTintColor: colors.text.tertiary,
-        tabBarShowLabel: false,
+        tabBarInactiveTintColor: colors.text.secondary, // FIX P0-8: 6.51:1 contrast (WCAG AA compliant)
+        tabBarShowLabel: true, // FIX P0-8: Text labels visible for better accessibility
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+          marginTop: 4,
+          marginBottom: 2,
+        },
         tabBarStyle: {
           backgroundColor: colors.background.secondary,
           borderTopWidth: 1,
           borderTopColor: colors.effects.divider,
-          paddingBottom: 4,
-          paddingTop: 4,
-          height: 60,
+          paddingBottom: 6,
+          paddingTop: 6,
+          height: 68,
+        },
+        tabBarIconStyle: {
+          marginTop: 2,
         },
       }}
     >

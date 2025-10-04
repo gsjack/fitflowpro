@@ -17,6 +17,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useVO2maxProgression } from '../services/api/vo2maxApi';
 import { colors } from '../theme/colors';
 import { spacing, borderRadius } from '../theme/typography';
+import { ChartSkeleton } from './skeletons';
 
 const CHART_WIDTH = Dimensions.get('window').width - 64;
 const CHART_HEIGHT = 280;
@@ -125,14 +126,7 @@ export default function VO2maxProgressionChart({
       </View>
 
       {/* Loading State */}
-      {isLoading && (
-        <View style={styles.centerContent}>
-          <ActivityIndicator size="large" color={colors.primary.main} />
-          <Text variant="bodyMedium" style={styles.loadingText}>
-            Loading progression data...
-          </Text>
-        </View>
-      )}
+      {isLoading && <ChartSkeleton height={CHART_HEIGHT} showLegend={true} />}
 
       {/* Error State */}
       {error && (

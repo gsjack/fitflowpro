@@ -29,6 +29,7 @@ import { format, parseISO } from 'date-fns';
 import { useVolumeTrendsHistory, VolumeTrends } from '../../services/api/analyticsApi';
 import { colors } from '../../theme/colors';
 import { VOLUME_LANDMARKS, MuscleGroup } from '../../constants/volumeLandmarks';
+import { ChartSkeleton } from '../skeletons';
 
 const CHART_WIDTH = Dimensions.get('window').width - 64;
 const CHART_HEIGHT = 300;
@@ -146,14 +147,7 @@ export function VolumeTrendsChart({
       </View>
 
       {/* Chart Content */}
-      {isLoading && (
-        <View style={styles.centerContent}>
-          <ActivityIndicator size="large" />
-          <Text variant="bodyMedium" style={styles.loadingText}>
-            Loading volume trends...
-          </Text>
-        </View>
-      )}
+      {isLoading && <ChartSkeleton height={CHART_HEIGHT} showLegend={true} />}
 
       {error && (
         <View style={styles.centerContent}>

@@ -13,6 +13,7 @@ import {
   getProgramDays,
   getProgramDayExercises,
   advancePhase,
+  createDefaultProgram,
 } from '../services/programService.js';
 import { getProgramVolumeAnalysis } from '../services/volumeService.js';
 import { authenticateJWT, AuthenticatedRequest } from '../middleware/auth.js';
@@ -184,6 +185,83 @@ const getVolumeSchema = {
  * Register program routes
  */
 export default async function programRoutes(fastify: FastifyInstance) {
+  /**
+   * POST /api/programs
+   *
+   * Create a new default program for the user
+   * Uses the 6-day Renaissance Periodization split
+   *
+   * Requires JWT authentication
+   * Returns the newly created program ID
+   */
+  fastify.post(
+    '/programs',
+    { preHandler: authenticateJWT },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      try {
+        const authenticatedUser = (request as AuthenticatedRequest).user;
+
+        // Check if user already has a program
+        const existingProgram = getUserProgram(authenticatedUser.userId);
+
+        if (existingProgram) {
+          return reply.status(409).send({
+            error: 'Conflict',
+            message: 'User already has an active program',
+            program_id: existingProgram.id,
+          });
+        }
+
+        // Create default program
+        const programId = createDefaultProgram(authenticatedUser.userId);
+
+        // Get the created program with full structure
+        const program = getUserProgram(authenticatedUser.userId);
+
+        if (!program) {
+          throw new Error('Failed to retrieve created program');
+        }
+
+        const programDays = getProgramDays(program.id);
+
+        const programDaysWithExercises = programDays.map((day) => {
+          const exercises = getProgramDayExercises(day.id);
+
+          const transformedExercises = exercises.map((ex) => ({
+            id: ex.id,
+            program_day_id: ex.program_day_id,
+            exercise_id: ex.exercise_id,
+            exercise_name: ex.exercise_name,
+            order_index: ex.order_index,
+            target_sets: ex.sets,
+            target_rep_range: ex.reps,
+            target_rir: ex.rir,
+            muscle_groups: ex.muscle_groups,
+            equipment: ex.equipment,
+          }));
+
+          return {
+            ...day,
+            exercises: transformedExercises,
+          };
+        });
+
+        const response = {
+          ...program,
+          program_days: programDaysWithExercises,
+        };
+
+        return reply.status(201).send(response);
+      } catch (error) {
+        fastify.log.error(error);
+        return reply.status(500).send({
+          error: 'Internal Server Error',
+          message: 'Failed to create program',
+        });
+      }
+    }
+  );
+
   /**
    * GET /api/programs
    *

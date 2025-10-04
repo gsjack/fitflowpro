@@ -12,8 +12,9 @@
 
 import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
-import { Surface, Text, SegmentedButtons, ActivityIndicator } from 'react-native-paper';
+import { Surface, Text, SegmentedButtons, ActivityIndicator, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { useConsistencyMetrics } from '../services/api/analyticsApi';
 import { OneRMProgressionChart } from '../components/analytics/OneRMProgressionChart';
 import { VolumeChart } from '../components/analytics/VolumeChart';
@@ -23,6 +24,7 @@ import VO2maxProgressionChart from '../components/VO2maxProgressionChart';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/typography';
 import StatCard from '../components/common/StatCard';
+import { ChartSkeleton, StatCardSkeleton } from '../components/skeletons';
 
 /**
  * Tab options for analytics navigation
@@ -164,13 +166,16 @@ interface ConsistencyTabProps {
 }
 
 function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.JSX.Element {
+  const navigation = useNavigation();
+
   if (isLoading) {
     return (
-      <View style={styles.centerContent}>
-        <ActivityIndicator size="large" color={colors.primary.main} />
-        <Text variant="bodyMedium" style={styles.loadingText}>
-          Loading stats...
+      <View>
+        <Text variant="headlineSmall" style={styles.sectionTitle}>
+          Performance Stats
         </Text>
+        <ChartSkeleton height={200} showLegend={false} />
+        <StatCardSkeleton count={3} />
       </View>
     );
   }
@@ -191,13 +196,23 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
   if (!data) {
     return (
       <View style={styles.centerContent}>
-        <MaterialCommunityIcons name="chart-line-variant" size={64} color={colors.text.disabled} />
-        <Text variant="titleMedium" style={styles.emptyText}>
-          No data available
+        <MaterialCommunityIcons name="chart-line-variant" size={80} color={colors.text.disabled} />
+        <Text variant="headlineMedium" style={styles.emptyText}>
+          Start tracking your progress
         </Text>
         <Text variant="bodyMedium" style={styles.emptySubtext}>
-          Complete workouts to see your performance stats
+          Complete at least 3 workouts to unlock analytics and see your strength gains
         </Text>
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate('Dashboard' as never)}
+          style={styles.emptyCTA}
+          icon="dumbbell"
+          contentStyle={styles.emptyCtaContent}
+          accessibilityLabel="Go to Dashboard to start your first workout"
+        >
+          Start Your First Workout
+        </Button>
       </View>
     );
   }
@@ -327,6 +342,14 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     textAlign: 'center',
     paddingHorizontal: spacing.xl,
+  },
+  emptyCTA: {
+    marginTop: spacing.xl,
+    borderRadius: 8,
+  },
+  emptyCtaContent: {
+    height: 48,
+    paddingHorizontal: spacing.lg,
   },
   statsGrid: {
     gap: spacing.md,

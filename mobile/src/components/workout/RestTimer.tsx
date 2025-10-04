@@ -5,10 +5,11 @@
  * Uses timerService for background support.
  */
 
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, StyleSheet, Platform } from 'react-native';
 import { Card, Text, Button, ProgressBar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
 import * as timerService from '../../services/timer/timerService';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
@@ -21,6 +22,8 @@ interface RestTimerProps {
 export default function RestTimer({ isActive, onComplete }: RestTimerProps) {
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [targetSeconds, setTargetSeconds] = useState(0);
+  const hasShownWarning = useRef(false);
+  const hasCompletedTimer = useRef(false);
 
   useEffect(() => {
     if (!isActive) {
@@ -28,6 +31,8 @@ export default function RestTimer({ isActive, onComplete }: RestTimerProps) {
       void timerService.stopTimer();
       setRemainingSeconds(0);
       setTargetSeconds(0);
+      hasShownWarning.current = false;
+      hasCompletedTimer.current = false;
       return;
     }
 
@@ -39,11 +44,27 @@ export default function RestTimer({ isActive, onComplete }: RestTimerProps) {
     }
 
     // Poll timer state every second to update display
-    const intervalId = setInterval(() => {
+    const intervalId = setInterval(async () => {
       const currentState = timerService.getTimerState();
       if (currentState.isRunning) {
         setRemainingSeconds(currentState.remainingSeconds);
         setTargetSeconds(currentState.targetSeconds);
+
+        // Haptic feedback at 10 second warning (mobile only)
+        if (currentState.remainingSeconds === 10 && !hasShownWarning.current) {
+          hasShownWarning.current = true;
+          if (Platform.OS !== 'web') {
+            await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+          }
+        }
+
+        // Haptic feedback on completion (mobile only)
+        if (currentState.remainingSeconds === 0 && !hasCompletedTimer.current) {
+          hasCompletedTimer.current = true;
+          if (Platform.OS !== 'web') {
+            await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          }
+        }
       } else {
         // Timer completed
         setRemainingSeconds(0);
@@ -56,20 +77,35 @@ export default function RestTimer({ isActive, onComplete }: RestTimerProps) {
   }, [isActive, onComplete]);
 
   const handleSkip = async () => {
+    // Haptic feedback on skip (mobile only)
+    if (Platform.OS !== 'web') {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
+
     await timerService.stopTimer();
     setRemainingSeconds(0);
     setTargetSeconds(0);
     onComplete?.();
   };
 
-  const handleAdd30s = () => {
+  const handleAdd30s = async () => {
+    // Haptic feedback on timer adjustment (mobile only)
+    if (Platform.OS !== 'web') {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+
     timerService.adjustTimer(30);
     const state = timerService.getTimerState();
     setRemainingSeconds(state.remainingSeconds);
     setTargetSeconds(state.targetSeconds);
   };
 
-  const handleSubtract30s = () => {
+  const handleSubtract30s = async () => {
+    // Haptic feedback on timer adjustment (mobile only)
+    if (Platform.OS !== 'web') {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+
     timerService.adjustTimer(-30);
     const state = timerService.getTimerState();
     setRemainingSeconds(state.remainingSeconds);
@@ -121,7 +157,7 @@ export default function RestTimer({ isActive, onComplete }: RestTimerProps) {
           <View style={styles.buttonRow}>
             <Button
               mode="outlined"
-              onPress={handleSubtract30s}
+              onPress={() => void handleSubtract30s()}
               style={styles.controlButton}
               textColor={colors.text.primary}
               contentStyle={styles.controlButtonContent}
@@ -143,7 +179,7 @@ export default function RestTimer({ isActive, onComplete }: RestTimerProps) {
             </Button>
             <Button
               mode="outlined"
-              onPress={handleAdd30s}
+              onPress={() => void handleAdd30s()}
               style={styles.controlButton}
               textColor={colors.text.primary}
               contentStyle={styles.controlButtonContent}

@@ -26,6 +26,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useVolumeTrends, VolumeTrendDataPoint } from '../../services/api/analyticsApi';
 import { MuscleGroup, VOLUME_LANDMARKS, getVolumeZone } from '../../constants/volumeLandmarks';
 import { colors } from '../../theme/colors';
+import { ChartSkeleton } from '../skeletons';
 
 const CHART_WIDTH = Dimensions.get('window').width - 64;
 const CHART_HEIGHT = 280;
@@ -102,14 +103,7 @@ export function VolumeChart({ startDate, endDate }: VolumeChartProps): React.JSX
       </View>
 
       {/* Chart Content */}
-      {isLoading && (
-        <View style={styles.centerContent}>
-          <ActivityIndicator size="large" />
-          <Text variant="bodyMedium" style={styles.loadingText}>
-            Loading volume trends...
-          </Text>
-        </View>
-      )}
+      {isLoading && <ChartSkeleton height={CHART_HEIGHT} showLegend={true} />}
 
       {error && (
         <View style={styles.centerContent}>

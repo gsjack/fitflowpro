@@ -93,6 +93,28 @@ export interface VolumeAnalysis {
 }
 
 /**
+ * Create a new default program for the authenticated user
+ *
+ * Creates a 6-day Renaissance Periodization split with pre-configured exercises.
+ * Starting phase: MEV (Minimum Effective Volume)
+ *
+ * @returns Full program structure with program days and exercises
+ * @throws Error if API call fails (401 unauthorized, 409 user already has program)
+ *
+ * @example
+ * const program = await createProgram();
+ * console.log(program.mesocycle_phase); // "mev"
+ * console.log(program.program_days.length); // 6
+ */
+export async function createProgram(): Promise<Program> {
+  const client = await getAuthenticatedClient();
+
+  const response = await client.post<Program>('/api/programs');
+
+  return response.data;
+}
+
+/**
  * Get the authenticated user's active program with full structure
  *
  * Returns the program with nested program days and exercises.

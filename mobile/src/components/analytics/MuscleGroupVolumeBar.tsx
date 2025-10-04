@@ -253,9 +253,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   zoneIndicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
   },
   headerRight: {
     flexDirection: 'row',
@@ -264,9 +266,11 @@ const styles = StyleSheet.create({
   },
   setsText: {
     color: colors.text.primary,
+    fontSize: 18,
     fontWeight: '700',
   },
   setsLabel: {
+    fontSize: 13,
     color: colors.text.secondary,
   },
   progressContainer: {
@@ -290,13 +294,19 @@ const styles = StyleSheet.create({
   markerLine: {
     width: 2,
     height: '100%',
-    backgroundColor: colors.text.tertiary,
-    opacity: 0.5,
+    backgroundColor: '#FFFFFF',
+    opacity: 0.6, // FIX P0-6: Increased to 0.6 for WCAG 3:1 contrast (marker visibility)
+    shadowColor: '#FFFFFF',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.4, // Increased shadow for better definition
+    shadowRadius: 2,
   },
   progressBar: {
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: colors.background.tertiary,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)', // FIX P0-6: Increased to 0.4 for stronger WCAG 3:1 contrast
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)', // FIX P0-6: Increased border contrast for better definition
   },
   thresholdLabels: {
     flexDirection: 'row',
@@ -304,9 +314,13 @@ const styles = StyleSheet.create({
   },
   thresholdLabel: {
     position: 'absolute',
-    fontSize: 10,
-    color: colors.text.secondary,
+    fontSize: 11,
+    fontWeight: '700', // FIX P0-6: Increased font weight for better visibility
+    color: colors.text.primary, // FIX P0-6: Changed from secondary to primary for better contrast
     marginLeft: -12, // Center the label on the marker
+    textShadowColor: 'rgba(0, 0, 0, 0.5)', // FIX P0-6: Added text shadow for better legibility
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   completionRow: {
     flexDirection: 'row',
@@ -314,6 +328,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   completionText: {
+    fontSize: 14,
+    fontWeight: '500',
     color: colors.text.secondary,
   },
   warningBadge: {

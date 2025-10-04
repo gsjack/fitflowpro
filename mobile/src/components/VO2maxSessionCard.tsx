@@ -131,9 +131,11 @@ export default function VO2maxSessionCard({
                   anchor={
                     <IconButton
                       icon="dots-vertical"
-                      size={20}
+                      size={24}
                       onPress={openMenu}
                       iconColor={colors.text.secondary}
+                      containerStyle={styles.iconButtonContainer}
+                      accessibilityLabel="Session options"
                     />
                   }
                 >
@@ -409,5 +411,9 @@ const styles = StyleSheet.create({
   notesText: {
     color: colors.text.secondary,
     fontStyle: 'italic',
+  },
+  iconButtonContainer: {
+    minWidth: 48,
+    minHeight: 48,
   },
 });

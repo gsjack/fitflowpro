@@ -39,3 +39,17 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Playwright / Visual Regression Testing
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Visual regression baselines (commit these!)
+# e2e/visual/**/*-snapshots/
+
+# Temporary test artifacts
+*.png.tmp
+*-actual.png
+*-expected.png
+*-diff.png

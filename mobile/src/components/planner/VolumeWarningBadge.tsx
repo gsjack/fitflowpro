@@ -213,9 +213,9 @@ export default function VolumeWarningBadge({
 
 const styles = StyleSheet.create({
   compactBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 48, // FIX P0-8: Increased from 32px to meet WCAG 2.5.5 minimum 44×44px (48px recommended)
+    height: 48, // FIX P0-8: Increased from 32px to meet WCAG 2.5.5 minimum 44×44px (48px recommended)
+    borderRadius: 24, // Adjusted to maintain circular shape
     justifyContent: 'center',
     alignItems: 'center',
   },

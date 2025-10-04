@@ -25,9 +25,11 @@ export default defineConfig({
     },
   ],
 
-  webServer: {
-    command: 'echo "Expo web server already running"',
-    port: 8081,
-    reuseExistingServer: true,
-  },
+  // webServer config commented out - using already running Expo server
+  // webServer: {
+  //   command: 'sleep 1',
+  //   port: 8081,
+  //   reuseExistingServer: true,
+  //   timeout: 5000,
+  // },
 });

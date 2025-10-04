@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert, RefreshControl } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert, RefreshControl, Platform } from 'react-native';
 import {
   Card,
   Button,
@@ -20,6 +20,7 @@ import {
   List,
   IconButton,
 } from 'react-native-paper';
+import * as Haptics from 'expo-haptics';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { useRecoveryStore, getRecoveryMessage } from '../stores/recoveryStore';
 import * as workoutDb from '../services/database/workoutDb';
@@ -32,6 +33,7 @@ import { getAuthenticatedClient } from '../services/api/authApi';
 import { getQuoteOfTheDay } from '../constants/quotes';
 import { MuscleGroupVolumeBar } from '../components/analytics/MuscleGroupVolumeBar';
 import { useCurrentWeekVolume } from '../services/api/analyticsApi';
+import { WorkoutCardSkeleton, VolumeBarSkeleton } from '../components/skeletons';
 
 interface DashboardScreenProps {
   userId: number;
@@ -144,6 +146,11 @@ export default function DashboardScreen({
   };
 
   const handleStartWorkout = async () => {
+    // Haptic feedback on workout start (mobile only)
+    if (Platform.OS !== 'web') {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
+
     if (onStartWorkout) {
       if (todayWorkout) {
         await onStartWorkout(todayWorkout.program_day_id, todayWorkout.date);
@@ -161,6 +168,12 @@ export default function DashboardScreen({
 
     try {
       setIsSubmitting(true);
+
+      // Haptic feedback on successful submission (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      }
+
       await submitAssessment(
         userId,
         parseInt(sleepQuality),
@@ -174,6 +187,10 @@ export default function DashboardScreen({
       setMentalMotivation('');
     } catch (error) {
       console.error('[DashboardScreen] Error submitting recovery:', error);
+      // Haptic feedback on error (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -234,9 +251,28 @@ export default function DashboardScreen({
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.heroSection}>
+          <Text variant="headlineLarge" style={styles.dateText}>
+            {new Date().toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </Text>
+        </View>
+        <WorkoutCardSkeleton />
+        <Card style={styles.volumeCard}>
+          <Card.Title
+            title="This Week's Volume"
+            titleVariant="titleLarge"
+            titleStyle={styles.sectionTitle}
+          />
+          <Card.Content>
+            <VolumeBarSkeleton count={3} />
+          </Card.Content>
+        </Card>
+      </ScrollView>
     );
   }
 
@@ -296,51 +332,75 @@ export default function DashboardScreen({
             </Text>
 
             <View style={styles.compactQuestions}>
-              {/* Question 1: Sleep */}
+              {/* Question 1: Sleep Quality */}
               <View style={styles.compactQuestion}>
+                <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
+                  Sleep Quality: 1 = Terrible, 5 = Excellent
+                </Text>
                 <SegmentedButtons
                   value={sleepQuality}
-                  onValueChange={setSleepQuality}
+                  onValueChange={(value) => {
+                    setSleepQuality(value);
+                    if (Platform.OS !== 'web') {
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }
+                  }}
                   buttons={[
-                    { value: '1', label: '1' },
-                    { value: '2', label: '2' },
-                    { value: '3', label: '3' },
-                    { value: '4', label: '4' },
-                    { value: '5', label: '5' },
+                    { value: '1', label: '😫 1' },
+                    { value: '2', label: '😴 2' },
+                    { value: '3', label: '😐 3' },
+                    { value: '4', label: '🙂 4' },
+                    { value: '5', label: '😃 5' },
                   ]}
-                  density="small"
+                  style={styles.segmentedButtons}
                 />
               </View>
 
-              {/* Question 2: Soreness */}
+              {/* Question 2: Muscle Soreness */}
               <View style={styles.compactQuestion}>
+                <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
+                  Muscle Soreness: 1 = Very sore, 5 = No soreness
+                </Text>
                 <SegmentedButtons
                   value={muscleSoreness}
-                  onValueChange={setMuscleSoreness}
+                  onValueChange={(value) => {
+                    setMuscleSoreness(value);
+                    if (Platform.OS !== 'web') {
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }
+                  }}
                   buttons={[
-                    { value: '1', label: '1' },
-                    { value: '2', label: '2' },
-                    { value: '3', label: '3' },
-                    { value: '4', label: '4' },
-                    { value: '5', label: '5' },
+                    { value: '1', label: '🔥 1' },
+                    { value: '2', label: '😣 2' },
+                    { value: '3', label: '😐 3' },
+                    { value: '4', label: '🙂 4' },
+                    { value: '5', label: '💪 5' },
                   ]}
-                  density="small"
+                  style={styles.segmentedButtons}
                 />
               </View>
 
-              {/* Question 3: Motivation */}
+              {/* Question 3: Mental Motivation */}
               <View style={styles.compactQuestion}>
+                <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
+                  Motivation: 1 = Very low, 5 = Very high
+                </Text>
                 <SegmentedButtons
                   value={mentalMotivation}
-                  onValueChange={setMentalMotivation}
+                  onValueChange={(value) => {
+                    setMentalMotivation(value);
+                    if (Platform.OS !== 'web') {
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }
+                  }}
                   buttons={[
-                    { value: '1', label: '1' },
-                    { value: '2', label: '2' },
-                    { value: '3', label: '3' },
-                    { value: '4', label: '4' },
-                    { value: '5', label: '5' },
+                    { value: '1', label: '😞 1' },
+                    { value: '2', label: '😕 2' },
+                    { value: '3', label: '😐 3' },
+                    { value: '4', label: '😊 4' },
+                    { value: '5', label: '🔥 5' },
                   ]}
-                  density="small"
+                  style={styles.segmentedButtons}
                 />
               </View>
 
@@ -396,9 +456,10 @@ export default function DashboardScreen({
                 {todayWorkout.status === 'not_started' && (
                   <IconButton
                     icon="swap-horizontal"
-                    size={20}
+                    size={24}
                     iconColor={colors.primary.main}
                     onPress={handleOpenSwapDialog}
+                    containerStyle={styles.swapButtonContainer}
                     accessibilityLabel="Change workout"
                     style={styles.swapButton}
                   />
@@ -582,14 +643,7 @@ export default function DashboardScreen({
           titleStyle={styles.sectionTitle}
         />
         <Card.Content>
-          {isLoadingVolume && (
-            <View style={styles.volumeLoadingContainer}>
-              <ActivityIndicator size="large" color={colors.primary.main} />
-              <Text variant="bodyMedium" style={styles.loadingText}>
-                Loading volume data...
-              </Text>
-            </View>
-          )}
+          {isLoadingVolume && <VolumeBarSkeleton count={3} />}
 
           {volumeError && (
             <View style={styles.errorContainer}>
@@ -768,6 +822,11 @@ const styles = StyleSheet.create({
   compactQuestion: {
     marginBottom: spacing.xs,
   },
+  recoveryScaleHelper: {
+    color: colors.text.tertiary,
+    marginBottom: 8,
+    fontSize: 12,
+  },
   submitButtonMinimal: {
     marginTop: spacing.xs,
   },
@@ -800,6 +859,13 @@ const styles = StyleSheet.create({
   },
   swapButton: {
     margin: 0,
+  },
+  swapButtonContainer: {
+    minWidth: 48,
+    minHeight: 48,
+  },
+  segmentedButtons: {
+    minHeight: 48, // FIX P0-2: Increased from 44px to meet WCAG 48px minimum touch target
   },
   workoutNameNew: {
     color: colors.text.primary,
@@ -902,6 +968,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.primary,
     marginVertical: spacing.xs,
     borderRadius: borderRadius.sm,
+    minHeight: 56, // FIX P0-1: Explicit minimum height to ensure WCAG 2.5.5 compliance (exceeds 44px minimum)
   },
   currentProgramDay: {
     backgroundColor: colors.primary.main + '20',

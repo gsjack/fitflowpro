@@ -1,0 +1,127 @@
+name: Visual Regression Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'mobile/src/**'
+      - 'mobile/e2e/visual/**'
+      - 'mobile/App.tsx'
+      - 'mobile/package.json'
+  push:
+    branches: [main, develop]
+    paths:
+      - 'mobile/src/**'
+      - 'mobile/e2e/visual/**'
+      - 'mobile/App.tsx'
+      - 'mobile/package.json'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  visual-regression:
+    name: Visual Regression Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: mobile/package-lock.json
+
+      # ========================================
+      # Backend Setup
+      # ========================================
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Start backend server
+        working-directory: backend
+        run: |
+          npm run dev &
+          echo "Waiting for backend to start..."
+          sleep 10
+          curl -f http://localhost:3000/health || exit 1
+        env:
+          NODE_ENV: test
+
+      # ========================================
+      # Mobile App Setup
+      # ========================================
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: mobile
+        run: npx playwright install --with-deps chromium
+
+      - name: Start Expo web server
+        working-directory: mobile
+        run: |
+          npx expo start --web &
+          echo "Waiting for Expo to start..."
+          sleep 15
+          curl -f http://localhost:8081 || exit 1
+
+      # ========================================
+      # Visual Regression Tests
+      # ========================================
+
+      - name: Run visual regression tests
+        working-directory: mobile
+        run: npm run test:visual
+        env:
+          CI: true
+
+      # ========================================
+      # Upload Results
+      # ========================================
+
+      - name: Upload visual regression report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-report
+          path: mobile/playwright-report/visual
+          retention-days: 30
+
+      - name: Upload visual diff screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diff-screenshots
+          path: mobile/test-results/
+          retention-days: 30
+
+      - name: Upload baseline snapshots (on push to main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-snapshots
+          path: mobile/e2e/visual/**/*-snapshots/
+          retention-days: 90
+
+      # ========================================
+      # Comment PR with Results
+      # ========================================
+
+      - name: Comment PR with visual regression results
+        if: github.event_name == 'pull_request' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ⚠️ Visual Regression Detected\n\nVisual regression tests failed. Please review the visual diff screenshots in the artifacts.\n\n[View Visual Regression Report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
+            })
