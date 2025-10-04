@@ -26,6 +26,9 @@ import { Svg, Line, Circle, Text as SvgText, Polyline } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { use1RMProgression, OneRMDataPoint } from '../../services/api/analyticsApi';
 import { colors } from '../../theme/colors';
+import { ChartSkeleton } from '../skeletons';
+import { useSettingsStore } from '../../stores/settingsStore';
+import { fromBackendWeight, getUnitLabel } from '../../utils/unitConversion';
 
 const CHART_WIDTH = Dimensions.get('window').width - 64; // Account for padding
 const CHART_HEIGHT = 250;
@@ -53,6 +56,7 @@ export function OneRMProgressionChart({
   endDate,
 }: OneRMProgressionChartProps): React.JSX.Element {
   const theme = useTheme();
+  const { weightUnit } = useSettingsStore();
   const [selectedExercise, setSelectedExercise] = useState(SAMPLE_EXERCISES[0]);
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -95,14 +99,7 @@ export function OneRMProgressionChart({
       </View>
 
       {/* Chart Content */}
-      {isLoading && (
-        <View style={styles.centerContent}>
-          <ActivityIndicator size="large" />
-          <Text variant="bodyMedium" style={styles.loadingText}>
-            Loading progression data...
-          </Text>
-        </View>
-      )}
+      {isLoading && <ChartSkeleton height={CHART_HEIGHT} showLegend={false} />}
 
       {error && (
         <View style={styles.centerContent}>
@@ -131,7 +128,9 @@ export function OneRMProgressionChart({
         </View>
       )}
 
-      {!isLoading && !error && data && data.length > 0 && <LineChart data={data} theme={theme} />}
+      {!isLoading && !error && data && data.length > 0 && (
+        <LineChart data={data} theme={theme} weightUnit={weightUnit} />
+      )}
     </Surface>
   );
 }
@@ -142,25 +141,28 @@ export function OneRMProgressionChart({
 interface LineChartProps {
   data: OneRMDataPoint[];
   theme: MD3Theme;
+  weightUnit: 'kg' | 'lbs';
 }
 
-function LineChart({ data, theme }: LineChartProps): React.JSX.Element {
+function LineChart({ data, theme, weightUnit }: LineChartProps): React.JSX.Element {
+  const unitLabel = getUnitLabel(weightUnit);
   // Calculate chart dimensions
   const chartWidth = CHART_WIDTH - PADDING.left - PADDING.right;
   const chartHeight = CHART_HEIGHT - PADDING.top - PADDING.bottom;
 
-  // Find min/max values for scaling
-  const values = data.map((d) => d.estimated_1rm);
-  const minValue = Math.floor(Math.min(...values) * 0.9); // 10% padding
-  const maxValue = Math.ceil(Math.max(...values) * 1.1); // 10% padding
+  // Convert all values to display units
+  const valuesInDisplayUnit = data.map((d) => fromBackendWeight(d.estimated_1rm, weightUnit));
+  const minValue = Math.floor(Math.min(...valuesInDisplayUnit) * 0.9); // 10% padding
+  const maxValue = Math.ceil(Math.max(...valuesInDisplayUnit) * 1.1); // 10% padding
   const valueRange = maxValue - minValue;
 
-  // Calculate point positions
+  // Calculate point positions (using display unit values)
   const points = data.map((point, index) => {
+    const valueInDisplayUnit = fromBackendWeight(point.estimated_1rm, weightUnit);
     const x = PADDING.left + (index / (data.length - 1)) * chartWidth;
     const y =
-      PADDING.top + chartHeight - ((point.estimated_1rm - minValue) / valueRange) * chartHeight;
-    return { x, y, value: point.estimated_1rm, date: point.date };
+      PADDING.top + chartHeight - ((valueInDisplayUnit - minValue) / valueRange) * chartHeight;
+    return { x, y, value: valueInDisplayUnit, date: point.date };
   });
 
   // Create polyline path for the line
@@ -252,7 +254,7 @@ function LineChart({ data, theme }: LineChartProps): React.JSX.Element {
           textAnchor="middle"
           transform={`rotate(-90, 15, ${CHART_HEIGHT / 2})`}
         >
-          1RM (kg)
+          1RM ({unitLabel})
         </SvgText>
       </Svg>
 
@@ -263,7 +265,7 @@ function LineChart({ data, theme }: LineChartProps): React.JSX.Element {
             Current
           </Text>
           <Text variant="titleMedium" style={styles.summaryValue}>
-            {Math.round(points[points.length - 1].value)} kg
+            {Math.round(points[points.length - 1].value)} {unitLabel}
           </Text>
         </View>
         <View style={styles.summaryItem}>
@@ -280,7 +282,7 @@ function LineChart({ data, theme }: LineChartProps): React.JSX.Element {
             ]}
           >
             {points[points.length - 1].value > points[0].value ? '+' : ''}
-            {Math.round(points[points.length - 1].value - points[0].value)} kg
+            {Math.round(points[points.length - 1].value - points[0].value)} {unitLabel}
           </Text>
         </View>
         <View style={styles.summaryItem}>
@@ -288,7 +290,7 @@ function LineChart({ data, theme }: LineChartProps): React.JSX.Element {
             Best
           </Text>
           <Text variant="titleMedium" style={styles.summaryValue}>
-            {Math.round(Math.max(...values))} kg
+            {Math.round(Math.max(...valuesInDisplayUnit))} {unitLabel}
           </Text>
         </View>
       </View>

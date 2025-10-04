@@ -3,14 +3,30 @@
  *
  * Set logging form with weight/reps inputs and RIR selector.
  * Uses Material Design Paper components.
+ *
+ * UX Enhancements for Gym Environment:
+ * - 64×64px adjustment buttons (up from 56×56) for easier tapping with sweaty hands/gloves
+ * - Long-press auto-increment: hold +/- buttons to rapidly adjust values (200ms intervals)
+ * - Haptic feedback on each increment (native only, not web)
+ * - Visual feedback: buttons scale down to 0.95 when long-pressing
+ * - Explicit labels on buttons ("+2.5", "-1") for clarity
+ * - Minimum screen width support: 320px (buttons + gaps = 160px, input = 160px)
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { Card, TextInput, Button, Text, SegmentedButtons } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
+import { useSettingsStore } from '../../stores/settingsStore';
+import {
+  fromBackendWeight,
+  toBackendWeight,
+  getUnitLabel,
+  getWeightIncrement,
+} from '../../utils/unitConversion';
 
 interface SetLogCardProps {
   exerciseName: string;
@@ -31,41 +47,125 @@ export default function SetLogCard({
   previousReps,
   onLogSet,
 }: SetLogCardProps) {
-  const [weightKg, setWeightKg] = useState(previousWeight?.toString() ?? '');
+  const { weightUnit } = useSettingsStore();
+
+  // Convert previous weight from kg to display unit
+  const previousWeightDisplay = previousWeight
+    ? fromBackendWeight(previousWeight, weightUnit).toString()
+    : '';
+
+  const [weightDisplay, setWeightDisplay] = useState(previousWeightDisplay);
   const [reps, setReps] = useState(previousReps?.toString() ?? '');
   const [rir, setRir] = useState(targetRir.toString());
 
-  const handleLogSet = () => {
-    const weight = parseFloat(weightKg);
+  // Long-press state management
+  const longPressInterval = useRef<NodeJS.Timeout | null>(null);
+  const [isLongPressingWeight, setIsLongPressingWeight] = useState(false);
+  const [isLongPressingReps, setIsLongPressingReps] = useState(false);
+
+  // Cleanup interval on unmount
+  useEffect(() => {
+    return () => {
+      if (longPressInterval.current) {
+        clearInterval(longPressInterval.current);
+      }
+    };
+  }, []);
+
+  const handleLogSet = async () => {
+    const weightInDisplayUnit = parseFloat(weightDisplay);
     const repsNum = parseInt(reps, 10);
     const rirNum = parseInt(rir, 10);
 
-    if (isNaN(weight) || isNaN(repsNum) || isNaN(rirNum)) {
+    if (isNaN(weightInDisplayUnit) || isNaN(repsNum) || isNaN(rirNum)) {
       return;
     }
 
-    onLogSet(weight, repsNum, rirNum);
+    // Convert display weight to kg for backend
+    const weightKg = toBackendWeight(weightInDisplayUnit, weightUnit);
+
+    // Haptic feedback on successful set completion (mobile only)
+    if (Platform.OS !== 'web') {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }
+
+    onLogSet(weightKg, repsNum, rirNum);
 
     // Clear form for next set
-    setWeightKg('');
+    setWeightDisplay('');
     setReps('');
     setRir(targetRir.toString());
   };
 
-  const adjustReps = (delta: number) => {
+  const adjustReps = async (delta: number) => {
+    if (Platform.OS !== 'web') {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
     const current = parseInt(reps, 10) || 0;
     const newReps = Math.max(0, current + delta);
     setReps(newReps.toString());
   };
 
-  const adjustWeight = (delta: number) => {
-    const current = parseFloat(weightKg) || 0;
+  const adjustWeight = async (delta: number) => {
+    if (Platform.OS !== 'web') {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+    const current = parseFloat(weightDisplay) || 0;
     const newWeight = Math.max(0, current + delta);
-    setWeightKg(newWeight.toFixed(1));
+    setWeightDisplay(newWeight.toFixed(1));
+  };
+
+  // Long-press handlers for weight
+  const handleWeightLongPressStart = (delta: number) => {
+    setIsLongPressingWeight(true);
+    if (Platform.OS !== 'web') {
+      void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+
+    // Start interval for continuous adjustment
+    longPressInterval.current = setInterval(() => {
+      void adjustWeight(delta);
+    }, 200);
+  };
+
+  const handleWeightLongPressEnd = () => {
+    setIsLongPressingWeight(false);
+    if (longPressInterval.current) {
+      clearInterval(longPressInterval.current);
+      longPressInterval.current = null;
+    }
+  };
+
+  // Long-press handlers for reps
+  const handleRepsLongPressStart = (delta: number) => {
+    setIsLongPressingReps(true);
+    if (Platform.OS !== 'web') {
+      void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+
+    // Start interval for continuous adjustment
+    longPressInterval.current = setInterval(() => {
+      void adjustReps(delta);
+    }, 200);
+  };
+
+  const handleRepsLongPressEnd = () => {
+    setIsLongPressingReps(false);
+    if (longPressInterval.current) {
+      clearInterval(longPressInterval.current);
+      longPressInterval.current = null;
+    }
   };
 
   const isValid =
-    weightKg !== '' && reps !== '' && !isNaN(parseFloat(weightKg)) && !isNaN(parseInt(reps, 10));
+    weightDisplay !== '' &&
+    reps !== '' &&
+    !isNaN(parseFloat(weightDisplay)) &&
+    !isNaN(parseInt(reps, 10));
+
+  // Get appropriate increment and unit label based on user preference
+  const weightIncrement = getWeightIncrement(weightUnit);
+  const unitLabel = getUnitLabel(weightUnit);
 
   return (
     <Card style={styles.card} elevation={4}>
@@ -81,7 +181,7 @@ export default function SetLogCard({
             <Text variant="labelMedium" style={styles.setLabel}>
               SET {setNumber}
             </Text>
-            <Text variant="bodySmall" style={styles.targetInfo}>
+            <Text variant="bodyMedium" style={styles.targetInfo}>
               Target: {targetReps} reps @ RIR {targetRir}
             </Text>
           </View>
@@ -91,25 +191,31 @@ export default function SetLogCard({
             {/* Weight Input */}
             <View style={styles.inputGroup}>
               <Text variant="labelSmall" style={styles.inputLabel}>
-                WEIGHT (KG)
+                WEIGHT ({unitLabel.toUpperCase()})
               </Text>
               <View style={styles.numberInputRow}>
                 <Button
                   mode="contained-tonal"
-                  onPress={() => adjustWeight(-2.5)}
-                  style={styles.adjustButtonLarge}
+                  onPress={() => void adjustWeight(-weightIncrement)}
+                  onLongPress={() => handleWeightLongPressStart(-weightIncrement)}
+                  onPressOut={handleWeightLongPressEnd}
+                  style={[
+                    styles.adjustButtonLarge,
+                    isLongPressingWeight && styles.adjustButtonPressed,
+                  ]}
                   buttonColor={colors.background.tertiary}
                   textColor={colors.text.primary}
                   contentStyle={styles.adjustButtonContent}
                   labelStyle={styles.adjustButtonLabel}
-                  accessibilityLabel="Decrease weight"
+                  accessibilityLabel={`Decrease weight by ${weightIncrement}${unitLabel}`}
+                  accessibilityHint="Long press to continuously decrease"
                 >
-                  −
+                  −{weightIncrement}
                 </Button>
                 <View style={styles.numberDisplay}>
                   <TextInput
-                    value={weightKg}
-                    onChangeText={setWeightKg}
+                    value={weightDisplay}
+                    onChangeText={setWeightDisplay}
                     keyboardType="decimal-pad"
                     style={styles.numberInput}
                     mode="flat"
@@ -122,15 +228,21 @@ export default function SetLogCard({
                 </View>
                 <Button
                   mode="contained-tonal"
-                  onPress={() => adjustWeight(2.5)}
-                  style={styles.adjustButtonLarge}
+                  onPress={() => void adjustWeight(weightIncrement)}
+                  onLongPress={() => handleWeightLongPressStart(weightIncrement)}
+                  onPressOut={handleWeightLongPressEnd}
+                  style={[
+                    styles.adjustButtonLarge,
+                    isLongPressingWeight && styles.adjustButtonPressed,
+                  ]}
                   buttonColor={colors.background.tertiary}
                   textColor={colors.text.primary}
                   contentStyle={styles.adjustButtonContent}
                   labelStyle={styles.adjustButtonLabel}
-                  accessibilityLabel="Increase weight"
+                  accessibilityLabel={`Increase weight by ${weightIncrement}${unitLabel}`}
+                  accessibilityHint="Long press to continuously increase"
                 >
-                  +
+                  +{weightIncrement}
                 </Button>
               </View>
             </View>
@@ -143,15 +255,21 @@ export default function SetLogCard({
               <View style={styles.numberInputRow}>
                 <Button
                   mode="contained-tonal"
-                  onPress={() => adjustReps(-1)}
-                  style={styles.adjustButtonLarge}
+                  onPress={() => void adjustReps(-1)}
+                  onLongPress={() => handleRepsLongPressStart(-1)}
+                  onPressOut={handleRepsLongPressEnd}
+                  style={[
+                    styles.adjustButtonLarge,
+                    isLongPressingReps && styles.adjustButtonPressed,
+                  ]}
                   buttonColor={colors.background.tertiary}
                   textColor={colors.text.primary}
                   contentStyle={styles.adjustButtonContent}
                   labelStyle={styles.adjustButtonLabel}
-                  accessibilityLabel="Decrease reps"
+                  accessibilityLabel="Decrease reps by 1"
+                  accessibilityHint="Long press to continuously decrease"
                 >
-                  −
+                  −1
                 </Button>
                 <View style={styles.numberDisplay}>
                   <TextInput
@@ -168,15 +286,21 @@ export default function SetLogCard({
                 </View>
                 <Button
                   mode="contained-tonal"
-                  onPress={() => adjustReps(1)}
-                  style={styles.adjustButtonLarge}
+                  onPress={() => void adjustReps(1)}
+                  onLongPress={() => handleRepsLongPressStart(1)}
+                  onPressOut={handleRepsLongPressEnd}
+                  style={[
+                    styles.adjustButtonLarge,
+                    isLongPressingReps && styles.adjustButtonPressed,
+                  ]}
                   buttonColor={colors.background.tertiary}
                   textColor={colors.text.primary}
                   contentStyle={styles.adjustButtonContent}
                   labelStyle={styles.adjustButtonLabel}
-                  accessibilityLabel="Increase reps"
+                  accessibilityLabel="Increase reps by 1"
+                  accessibilityHint="Long press to continuously increase"
                 >
-                  +
+                  +1
                 </Button>
               </View>
             </View>
@@ -190,7 +314,6 @@ export default function SetLogCard({
             <SegmentedButtons
               value={rir}
               onValueChange={setRir}
-              density="small"
               buttons={[
                 { value: '0', label: '0' },
                 { value: '1', label: '1' },
@@ -198,6 +321,7 @@ export default function SetLogCard({
                 { value: '3', label: '3' },
                 { value: '4', label: '4+' },
               ]}
+              style={styles.segmentedButtons}
               theme={{
                 colors: {
                   secondaryContainer: colors.primary.main,
@@ -212,7 +336,7 @@ export default function SetLogCard({
           {/* Complete Set Button */}
           <Button
             mode="contained"
-            onPress={handleLogSet}
+            onPress={() => void handleLogSet()}
             disabled={!isValid}
             style={styles.completeButton}
             buttonColor={colors.success.main}
@@ -254,6 +378,7 @@ const styles = StyleSheet.create({
   },
   targetInfo: {
     color: colors.text.tertiary,
+    fontSize: 16, // FIX P0-2: Increased from default bodySmall (14px) for better readability
   },
   mainInputs: {
     gap: spacing.lg,
@@ -272,15 +397,23 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   adjustButtonLarge: {
-    minWidth: 56,
+    minWidth: 64,
+    width: 64,
+    height: 64,
     borderRadius: borderRadius.md,
   },
   adjustButtonContent: {
-    height: 56,
+    height: 64,
+    width: 64,
   },
   adjustButtonLabel: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '700',
+    lineHeight: 20,
+  },
+  adjustButtonPressed: {
+    transform: [{ scale: 0.95 }],
+    opacity: 0.8,
   },
   numberDisplay: {
     flex: 1,
@@ -313,6 +446,9 @@ const styles = StyleSheet.create({
     color: colors.text.tertiary,
     letterSpacing: 1.2,
     marginBottom: spacing.sm,
+  },
+  segmentedButtons: {
+    minHeight: 48,
   },
   completeButton: {
     minHeight: 56,

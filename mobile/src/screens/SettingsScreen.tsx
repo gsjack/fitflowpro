@@ -34,6 +34,7 @@ import {
   shareCsvFile,
 } from '../services/export/csvExporter';
 import DeleteAccountModal from '../components/common/DeleteAccountModal';
+import { useSettingsStore, type WeightUnit } from '../stores/settingsStore';
 
 interface SettingsScreenProps {
   onLogout: () => void; // Navigate to AuthScreen after logout
@@ -80,6 +81,9 @@ async function getUserFromToken(): Promise<{
  */
 export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
   const theme = useTheme();
+
+  // Settings store
+  const { weightUnit, setWeightUnit } = useSettingsStore();
 
   // User state
   const [userId, setUserId] = useState<number | null>(null);
@@ -260,6 +264,47 @@ export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
 
         <Divider style={styles.divider} />
 
+        {/* Preferences Section */}
+        <Text variant="headlineSmall" style={styles.sectionTitle}>
+          Preferences
+        </Text>
+
+        <List.Section>
+          <List.Subheader style={styles.listSubheader}>Weight Units</List.Subheader>
+          <List.Item
+            title="Kilograms (kg)"
+            description="Metric system (international standard)"
+            left={(props) => (
+              <List.Icon
+                {...props}
+                icon={weightUnit === 'kg' ? 'check-circle' : 'circle-outline'}
+                color={weightUnit === 'kg' ? theme.colors.primary : theme.colors.onSurfaceVariant}
+              />
+            )}
+            onPress={() => setWeightUnit('kg')}
+            accessibilityLabel="Set weight unit to kilograms"
+            accessibilityRole="button"
+            accessibilityState={{ selected: weightUnit === 'kg' }}
+          />
+          <List.Item
+            title="Pounds (lbs)"
+            description="Imperial system (US standard)"
+            left={(props) => (
+              <List.Icon
+                {...props}
+                icon={weightUnit === 'lbs' ? 'check-circle' : 'circle-outline'}
+                color={weightUnit === 'lbs' ? theme.colors.primary : theme.colors.onSurfaceVariant}
+              />
+            )}
+            onPress={() => setWeightUnit('lbs')}
+            accessibilityLabel="Set weight unit to pounds"
+            accessibilityRole="button"
+            accessibilityState={{ selected: weightUnit === 'lbs' }}
+          />
+        </List.Section>
+
+        <Divider style={styles.divider} />
+
         {/* Data Export Section */}
         <Text variant="headlineSmall" style={styles.sectionTitle}>
           Data Export
@@ -400,5 +445,9 @@ const styles = StyleSheet.create({
   versionText: {
     textAlign: 'center',
     opacity: 0.5,
+  },
+  listSubheader: {
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
