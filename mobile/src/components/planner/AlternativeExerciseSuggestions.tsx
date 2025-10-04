@@ -354,8 +354,6 @@ export default function AlternativeExerciseSuggestions({
         <Dialog
           visible={confirmDialogVisible}
           onDismiss={handleCancelSwap}
-          accessible={true}
-          accessibilityLabel="Swap confirmation dialog"
         >
           <Dialog.Title>Confirm Exercise Swap</Dialog.Title>
           <Dialog.Content>

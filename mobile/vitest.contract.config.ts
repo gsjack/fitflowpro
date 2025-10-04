@@ -38,6 +38,7 @@ export default defineConfig({
     testTimeout: 5000,
     hookTimeout: 5000,
     // Contract tests can run in parallel
+    // @ts-expect-error - threads may not be in latest vitest types
     threads: true,
     // Clear mocks between tests
     clearMocks: true,

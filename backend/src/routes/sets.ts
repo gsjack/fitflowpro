@@ -15,11 +15,11 @@ import { authenticateJWT } from '../middleware/auth.js';
 interface LogSetBody {
   workout_id: number;
   exercise_id: number;
-  set_number: number;
+  set_number?: number;
   weight_kg: number;
   reps: number;
   rir: number;
-  timestamp: number;
+  timestamp?: number | string;
   localId?: number;
   notes?: string;
 }
@@ -34,11 +34,9 @@ const logSetSchema = {
       required: [
         'workout_id',
         'exercise_id',
-        'set_number',
         'weight_kg',
         'reps',
         'rir',
-        'timestamp',
       ],
       properties: {
         workout_id: {
@@ -73,8 +71,11 @@ const logSetSchema = {
           description: 'Reps in Reserve (0-4)',
         },
         timestamp: {
-          type: 'integer',
-          description: 'UTC milliseconds when set was completed',
+          oneOf: [
+            { type: 'integer' },
+            { type: 'string', format: 'date-time' },
+          ],
+          description: 'UTC milliseconds when set was completed (or ISO 8601 string)',
         },
         localId: {
           type: 'integer',

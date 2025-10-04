@@ -58,11 +58,11 @@ export interface LogSetResponse {
 export function logSet(
   workoutId: number,
   exerciseId: number,
-  setNumber: number,
+  setNumber: number | undefined,
   weightKg: number,
   reps: number,
   rir: number,
-  timestamp: number,
+  timestamp: number | string | undefined,
   localId?: number,
   notes?: string
 ): LogSetResponse {
@@ -80,6 +80,26 @@ export function logSet(
   // Validate notes length
   if (notes && notes.length > 500) {
     throw new Error('Notes must be 500 characters or less');
+  }
+
+  // Default values for optional fields
+  // Auto-generate set_number if not provided (count existing sets + 1)
+  let finalSetNumber = setNumber;
+  if (finalSetNumber === undefined) {
+    const existingSets = db
+      .prepare('SELECT COUNT(*) as count FROM sets WHERE workout_id = ? AND exercise_id = ?')
+      .get(workoutId, exerciseId) as { count: number };
+    finalSetNumber = existingSets.count + 1;
+  }
+
+  // Default timestamp to current time if not provided, convert ISO string to Unix ms
+  let finalTimestamp: number;
+  if (timestamp === undefined) {
+    finalTimestamp = Date.now();
+  } else if (typeof timestamp === 'string') {
+    finalTimestamp = new Date(timestamp).getTime();
+  } else {
+    finalTimestamp = timestamp;
   }
 
   // Deduplication check: if localId provided, check if set already exists
@@ -117,11 +137,11 @@ export function logSet(
   const result = stmtLogSet.run(
     workoutId,
     exerciseId,
-    setNumber,
+    finalSetNumber,
     weightKg,
     reps,
     rir,
-    timestamp,
+    finalTimestamp,
     notes ?? null
   );
 

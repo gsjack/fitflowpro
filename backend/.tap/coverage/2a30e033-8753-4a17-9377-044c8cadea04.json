@@ -1,0 +1,1086 @@
+{
+  "result": [
+    {
+      "scriptId": "324",
+      "url": "file:///home/asigator/fitness2025/backend/src/database/db.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 28100,
+              "count": 1
+            },
+            {
+              "startOffset": 450,
+              "endOffset": 498,
+              "count": 0
+            },
+            {
+              "startOffset": 593,
+              "endOffset": 606,
+              "count": 0
+            },
+            {
+              "startOffset": 1192,
+              "endOffset": 1219,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "initializeSchema",
+          "ranges": [
+            {
+              "startOffset": 784,
+              "endOffset": 917,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "isInitialized",
+          "ranges": [
+            {
+              "startOffset": 941,
+              "endOffset": 1168,
+              "count": 1
+            },
+            {
+              "startOffset": 1131,
+              "endOffset": 1166,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "calculateOneRepMax",
+          "ranges": [
+            {
+              "startOffset": 6163,
+              "endOffset": 6234,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "calculateVolumeAdjustment",
+          "ranges": [
+            {
+              "startOffset": 6277,
+              "endOffset": 6481,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "executeWithTiming",
+          "ranges": [
+            {
+              "startOffset": 6516,
+              "endOffset": 6775,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "transaction",
+          "ranges": [
+            {
+              "startOffset": 6804,
+              "endOffset": 6848,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "batchInsert",
+          "ranges": [
+            {
+              "startOffset": 6877,
+              "endOffset": 7049,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "closeDatabase",
+          "ranges": [
+            {
+              "startOffset": 7080,
+              "endOffset": 7152,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7173,
+              "endOffset": 7203,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7227,
+              "endOffset": 7278,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7303,
+              "endOffset": 7354,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "325",
+      "url": "file:///home/asigator/fitness2025/backend/src/services/programExerciseService.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 42809,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getProgramExercises",
+          "ranges": [
+            {
+              "startOffset": 793,
+              "endOffset": 1462,
+              "count": 15
+            },
+            {
+              "startOffset": 1115,
+              "endOffset": 1214,
+              "count": 14
+            },
+            {
+              "startOffset": 1258,
+              "endOffset": 1351,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "createProgramExercise",
+          "ranges": [
+            {
+              "startOffset": 1470,
+              "endOffset": 2915,
+              "count": 22
+            },
+            {
+              "startOffset": 1677,
+              "endOffset": 1765,
+              "count": 1
+            },
+            {
+              "startOffset": 1765,
+              "endOffset": 1919,
+              "count": 21
+            },
+            {
+              "startOffset": 1919,
+              "endOffset": 2001,
+              "count": 1
+            },
+            {
+              "startOffset": 2001,
+              "endOffset": 2075,
+              "count": 20
+            },
+            {
+              "startOffset": 2075,
+              "endOffset": 2324,
+              "count": 19
+            },
+            {
+              "startOffset": 2308,
+              "endOffset": 2312,
+              "count": 8
+            },
+            {
+              "startOffset": 2324,
+              "endOffset": 2914,
+              "count": 20
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "updateProgramExercise",
+          "ranges": [
+            {
+              "startOffset": 2923,
+              "endOffset": 4370,
+              "count": 5
+            },
+            {
+              "startOffset": 3121,
+              "endOffset": 3197,
+              "count": 1
+            },
+            {
+              "startOffset": 3197,
+              "endOffset": 3285,
+              "count": 4
+            },
+            {
+              "startOffset": 3285,
+              "endOffset": 3365,
+              "count": 2
+            },
+            {
+              "startOffset": 3365,
+              "endOffset": 3411,
+              "count": 4
+            },
+            {
+              "startOffset": 3411,
+              "endOffset": 3496,
+              "count": 2
+            },
+            {
+              "startOffset": 3496,
+              "endOffset": 3536,
+              "count": 4
+            },
+            {
+              "startOffset": 3536,
+              "endOffset": 3614,
+              "count": 2
+            },
+            {
+              "startOffset": 3614,
+              "endOffset": 3645,
+              "count": 4
+            },
+            {
+              "startOffset": 3645,
+              "endOffset": 3709,
+              "count": 0
+            },
+            {
+              "startOffset": 3709,
+              "endOffset": 3950,
+              "count": 4
+            },
+            {
+              "startOffset": 3950,
+              "endOffset": 4307,
+              "count": 2
+            },
+            {
+              "startOffset": 4307,
+              "endOffset": 4369,
+              "count": 4
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "deleteProgramExercise",
+          "ranges": [
+            {
+              "startOffset": 4378,
+              "endOffset": 5044,
+              "count": 3
+            },
+            {
+              "startOffset": 4648,
+              "endOffset": 4724,
+              "count": 1
+            },
+            {
+              "startOffset": 4724,
+              "endOffset": 5043,
+              "count": 2
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "swapExercise",
+          "ranges": [
+            {
+              "startOffset": 5052,
+              "endOffset": 6528,
+              "count": 5
+            },
+            {
+              "startOffset": 5413,
+              "endOffset": 5504,
+              "count": 1
+            },
+            {
+              "startOffset": 5504,
+              "endOffset": 5667,
+              "count": 4
+            },
+            {
+              "startOffset": 5667,
+              "endOffset": 5746,
+              "count": 1
+            },
+            {
+              "startOffset": 5746,
+              "endOffset": 5999,
+              "count": 3
+            },
+            {
+              "startOffset": 5999,
+              "endOffset": 6230,
+              "count": 1
+            },
+            {
+              "startOffset": 6230,
+              "endOffset": 6527,
+              "count": 2
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 5934,
+              "endOffset": 5970,
+              "count": 5
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "reorderExercises",
+          "ranges": [
+            {
+              "startOffset": 6536,
+              "endOffset": 6913,
+              "count": 2
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 6624,
+              "endOffset": 6862,
+              "count": 2
+            },
+            {
+              "startOffset": 6769,
+              "endOffset": 6856,
+              "count": 4
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "calculateVolumeWarning",
+          "ranges": [
+            {
+              "startOffset": 6914,
+              "endOffset": 8717,
+              "count": 24
+            },
+            {
+              "startOffset": 7169,
+              "endOffset": 7197,
+              "count": 0
+            },
+            {
+              "startOffset": 7845,
+              "endOffset": 8032,
+              "count": 204
+            },
+            {
+              "startOffset": 7949,
+              "endOffset": 8026,
+              "count": 612
+            },
+            {
+              "startOffset": 8000,
+              "endOffset": 8004,
+              "count": 72
+            },
+            {
+              "startOffset": 8091,
+              "endOffset": 8127,
+              "count": 20
+            },
+            {
+              "startOffset": 8127,
+              "endOffset": 8516,
+              "count": 4
+            },
+            {
+              "startOffset": 8165,
+              "endOffset": 8516,
+              "count": 2
+            },
+            {
+              "startOffset": 8348,
+              "endOffset": 8427,
+              "count": 6
+            },
+            {
+              "startOffset": 8399,
+              "endOffset": 8403,
+              "count": 0
+            },
+            {
+              "startOffset": 8516,
+              "endOffset": 8552,
+              "count": 22
+            },
+            {
+              "startOffset": 8552,
+              "endOffset": 8636,
+              "count": 66
+            },
+            {
+              "startOffset": 8599,
+              "endOffset": 8603,
+              "count": 0
+            },
+            {
+              "startOffset": 8636,
+              "endOffset": 8716,
+              "count": 22
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7408,
+              "endOffset": 7423,
+              "count": 74
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7629,
+              "endOffset": 7638,
+              "count": 74
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "checkVolumeThresholds",
+          "ranges": [
+            {
+              "startOffset": 8718,
+              "endOffset": 9580,
+              "count": 24
+            },
+            {
+              "startOffset": 8857,
+              "endOffset": 9517,
+              "count": 72
+            },
+            {
+              "startOffset": 8906,
+              "endOffset": 8910,
+              "count": 0
+            },
+            {
+              "startOffset": 8984,
+              "endOffset": 9017,
+              "count": 0
+            },
+            {
+              "startOffset": 9050,
+              "endOffset": 9075,
+              "count": 12
+            },
+            {
+              "startOffset": 9077,
+              "endOffset": 9270,
+              "count": 66
+            },
+            {
+              "startOffset": 9126,
+              "endOffset": 9260,
+              "count": 47
+            },
+            {
+              "startOffset": 9270,
+              "endOffset": 9511,
+              "count": 6
+            },
+            {
+              "startOffset": 9361,
+              "endOffset": 9501,
+              "count": 2
+            },
+            {
+              "startOffset": 9549,
+              "endOffset": 9570,
+              "count": 18
+            },
+            {
+              "startOffset": 9571,
+              "endOffset": 9577,
+              "count": 6
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    }
+  ],
+  "timestamp": 15376.604136,
+  "source-map-cache": {
+    "file:///home/asigator/fitness2025/backend/src/database/db.ts": {
+      "lineLengths": [
+        38,
+        57,
+        37,
+        36,
+        50,
+        38,
+        57,
+        69,
+        33,
+        27,
+        44,
+        1,
+        41,
+        78,
+        3,
+        32,
+        33,
+        35,
+        31,
+        32,
+        54,
+        20,
+        47,
+        2,
+        29,
+        9,
+        25,
+        90,
+        19,
+        24,
+        5,
+        11,
+        21,
+        5,
+        2,
+        23,
+        23,
+        1,
+        90,
+        78,
+        42,
+        103,
+        30,
+        3,
+        75,
+        45,
+        70,
+        36,
+        3,
+        49,
+        38,
+        17,
+        55,
+        21,
+        22,
+        3,
+        58,
+        38,
+        17,
+        55,
+        53,
+        22,
+        3,
+        51,
+        17,
+        88,
+        14,
+        3,
+        55,
+        17,
+        24,
+        14,
+        3,
+        46,
+        37,
+        3,
+        59,
+        14,
+        22,
+        41,
+        35,
+        3,
+        38,
+        104,
+        36,
+        3,
+        48,
+        37,
+        13,
+        42,
+        24,
+        23,
+        3,
+        47,
+        52,
+        3,
+        47,
+        45,
+        3,
+        45,
+        41,
+        3,
+        56,
+        36,
+        69,
+        53,
+        3,
+        36,
+        3,
+        59,
+        36,
+        32,
+        3,
+        51,
+        31,
+        64,
+        49,
+        3,
+        33,
+        3,
+        57,
+        52,
+        3,
+        46,
+        8,
+        11,
+        69,
+        13,
+        40,
+        75,
+        17,
+        17,
+        3,
+        44,
+        8,
+        38,
+        29,
+        13,
+        40,
+        42,
+        21,
+        35,
+        44,
+        15,
+        15,
+        3,
+        50,
+        8,
+        75,
+        31,
+        102,
+        15,
+        19,
+        3,
+        48,
+        49,
+        3,
+        51,
+        42,
+        84,
+        3,
+        27,
+        3,
+        51,
+        24,
+        65,
+        19,
+        3,
+        51,
+        47,
+        3,
+        46,
+        78,
+        24,
+        3,
+        50,
+        26,
+        19,
+        25,
+        9,
+        3,
+        58,
+        44,
+        2,
+        58,
+        25,
+        22,
+        24,
+        30,
+        24,
+        31,
+        22,
+        2,
+        48,
+        29,
+        24,
+        40,
+        23,
+        96,
+        5,
+        18,
+        2,
+        36,
+        32,
+        2,
+        47,
+        46,
+        35,
+        27,
+        9,
+        7,
+        20,
+        2,
+        36,
+        15,
+        46,
+        2,
+        26,
+        20,
+        3,
+        28,
+        20,
+        20,
+        3,
+        29,
+        20,
+        20,
+        3,
+        18,
+        20724
+      ],
+      "data": {
+        "version": 3,
+        "file": "/home/asigator/fitness2025/backend/src/database/db.ts",
+        "sources": [
+          "file:///home/asigator/fitness2025/backend/src/database/db.ts"
+        ],
+        "names": [],
+        "mappings": "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",
+        "sourcesContent": [
+          "/**\n * Backend Database Initialization\n *\n * Initializes better-sqlite3 with performance optimizations:\n * - WAL mode for concurrent reads\n * - 64MB cache for query performance\n * - 256MB memory-mapped I/O\n * - Prepared statements for common queries\n */\n\nimport Database, { Statement } from 'better-sqlite3';\nimport { readFileSync, mkdirSync, existsSync } from 'fs';\nimport { join, dirname } from 'path';\nimport { fileURLToPath } from 'url';\n\n// Get the directory of this module file\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = dirname(__filename);\n\n// Database file path - from dist/database to backend root\nconst DB_PATH = join(__dirname, '../../data/fitflow.db');\nconst SCHEMA_PATH = join(__dirname, '../../src/database/schema.sql');\n\n// Ensure data directory exists\nconst dataDir = dirname(DB_PATH);\nif (!existsSync(dataDir)) {\n  mkdirSync(dataDir, { recursive: true });\n}\n\n// Initialize database\nexport const db: Database.Database = new Database(DB_PATH, {\n  verbose: process.env.NODE_ENV === 'development' ? console.log : undefined,\n});\n\n// Apply performance optimizations\ndb.pragma('journal_mode = WAL');\ndb.pragma('cache_size = -64000'); // 64MB cache\ndb.pragma('mmap_size = 268435456'); // 256MB memory-mapped I/O\ndb.pragma('foreign_keys = ON');\n\n// Initialize schema on first run\nconst initializeSchema = (): void => {\n  const schema = readFileSync(SCHEMA_PATH, 'utf-8');\n  db.exec(schema);\n  console.log('Database schema initialized');\n};\n\n// Check if database is initialized (check for users table)\nconst isInitialized = (): boolean => {\n  try {\n    const result = db\n      .prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name='users'\")\n      .get();\n    return !!result;\n  } catch {\n    return false;\n  }\n};\n\n// Initialize if needed\nif (!isInitialized()) {\n  initializeSchema();\n}\n\n// ============================================================================\n// Prepared Statements (Common Queries)\n// ============================================================================\n\n// User Operations\nexport const stmtGetUserByUsername: Statement = db.prepare(\n  'SELECT * FROM users WHERE username = ?'\n);\n\nexport const stmtGetUserById: Statement = db.prepare('SELECT * FROM users WHERE id = ?');\n\nexport const stmtCreateUser: Statement = db.prepare(`\n  INSERT INTO users (username, password_hash, age, weight_kg, experience_level, created_at, updated_at)\n  VALUES (?, ?, ?, ?, ?, ?, ?)\n`);\n\nexport const stmtDeleteUser: Statement = db.prepare('DELETE FROM users WHERE id = ?');\n\n// Workout Operations\nexport const stmtCreateWorkout: Statement = db.prepare(`\n  INSERT INTO workouts (user_id, program_day_id, date, status, synced)\n  VALUES (?, ?, ?, 'not_started', 1)\n`);\n\nexport const stmtGetWorkoutsByUser: Statement = db.prepare(`\n  SELECT w.*, pd.day_name, pd.day_type\n  FROM workouts w\n  LEFT JOIN program_days pd ON w.program_day_id = pd.id\n  WHERE w.user_id = ?\n  ORDER BY w.date DESC\n`);\n\nexport const stmtGetWorkoutsByUserDateRange: Statement = db.prepare(`\n  SELECT w.*, pd.day_name, pd.day_type\n  FROM workouts w\n  LEFT JOIN program_days pd ON w.program_day_id = pd.id\n  WHERE w.user_id = ? AND w.date >= ? AND w.date <= ?\n  ORDER BY w.date DESC\n`);\n\nexport const stmtUpdateWorkoutStatus: Statement = db.prepare(`\n  UPDATE workouts\n  SET status = ?, started_at = ?, completed_at = ?, total_volume_kg = ?, average_rir = ?\n  WHERE id = ?\n`);\n\nexport const stmtUpdateWorkoutProgramDay: Statement = db.prepare(`\n  UPDATE workouts\n  SET program_day_id = ?\n  WHERE id = ?\n`);\n\nexport const stmtGetWorkoutById: Statement = db.prepare(`\n  SELECT * FROM workouts WHERE id = ?\n`);\n\nexport const stmtValidateProgramDayOwnership: Statement = db.prepare(`\n  SELECT pd.id\n  FROM program_days pd\n  JOIN programs p ON pd.program_id = p.id\n  WHERE pd.id = ? AND p.user_id = ?\n`);\n\n// Set Operations\nexport const stmtLogSet: Statement = db.prepare(`\n  INSERT INTO sets (workout_id, exercise_id, set_number, weight_kg, reps, rir, timestamp, notes, synced)\n  VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetSetsByWorkout: Statement = db.prepare(`\n  SELECT s.*, e.name as exercise_name\n  FROM sets s\n  JOIN exercises e ON s.exercise_id = e.id\n  WHERE s.workout_id = ?\n  ORDER BY s.set_number\n`);\n\nexport const stmtGetSetByLocalId: Statement = db.prepare(`\n  SELECT * FROM sets WHERE id = ? AND workout_id = ?\n`);\n\nexport const stmtGetUnsyncedSets: Statement = db.prepare(`\n  SELECT * FROM sets WHERE synced = 0 LIMIT ?\n`);\n\nexport const stmtMarkSetSynced: Statement = db.prepare(`\n  UPDATE sets SET synced = 1 WHERE id = ?\n`);\n\n// Recovery Assessment Operations\nexport const stmtCreateRecoveryAssessment: Statement = db.prepare(`\n  INSERT INTO recovery_assessments (\n    user_id, date, sleep_quality, muscle_soreness, mental_motivation,\n    total_score, volume_adjustment, timestamp, synced\n  )\n  VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetRecoveryAssessmentByDate: Statement = db.prepare(`\n  SELECT * FROM recovery_assessments\n  WHERE user_id = ? AND date = ?\n`);\n\n// VO2max Session Operations\nexport const stmtCreateVO2maxSession: Statement = db.prepare(`\n  INSERT INTO vo2max_sessions (\n    workout_id, protocol, duration_seconds, intervals_completed,\n    average_hr, peak_hr, estimated_vo2max, synced\n  )\n  VALUES (?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetVO2maxSessionByWorkout: Statement = db.prepare(`\n  SELECT * FROM vo2max_sessions WHERE workout_id = ?\n`);\n\n// Analytics Queries\nexport const stmt1RMProgression: Statement = db.prepare(`\n  SELECT\n    w.date,\n    MAX(s.weight_kg * (1 + (s.reps - s.rir) / 30.0)) as estimated_1rm\n  FROM sets s\n  JOIN workouts w ON s.workout_id = w.id\n  WHERE w.user_id = ? AND s.exercise_id = ? AND w.date >= ? AND w.date <= ?\n  GROUP BY w.date\n  ORDER BY w.date\n`);\n\nexport const stmtVolumeTrends: Statement = db.prepare(`\n  SELECT\n    strftime('%Y-%W', w.date) as week,\n    COUNT(s.id) as total_sets\n  FROM sets s\n  JOIN workouts w ON s.workout_id = w.id\n  JOIN exercises e ON s.exercise_id = e.id\n  WHERE w.user_id = ?\n    AND w.date >= ? AND w.date <= ?\n    AND e.muscle_groups LIKE '%' || ? || '%'\n  GROUP BY week\n  ORDER BY week\n`);\n\nexport const stmtConsistencyMetrics: Statement = db.prepare(`\n  SELECT\n    COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_workouts,\n    COUNT(*) as total_workouts,\n    AVG(CASE WHEN completed_at IS NOT NULL THEN completed_at - started_at END) as avg_session_duration\n  FROM workouts\n  WHERE user_id = ?\n`);\n\n// Active Session Operations\nexport const stmtGetActiveSession: Statement = db.prepare(`\n  SELECT * FROM active_sessions WHERE user_id = ?\n`);\n\nexport const stmtCreateActiveSession: Statement = db.prepare(`\n  INSERT OR REPLACE INTO active_sessions (\n    user_id, workout_id, current_exercise_index, started_at, last_activity_at, state\n  )\n  VALUES (?, ?, ?, ?, ?, ?)\n`);\n\nexport const stmtUpdateActiveSession: Statement = db.prepare(`\n  UPDATE active_sessions\n  SET current_exercise_index = ?, last_activity_at = ?, state = ?\n  WHERE user_id = ?\n`);\n\nexport const stmtDeleteActiveSession: Statement = db.prepare(`\n  DELETE FROM active_sessions WHERE user_id = ?\n`);\n\n// Audit Log Operations\nexport const stmtCreateAuditLog: Statement = db.prepare(`\n  INSERT INTO audit_logs (user_id, event_type, ip_address, timestamp, details)\n  VALUES (?, ?, ?, ?, ?)\n`);\n\nexport const stmtGetAuditLogsByUser: Statement = db.prepare(`\n  SELECT * FROM audit_logs\n  WHERE user_id = ?\n  ORDER BY timestamp DESC\n  LIMIT ?\n`);\n\n// ============================================================================\n// Helper Functions\n// ============================================================================\n\n/**\n * Calculate estimated 1RM using Epley formula with RIR adjustment\n * Formula: 1RM = weight × (1 + (reps - rir) / 30)\n */\nexport const calculateOneRepMax = (weight: number, reps: number, rir: number): number => {\n  return weight * (1 + (reps - rir) / 30);\n};\n\n/**\n * Calculate recovery score auto-regulation adjustment\n * Ranges: 12-15 = none, 9-11 = reduce_1_set, 6-8 = reduce_2_sets, 3-5 = rest_day\n */\nexport const calculateVolumeAdjustment = (\n  totalScore: number\n): 'none' | 'reduce_1_set' | 'reduce_2_sets' | 'rest_day' => {\n  if (totalScore >= 12) return 'none';\n  if (totalScore >= 9) return 'reduce_1_set';\n  if (totalScore >= 6) return 'reduce_2_sets';\n  return 'rest_day';\n};\n\n/**\n * Execute query with performance timing\n */\nexport const executeWithTiming = <T>(name: string, fn: () => T): T => {\n  const start = Date.now();\n  const result = fn();\n  const duration = Date.now() - start;\n\n  if (duration > 5) {\n    console.warn(`[PERFORMANCE WARNING] Query \"${name}\" took ${duration}ms (target: <5ms)`);\n  }\n\n  return result;\n};\n\n// ============================================================================\n// Transaction Helpers\n// ============================================================================\n\n/**\n * Execute function within transaction\n */\nexport const transaction = <T>(fn: () => T): T => {\n  return db.transaction(fn)();\n};\n\n/**\n * Batch insert with transaction\n */\nexport const batchInsert = <T>(stmt: Database.Statement, records: T[]): void => {\n  const insert = db.transaction((items: T[]) => {\n    for (const item of items) {\n      stmt.run(item);\n    }\n  });\n\n  insert(records);\n};\n\n// ============================================================================\n// Cleanup\n// ============================================================================\n\n/**\n * Close database connection\n */\nexport const closeDatabase = (): void => {\n  db.close();\n  console.log('Database connection closed');\n};\n\n// Handle process termination\nprocess.on('exit', () => {\n  closeDatabase();\n});\n\nprocess.on('SIGINT', () => {\n  closeDatabase();\n  process.exit(0);\n});\n\nprocess.on('SIGTERM', () => {\n  closeDatabase();\n  process.exit(0);\n});\n\nexport default db;\n"
+        ],
+        "sourceRoot": ""
+      }
+    },
+    "file:///home/asigator/fitness2025/backend/src/services/programExerciseService.ts": {
+      "lineLengths": [
+        39,
+        26,
+        40,
+        45,
+        45,
+        49,
+        49,
+        49,
+        41,
+        42,
+        40,
+        45,
+        41,
+        41,
+        38,
+        45,
+        45,
+        45,
+        2,
+        51,
+        17,
+        10,
+        11,
+        30,
+        22,
+        17,
+        29,
+        45,
+        13,
+        4,
+        22,
+        47,
+        46,
+        44,
+        5,
+        44,
+        43,
+        41,
+        5,
+        40,
+        35,
+        31,
+        1,
+        45,
+        82,
+        63,
+        22,
+        80,
+        5,
+        76,
+        56,
+        20,
+        74,
+        5,
+        38,
+        35,
+        128,
+        61,
+        50,
+        5,
+        35,
+        93,
+        29,
+        5,
+        149,
+        59,
+        105,
+        12,
+        47,
+        38,
+        6,
+        1,
+        49,
+        81,
+        46,
+        27,
+        68,
+        5,
+        23,
+        22,
+        41,
+        33,
+        38,
+        5,
+        46,
+        33,
+        43,
+        5,
+        40,
+        32,
+        37,
+        5,
+        31,
+        56,
+        5,
+        20,
+        35,
+        28,
+        29,
+        16,
+        5,
+        30,
+        29,
+        41,
+        41,
+        33,
+        56,
+        21,
+        7,
+        46,
+        139,
+        5,
+        60,
+        1,
+        43,
+        29,
+        32,
+        29,
+        45,
+        19,
+        5,
+        41,
+        27,
+        68,
+        5,
+        130,
+        80,
+        23,
+        12,
+        22,
+        38,
+        6,
+        1,
+        64,
+        44,
+        57,
+        29,
+        45,
+        19,
+        5,
+        71,
+        27,
+        83,
+        5,
+        79,
+        59,
+        23,
+        71,
+        5,
+        70,
+        66,
+        87,
+        27,
+        116,
+        106,
+        5,
+        95,
+        53,
+        12,
+        22,
+        57,
+        44,
+        6,
+        1,
+        59,
+        42,
+        99,
+        38,
+        75,
+        9,
+        7,
+        14,
+        31,
+        1,
+        83,
+        36,
+        52,
+        5,
+        53,
+        22,
+        20,
+        5,
+        44,
+        42,
+        52,
+        5,
+        80,
+        38,
+        35,
+        29,
+        45,
+        74,
+        5,
+        61,
+        60,
+        28,
+        36,
+        60,
+        42,
+        65,
+        9,
+        5,
+        28,
+        30,
+        28,
+        5,
+        38,
+        29,
+        5,
+        63,
+        41,
+        40,
+        67,
+        9,
+        82,
+        5,
+        36,
+        76,
+        5,
+        78,
+        1,
+        78,
+        24,
+        36,
+        52,
+        47,
+        25,
+        21,
+        9,
+        60,
+        48,
+        118,
+        13,
+        9,
+        42,
+        48,
+        124,
+        13,
+        9,
+        5,
+        60,
+        1,
+        33228
+      ],
+      "data": {
+        "version": 3,
+        "file": "/home/asigator/fitness2025/backend/src/services/programExerciseService.ts",
+        "sources": [
+          "file:///home/asigator/fitness2025/backend/src/services/programExerciseService.ts"
+        ],
+        "names": [],
+        "mappings": "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",
+        "sourcesContent": [
+          "/**\n * Program Exercise Service (T034-T038)\n *\n * Handles CRUD operations for program exercises with volume validation.\n * Provides exercise swapping, reordering, and MEV/MAV/MRV volume warnings.\n */\n\nimport { db } from '../database/db.js';\n\n/**\n * Volume landmarks for muscle groups (from analyticsService)\n */\nconst VOLUME_LANDMARKS: Record<string, { mev: number; mav: number; mrv: number }> = {\n  chest: { mev: 8, mav: 14, mrv: 22 },\n  back_lats: { mev: 10, mav: 16, mrv: 26 },\n  back_traps: { mev: 6, mav: 12, mrv: 20 },\n  shoulders_front: { mev: 4, mav: 8, mrv: 14 },\n  shoulders_side: { mev: 8, mav: 16, mrv: 26 },\n  shoulders_rear: { mev: 8, mav: 14, mrv: 22 },\n  biceps: { mev: 6, mav: 12, mrv: 20 },\n  triceps: { mev: 6, mav: 12, mrv: 22 },\n  quads: { mev: 8, mav: 14, mrv: 24 },\n  hamstrings: { mev: 6, mav: 12, mrv: 20 },\n  glutes: { mev: 6, mav: 12, mrv: 20 },\n  calves: { mev: 8, mav: 14, mrv: 22 },\n  abs: { mev: 8, mav: 16, mrv: 28 },\n  front_delts: { mev: 4, mav: 8, mrv: 14 }, // Alias for shoulders_front\n  side_delts: { mev: 8, mav: 16, mrv: 26 }, // Alias for shoulders_side\n  rear_delts: { mev: 8, mav: 14, mrv: 22 }, // Alias for shoulders_rear\n};\n\n/**\n * Program Exercise Data\n */\nexport interface ProgramExercise {\n  id: number;\n  program_day_id: number;\n  exercise_id: number;\n  order_index: number;\n  sets: number;\n  reps: string;\n  rir: number;\n}\n\n/**\n * Program exercise with exercise details\n */\nexport interface ProgramExerciseWithDetails extends ProgramExercise {\n  exercise_name: string;\n  muscle_groups: string;\n  equipment: string;\n}\n\n/**\n * Filters for getting program exercises\n */\nexport interface ProgramExerciseFilters {\n  program_day_id?: number;\n  exercise_id?: number;\n}\n\n/**\n * Data for creating a program exercise\n */\nexport interface CreateProgramExerciseData {\n  program_day_id: number;\n  exercise_id: number;\n  target_sets: number;\n  target_rep_range: string;\n  target_rir: number;\n  order_index?: number;\n}\n\n/**\n * Data for updating a program exercise\n */\nexport interface UpdateProgramExerciseData {\n  target_sets?: number;\n  target_rep_range?: string;\n  target_rir?: number;\n}\n\n/**\n * Exercise reorder item\n */\nexport interface ExerciseReorderItem {\n  program_exercise_id: number;\n  new_order_index: number;\n}\n\n/**\n * Get program exercises with optional filters\n *\n * @param filters - Optional filters (program_day_id or exercise_id)\n * @returns Array of program exercises with exercise details\n */\nexport function getProgramExercises(\n  filters: ProgramExerciseFilters = {}\n): ProgramExerciseWithDetails[] {\n  let query = `\n    SELECT\n      pe.*,\n      e.name as exercise_name,\n      e.muscle_groups,\n      e.equipment\n    FROM program_exercises pe\n    JOIN exercises e ON pe.exercise_id = e.id\n    WHERE 1=1\n  `;\n\n  const params: number[] = [];\n\n  if (filters.program_day_id !== undefined) {\n    query += ' AND pe.program_day_id = ?';\n    params.push(filters.program_day_id);\n  }\n\n  if (filters.exercise_id !== undefined) {\n    query += ' AND pe.exercise_id = ?';\n    params.push(filters.exercise_id);\n  }\n\n  query += ' ORDER BY pe.order_index';\n\n  const stmt = db.prepare(query);\n  return stmt.all(...params) as ProgramExerciseWithDetails[];\n}\n\n/**\n * Create a new program exercise with volume warning\n *\n * @param data - Program exercise data\n * @returns Object with program_exercise_id and optional volume_warning\n * @throws Error if program_day_id or exercise_id doesn't exist\n */\nexport function createProgramExercise(data: CreateProgramExerciseData): {\n  program_exercise_id: number;\n  volume_warning: string | null;\n} {\n  // Validate program_day_id exists\n  const programDayStmt = db.prepare('SELECT id FROM program_days WHERE id = ?');\n  const programDay = programDayStmt.get(data.program_day_id);\n  if (!programDay) {\n    throw new Error(`Program day with ID ${data.program_day_id} not found`);\n  }\n\n  // Validate exercise_id exists\n  const exerciseStmt = db.prepare('SELECT * FROM exercises WHERE id = ?');\n  const exercise = exerciseStmt.get(data.exercise_id) as any;\n  if (!exercise) {\n    throw new Error(`Exercise with ID ${data.exercise_id} not found`);\n  }\n\n  // Determine order_index if not provided\n  let orderIndex = data.order_index;\n  if (orderIndex === undefined) {\n    const maxOrderStmt = db.prepare(\n      'SELECT MAX(order_index) as max_order FROM program_exercises WHERE program_day_id = ?'\n    );\n    const result = maxOrderStmt.get(data.program_day_id) as any;\n    orderIndex = (result?.max_order ?? 0) + 1;\n  }\n\n  // Insert program exercise\n  const insertStmt = db.prepare(`\n    INSERT INTO program_exercises (program_day_id, exercise_id, order_index, sets, reps, rir)\n    VALUES (?, ?, ?, ?, ?, ?)\n  `);\n\n  const insertResult = insertStmt.run(\n    data.program_day_id,\n    data.exercise_id,\n    orderIndex,\n    data.target_sets,\n    data.target_rep_range,\n    data.target_rir\n  );\n\n  const programExerciseId = insertResult.lastInsertRowid as number;\n\n  // Calculate volume warning\n  const volumeWarning = calculateVolumeWarning(\n    data.program_day_id,\n    'add',\n    data.target_sets,\n    exercise\n  );\n\n  return {\n    program_exercise_id: programExerciseId,\n    volume_warning: volumeWarning,\n  };\n}\n\n/**\n * Update a program exercise\n *\n * @param id - Program exercise ID\n * @param data - Update data (target_sets, target_rep_range, target_rir)\n * @returns Object with updated=true and optional volume_warning\n * @throws Error if program exercise doesn't exist\n */\nexport function updateProgramExercise(\n  id: number,\n  data: UpdateProgramExerciseData\n): { updated: boolean; volume_warning: string | null } {\n  // Check if program exercise exists\n  const checkStmt = db.prepare('SELECT * FROM program_exercises WHERE id = ?');\n  const programExercise = checkStmt.get(id) as ProgramExercise | undefined;\n  if (!programExercise) {\n    throw new Error(`Program exercise with ID ${id} not found`);\n  }\n\n  // Build dynamic update query\n  const updates: string[] = [];\n  const params: (string | number)[] = [];\n\n  if (data.target_sets !== undefined) {\n    updates.push('sets = ?');\n    params.push(data.target_sets);\n  }\n\n  if (data.target_rep_range !== undefined) {\n    updates.push('reps = ?');\n    params.push(data.target_rep_range);\n  }\n\n  if (data.target_rir !== undefined) {\n    updates.push('rir = ?');\n    params.push(data.target_rir);\n  }\n\n  if (updates.length === 0) {\n    // No updates to perform\n    return { updated: false, volume_warning: null };\n  }\n\n  params.push(id);\n\n  const updateStmt = db.prepare(`\n    UPDATE program_exercises\n    SET ${updates.join(', ')}\n    WHERE id = ?\n  `);\n\n  updateStmt.run(...params);\n\n  // Calculate volume warning if sets changed\n  let volumeWarning: string | null = null;\n  if (data.target_sets !== undefined) {\n    const exerciseStmt = db.prepare(`\n      SELECT e.* FROM exercises e\n      JOIN program_exercises pe ON e.id = pe.exercise_id\n      WHERE pe.id = ?\n    `);\n    const exercise = exerciseStmt.get(id) as any;\n\n    volumeWarning = calculateVolumeWarning(\n      programExercise.program_day_id,\n      'update',\n      data.target_sets,\n      exercise,\n      programExercise.sets\n    );\n  }\n\n  return { updated: true, volume_warning: volumeWarning };\n}\n\n/**\n * Delete a program exercise\n *\n * @param id - Program exercise ID\n * @returns Object with deleted=true and optional volume_warning\n * @throws Error if program exercise doesn't exist\n */\nexport function deleteProgramExercise(id: number): {\n  deleted: boolean;\n  volume_warning: string | null;\n} {\n  // Get program exercise details before deletion\n  const stmt = db.prepare(`\n    SELECT pe.*, e.muscle_groups\n    FROM program_exercises pe\n    JOIN exercises e ON pe.exercise_id = e.id\n    WHERE pe.id = ?\n  `);\n  const programExercise = stmt.get(id) as any;\n\n  if (!programExercise) {\n    throw new Error(`Program exercise with ID ${id} not found`);\n  }\n\n  // Calculate volume warning before deletion\n  const volumeWarning = calculateVolumeWarning(\n    programExercise.program_day_id,\n    'delete',\n    programExercise.sets,\n    programExercise\n  );\n\n  // Delete the program exercise\n  const deleteStmt = db.prepare('DELETE FROM program_exercises WHERE id = ?');\n  deleteStmt.run(id);\n\n  return {\n    deleted: true,\n    volume_warning: volumeWarning,\n  };\n}\n\n/**\n * Swap an exercise with a compatible alternative\n *\n * @param programExerciseId - Program exercise ID to swap\n * @param newExerciseId - New exercise ID\n * @returns Object with swapped=true, old_exercise_name, new_exercise_name\n * @throws Error if exercises are incompatible or don't exist\n */\nexport function swapExercise(\n  programExerciseId: number,\n  newExerciseId: number\n): {\n  swapped: boolean;\n  old_exercise_name: string;\n  new_exercise_name: string;\n} {\n  // Get current program exercise\n  const programExerciseStmt = db.prepare(`\n    SELECT pe.*, e.name as exercise_name, e.muscle_groups\n    FROM program_exercises pe\n    JOIN exercises e ON pe.exercise_id = e.id\n    WHERE pe.id = ?\n  `);\n  const programExercise = programExerciseStmt.get(programExerciseId) as any;\n\n  if (!programExercise) {\n    throw new Error(`Program exercise with ID ${programExerciseId} not found`);\n  }\n\n  // Get new exercise\n  const newExerciseStmt = db.prepare('SELECT * FROM exercises WHERE id = ?');\n  const newExercise = newExerciseStmt.get(newExerciseId) as any;\n\n  if (!newExercise) {\n    throw new Error(`Exercise with ID ${newExerciseId} not found`);\n  }\n\n  // Check compatibility (at least one shared muscle group)\n  const oldMuscleGroups = JSON.parse(programExercise.muscle_groups) as string[];\n  const newMuscleGroups = JSON.parse(newExercise.muscle_groups) as string[];\n\n  const hasSharedMuscle = oldMuscleGroups.some((mg) => newMuscleGroups.includes(mg));\n\n  if (!hasSharedMuscle) {\n    throw new Error(\n      `Exercise \"${newExercise.name}\" is incompatible with \"${programExercise.exercise_name}\". ` +\n        `Old targets: [${oldMuscleGroups.join(', ')}], New targets: [${newMuscleGroups.join(', ')}]`\n    );\n  }\n\n  // Perform swap (preserve order_index, sets, reps, rir)\n  const updateStmt = db.prepare('UPDATE program_exercises SET exercise_id = ? WHERE id = ?');\n  updateStmt.run(newExerciseId, programExerciseId);\n\n  return {\n    swapped: true,\n    old_exercise_name: programExercise.exercise_name,\n    new_exercise_name: newExercise.name,\n  };\n}\n\n/**\n * Reorder exercises within a program day\n *\n * @param programDayId - Program day ID\n * @param newOrder - Array of {program_exercise_id, new_order_index}\n * @returns Object with reordered=true\n */\nexport function reorderExercises(\n  _programDayId: number,\n  newOrder: ExerciseReorderItem[]\n): { reordered: boolean } {\n  // Execute as transaction for atomicity\n  const reorder = db.transaction(() => {\n    const updateStmt = db.prepare('UPDATE program_exercises SET order_index = ? WHERE id = ?');\n\n    for (const item of newOrder) {\n      updateStmt.run(item.new_order_index, item.program_exercise_id);\n    }\n  });\n\n  reorder();\n\n  return { reordered: true };\n}\n\n/**\n * Calculate volume warning when adding/updating/deleting exercises\n *\n * @param programDayId - Program day ID\n * @param operation - 'add', 'update', or 'delete'\n * @param sets - Number of sets being added/removed\n * @param exercise - Exercise data with muscle_groups\n * @param oldSets - Previous sets count (for update operation)\n * @returns Volume warning message or null\n */\nfunction calculateVolumeWarning(\n  programDayId: number,\n  operation: 'add' | 'update' | 'delete',\n  sets: number,\n  exercise: { muscle_groups: string },\n  oldSets?: number\n): string | null {\n  // Get program_id from program_day_id\n  const programStmt = db.prepare(`\n    SELECT program_id FROM program_days WHERE id = ?\n  `);\n  const programDay = programStmt.get(programDayId) as any;\n  if (!programDay) {\n    return null;\n  }\n\n  const programId = programDay.program_id;\n\n  // Get all program days for this program\n  const programDayIdsStmt = db.prepare(`\n    SELECT id FROM program_days WHERE program_id = ?\n  `);\n  const programDayIds = (programDayIdsStmt.all(programId) as any[]).map((row) => row.id);\n\n  // Get all exercises across all program days\n  const exercisesStmt = db.prepare(`\n    SELECT pe.sets, e.muscle_groups\n    FROM program_exercises pe\n    JOIN exercises e ON pe.exercise_id = e.id\n    WHERE pe.program_day_id IN (${programDayIds.map(() => '?').join(',')})\n  `);\n  const allExercises = exercisesStmt.all(...programDayIds) as any[];\n\n  // Parse muscle groups from exercise being added/updated/deleted\n  const muscleGroups = JSON.parse(exercise.muscle_groups) as string[];\n\n  // Calculate current weekly volume per muscle group\n  const muscleVolume: Record<string, number> = {};\n\n  for (const ex of allExercises) {\n    const exMuscleGroups = JSON.parse(ex.muscle_groups) as string[];\n    for (const mg of exMuscleGroups) {\n      muscleVolume[mg] = (muscleVolume[mg] || 0) + ex.sets;\n    }\n  }\n\n  // Apply operation delta\n  let deltaMultiplier = 1;\n  if (operation === 'add') {\n    deltaMultiplier = 1; // Add sets\n  } else if (operation === 'delete') {\n    deltaMultiplier = -1; // Subtract sets\n  } else if (operation === 'update' && oldSets !== undefined) {\n    // Calculate net change\n    const netChange = sets - oldSets;\n    for (const mg of muscleGroups) {\n      muscleVolume[mg] = (muscleVolume[mg] || 0) + netChange;\n    }\n    return checkVolumeThresholds(muscleVolume, muscleGroups, sets, operation);\n  }\n\n  // Apply delta for add/delete\n  for (const mg of muscleGroups) {\n    muscleVolume[mg] = (muscleVolume[mg] || 0) + sets * deltaMultiplier;\n  }\n\n  return checkVolumeThresholds(muscleVolume, muscleGroups, sets, operation);\n}\n\n/**\n * Check volume against MEV/MAV/MRV thresholds\n *\n * @param muscleVolume - Current weekly volume per muscle group\n * @param muscleGroups - Muscle groups affected by operation\n * @param sets - Sets being added/removed\n * @param operation - 'add', 'update', or 'delete'\n * @returns Warning message or null\n */\nfunction checkVolumeThresholds(\n  muscleVolume: Record<string, number>,\n  muscleGroups: string[],\n  _sets: number,\n  operation: 'add' | 'update' | 'delete'\n): string | null {\n  const warnings: string[] = [];\n\n  for (const mg of muscleGroups) {\n    const currentVolume = muscleVolume[mg] || 0;\n    const landmarks = VOLUME_LANDMARKS[mg];\n\n    if (!landmarks) {\n      continue; // Skip if no landmarks defined for this muscle group\n    }\n\n    if (operation === 'add' || operation === 'update') {\n      // Check if exceeding MRV\n      if (currentVolume > landmarks.mrv) {\n        warnings.push(\n          `Adding this exercise will exceed MRV for ${mg} (${currentVolume} > ${landmarks.mrv})`\n        );\n      }\n    } else if (operation === 'delete') {\n      // Check if dropping below MEV\n      if (currentVolume < landmarks.mev) {\n        warnings.push(\n          `Removing this exercise will drop below MEV for ${mg} (${currentVolume} < ${landmarks.mev})`\n        );\n      }\n    }\n  }\n\n  return warnings.length > 0 ? warnings.join('; ') : null;\n}\n"
+        ],
+        "sourceRoot": ""
+      }
+    }
+  }
+}

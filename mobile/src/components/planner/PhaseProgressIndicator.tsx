@@ -201,7 +201,6 @@ export default function PhaseProgressIndicator({
               borderWidth: isActive ? 3 : 1,
             },
           ]}
-          accessible={true}
           accessibilityRole="text"
           accessibilityLabel={`${config.label} phase, weeks ${config.weeks.join(' and ')}`}
         />
@@ -324,8 +323,6 @@ export default function PhaseProgressIndicator({
         <Dialog
           visible={confirmDialogVisible}
           onDismiss={handleCancelAdvance}
-          accessible={true}
-          accessibilityLabel="Advance phase confirmation"
         >
           <Dialog.Title>Advance to {nextConfig.label} Phase?</Dialog.Title>
           <Dialog.Content>

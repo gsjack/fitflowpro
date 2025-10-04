@@ -1,82 +1,82 @@
 TAP version 14
 # Subtest: Scenario 2: VO2max Session
-{"level":30,"time":1759552508652,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552508867,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":214.0785170001909,"msg":"request completed"}
-{"level":30,"time":1759552508868,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509070,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":201.42995799984783,"msg":"request completed"}
+{"level":30,"time":1759599561279,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561531,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":250.9135280009359,"msg":"request completed"}
+{"level":30,"time":1759599561533,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561755,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":221.99694899842143,"msg":"request completed"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
-[VO2max] Session created: id=332, workout=601, protocol=4x4, duration=28min, VO2max=48.5
+[VO2max] Session created: id=432, workout=810, protocol=4x4, duration=28min, VO2max=48.5
     # Subtest: AC-1: Create Norwegian 4x4 session
         ok 1 - Session created successfully
         ok 2 - Response contains session_id
         ok 3 - Response contains estimated_vo2max
         ok 4 - Response contains completion_status
         1..4
-    ok 1 - AC-1: Create Norwegian 4x4 session # time=10.172ms
+    ok 1 - AC-1: Create Norwegian 4x4 session # time=12.929ms
     
-{"level":30,"time":1759552509071,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509077,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":201},"responseTime":6.187074999790639,"msg":"request completed"}
-{"level":30,"time":1759552509082,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561756,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561764,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":201},"responseTime":7.880885999649763,"msg":"request completed"}
+{"level":30,"time":1759599561771,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
-[VO2max] Session created: id=333, workout=602, protocol=4x4, duration=28min, VO2max=48.5
+[VO2max] Session created: id=433, workout=811, protocol=4x4, duration=28min, VO2max=48.5
     # Subtest: AC-2: Auto-calculate VO2max with Cooper formula
         ok 1 - Session created successfully
         ok 2 - VO2max was calculated automatically
         ok 3 - VO2max is a number
         1..3
-    ok 2 - AC-2: Auto-calculate VO2max with Cooper formula # time=2.871ms
+    ok 2 - AC-2: Auto-calculate VO2max with Cooper formula # time=3.192ms
     
-{"level":30,"time":1759552509084,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":201},"responseTime":1.6998800002038479,"msg":"request completed"}
-{"level":30,"time":1759552509086,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-[VO2max] Session created: id=334, workout=603, protocol=4x4, duration=15min, VO2max=N/A
+{"level":30,"time":1759599561773,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":201},"responseTime":1.9670780003070831,"msg":"request completed"}
+{"level":30,"time":1759599561775,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=434, workout=812, protocol=4x4, duration=15min, VO2max=N/A
     # Subtest: AC-3: Store intervals completed (0-4)
         ok 1 - Partial session created
         ok 2 - Intervals completed stored correctly
         1..2
-    ok 3 - AC-3: Store intervals completed (0-4) # time=4.109ms
+    ok 3 - AC-3: Store intervals completed (0-4) # time=3.943ms
     
-{"level":30,"time":1759552509088,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":201},"responseTime":2.001246999949217,"msg":"request completed"}
-{"level":30,"time":1759552509088,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/vo2max-sessions/334","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509089,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":0.6739029996097088,"msg":"request completed"}
-{"level":30,"time":1759552509091,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561776,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":201},"responseTime":1.7261260002851486,"msg":"request completed"}
+{"level":30,"time":1759599561777,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/vo2max-sessions/434","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561778,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":0.7544950004667044,"msg":"request completed"}
+{"level":30,"time":1759599561780,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=170)
-[VO2max] Session created: id=335, workout=604, protocol=4x4, duration=28min, VO2max=48.5
+[VO2max] Session created: id=435, workout=813, protocol=4x4, duration=28min, VO2max=48.5
     # Subtest: AC-4: Store average and peak heart rate
         ok 1 - Session created successfully
         ok 2 - Average HR stored correctly
         ok 3 - Peak HR stored correctly
         1..3
-    ok 4 - AC-4: Store average and peak heart rate # time=3.799ms
+    ok 4 - AC-4: Store average and peak heart rate # time=4.423ms
     
-{"level":30,"time":1759552509093,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":201},"responseTime":1.8395630000159144,"msg":"request completed"}
-{"level":30,"time":1759552509093,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/vo2max-sessions/335","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509094,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":0.46835900004953146,"msg":"request completed"}
-{"level":30,"time":1759552509095,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-[VO2max] Session created: id=336, workout=605, protocol=4x4, duration=28min, VO2max=N/A
+{"level":30,"time":1759599561782,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":201},"responseTime":1.9943859986960888,"msg":"request completed"}
+{"level":30,"time":1759599561783,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/vo2max-sessions/435","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561783,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":0.5354729983955622,"msg":"request completed"}
+{"level":30,"time":1759599561785,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=436, workout=814, protocol=4x4, duration=28min, VO2max=N/A
     # Subtest: AC-5: Store RPE (1-10 scale)
         ok 1 - Session created successfully
         ok 2 - RPE stored correctly
         1..2
-    ok 5 - AC-5: Store RPE (1-10 scale) # time=3.216ms
+    ok 5 - AC-5: Store RPE (1-10 scale) # time=5.045ms
     
-{"level":30,"time":1759552509097,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":201},"responseTime":1.5319799999706447,"msg":"request completed"}
-{"level":30,"time":1759552509097,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/vo2max-sessions/336","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509098,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":200},"responseTime":0.35786900017410517,"msg":"request completed"}
-{"level":30,"time":1759552509099,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-[VO2max] Session created: id=337, workout=606, protocol=4x4, duration=28min, VO2max=N/A
+{"level":30,"time":1759599561787,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":201},"responseTime":1.9143479987978935,"msg":"request completed"}
+{"level":30,"time":1759599561788,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/vo2max-sessions/436","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561789,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":200},"responseTime":0.7598730009049177,"msg":"request completed"}
+{"level":30,"time":1759599561791,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=437, workout=815, protocol=4x4, duration=28min, VO2max=N/A
     # Subtest: AC-6: Completion status based on intervals
         ok 1 - Status is completed for 4 intervals
-{"level":30,"time":1759552509100,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":201},"responseTime":1.233057000208646,"msg":"request completed"}
-{"level":30,"time":1759552509101,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-[VO2max] Session created: id=338, workout=607, protocol=4x4, duration=15min, VO2max=N/A
+{"level":30,"time":1759599561793,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":201},"responseTime":1.9106469992548227,"msg":"request completed"}
+{"level":30,"time":1759599561794,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=438, workout=816, protocol=4x4, duration=15min, VO2max=N/A
         ok 2 - Status is incomplete for < 4 intervals
         1..2
-    ok 6 - AC-6: Completion status based on intervals # time=4.076ms
+    ok 6 - AC-6: Completion status based on intervals # time=5.334ms
     
-{"level":30,"time":1759552509102,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":201},"responseTime":1.5868049999698997,"msg":"request completed"}
-{"level":30,"time":1759552509104,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561796,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":201},"responseTime":1.7397450003772974,"msg":"request completed"}
+{"level":30,"time":1759599561798,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=168)
-[VO2max] Session created: id=339, workout=608, protocol=4x4, duration=28min, VO2max=48.5
+[VO2max] Session created: id=439, workout=817, protocol=4x4, duration=28min, VO2max=48.5
     # Subtest: AC-7: Session data persists and can be retrieved
         ok 1 - Session retrieved successfully
         ok 2 - Session ID matches
@@ -88,22 +88,22 @@ TAP version 14
         ok 8 - RPE persisted
         ok 9 - Notes persisted
         1..9
-    ok 7 - AC-7: Session data persists and can be retrieved # time=3.526ms
+    ok 7 - AC-7: Session data persists and can be retrieved # time=5.542ms
     
-{"level":30,"time":1759552509105,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":201},"responseTime":1.283902000170201,"msg":"request completed"}
-{"level":30,"time":1759552509105,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/vo2max-sessions/339","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509106,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":0.3288159999065101,"msg":"request completed"}
-{"level":30,"time":1759552509108,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561800,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":201},"responseTime":2.1607479993253946,"msg":"request completed"}
+{"level":30,"time":1759599561800,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/vo2max-sessions/439","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561801,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":0.5289769992232323,"msg":"request completed"}
+{"level":30,"time":1759599561804,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
-[VO2max] Session created: id=340, workout=609, protocol=4x4, duration=28min, VO2max=48.5
-{"level":30,"time":1759552509110,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":201},"responseTime":1.69527000002563,"msg":"request completed"}
-{"level":30,"time":1759552509110,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=440, workout=818, protocol=4x4, duration=28min, VO2max=48.5
+{"level":30,"time":1759599561820,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":201},"responseTime":15.930158998817205,"msg":"request completed"}
+{"level":30,"time":1759599561821,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=167)
-[VO2max] Session created: id=341, workout=610, protocol=4x4, duration=28min, VO2max=48.5
-{"level":30,"time":1759552509112,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":201},"responseTime":1.2886510002426803,"msg":"request completed"}
-{"level":30,"time":1759552509112,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=441, workout=819, protocol=4x4, duration=28min, VO2max=48.5
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=170)
-[VO2max] Session created: id=342, workout=611, protocol=4x4, duration=28min, VO2max=48.5
+{"level":30,"time":1759599561824,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":201},"responseTime":3.2252680007368326,"msg":"request completed"}
+{"level":30,"time":1759599561824,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=442, workout=820, protocol=4x4, duration=28min, VO2max=48.5
     # Subtest: AC-8: VO2max progression tracking
         ok 1 - Progression retrieved successfully
         ok 2 - Progression has sessions array
@@ -136,24 +136,24 @@ TAP version 14
         ok 29 - Session has VO2max estimate
         ok 30 - Session has protocol type
         1..30
-    ok 8 - AC-8: VO2max progression tracking # time=10.26ms
+    ok 8 - AC-8: VO2max progression tracking # time=29ms
     
-{"level":30,"time":1759552509113,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":201},"responseTime":1.1487579997628927,"msg":"request completed"}
-{"level":30,"time":1759552509113,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"GET","url":"/api/vo2max-sessions/progression","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509115,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":200},"responseTime":1.2335459999740124,"msg":"request completed"}
-{"level":30,"time":1759552509119,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561826,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":201},"responseTime":1.5599050000309944,"msg":"request completed"}
+{"level":30,"time":1759599561826,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"GET","url":"/api/vo2max-sessions/progression","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561828,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":200},"responseTime":1.6482530012726784,"msg":"request completed"}
+{"level":30,"time":1759599561834,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=170)
-[VO2max] Session created: id=343, workout=612, protocol=4x4, duration=28min, VO2max=48.5
+[VO2max] Session created: id=443, workout=821, protocol=4x4, duration=28min, VO2max=48.5
     # Subtest: AC-9: VO2max within valid range (20-80 ml/kg/min)
         ok 1 - Session created successfully
         ok 2 - VO2max 48.45 is within valid range (20-80)
         ok 3 - VO2max 48.45 is reasonable for intermediate athlete
         1..3
-    ok 9 - AC-9: VO2max within valid range (20-80 ml/kg/min) # time=3.345ms
+    ok 9 - AC-9: VO2max within valid range (20-80 ml/kg/min) # time=5.167ms
     
     1..9
-ok 1 - Scenario 2: VO2max Session # time=674.045ms
+ok 1 - Scenario 2: VO2max Session # time=910.31ms
 
-{"level":30,"time":1759552509121,"pid":45677,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":201},"responseTime":1.8752520000562072,"msg":"request completed"}
+{"level":30,"time":1759599561837,"pid":210177,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":201},"responseTime":2.338214000687003,"msg":"request completed"}
 1..1
 Database connection closed

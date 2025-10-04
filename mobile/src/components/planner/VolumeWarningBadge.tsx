@@ -129,7 +129,6 @@ export default function VolumeWarningBadge({
         <TouchableOpacity
           onPress={handlePress}
           style={[styles.compactBadge, { backgroundColor: config.backgroundColor }]}
-          accessible={true}
           accessibilityRole="button"
           accessibilityLabel={`${config.label} volume zone`}
           accessibilityHint={warning ? 'Press to view details' : undefined}
@@ -174,7 +173,6 @@ export default function VolumeWarningBadge({
         style={[styles.expandedBadge, { backgroundColor: config.backgroundColor }]}
         textStyle={[styles.expandedText, { color: config.color }]}
         selectedColor={config.color}
-        accessible={true}
         accessibilityRole="button"
         accessibilityLabel={`${config.label} volume zone${muscleGroup ? ` for ${muscleGroup}` : ''}`}
         accessibilityHint={warning ? 'Press to view details' : undefined}
@@ -188,8 +186,6 @@ export default function VolumeWarningBadge({
           <Dialog
             visible={dialogVisible}
             onDismiss={handleCloseDialog}
-            accessible={true}
-            accessibilityLabel="Volume warning details"
           >
             <Dialog.Title>Volume Warning</Dialog.Title>
             <Dialog.Content>

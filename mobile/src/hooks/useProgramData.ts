@@ -113,7 +113,7 @@ export function useProgramData(): UseProgramDataReturn {
 
       return { previousProgram };
     },
-    onError: (err, variables, context) => {
+    onError: (_, __, context) => {
       // Rollback on error
       if (context?.previousProgram) {
         queryClient.setQueryData(['program'], context.previousProgram);
@@ -144,7 +144,7 @@ export function useProgramData(): UseProgramDataReturn {
 
       return { previousProgram };
     },
-    onError: (err, variables, context) => {
+    onError: (_, __, context) => {
       if (context?.previousProgram) {
         queryClient.setQueryData(['program'], context.previousProgram);
       }
@@ -196,7 +196,7 @@ export function useProgramData(): UseProgramDataReturn {
 
       return { previousProgram };
     },
-    onError: (err, variables, context) => {
+    onError: (_, __, context) => {
       if (context?.previousProgram) {
         queryClient.setQueryData(['program'], context.previousProgram);
       }
@@ -235,7 +235,7 @@ export function useProgramData(): UseProgramDataReturn {
 
       return { previousProgram };
     },
-    onError: (err, variables, context) => {
+    onError: (_, __, context) => {
       if (context?.previousProgram) {
         queryClient.setQueryData(['program'], context.previousProgram);
       }
@@ -259,7 +259,7 @@ export function useProgramData(): UseProgramDataReturn {
 
       return { previousProgram };
     },
-    onError: (err, variables, context) => {
+    onError: (_, __, context) => {
       if (context?.previousProgram) {
         queryClient.setQueryData(['program'], context.previousProgram);
       }

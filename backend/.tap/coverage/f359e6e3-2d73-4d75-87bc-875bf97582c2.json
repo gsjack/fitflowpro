@@ -1,0 +1,1425 @@
+{
+  "result": [
+    {
+      "scriptId": "324",
+      "url": "file:///home/asigator/fitness2025/backend/src/services/volumeService.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 43013,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getISOWeekBoundaries",
+          "ranges": [
+            {
+              "startOffset": 1021,
+              "endOffset": 1625,
+              "count": 13
+            },
+            {
+              "startOffset": 1172,
+              "endOffset": 1176,
+              "count": 0
+            },
+            {
+              "startOffset": 1470,
+              "endOffset": 1545,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "classifyZone",
+          "ranges": [
+            {
+              "startOffset": 1626,
+              "endOffset": 1929,
+              "count": 95
+            },
+            {
+              "startOffset": 1709,
+              "endOffset": 1744,
+              "count": 81
+            },
+            {
+              "startOffset": 1744,
+              "endOffset": 1927,
+              "count": 14
+            },
+            {
+              "startOffset": 1779,
+              "endOffset": 1927,
+              "count": 7
+            },
+            {
+              "startOffset": 1882,
+              "endOffset": 1927,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "classifyZoneWithOnTrack",
+          "ranges": [
+            {
+              "startOffset": 1930,
+              "endOffset": 2309,
+              "count": 84
+            },
+            {
+              "startOffset": 2035,
+              "endOffset": 2056,
+              "count": 42
+            },
+            {
+              "startOffset": 2057,
+              "endOffset": 2094,
+              "count": 42
+            },
+            {
+              "startOffset": 2096,
+              "endOffset": 2130,
+              "count": 3
+            },
+            {
+              "startOffset": 2130,
+              "endOffset": 2158,
+              "count": 81
+            },
+            {
+              "startOffset": 2158,
+              "endOffset": 2178,
+              "count": 69
+            },
+            {
+              "startOffset": 2179,
+              "endOffset": 2216,
+              "count": 30
+            },
+            {
+              "startOffset": 2218,
+              "endOffset": 2252,
+              "count": 0
+            },
+            {
+              "startOffset": 2252,
+              "endOffset": 2308,
+              "count": 81
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "generateWarning",
+          "ranges": [
+            {
+              "startOffset": 2310,
+              "endOffset": 2666,
+              "count": 98
+            },
+            {
+              "startOffset": 2386,
+              "endOffset": 2500,
+              "count": 81
+            },
+            {
+              "startOffset": 2500,
+              "endOffset": 2647,
+              "count": 17
+            },
+            {
+              "startOffset": 2536,
+              "endOffset": 2647,
+              "count": 0
+            },
+            {
+              "startOffset": 2647,
+              "endOffset": 2665,
+              "count": 17
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getCurrentWeekVolume",
+          "ranges": [
+            {
+              "startOffset": 2674,
+              "endOffset": 5970,
+              "count": 6
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 4028,
+              "endOffset": 4539,
+              "count": 15
+            },
+            {
+              "startOffset": 4100,
+              "endOffset": 4129,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 4569,
+              "endOffset": 5302,
+              "count": 84
+            },
+            {
+              "startOffset": 4641,
+              "endOffset": 4670,
+              "count": 0
+            },
+            {
+              "startOffset": 4757,
+              "endOffset": 4822,
+              "count": 15
+            },
+            {
+              "startOffset": 4822,
+              "endOffset": 5296,
+              "count": 69
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 5361,
+              "endOffset": 5792,
+              "count": 84
+            },
+            {
+              "startOffset": 5584,
+              "endOffset": 5587,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 5817,
+              "endOffset": 5871,
+              "count": 203
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getVolumeHistory",
+          "ranges": [
+            {
+              "startOffset": 5978,
+              "endOffset": 8293,
+              "count": 5
+            },
+            {
+              "startOffset": 6062,
+              "endOffset": 6075,
+              "count": 4
+            },
+            {
+              "startOffset": 6077,
+              "endOffset": 6153,
+              "count": 2
+            },
+            {
+              "startOffset": 6153,
+              "endOffset": 6668,
+              "count": 3
+            },
+            {
+              "startOffset": 6668,
+              "endOffset": 6688,
+              "count": 1
+            },
+            {
+              "startOffset": 6689,
+              "endOffset": 6693,
+              "count": 2
+            },
+            {
+              "startOffset": 6914,
+              "endOffset": 6961,
+              "count": 1
+            },
+            {
+              "startOffset": 6961,
+              "endOffset": 8292,
+              "count": 3
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7055,
+              "endOffset": 7476,
+              "count": 7
+            },
+            {
+              "startOffset": 7204,
+              "endOffset": 7263,
+              "count": 3
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7525,
+              "endOffset": 8171,
+              "count": 3
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7623,
+              "endOffset": 7978,
+              "count": 7
+            },
+            {
+              "startOffset": 7720,
+              "endOffset": 7749,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 8007,
+              "endOffset": 8061,
+              "count": 4
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 8193,
+              "endOffset": 8243,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getProgramVolumeAnalysis",
+          "ranges": [
+            {
+              "startOffset": 8301,
+              "endOffset": 9812,
+              "count": 1
+            },
+            {
+              "startOffset": 8589,
+              "endOffset": 8617,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 9059,
+              "endOffset": 9578,
+              "count": 14
+            },
+            {
+              "startOffset": 9131,
+              "endOffset": 9160,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 9603,
+              "endOffset": 9657,
+              "count": 13
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "325",
+      "url": "file:///home/asigator/fitness2025/backend/src/services/programService.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 40928,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getProgramExerciseTemplate",
+          "ranges": [
+            {
+              "startOffset": 612,
+              "endOffset": 3245,
+              "count": 1
+            },
+            {
+              "startOffset": 669,
+              "endOffset": 731,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "createDefaultProgram",
+          "ranges": [
+            {
+              "startOffset": 3254,
+              "endOffset": 5088,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 3335,
+              "endOffset": 5056,
+              "count": 1
+            },
+            {
+              "startOffset": 3964,
+              "endOffset": 4146,
+              "count": 6
+            },
+            {
+              "startOffset": 4449,
+              "endOffset": 4616,
+              "count": 24
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getUserProgram",
+          "ranges": [
+            {
+              "startOffset": 5096,
+              "endOffset": 5282,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "getProgramDays",
+          "ranges": [
+            {
+              "startOffset": 5290,
+              "endOffset": 5469,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "getProgramDayExercises",
+          "ranges": [
+            {
+              "startOffset": 5477,
+              "endOffset": 5828,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "advancePhase",
+          "ranges": [
+            {
+              "startOffset": 5836,
+              "endOffset": 9018,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "calculateMultiplierForTransition",
+          "ranges": [
+            {
+              "startOffset": 9019,
+              "endOffset": 9335,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "326",
+      "url": "file:///home/asigator/fitness2025/backend/src/database/db.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 28100,
+              "count": 1
+            },
+            {
+              "startOffset": 450,
+              "endOffset": 498,
+              "count": 0
+            },
+            {
+              "startOffset": 593,
+              "endOffset": 606,
+              "count": 0
+            },
+            {
+              "startOffset": 1192,
+              "endOffset": 1219,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "initializeSchema",
+          "ranges": [
+            {
+              "startOffset": 784,
+              "endOffset": 917,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "isInitialized",
+          "ranges": [
+            {
+              "startOffset": 941,
+              "endOffset": 1168,
+              "count": 1
+            },
+            {
+              "startOffset": 1131,
+              "endOffset": 1166,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "calculateOneRepMax",
+          "ranges": [
+            {
+              "startOffset": 6163,
+              "endOffset": 6234,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "calculateVolumeAdjustment",
+          "ranges": [
+            {
+              "startOffset": 6277,
+              "endOffset": 6481,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "executeWithTiming",
+          "ranges": [
+            {
+              "startOffset": 6516,
+              "endOffset": 6775,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "transaction",
+          "ranges": [
+            {
+              "startOffset": 6804,
+              "endOffset": 6848,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "batchInsert",
+          "ranges": [
+            {
+              "startOffset": 6877,
+              "endOffset": 7049,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "closeDatabase",
+          "ranges": [
+            {
+              "startOffset": 7080,
+              "endOffset": 7152,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7173,
+              "endOffset": 7203,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7227,
+              "endOffset": 7278,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7303,
+              "endOffset": 7354,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    }
+  ],
+  "timestamp": 15377.618959,
+  "source-map-cache": {
+    "file:///home/asigator/fitness2025/backend/src/services/volumeService.ts": {
+      "lineLengths": [
+        39,
+        26,
+        40,
+        41,
+        42,
+        40,
+        45,
+        41,
+        41,
+        38,
+        40,
+        40,
+        44,
+        45,
+        45,
+        45,
+        45,
+        39,
+        43,
+        42,
+        44,
+        45,
+        40,
+        44,
+        2,
+        37,
+        36,
+        34,
+        62,
+        50,
+        36,
+        41,
+        57,
+        55,
+        33,
+        67,
+        5,
+        12,
+        30,
+        26,
+        6,
+        1,
+        53,
+        30,
+        27,
+        5,
+        35,
+        26,
+        5,
+        36,
+        25,
+        5,
+        10,
+        27,
+        5,
+        1,
+        77,
+        89,
+        26,
+        5,
+        88,
+        26,
+        5,
+        54,
+        1,
+        45,
+        31,
+        106,
+        5,
+        36,
+        103,
+        5,
+        16,
+        1,
+        46,
+        27,
+        63,
+        39,
+        10,
+        31,
+        35,
+        15,
+        42,
+        44,
+        38,
+        23,
+        32,
+        21,
+        21,
+        21,
+        5,
+        78,
+        43,
+        27,
+        21,
+        28,
+        11,
+        5,
+        57,
+        28,
+        24,
+        41,
+        12,
+        33,
+        36,
+        31,
+        55,
+        47,
+        40,
+        29,
+        23,
+        7,
+        60,
+        5,
+        37,
+        39,
+        91,
+        46,
+        43,
+        47,
+        28,
+        30,
+        31,
+        31,
+        31,
+        37,
+        30,
+        26,
+        11,
+        7,
+        37,
+        91,
+        62,
+        23,
+        53,
+        9,
+        14,
+        50,
+        47,
+        34,
+        47,
+        34,
+        35,
+        35,
+        35,
+        41,
+        34,
+        30,
+        15,
+        9,
+        7,
+        28,
+        36,
+        77,
+        34,
+        104,
+        102,
+        63,
+        30,
+        7,
+        78,
+        12,
+        19,
+        17,
+        36,
+        6,
+        1,
+        72,
+        34,
+        68,
+        5,
+        31,
+        33,
+        53,
+        30,
+        10,
+        13,
+        31,
+        35,
+        15,
+        42,
+        44,
+        38,
+        23,
+        32,
+        21,
+        21,
+        52,
+        29,
+        19,
+        5,
+        20,
+        15,
+        46,
+        44,
+        6,
+        28,
+        39,
+        5,
+        41,
+        30,
+        30,
+        40,
+        58,
+        39,
+        47,
+        9,
+        55,
+        70,
+        79,
+        7,
+        25,
+        53,
+        32,
+        66,
+        91,
+        31,
+        29,
+        31,
+        35,
+        35,
+        35,
+        15,
+        11,
+        82,
+        24,
+        23,
+        40,
+        11,
+        7,
+        71,
+        12,
+        25,
+        6,
+        1,
+        50,
+        43,
+        30,
+        17,
+        21,
+        28,
+        11,
+        5,
+        57,
+        25,
+        20,
+        5,
+        37,
+        10,
+        31,
+        41,
+        29,
+        53,
+        45,
+        38,
+        27,
+        21,
+        5,
+        55,
+        47,
+        91,
+        104,
+        16,
+        43,
+        57,
+        31,
+        31,
+        31,
+        17,
+        61,
+        10,
+        7,
+        78,
+        12,
+        37,
+        55,
+        36,
+        6,
+        1,
+        33200
+      ],
+      "data": {
+        "version": 3,
+        "file": "/home/asigator/fitness2025/backend/src/services/volumeService.ts",
+        "sources": [
+          "file:///home/asigator/fitness2025/backend/src/services/volumeService.ts"
+        ],
+        "names": [],
+        "mappings": "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",
+        "sourcesContent": [
+          "/**\n * Volume Analytics Service (T041-T045)\n *\n * Provides volume analytics:\n * - Current week volume tracking (completed + planned)\n * - Volume history over multiple weeks\n * - Zone classification (below_mev, adequate, optimal, above_mrv)\n */\n\nimport { db } from '../database/db.js';\n\n/**\n * Volume landmarks for muscle groups (from Renaissance Periodization)\n */\nconst VOLUME_LANDMARKS: Record<string, { mev: number; mav: number; mrv: number }> = {\n  // Primary muscle groups\n  chest: { mev: 8, mav: 14, mrv: 22 },\n  biceps: { mev: 6, mav: 12, mrv: 20 },\n  triceps: { mev: 6, mav: 12, mrv: 22 },\n  quads: { mev: 8, mav: 14, mrv: 24 },\n  hamstrings: { mev: 6, mav: 12, mrv: 20 },\n  glutes: { mev: 6, mav: 12, mrv: 20 },\n  calves: { mev: 8, mav: 14, mrv: 22 },\n  abs: { mev: 8, mav: 16, mrv: 28 },\n\n  // Back muscles (database uses lats, traps, mid_back, lower_back)\n  lats: { mev: 10, mav: 16, mrv: 26 },\n  traps: { mev: 6, mav: 12, mrv: 20 },\n  mid_back: { mev: 10, mav: 16, mrv: 26 },\n  lower_back: { mev: 6, mav: 12, mrv: 20 },\n\n  // Shoulder muscles (database uses front_delts, side_delts, rear_delts)\n  front_delts: { mev: 4, mav: 8, mrv: 14 },\n  side_delts: { mev: 8, mav: 16, mrv: 26 },\n  rear_delts: { mev: 8, mav: 14, mrv: 22 },\n\n  // Supporting muscles\n  core: { mev: 8, mav: 16, mrv: 28 },\n  obliques: { mev: 6, mav: 12, mrv: 20 },\n  forearms: { mev: 4, mav: 8, mrv: 16 },\n  brachialis: { mev: 4, mav: 8, mrv: 14 },\n  hip_flexors: { mev: 4, mav: 8, mrv: 14 },\n\n  // Legacy/compatibility names (may not be in database)\n  back: { mev: 10, mav: 16, mrv: 26 },\n  shoulders: { mev: 8, mav: 14, mrv: 22 },\n};\n\n/**\n * Muscle group volume tracking data\n */\nexport interface MuscleGroupVolumeTracking {\n  muscle_group: string;\n  completed_sets: number;\n  planned_sets: number;\n  remaining_sets: number;\n  mev: number;\n  mav: number;\n  mrv: number;\n  completion_percentage: number;\n  zone: 'below_mev' | 'adequate' | 'optimal' | 'above_mrv' | 'on_track';\n  warning: string | null;\n}\n\n/**\n * Current week volume response\n */\nexport interface CurrentWeekVolume {\n  week_start: string;\n  week_end: string;\n  muscle_groups: MuscleGroupVolumeTracking[];\n}\n\n/**\n * Historical volume data point\n */\nexport interface HistoricalVolume {\n  muscle_group: string;\n  completed_sets: number;\n  mev: number;\n  mav: number;\n  mrv: number;\n}\n\n/**\n * Volume trends response (historical)\n */\nexport interface VolumeTrendsResponse {\n  weeks: Array<{\n    week_start: string;\n    muscle_groups: HistoricalVolume[];\n  }>;\n}\n\n/**\n * Program volume analysis data\n */\nexport interface ProgramVolumeAnalysis {\n  program_id: number;\n  mesocycle_phase: 'mev' | 'mav' | 'mrv' | 'deload';\n  muscle_groups: Array<{\n    muscle_group: string;\n    planned_weekly_sets: number;\n    mev: number;\n    mav: number;\n    mrv: number;\n    zone: 'below_mev' | 'adequate' | 'optimal' | 'above_mrv';\n    warning: string | null;\n  }>;\n}\n\n/**\n * Get ISO week boundaries (Monday to Sunday) for a given date\n */\nfunction getISOWeekBoundaries(date: Date): { week_start: string; week_end: string } {\n  // Get day of week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)\n  const dayOfWeek = date.getDay();\n\n  // Calculate Monday of the week (ISO week starts on Monday)\n  const monday = new Date(date);\n  const daysToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // If Sunday, go back 6 days\n  monday.setDate(date.getDate() + daysToMonday);\n\n  // Calculate Sunday of the week\n  const sunday = new Date(monday);\n  sunday.setDate(monday.getDate() + 6);\n\n  const weekStart = monday.toISOString().split('T')[0];\n  const weekEnd = sunday.toISOString().split('T')[0];\n\n  // Ensure non-undefined values\n  if (!weekStart || !weekEnd) {\n    throw new Error('Failed to calculate ISO week boundaries');\n  }\n\n  return {\n    week_start: weekStart,\n    week_end: weekEnd,\n  };\n}\n\n/**\n * Classify volume zone based on completed sets\n */\nfunction classifyZone(\n  completedSets: number,\n  mev: number,\n  mav: number,\n  mrv: number\n): 'below_mev' | 'adequate' | 'optimal' | 'above_mrv' {\n  if (completedSets < mev) {\n    return 'below_mev';\n  } else if (completedSets < mav) {\n    return 'adequate';\n  } else if (completedSets <= mrv) {\n    return 'optimal';\n  } else {\n    return 'above_mrv';\n  }\n}\n\n/**\n * Classify zone with on_track for current week tracking\n */\nfunction classifyZoneWithOnTrack(\n  completedSets: number,\n  plannedSets: number,\n  mev: number,\n  mav: number,\n  mrv: number\n): 'below_mev' | 'adequate' | 'optimal' | 'above_mrv' | 'on_track' {\n  // If planned sets are in optimal range and completion >= 50%, mark as on_track\n  if (plannedSets >= mav && plannedSets <= mrv && completedSets >= plannedSets * 0.5) {\n    return 'on_track';\n  }\n\n  // If planned sets are in adequate range and completion >= 50%, mark as on_track\n  if (plannedSets >= mev && plannedSets < mav && completedSets >= plannedSets * 0.5) {\n    return 'on_track';\n  }\n\n  // Otherwise use standard zone classification\n  return classifyZone(completedSets, mev, mav, mrv);\n}\n\n/**\n * Generate warning message based on zone\n */\nfunction generateWarning(zone: string, muscleGroup: string): string | null {\n  if (zone === 'below_mev') {\n    return `${muscleGroup} volume is below minimum effective volume (MEV). Increase sets for growth.`;\n  } else if (zone === 'above_mrv') {\n    return `${muscleGroup} volume exceeds maximum recoverable volume (MRV). Risk of overtraining.`;\n  }\n  return null;\n}\n\n/**\n * Get current week volume tracking (T017)\n *\n * Calculates:\n * - Completed sets from workouts with status='completed' in current ISO week\n * - Planned sets from program_exercises for all program_days in current week\n * - Zone classification based on completed sets\n * - Full set counting: Each set counts fully toward ALL muscle groups\n *\n * @param userId User ID\n * @returns Current week volume data with zone classification\n */\nexport function getCurrentWeekVolume(userId: number): CurrentWeekVolume {\n  const now = new Date();\n  const { week_start, week_end } = getISOWeekBoundaries(now);\n\n  // Query completed sets grouped by muscle group for current week\n  const completedQuery = db.prepare(`\n    SELECT\n      mg.value as muscle_group,\n      COUNT(s.id) as completed_sets\n    FROM sets s\n    JOIN workouts w ON s.workout_id = w.id\n    JOIN exercises e ON s.exercise_id = e.id\n    JOIN json_each(e.muscle_groups) mg\n    WHERE w.user_id = ?\n      AND w.status = 'completed'\n      AND w.date >= ?\n      AND w.date <= ?\n    GROUP BY mg.value\n  `);\n\n  const completedResults = completedQuery.all(userId, week_start, week_end) as Array<{\n    muscle_group: string;\n    completed_sets: number;\n  }>;\n\n  // Query planned sets from active program for current week\n  // Get active program first\n  const activeProgramQuery = db.prepare(`\n    SELECT id FROM programs\n    WHERE user_id = ?\n    ORDER BY created_at DESC\n    LIMIT 1\n  `);\n\n  const activeProgram = activeProgramQuery.get(userId) as { id: number } | undefined;\n\n  let plannedResults: Array<{ muscle_group: string; planned_sets: number }> = [];\n\n  if (activeProgram) {\n    // Calculate day of week for current week (1-7, Monday = 1)\n    // Get all program days for this week and sum their planned sets\n    const plannedQuery = db.prepare(`\n      SELECT\n        mg.value as muscle_group,\n        SUM(pe.sets) as planned_sets\n      FROM program_exercises pe\n      JOIN program_days pd ON pe.program_day_id = pd.id\n      JOIN exercises e ON pe.exercise_id = e.id\n      JOIN json_each(e.muscle_groups) mg\n      WHERE pd.program_id = ?\n      GROUP BY mg.value\n    `);\n\n    plannedResults = plannedQuery.all(activeProgram.id) as Array<{\n      muscle_group: string;\n      planned_sets: number;\n    }>;\n  }\n\n  // Merge completed and planned data\n  const muscleGroupMap = new Map<string, MuscleGroupVolumeTracking>();\n\n  // Process completed sets\n  completedResults.forEach((row) => {\n    const landmarks = VOLUME_LANDMARKS[row.muscle_group] || { mev: 0, mav: 0, mrv: 0 };\n    muscleGroupMap.set(row.muscle_group, {\n      muscle_group: row.muscle_group,\n      completed_sets: row.completed_sets,\n      planned_sets: 0,\n      remaining_sets: 0,\n      mev: landmarks.mev,\n      mav: landmarks.mav,\n      mrv: landmarks.mrv,\n      completion_percentage: 0,\n      zone: 'below_mev',\n      warning: null,\n    });\n  });\n\n  // Process planned sets\n  plannedResults.forEach((row) => {\n    const landmarks = VOLUME_LANDMARKS[row.muscle_group] || { mev: 0, mav: 0, mrv: 0 };\n    const existing = muscleGroupMap.get(row.muscle_group);\n\n    if (existing) {\n      existing.planned_sets = row.planned_sets;\n    } else {\n      muscleGroupMap.set(row.muscle_group, {\n        muscle_group: row.muscle_group,\n        completed_sets: 0,\n        planned_sets: row.planned_sets,\n        remaining_sets: 0,\n        mev: landmarks.mev,\n        mav: landmarks.mav,\n        mrv: landmarks.mrv,\n        completion_percentage: 0,\n        zone: 'below_mev',\n        warning: null,\n      });\n    }\n  });\n\n  // Calculate derived fields and classify zones\n  const muscleGroups: MuscleGroupVolumeTracking[] = [];\n  muscleGroupMap.forEach((mg) => {\n    mg.remaining_sets = Math.max(0, mg.planned_sets - mg.completed_sets);\n    mg.completion_percentage =\n      mg.planned_sets > 0 ? Math.round((mg.completed_sets / mg.planned_sets) * 100 * 10) / 10 : 0;\n\n    mg.zone = classifyZoneWithOnTrack(mg.completed_sets, mg.planned_sets, mg.mev, mg.mav, mg.mrv);\n\n    mg.warning = generateWarning(mg.zone, mg.muscle_group);\n\n    muscleGroups.push(mg);\n  });\n\n  // Sort by muscle group name\n  muscleGroups.sort((a, b) => a.muscle_group.localeCompare(b.muscle_group));\n\n  return {\n    week_start,\n    week_end,\n    muscle_groups: muscleGroups,\n  };\n}\n\n/**\n * Get volume history over multiple weeks (T018)\n *\n * @param userId User ID\n * @param weeks Number of weeks to retrieve (default: 8, max: 52)\n * @param muscleGroupFilter Optional muscle group filter\n * @returns Historical volume data grouped by week\n */\nexport function getVolumeHistory(\n  userId: number,\n  weeks: number = 8,\n  muscleGroupFilter?: string\n): VolumeTrendsResponse {\n  // Validate weeks parameter\n  if (weeks < 1 || weeks > 52) {\n    throw new Error('Weeks parameter must be between 1 and 52');\n  }\n\n  // Calculate start date (weeks ago from today)\n  const endDate = new Date();\n  const startDate = new Date();\n  startDate.setDate(endDate.getDate() - weeks * 7);\n\n  // Query volume by week\n  const query = db.prepare(`\n    SELECT\n      w.date,\n      mg.value as muscle_group,\n      COUNT(s.id) as completed_sets\n    FROM sets s\n    JOIN workouts w ON s.workout_id = w.id\n    JOIN exercises e ON s.exercise_id = e.id\n    JOIN json_each(e.muscle_groups) mg\n    WHERE w.user_id = ?\n      AND w.status = 'completed'\n      AND w.date >= ?\n      AND w.date <= ?\n      ${muscleGroupFilter ? 'AND mg.value = ?' : ''}\n    GROUP BY w.date, mg.value\n    ORDER BY w.date\n  `);\n\n  const params = [\n    userId,\n    startDate.toISOString().split('T')[0],\n    endDate.toISOString().split('T')[0],\n  ];\n  if (muscleGroupFilter) {\n    params.push(muscleGroupFilter);\n  }\n\n  const results = query.all(...params) as Array<{\n    date: string;\n    muscle_group: string;\n    completed_sets: number;\n  }>;\n\n  // Group by week\n  const weekMap = new Map<string, Map<string, number>>();\n\n  results.forEach((row) => {\n    const date = new Date(row.date);\n    const { week_start } = getISOWeekBoundaries(date);\n\n    if (!weekMap.has(week_start)) {\n      weekMap.set(week_start, new Map());\n    }\n\n    const muscleGroupMap = weekMap.get(week_start)!;\n    const currentSets = muscleGroupMap.get(row.muscle_group) || 0;\n    muscleGroupMap.set(row.muscle_group, currentSets + row.completed_sets);\n  });\n\n  // Convert to response format\n  const weekArray: Array<{\n    week_start: string;\n    muscle_groups: HistoricalVolume[];\n  }> = [];\n\n  weekMap.forEach((muscleGroupMap, week_start) => {\n    const muscleGroups: HistoricalVolume[] = [];\n\n    muscleGroupMap.forEach((completed_sets, muscle_group) => {\n      const landmarks = VOLUME_LANDMARKS[muscle_group] || { mev: 0, mav: 0, mrv: 0 };\n      muscleGroups.push({\n        muscle_group,\n        completed_sets,\n        mev: landmarks.mev,\n        mav: landmarks.mav,\n        mrv: landmarks.mrv,\n      });\n    });\n\n    // Sort muscle groups alphabetically\n    muscleGroups.sort((a, b) => a.muscle_group.localeCompare(b.muscle_group));\n\n    weekArray.push({\n      week_start,\n      muscle_groups: muscleGroups,\n    });\n  });\n\n  // Sort weeks chronologically (oldest first)\n  weekArray.sort((a, b) => a.week_start.localeCompare(b.week_start));\n\n  return {\n    weeks: weekArray,\n  };\n}\n\n/**\n * Get program volume analysis (T019)\n *\n * Analyzes planned volume for the active program and classifies zones.\n *\n * @param userId User ID\n * @returns Program volume analysis or null if no active program\n */\nexport function getProgramVolumeAnalysis(userId: number): ProgramVolumeAnalysis | null {\n  // Get active program\n  const activeProgramQuery = db.prepare(`\n    SELECT id, mesocycle_phase\n    FROM programs\n    WHERE user_id = ?\n    ORDER BY created_at DESC\n    LIMIT 1\n  `);\n\n  const activeProgram = activeProgramQuery.get(userId) as\n    | { id: number; mesocycle_phase: 'mev' | 'mav' | 'mrv' | 'deload' }\n    | undefined;\n\n  if (!activeProgram) {\n    return null;\n  }\n\n  // Query planned weekly sets by muscle group\n  const plannedQuery = db.prepare(`\n    SELECT\n      mg.value as muscle_group,\n      SUM(pe.sets) as planned_weekly_sets\n    FROM program_exercises pe\n    JOIN program_days pd ON pe.program_day_id = pd.id\n    JOIN exercises e ON pe.exercise_id = e.id\n    JOIN json_each(e.muscle_groups) mg\n    WHERE pd.program_id = ?\n    GROUP BY mg.value\n  `);\n\n  const results = plannedQuery.all(activeProgram.id) as Array<{\n    muscle_group: string;\n    planned_weekly_sets: number;\n  }>;\n\n  // Classify zones\n  const muscleGroups = results.map((row) => {\n    const landmarks = VOLUME_LANDMARKS[row.muscle_group] || { mev: 0, mav: 0, mrv: 0 };\n    const zone = classifyZone(row.planned_weekly_sets, landmarks.mev, landmarks.mav, landmarks.mrv);\n\n    return {\n      muscle_group: row.muscle_group,\n      planned_weekly_sets: row.planned_weekly_sets,\n      mev: landmarks.mev,\n      mav: landmarks.mav,\n      mrv: landmarks.mrv,\n      zone,\n      warning: generateWarning(zone, row.muscle_group),\n    };\n  });\n\n  // Sort by muscle group name\n  muscleGroups.sort((a, b) => a.muscle_group.localeCompare(b.muscle_group));\n\n  return {\n    program_id: activeProgram.id,\n    mesocycle_phase: activeProgram.mesocycle_phase,\n    muscle_groups: muscleGroups,\n  };\n}\n"
+        ],
+        "sourceRoot": ""
+      }
+    },
+    "file:///home/asigator/fitness2025/backend/src/services/programService.ts": {
+      "lineLengths": [
+        39,
+        30,
+        81,
+        79,
+        81,
+        84,
+        89,
+        83,
+        2,
+        55,
+        37,
+        54,
+        5,
+        34,
+        34,
+        34,
+        34,
+        12,
+        96,
+        95,
+        96,
+        97,
+        98,
+        98,
+        96,
+        96,
+        97,
+        98,
+        98,
+        97,
+        97,
+        96,
+        96,
+        98,
+        98,
+        97,
+        96,
+        96,
+        98,
+        98,
+        98,
+        98,
+        6,
+        2,
+        46,
+        48,
+        31,
+        46,
+        87,
+        28,
+        7,
+        116,
+        56,
+        49,
+        76,
+        25,
+        7,
+        33,
+        49,
+        111,
+        58,
+        9,
+        54,
+        95,
+        31,
+        7,
+        68,
+        43,
+        155,
+        9,
+        46,
+        49,
+        71,
+        46,
+        74,
+        50,
+        7,
+        57,
+        25,
+        7,
+        27,
+        1,
+        40,
+        29,
+        77,
+        5,
+        36,
+        1,
+        43,
+        29,
+        72,
+        5,
+        31,
+        1,
+        54,
+        29,
+        10,
+        11,
+        30,
+        22,
+        17,
+        29,
+        45,
+        31,
+        27,
+        5,
+        34,
+        1,
+        70,
+        33,
+        69,
+        5,
+        80,
+        64,
+        5,
+        42,
+        78,
+        51,
+        23,
+        70,
+        9,
+        54,
+        21,
+        29,
+        36,
+        35,
+        64,
+        39,
+        13,
+        69,
+        40,
+        13,
+        72,
+        39,
+        13,
+        72,
+        39,
+        13,
+        50,
+        39,
+        13,
+        18,
+        93,
+        13,
+        9,
+        14,
+        38,
+        54,
+        55,
+        57,
+        57,
+        14,
+        64,
+        31,
+        75,
+        13,
+        40,
+        54,
+        9,
+        129,
+        33,
+        51,
+        32,
+        91,
+        35,
+        96,
+        47,
+        77,
+        53,
+        35,
+        13,
+        9,
+        120,
+        16,
+        42,
+        32,
+        48,
+        48,
+        10,
+        7,
+        21,
+        1,
+        63,
+        26,
+        17,
+        17,
+        18,
+        21,
+        6,
+        54,
+        50,
+        33,
+        1,
+        31592
+      ],
+      "data": {
+        "version": 3,
+        "file": "/home/asigator/fitness2025/backend/src/services/programService.ts",
+        "sources": [
+          "file:///home/asigator/fitness2025/backend/src/services/programService.ts"
+        ],
+        "names": [],
+        "mappings": "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",
+        "sourcesContent": [
+          "/**\n * Program Service\n *\n * Manages training program creation and configuration.\n * Provides default 6-day Renaissance Periodization split for new users.\n */\n\nimport { db } from '../database/db.js';\nimport type { Statement } from 'better-sqlite3';\n\n/**\n * Program day configuration\n */\ninterface ProgramDay {\n  day_of_week: number;\n  day_name: string;\n  day_type: 'strength' | 'vo2max';\n}\n\n/**\n * Exercise configuration for program\n */\ninterface ProgramExercise {\n  program_day_id: number;\n  exercise_id: number;\n  order_index: number;\n  sets: number;\n  reps: string;\n  rir: number;\n}\n\n/**\n * Stored program from database\n */\nexport interface Program {\n  id: number;\n  user_id: number;\n  name: string;\n  created_at: number;\n}\n\n/**\n * Program day from database\n */\nexport interface ProgramDayRecord {\n  id: number;\n  program_id: number;\n  day_of_week: number;\n  day_name: string;\n  day_type: 'strength' | 'vo2max';\n}\n\n/**\n * Program exercise with exercise details\n */\nexport interface ProgramExerciseWithDetails {\n  id: number;\n  program_day_id: number;\n  exercise_id: number;\n  order_index: number;\n  sets: number;\n  reps: string;\n  rir: number;\n  exercise_name: string;\n  muscle_groups: string;\n  equipment: string;\n}\n\n/**\n * Default 6-day program structure\n */\nconst DEFAULT_PROGRAM_DAYS: ProgramDay[] = [\n  { day_of_week: 1, day_name: 'Push A (Chest-Focused)', day_type: 'strength' },\n  { day_of_week: 2, day_name: 'Pull A (Lat-Focused)', day_type: 'strength' },\n  { day_of_week: 3, day_name: 'VO2max A (Norwegian 4x4)', day_type: 'vo2max' },\n  { day_of_week: 4, day_name: 'Push B (Shoulder-Focused)', day_type: 'strength' },\n  { day_of_week: 5, day_name: 'Pull B (Rhomboid/Trap-Focused)', day_type: 'strength' },\n  { day_of_week: 6, day_name: 'VO2max B (30/30 or Zone 2)', day_type: 'vo2max' },\n];\n\n/**\n * Default exercise template for 6-day split\n * Exercise IDs are from the pre-seeded exercises table\n */\nconst getProgramExerciseTemplate = (programDayIds: number[]): ProgramExercise[] => {\n  // Ensure we have all 6 program day IDs\n  if (programDayIds.length !== 6) {\n    throw new Error('Expected 6 program day IDs');\n  }\n\n  const day1 = programDayIds[0]!;\n  const day2 = programDayIds[1]!;\n  // day3 and day6 are VO2max days with no exercises, so we don't need them here\n  const day4 = programDayIds[3]!;\n  const day5 = programDayIds[4]!;\n\n  return [\n    // Day 1: Push A (Chest-Focused)\n    { program_day_id: day1, exercise_id: 25, order_index: 1, sets: 3, reps: '6-8', rir: 3 }, // Barbell Back Squat\n    { program_day_id: day1, exercise_id: 1, order_index: 2, sets: 4, reps: '6-8', rir: 3 }, // Barbell Bench Press\n    { program_day_id: day1, exercise_id: 5, order_index: 3, sets: 3, reps: '8-10', rir: 2 }, // Incline Dumbbell Press\n    { program_day_id: day1, exercise_id: 7, order_index: 4, sets: 3, reps: '12-15', rir: 1 }, // Cable Flyes\n    { program_day_id: day1, exercise_id: 20, order_index: 5, sets: 4, reps: '12-15', rir: 1 }, // Lateral Raises\n    { program_day_id: day1, exercise_id: 49, order_index: 6, sets: 3, reps: '15-20', rir: 0 }, // Tricep Pushdown\n\n    // Day 2: Pull A (Lat-Focused)\n    { program_day_id: day2, exercise_id: 68, order_index: 1, sets: 3, reps: '5-8', rir: 3 }, // Conventional Deadlift\n    { program_day_id: day2, exercise_id: 14, order_index: 2, sets: 4, reps: '5-8', rir: 3 }, // Pull-Ups\n    { program_day_id: day2, exercise_id: 10, order_index: 3, sets: 4, reps: '8-10', rir: 2 }, // Barbell Row\n    { program_day_id: day2, exercise_id: 13, order_index: 4, sets: 3, reps: '12-15', rir: 1 }, // Seated Cable Row\n    { program_day_id: day2, exercise_id: 16, order_index: 5, sets: 3, reps: '15-20', rir: 0 }, // Face Pulls\n    { program_day_id: day2, exercise_id: 39, order_index: 6, sets: 3, reps: '8-12', rir: 1 }, // Barbell Curl\n\n    // Day 3: VO2max A (Norwegian 4x4) - no exercises\n\n    // Day 4: Push B (Shoulder-Focused)\n    { program_day_id: day4, exercise_id: 27, order_index: 1, sets: 3, reps: '8-12', rir: 3 }, // Leg Press\n    { program_day_id: day4, exercise_id: 18, order_index: 2, sets: 4, reps: '5-8', rir: 3 }, // Overhead Press\n    { program_day_id: day4, exercise_id: 4, order_index: 3, sets: 3, reps: '8-12', rir: 2 }, // Dumbbell Bench Press\n    { program_day_id: day4, exercise_id: 21, order_index: 4, sets: 4, reps: '15-20', rir: 0 }, // Cable Lateral Raises\n    { program_day_id: day4, exercise_id: 22, order_index: 5, sets: 3, reps: '15-20', rir: 0 }, // Rear Delt Flyes\n    { program_day_id: day4, exercise_id: 46, order_index: 6, sets: 3, reps: '8-10', rir: 2 }, // Close-Grip Bench Press\n\n    // Day 5: Pull B (Rhomboid/Trap-Focused)\n    { program_day_id: day5, exercise_id: 26, order_index: 1, sets: 3, reps: '6-8', rir: 3 }, // Front Squat\n    { program_day_id: day5, exercise_id: 10, order_index: 2, sets: 4, reps: '6-8', rir: 3 }, // Barbell Row\n    { program_day_id: day5, exercise_id: 12, order_index: 3, sets: 3, reps: '10-12', rir: 2 }, // Lat Pulldown (wide grip)\n    { program_day_id: day5, exercise_id: 62, order_index: 4, sets: 4, reps: '12-15', rir: 1 }, // Barbell Shrugs\n    { program_day_id: day5, exercise_id: 22, order_index: 5, sets: 3, reps: '15-20', rir: 0 }, // Rear Delt Flyes\n    { program_day_id: day5, exercise_id: 41, order_index: 6, sets: 3, reps: '10-15', rir: 1 }, // Hammer Curl\n\n    // Day 6: VO2max B (30/30 or Zone 2) - no exercises\n  ];\n};\n\n/**\n * Create default 6-day Renaissance Periodization program for a new user\n *\n * @param userId - The user ID to create the program for\n * @returns The created program ID\n * @throws Error if program creation fails\n */\nexport function createDefaultProgram(userId: number): number {\n  // Execute as a single transaction for atomicity\n  const createProgram = db.transaction(() => {\n    const now = Date.now();\n\n    // 1. Create the program\n    const stmtCreateProgram: Statement = db.prepare(`\n      INSERT INTO programs (user_id, name, mesocycle_week, mesocycle_phase, created_at)\n      VALUES (?, ?, ?, ?, ?)\n    `);\n\n    const programResult = stmtCreateProgram.run(\n      userId,\n      'Renaissance Periodization 6-Day Split',\n      1,\n      'mev',\n      now\n    );\n\n    const programId = programResult.lastInsertRowid as number;\n\n    // 2. Create the 6 program days\n    const stmtCreateProgramDay: Statement = db.prepare(`\n      INSERT INTO program_days (program_id, day_of_week, day_name, day_type)\n      VALUES (?, ?, ?, ?)\n    `);\n\n    const programDayIds: number[] = [];\n\n    for (const day of DEFAULT_PROGRAM_DAYS) {\n      const dayResult = stmtCreateProgramDay.run(\n        programId,\n        day.day_of_week,\n        day.day_name,\n        day.day_type\n      );\n      programDayIds.push(dayResult.lastInsertRowid as number);\n    }\n\n    // 3. Create program exercises for all strength days\n    const stmtCreateProgramExercise: Statement = db.prepare(`\n      INSERT INTO program_exercises (program_day_id, exercise_id, order_index, sets, reps, rir)\n      VALUES (?, ?, ?, ?, ?, ?)\n    `);\n\n    const exercises = getProgramExerciseTemplate(programDayIds);\n\n    for (const exercise of exercises) {\n      stmtCreateProgramExercise.run(\n        exercise.program_day_id,\n        exercise.exercise_id,\n        exercise.order_index,\n        exercise.sets,\n        exercise.reps,\n        exercise.rir\n      );\n    }\n\n    // 4. Create today's workout for the user\n    // Determine which day of week it is (0=Sunday, 1=Monday, ..., 6=Saturday)\n    const dayOfWeek = new Date().getDay();\n\n    // Map day of week to program_day_id\n    // Sunday (0) -> Saturday's workout (index 5, VO2max B)\n    // Monday (1) -> Push A (index 0)\n    // etc.\n    const dayMapping = [5, 0, 1, 2, 3, 4, 5]; // Sunday maps to Saturday's workout\n    const todayProgramDayId = programDayIds[dayMapping[dayOfWeek]!]!;\n\n    const stmtCreateWorkout: Statement = db.prepare(`\n      INSERT INTO workouts (user_id, program_day_id, date, status, synced)\n      VALUES (?, ?, date('now'), 'not_started', 0)\n    `);\n\n    stmtCreateWorkout.run(userId, todayProgramDayId);\n\n    return programId;\n  });\n\n  return createProgram();\n}\n\n/**\n * Get program details for a user\n *\n * @param userId - The user ID\n * @returns Program details or null if no program exists\n */\nexport function getUserProgram(userId: number): Program | null {\n  const stmt = db.prepare(`\n    SELECT * FROM programs WHERE user_id = ? ORDER BY created_at DESC LIMIT 1\n  `);\n\n  return (stmt.get(userId) as Program | undefined) || null;\n}\n\n/**\n * Get program days for a program\n *\n * @param programId - The program ID\n * @returns Array of program days\n */\nexport function getProgramDays(programId: number): ProgramDayRecord[] {\n  const stmt = db.prepare(`\n    SELECT * FROM program_days WHERE program_id = ? ORDER BY day_of_week\n  `);\n\n  return stmt.all(programId) as ProgramDayRecord[];\n}\n\n/**\n * Get exercises for a program day\n *\n * @param programDayId - The program day ID\n * @returns Array of program exercises with exercise details\n */\nexport function getProgramDayExercises(programDayId: number): ProgramExerciseWithDetails[] {\n  const stmt = db.prepare(`\n    SELECT\n      pe.*,\n      e.name as exercise_name,\n      e.muscle_groups,\n      e.equipment\n    FROM program_exercises pe\n    JOIN exercises e ON pe.exercise_id = e.id\n    WHERE pe.program_day_id = ?\n    ORDER BY pe.order_index\n  `);\n\n  return stmt.all(programDayId);\n}\n\n/**\n * Phase transition result\n */\ninterface PhaseAdvancementResult {\n  previous_phase: string;\n  new_phase: string;\n  volume_multiplier: number;\n  exercises_updated: number;\n}\n\n/**\n * Advance program to the next mesocycle phase with automatic volume adjustment\n *\n * Phase progression cycle: mev → mav → mrv → deload → mev (repeats)\n *\n * Volume multipliers:\n * - MEV → MAV: +20% (1.2x)\n * - MAV → MRV: +15% (1.15x)\n * - MRV → Deload: -50% (0.5x)\n * - Deload → MEV: Reset to baseline (+100%, 2.0x)\n *\n * @param programId - The program ID to advance\n * @param manual - If true, requires target_phase parameter\n * @param targetPhase - Target phase for manual advancement\n * @returns Phase advancement result\n * @throws Error if program not found or invalid phase transition\n */\nexport function advancePhase(\n  programId: number,\n  manual: boolean = false,\n  targetPhase?: string\n): PhaseAdvancementResult {\n  // Validate target phase if manual\n  if (manual && !targetPhase) {\n    throw new Error('target_phase is required when manual=true');\n  }\n\n  if (targetPhase && !['mev', 'mav', 'mrv', 'deload'].includes(targetPhase)) {\n    throw new Error(`Invalid target_phase: ${targetPhase}`);\n  }\n\n  // Execute as atomic transaction\n  const advance = db.transaction(() => {\n    // 1. Get current program state\n    const programStmt = db.prepare('SELECT * FROM programs WHERE id = ?');\n    const program = programStmt.get(programId) as any;\n\n    if (!program) {\n      throw new Error(`Program with ID ${programId} not found`);\n    }\n\n    const previousPhase = program.mesocycle_phase;\n\n    // 2. Determine new phase\n    let newPhase: string;\n    let volumeMultiplier: number;\n\n    if (manual && targetPhase) {\n      // Manual phase transition\n      newPhase = targetPhase;\n\n      // Calculate multiplier based on transition\n      if (previousPhase === 'mev' && newPhase === 'mav') {\n        volumeMultiplier = 1.2;\n      } else if (previousPhase === 'mav' && newPhase === 'mrv') {\n        volumeMultiplier = 1.15;\n      } else if (previousPhase === 'mrv' && newPhase === 'deload') {\n        volumeMultiplier = 0.5;\n      } else if (previousPhase === 'deload' && newPhase === 'mev') {\n        volumeMultiplier = 2.0;\n      } else if (previousPhase === newPhase) {\n        // No change\n        volumeMultiplier = 1.0;\n      } else {\n        // For any other manual transition, calculate based on phases\n        volumeMultiplier = calculateMultiplierForTransition(previousPhase, newPhase);\n      }\n    } else {\n      // Automatic phase progression\n      const phaseProgression: Record<string, { next: string; multiplier: number }> = {\n        mev: { next: 'mav', multiplier: 1.2 },\n        mav: { next: 'mrv', multiplier: 1.15 },\n        mrv: { next: 'deload', multiplier: 0.5 },\n        deload: { next: 'mev', multiplier: 2.0 },\n      };\n\n      const progression = phaseProgression[previousPhase];\n      if (!progression) {\n        throw new Error(`Invalid current phase: ${previousPhase}`);\n      }\n\n      newPhase = progression.next;\n      volumeMultiplier = progression.multiplier;\n    }\n\n    // 3. Update all program exercises across all program days\n    const programDayIds = (\n      db.prepare('SELECT id FROM program_days WHERE program_id = ?').all(programId) as Array<{\n        id: number;\n      }>\n    ).map((row) => row.id);\n\n    let exercisesUpdated = 0;\n\n    for (const programDayId of programDayIds) {\n      const exercises = db\n        .prepare('SELECT id, sets FROM program_exercises WHERE program_day_id = ?')\n        .all(programDayId) as Array<{ id: number; sets: number }>;\n\n      const updateStmt = db.prepare('UPDATE program_exercises SET sets = ? WHERE id = ?');\n\n      for (const exercise of exercises) {\n        const newSets = Math.round(exercise.sets * volumeMultiplier);\n        updateStmt.run(newSets, exercise.id);\n        exercisesUpdated++;\n      }\n    }\n\n    // 4. Update program phase and reset week counter\n    db.prepare('UPDATE programs SET mesocycle_phase = ?, mesocycle_week = 1 WHERE id = ?').run(\n      newPhase,\n      programId\n    );\n\n    return {\n      previous_phase: previousPhase,\n      new_phase: newPhase,\n      volume_multiplier: volumeMultiplier,\n      exercises_updated: exercisesUpdated,\n    };\n  });\n\n  return advance();\n}\n\n/**\n * Calculate volume multiplier for arbitrary phase transitions\n *\n * @param fromPhase - Current phase\n * @param toPhase - Target phase\n * @returns Volume multiplier\n */\nfunction calculateMultiplierForTransition(fromPhase: string, toPhase: string): number {\n  // Define relative volumes for each phase (baseline = mev = 1.0)\n  const phaseVolumes: Record<string, number> = {\n    mev: 1.0,\n    mav: 1.2,\n    mrv: 1.38, // 1.2 * 1.15\n    deload: 0.69, // 1.38 * 0.5\n  };\n\n  const fromVolume = phaseVolumes[fromPhase] || 1.0;\n  const toVolume = phaseVolumes[toPhase] || 1.0;\n\n  return toVolume / fromVolume;\n}\n"
+        ],
+        "sourceRoot": ""
+      }
+    },
+    "file:///home/asigator/fitness2025/backend/src/database/db.ts": {
+      "lineLengths": [
+        38,
+        57,
+        37,
+        36,
+        50,
+        38,
+        57,
+        69,
+        33,
+        27,
+        44,
+        1,
+        41,
+        78,
+        3,
+        32,
+        33,
+        35,
+        31,
+        32,
+        54,
+        20,
+        47,
+        2,
+        29,
+        9,
+        25,
+        90,
+        19,
+        24,
+        5,
+        11,
+        21,
+        5,
+        2,
+        23,
+        23,
+        1,
+        90,
+        78,
+        42,
+        103,
+        30,
+        3,
+        75,
+        45,
+        70,
+        36,
+        3,
+        49,
+        38,
+        17,
+        55,
+        21,
+        22,
+        3,
+        58,
+        38,
+        17,
+        55,
+        53,
+        22,
+        3,
+        51,
+        17,
+        88,
+        14,
+        3,
+        55,
+        17,
+        24,
+        14,
+        3,
+        46,
+        37,
+        3,
+        59,
+        14,
+        22,
+        41,
+        35,
+        3,
+        38,
+        104,
+        36,
+        3,
+        48,
+        37,
+        13,
+        42,
+        24,
+        23,
+        3,
+        47,
+        52,
+        3,
+        47,
+        45,
+        3,
+        45,
+        41,
+        3,
+        56,
+        36,
+        69,
+        53,
+        3,
+        36,
+        3,
+        59,
+        36,
+        32,
+        3,
+        51,
+        31,
+        64,
+        49,
+        3,
+        33,
+        3,
+        57,
+        52,
+        3,
+        46,
+        8,
+        11,
+        69,
+        13,
+        40,
+        75,
+        17,
+        17,
+        3,
+        44,
+        8,
+        38,
+        29,
+        13,
+        40,
+        42,
+        21,
+        35,
+        44,
+        15,
+        15,
+        3,
+        50,
+        8,
+        75,
+        31,
+        102,
+        15,
+        19,
+        3,
+        48,
+        49,
+        3,
+        51,
+        42,
+        84,
+        3,
+        27,
+        3,
+        51,
+        24,
+        65,
+        19,
+        3,
+        51,
+        47,
+        3,
+        46,
+        78,
+        24,
+        3,
+        50,
+        26,
+        19,
+        25,
+        9,
+        3,
+        58,
+        44,
+        2,
+        58,
+        25,
+        22,
+        24,
+        30,
+        24,
+        31,
+        22,
+        2,
+        48,
+        29,
+        24,
+        40,
+        23,
+        96,
+        5,
+        18,
+        2,
+        36,
+        32,
+        2,
+        47,
+        46,
+        35,
+        27,
+        9,
+        7,
+        20,
+        2,
+        36,
+        15,
+        46,
+        2,
+        26,
+        20,
+        3,
+        28,
+        20,
+        20,
+        3,
+        29,
+        20,
+        20,
+        3,
+        18,
+        20724
+      ],
+      "data": {
+        "version": 3,
+        "file": "/home/asigator/fitness2025/backend/src/database/db.ts",
+        "sources": [
+          "file:///home/asigator/fitness2025/backend/src/database/db.ts"
+        ],
+        "names": [],
+        "mappings": "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",
+        "sourcesContent": [
+          "/**\n * Backend Database Initialization\n *\n * Initializes better-sqlite3 with performance optimizations:\n * - WAL mode for concurrent reads\n * - 64MB cache for query performance\n * - 256MB memory-mapped I/O\n * - Prepared statements for common queries\n */\n\nimport Database, { Statement } from 'better-sqlite3';\nimport { readFileSync, mkdirSync, existsSync } from 'fs';\nimport { join, dirname } from 'path';\nimport { fileURLToPath } from 'url';\n\n// Get the directory of this module file\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = dirname(__filename);\n\n// Database file path - from dist/database to backend root\nconst DB_PATH = join(__dirname, '../../data/fitflow.db');\nconst SCHEMA_PATH = join(__dirname, '../../src/database/schema.sql');\n\n// Ensure data directory exists\nconst dataDir = dirname(DB_PATH);\nif (!existsSync(dataDir)) {\n  mkdirSync(dataDir, { recursive: true });\n}\n\n// Initialize database\nexport const db: Database.Database = new Database(DB_PATH, {\n  verbose: process.env.NODE_ENV === 'development' ? console.log : undefined,\n});\n\n// Apply performance optimizations\ndb.pragma('journal_mode = WAL');\ndb.pragma('cache_size = -64000'); // 64MB cache\ndb.pragma('mmap_size = 268435456'); // 256MB memory-mapped I/O\ndb.pragma('foreign_keys = ON');\n\n// Initialize schema on first run\nconst initializeSchema = (): void => {\n  const schema = readFileSync(SCHEMA_PATH, 'utf-8');\n  db.exec(schema);\n  console.log('Database schema initialized');\n};\n\n// Check if database is initialized (check for users table)\nconst isInitialized = (): boolean => {\n  try {\n    const result = db\n      .prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name='users'\")\n      .get();\n    return !!result;\n  } catch {\n    return false;\n  }\n};\n\n// Initialize if needed\nif (!isInitialized()) {\n  initializeSchema();\n}\n\n// ============================================================================\n// Prepared Statements (Common Queries)\n// ============================================================================\n\n// User Operations\nexport const stmtGetUserByUsername: Statement = db.prepare(\n  'SELECT * FROM users WHERE username = ?'\n);\n\nexport const stmtGetUserById: Statement = db.prepare('SELECT * FROM users WHERE id = ?');\n\nexport const stmtCreateUser: Statement = db.prepare(`\n  INSERT INTO users (username, password_hash, age, weight_kg, experience_level, created_at, updated_at)\n  VALUES (?, ?, ?, ?, ?, ?, ?)\n`);\n\nexport const stmtDeleteUser: Statement = db.prepare('DELETE FROM users WHERE id = ?');\n\n// Workout Operations\nexport const stmtCreateWorkout: Statement = db.prepare(`\n  INSERT INTO workouts (user_id, program_day_id, date, status, synced)\n  VALUES (?, ?, ?, 'not_started', 1)\n`);\n\nexport const stmtGetWorkoutsByUser: Statement = db.prepare(`\n  SELECT w.*, pd.day_name, pd.day_type\n  FROM workouts w\n  LEFT JOIN program_days pd ON w.program_day_id = pd.id\n  WHERE w.user_id = ?\n  ORDER BY w.date DESC\n`);\n\nexport const stmtGetWorkoutsByUserDateRange: Statement = db.prepare(`\n  SELECT w.*, pd.day_name, pd.day_type\n  FROM workouts w\n  LEFT JOIN program_days pd ON w.program_day_id = pd.id\n  WHERE w.user_id = ? AND w.date >= ? AND w.date <= ?\n  ORDER BY w.date DESC\n`);\n\nexport const stmtUpdateWorkoutStatus: Statement = db.prepare(`\n  UPDATE workouts\n  SET status = ?, started_at = ?, completed_at = ?, total_volume_kg = ?, average_rir = ?\n  WHERE id = ?\n`);\n\nexport const stmtUpdateWorkoutProgramDay: Statement = db.prepare(`\n  UPDATE workouts\n  SET program_day_id = ?\n  WHERE id = ?\n`);\n\nexport const stmtGetWorkoutById: Statement = db.prepare(`\n  SELECT * FROM workouts WHERE id = ?\n`);\n\nexport const stmtValidateProgramDayOwnership: Statement = db.prepare(`\n  SELECT pd.id\n  FROM program_days pd\n  JOIN programs p ON pd.program_id = p.id\n  WHERE pd.id = ? AND p.user_id = ?\n`);\n\n// Set Operations\nexport const stmtLogSet: Statement = db.prepare(`\n  INSERT INTO sets (workout_id, exercise_id, set_number, weight_kg, reps, rir, timestamp, notes, synced)\n  VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetSetsByWorkout: Statement = db.prepare(`\n  SELECT s.*, e.name as exercise_name\n  FROM sets s\n  JOIN exercises e ON s.exercise_id = e.id\n  WHERE s.workout_id = ?\n  ORDER BY s.set_number\n`);\n\nexport const stmtGetSetByLocalId: Statement = db.prepare(`\n  SELECT * FROM sets WHERE id = ? AND workout_id = ?\n`);\n\nexport const stmtGetUnsyncedSets: Statement = db.prepare(`\n  SELECT * FROM sets WHERE synced = 0 LIMIT ?\n`);\n\nexport const stmtMarkSetSynced: Statement = db.prepare(`\n  UPDATE sets SET synced = 1 WHERE id = ?\n`);\n\n// Recovery Assessment Operations\nexport const stmtCreateRecoveryAssessment: Statement = db.prepare(`\n  INSERT INTO recovery_assessments (\n    user_id, date, sleep_quality, muscle_soreness, mental_motivation,\n    total_score, volume_adjustment, timestamp, synced\n  )\n  VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetRecoveryAssessmentByDate: Statement = db.prepare(`\n  SELECT * FROM recovery_assessments\n  WHERE user_id = ? AND date = ?\n`);\n\n// VO2max Session Operations\nexport const stmtCreateVO2maxSession: Statement = db.prepare(`\n  INSERT INTO vo2max_sessions (\n    workout_id, protocol, duration_seconds, intervals_completed,\n    average_hr, peak_hr, estimated_vo2max, synced\n  )\n  VALUES (?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetVO2maxSessionByWorkout: Statement = db.prepare(`\n  SELECT * FROM vo2max_sessions WHERE workout_id = ?\n`);\n\n// Analytics Queries\nexport const stmt1RMProgression: Statement = db.prepare(`\n  SELECT\n    w.date,\n    MAX(s.weight_kg * (1 + (s.reps - s.rir) / 30.0)) as estimated_1rm\n  FROM sets s\n  JOIN workouts w ON s.workout_id = w.id\n  WHERE w.user_id = ? AND s.exercise_id = ? AND w.date >= ? AND w.date <= ?\n  GROUP BY w.date\n  ORDER BY w.date\n`);\n\nexport const stmtVolumeTrends: Statement = db.prepare(`\n  SELECT\n    strftime('%Y-%W', w.date) as week,\n    COUNT(s.id) as total_sets\n  FROM sets s\n  JOIN workouts w ON s.workout_id = w.id\n  JOIN exercises e ON s.exercise_id = e.id\n  WHERE w.user_id = ?\n    AND w.date >= ? AND w.date <= ?\n    AND e.muscle_groups LIKE '%' || ? || '%'\n  GROUP BY week\n  ORDER BY week\n`);\n\nexport const stmtConsistencyMetrics: Statement = db.prepare(`\n  SELECT\n    COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_workouts,\n    COUNT(*) as total_workouts,\n    AVG(CASE WHEN completed_at IS NOT NULL THEN completed_at - started_at END) as avg_session_duration\n  FROM workouts\n  WHERE user_id = ?\n`);\n\n// Active Session Operations\nexport const stmtGetActiveSession: Statement = db.prepare(`\n  SELECT * FROM active_sessions WHERE user_id = ?\n`);\n\nexport const stmtCreateActiveSession: Statement = db.prepare(`\n  INSERT OR REPLACE INTO active_sessions (\n    user_id, workout_id, current_exercise_index, started_at, last_activity_at, state\n  )\n  VALUES (?, ?, ?, ?, ?, ?)\n`);\n\nexport const stmtUpdateActiveSession: Statement = db.prepare(`\n  UPDATE active_sessions\n  SET current_exercise_index = ?, last_activity_at = ?, state = ?\n  WHERE user_id = ?\n`);\n\nexport const stmtDeleteActiveSession: Statement = db.prepare(`\n  DELETE FROM active_sessions WHERE user_id = ?\n`);\n\n// Audit Log Operations\nexport const stmtCreateAuditLog: Statement = db.prepare(`\n  INSERT INTO audit_logs (user_id, event_type, ip_address, timestamp, details)\n  VALUES (?, ?, ?, ?, ?)\n`);\n\nexport const stmtGetAuditLogsByUser: Statement = db.prepare(`\n  SELECT * FROM audit_logs\n  WHERE user_id = ?\n  ORDER BY timestamp DESC\n  LIMIT ?\n`);\n\n// ============================================================================\n// Helper Functions\n// ============================================================================\n\n/**\n * Calculate estimated 1RM using Epley formula with RIR adjustment\n * Formula: 1RM = weight × (1 + (reps - rir) / 30)\n */\nexport const calculateOneRepMax = (weight: number, reps: number, rir: number): number => {\n  return weight * (1 + (reps - rir) / 30);\n};\n\n/**\n * Calculate recovery score auto-regulation adjustment\n * Ranges: 12-15 = none, 9-11 = reduce_1_set, 6-8 = reduce_2_sets, 3-5 = rest_day\n */\nexport const calculateVolumeAdjustment = (\n  totalScore: number\n): 'none' | 'reduce_1_set' | 'reduce_2_sets' | 'rest_day' => {\n  if (totalScore >= 12) return 'none';\n  if (totalScore >= 9) return 'reduce_1_set';\n  if (totalScore >= 6) return 'reduce_2_sets';\n  return 'rest_day';\n};\n\n/**\n * Execute query with performance timing\n */\nexport const executeWithTiming = <T>(name: string, fn: () => T): T => {\n  const start = Date.now();\n  const result = fn();\n  const duration = Date.now() - start;\n\n  if (duration > 5) {\n    console.warn(`[PERFORMANCE WARNING] Query \"${name}\" took ${duration}ms (target: <5ms)`);\n  }\n\n  return result;\n};\n\n// ============================================================================\n// Transaction Helpers\n// ============================================================================\n\n/**\n * Execute function within transaction\n */\nexport const transaction = <T>(fn: () => T): T => {\n  return db.transaction(fn)();\n};\n\n/**\n * Batch insert with transaction\n */\nexport const batchInsert = <T>(stmt: Database.Statement, records: T[]): void => {\n  const insert = db.transaction((items: T[]) => {\n    for (const item of items) {\n      stmt.run(item);\n    }\n  });\n\n  insert(records);\n};\n\n// ============================================================================\n// Cleanup\n// ============================================================================\n\n/**\n * Close database connection\n */\nexport const closeDatabase = (): void => {\n  db.close();\n  console.log('Database connection closed');\n};\n\n// Handle process termination\nprocess.on('exit', () => {\n  closeDatabase();\n});\n\nprocess.on('SIGINT', () => {\n  closeDatabase();\n  process.exit(0);\n});\n\nprocess.on('SIGTERM', () => {\n  closeDatabase();\n  process.exit(0);\n});\n\nexport default db;\n"
+        ],
+        "sourceRoot": ""
+      }
+    }
+  }
+}

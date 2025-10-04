@@ -1,9 +1,9 @@
 TAP version 14
 # Subtest: Scenario 1: Exercise Swap
-{"level":30,"time":1759552508617,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552508837,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":218.25044599967077,"msg":"request completed"}
-{"level":30,"time":1759552508837,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509040,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":202.1657410003245,"msg":"request completed"}
+{"level":30,"time":1759599560991,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561253,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":260.87666099891067,"msg":"request completed"}
+{"level":30,"time":1759599561256,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561486,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":229.9906280003488,"msg":"request completed"}
     # Subtest: AC-1: View current program with exercises
         ok 1 - Returns 200 OK
         ok 2 - Program has id
@@ -17,7 +17,7 @@ TAP version 14
         ok 10 - Exercise has target_rep_range
         ok 11 - Exercise has target_rir
         1..11
-    ok 1 - AC-1: View current program with exercises # time=6.537ms
+    ok 1 - AC-1: View current program with exercises # time=9.188ms
     
     # Subtest: AC-2 & AC-3: Get alternative exercises for swap
         ok 1 - Can fetch current exercise details
@@ -60,7 +60,7 @@ TAP version 14
         ok 12 - Alternative exercise Trap Bar Deadlift is in same muscle group
         ok 13 - Alternative exercise Walking Lunges is in same muscle group
         1..13
-    not ok 2 - AC-2 & AC-3: Get alternative exercises for swap # time=23.462ms
+    not ok 2 - AC-2 & AC-3: Get alternative exercises for swap # time=36.322ms
       ---
       at:
         fileName: tests/scenarios/scenario1-exercise-swap.test.ts
@@ -84,48 +84,48 @@ TAP version 14
         ok 5 - Has new exercise name
         ok 6 - New exercise name matches
         1..6
-    ok 3 - AC-4: Swap exercise with alternative # time=4.122ms
+    ok 3 - AC-4: Swap exercise with alternative # time=5.926ms
     
     # Subtest: AC-5: Program reflects swapped exercise
         ok 1 - Returns 200 OK
         ok 2 - Swapped exercise still exists in program
         ok 3 - Exercise ID has changed
         1..3
-    ok 4 - AC-5: Program reflects swapped exercise # time=2.378ms
+    ok 4 - AC-5: Program reflects swapped exercise # time=3.366ms
     
-{"level":30,"time":1759552509040,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509044,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":3.7542060003615916,"msg":"request completed"}
-{"level":30,"time":1759552509045,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509046,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":1.093303999863565,"msg":"request completed"}
-{"level":30,"time":1759552509053,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises/25","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509055,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.3485750001855195,"msg":"request completed"}
-{"level":30,"time":1759552509055,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509057,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":1.5198269998654723,"msg":"request completed"}
-{"level":30,"time":1759552509079,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"GET","url":"/api/exercises/25","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509080,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":0.5180870001204312,"msg":"request completed"}
-{"level":30,"time":1759552509080,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509081,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":0.45082899974659085,"msg":"request completed"}
-{"level":30,"time":1759552509081,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"PUT","url":"/api/program-exercises/8926/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509082,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":200},"responseTime":1.0657160002738237,"msg":"request completed"}
-{"level":30,"time":1759552509084,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509085,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":200},"responseTime":1.1146049997769296,"msg":"request completed"}
-{"level":30,"time":1759552509087,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509123,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":200},"responseTime":35.64879000000656,"msg":"request completed"}
-{"level":30,"time":1759552509123,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"GET","url":"/api/exercises/28","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509124,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":200},"responseTime":0.4541810001246631,"msg":"request completed"}
-{"level":30,"time":1759552509124,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509124,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":200},"responseTime":0.47199100023135543,"msg":"request completed"}
-{"level":30,"time":1759552509125,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"PUT","url":"/api/program-exercises/8926/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561486,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561495,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":8.88450499996543,"msg":"request completed"}
+{"level":30,"time":1759599561496,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561499,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":2.104805000126362,"msg":"request completed"}
+{"level":30,"time":1759599561508,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises/25","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561510,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.5844180006533861,"msg":"request completed"}
+{"level":30,"time":1759599561511,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561514,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":2.7146589998155832,"msg":"request completed"}
+{"level":30,"time":1759599561548,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"GET","url":"/api/exercises/25","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561549,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":0.6849330011755228,"msg":"request completed"}
+{"level":30,"time":1759599561549,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561550,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":0.6531549990177155,"msg":"request completed"}
+{"level":30,"time":1759599561551,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"PUT","url":"/api/program-exercises/11227/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561553,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":200},"responseTime":1.4749079998582602,"msg":"request completed"}
+{"level":30,"time":1759599561556,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561557,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":200},"responseTime":1.5161830000579357,"msg":"request completed"}
+{"level":30,"time":1759599561560,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"GET","url":"/api/program-exercises/11227","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561613,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":200},"responseTime":53.10734900087118,"msg":"request completed"}
+{"level":30,"time":1759599561614,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"GET","url":"/api/exercises/28","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561615,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":200},"responseTime":0.7364060003310442,"msg":"request completed"}
+{"level":30,"time":1759599561615,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"GET","url":"/api/exercises?muscle_group=quads","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561616,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":200},"responseTime":0.731657000258565,"msg":"request completed"}
+{"level":30,"time":1759599561616,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"PUT","url":"/api/program-exercises/11227/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: AC-6: Volume warning logic
         ok 1 - No volume warning (swap maintains volume)
         1..1
-    ok 5 - AC-6: Volume warning logic # time=39.066ms
+    ok 5 - AC-6: Volume warning logic # time=58.318ms
     
     # Subtest: AC-7: Order index preserved after swap
         ok 1 - Returns 200 OK
         ok 2 - Order index remains unchanged after swap
         1..2
-    ok 6 - AC-7: Order index preserved after swap # time=29.27ms
+    ok 6 - AC-7: Order index preserved after swap # time=43.669ms
     
     # Subtest: AC-8: Swapped exercise persists
         ok 1 - Returns 200 OK after refresh
@@ -133,10 +133,10 @@ TAP version 14
         ok 3 - Order index persists after refresh
         ok 4 - Target sets persists after refresh
         1..4
-    ok 7 - AC-8: Swapped exercise persists # time=57.654ms
+    ok 7 - AC-8: Swapped exercise persists # time=87.236ms
     
     1..7
-not ok 1 - Scenario 1: Exercise Swap # time=791ms
+not ok 1 - Scenario 1: Exercise Swap # time=1138.973ms
   ---
   at:
     fileName: tests/scenarios/scenario1-exercise-swap.test.ts
@@ -151,12 +151,12 @@ not ok 1 - Scenario 1: Exercise Swap # time=791ms
       const app = await buildApp();
   ...
 
-{"level":30,"time":1759552509126,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":0.7915169997140765,"msg":"request completed"}
-{"level":30,"time":1759552509127,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509155,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":28.308906000107527,"msg":"request completed"}
-{"level":30,"time":1759552509157,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509183,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":200},"responseTime":25.82987100025639,"msg":"request completed"}
-{"level":30,"time":1759552509183,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"GET","url":"/api/program-exercises/8926","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509213,"pid":45675,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":30.138201999943703,"msg":"request completed"}
+{"level":30,"time":1759599561617,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":1.1935869995504618,"msg":"request completed"}
+{"level":30,"time":1759599561619,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"GET","url":"/api/program-exercises/11227","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561662,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":42.35920099914074,"msg":"request completed"}
+{"level":30,"time":1759599561664,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"GET","url":"/api/program-exercises/11227","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561699,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":200},"responseTime":34.73100099898875,"msg":"request completed"}
+{"level":30,"time":1759599561700,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"GET","url":"/api/program-exercises/11227","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561750,"pid":210165,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":50.64614399895072,"msg":"request completed"}
 1..1
 Database connection closed

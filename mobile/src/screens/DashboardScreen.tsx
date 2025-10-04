@@ -428,9 +428,9 @@ export default function DashboardScreen({
         <GradientCard
           gradient={
             todayWorkout.status === 'completed'
-              ? [colors.success.dark, colors.background.secondary]
+              ? ([colors.success.dark, colors.background.secondary] as [string, string, ...string[]])
               : todayWorkout.status === 'in_progress'
-                ? [colors.primary.dark, colors.background.secondary]
+                ? ([colors.primary.dark, colors.background.secondary] as [string, string, ...string[]])
                 : gradients.hero
           }
           style={styles.workoutCard}
@@ -459,9 +459,8 @@ export default function DashboardScreen({
                     size={24}
                     iconColor={colors.primary.main}
                     onPress={handleOpenSwapDialog}
-                    containerStyle={styles.swapButtonContainer}
                     accessibilityLabel="Change workout"
-                    style={styles.swapButton}
+                    style={[styles.swapButton, styles.swapButtonContainer]}
                   />
                 )}
               </View>
@@ -547,7 +546,7 @@ export default function DashboardScreen({
                 {todayWorkout.average_rir !== undefined && (
                   <View style={styles.metricItem}>
                     <Text variant="displaySmall" style={styles.metricValue}>
-                      {todayWorkout.average_rir.toFixed(1)}
+                      {todayWorkout.average_rir?.toFixed(1) ?? 'N/A'}
                     </Text>
                     <Text variant="bodySmall" style={styles.metricLabel}>
                       avg RIR

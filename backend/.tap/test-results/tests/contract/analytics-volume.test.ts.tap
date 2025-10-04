@@ -1,7 +1,7 @@
 TAP version 14
 # Subtest: Volume Analytics Endpoints Contract Tests
-{"level":30,"time":1759594755554,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755904,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":346.8684700001031,"msg":"request completed"}
+{"level":30,"time":1759599556505,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556754,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":247.38905999995768,"msg":"request completed"}
     # Subtest: GET /api/analytics/volume-current-week
         # Subtest: should return current week volume tracking data (200)
             ok 1 - Returns 200 OK
@@ -25,12 +25,12 @@ TAP version 14
             ok 19 - completion_percentage is correctly calculated
             ok 20 - remaining_sets is correctly calculated
             1..20
-        ok 1 - should return current week volume tracking data (200) # time=31.696ms
+        ok 1 - should return current week volume tracking data (200) # time=23.057ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 2 - should return 401 without authentication # time=2.71ms
+        ok 2 - should return 401 without authentication # time=2.111ms
         
         # Subtest: should validate zone logic based on completed sets
             ok 1 - Returns 200 OK
@@ -49,10 +49,10 @@ TAP version 14
             ok 14 - Zone is below_mev when completed < MEV
             ok 15 - Zone is below_mev when completed < MEV
             1..15
-        ok 3 - should validate zone logic based on completed sets # time=8.833ms
+        ok 3 - should validate zone logic based on completed sets # time=6.024ms
         
         1..3
-    ok 1 - GET /api/analytics/volume-current-week # time=49.041ms
+    ok 1 - GET /api/analytics/volume-current-week # time=36.579ms
     
     # Subtest: GET /api/analytics/volume-trends
         # Subtest: should return volume trends with default 8 weeks (200)
@@ -60,60 +60,60 @@ TAP version 14
             ok 2 - Has weeks array
             ok 3 - Returns at most 8 weeks by default
             1..3
-        ok 1 - should return volume trends with default 8 weeks (200) # time=4.649ms
+        ok 1 - should return volume trends with default 8 weeks (200) # time=2.669ms
         
         # Subtest: should accept custom weeks parameter (200)
             ok 1 - Returns 200 OK
             ok 2 - Has weeks array
             ok 3 - Returns at most 12 weeks
             1..3
-        ok 2 - should accept custom weeks parameter (200) # time=2.594ms
+        ok 2 - should accept custom weeks parameter (200) # time=2.611ms
         
         # Subtest: should filter by muscle_group parameter (200)
             ok 1 - Returns 200 OK
             1..1
-        ok 3 - should filter by muscle_group parameter (200) # time=2.089ms
+        ok 3 - should filter by muscle_group parameter (200) # time=2.075ms
         
         # Subtest: should accept maximum weeks parameter (52)
             ok 1 - Returns 200 OK
             ok 2 - Has weeks array
             ok 3 - Returns at most 52 weeks
             1..3
-        ok 4 - should accept maximum weeks parameter (52) # time=2.927ms
+        ok 4 - should accept maximum weeks parameter (52) # time=2.169ms
         
         # Subtest: should return 400 for weeks exceeding maximum (53)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             ok 3 - Error mentions weeks parameter limit
             1..3
-        ok 5 - should return 400 for weeks exceeding maximum (53) # time=2.93ms
+        ok 5 - should return 400 for weeks exceeding maximum (53) # time=2.106ms
         
         # Subtest: should return 400 for invalid muscle_group
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             ok 3 - Error mentions invalid muscle_group
             1..3
-        ok 6 - should return 400 for invalid muscle_group # time=2.112ms
+        ok 6 - should return 400 for invalid muscle_group # time=1.728ms
         
         # Subtest: should return 400 for negative weeks parameter
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 7 - should return 400 for negative weeks parameter # time=2.243ms
+        ok 7 - should return 400 for negative weeks parameter # time=1.929ms
         
         # Subtest: should return 400 for non-numeric weeks parameter
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 8 - should return 400 for non-numeric weeks parameter # time=2.417ms
+        ok 8 - should return 400 for non-numeric weeks parameter # time=1.785ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 9 - should return 401 without authentication # time=1.652ms
+        ok 9 - should return 401 without authentication # time=4.435ms
         
         1..9
-    ok 2 - GET /api/analytics/volume-trends # time=35.259ms
+    ok 2 - GET /api/analytics/volume-trends # time=31.614ms
     
     # Subtest: GET /api/analytics/program-volume-analysis
         # Subtest: should return program volume analysis for active program (200)
@@ -132,17 +132,17 @@ TAP version 14
             ok 13 - Zone is adequate when MEV <= planned < MAV
             ok 14 - muscle_group is valid enum value
             1..14
-        ok 1 - should return program volume analysis for active program (200) # time=6.707ms
+        ok 1 - should return program volume analysis for active program (200) # time=5.854ms
         
         # Subtest: should return 404 when no active program exists
             ok 1 - Returns 200 or 404 depending on program existence
             1..1
-        ok 2 - should return 404 when no active program exists # time=3.406ms
+        ok 2 - should return 404 when no active program exists # time=3.126ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 3 - should return 401 without authentication # time=1.507ms
+        ok 3 - should return 401 without authentication # time=1.175ms
         
         # Subtest: should validate MEV/MAV/MRV thresholds exist
             ok 1 - MEV is less than or equal to MAV
@@ -202,45 +202,45 @@ TAP version 14
             ok 55 - MEV is positive
             ok 56 - Planned weekly sets is non-negative
             1..56
-        ok 4 - should validate MEV/MAV/MRV thresholds exist # time=15.134ms
+        ok 4 - should validate MEV/MAV/MRV thresholds exist # time=13.746ms
         
         1..4
-    ok 3 - GET /api/analytics/program-volume-analysis # time=31.418ms
+    ok 3 - GET /api/analytics/program-volume-analysis # time=29.362ms
     
     1..3
-ok 1 - Volume Analytics Endpoints Contract Tests # time=955.934ms
+ok 1 - Volume Analytics Endpoints Contract Tests # time=666.311ms
 
-{"level":30,"time":1759594755907,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"GET","url":"/api/analytics/volume-current-week","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755926,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":19.14471299946308,"msg":"request completed"}
-{"level":30,"time":1759594755941,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/analytics/volume-current-week","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755942,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":401},"responseTime":0.894598999992013,"msg":"request completed"}
-{"level":30,"time":1759594755944,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/analytics/volume-current-week","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755946,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":2.02938099950552,"msg":"request completed"}
-{"level":30,"time":1759594755957,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/analytics/volume-trends","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755959,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.4236469995230436,"msg":"request completed"}
-{"level":30,"time":1759594755963,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=12","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755964,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":0.7593149989843369,"msg":"request completed"}
-{"level":30,"time":1759594755966,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=chest","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755967,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":0.6606299988925457,"msg":"request completed"}
-{"level":30,"time":1759594755970,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=52","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755971,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":1.2740470003336668,"msg":"request completed"}
-{"level":30,"time":1759594755974,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=53","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755974,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":400},"responseTime":0.47617899999022484,"msg":"request completed"}
-{"level":30,"time":1759594755978,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=invalid_muscle","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755979,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"responseTime":0.4536899998784065,"msg":"request completed"}
-{"level":30,"time":1759594755982,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=-5","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755983,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"responseTime":0.6586739998310804,"msg":"request completed"}
-{"level":30,"time":1759594755985,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=abc","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755986,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":400},"responseTime":0.8800009991973639,"msg":"request completed"}
-{"level":30,"time":1759594755988,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"GET","url":"/api/analytics/volume-trends","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755989,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":401},"responseTime":0.46018500067293644,"msg":"request completed"}
-{"level":30,"time":1759594755993,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755996,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":2.655858999118209,"msg":"request completed"}
-{"level":30,"time":1759594756000,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756003,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":2.1110960002988577,"msg":"request completed"}
-{"level":30,"time":1759594756005,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756005,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":401},"responseTime":0.4833020009100437,"msg":"request completed"}
-{"level":30,"time":1759594756007,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756009,"pid":141233,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":2.1976289991289377,"msg":"request completed"}
+{"level":30,"time":1759599556757,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"GET","url":"/api/analytics/volume-current-week","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556770,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":12.33703599870205,"msg":"request completed"}
+{"level":30,"time":1759599556782,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/analytics/volume-current-week","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556783,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":401},"responseTime":0.9954469986259937,"msg":"request completed"}
+{"level":30,"time":1759599556786,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/analytics/volume-current-week","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556788,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":2.499338001012802,"msg":"request completed"}
+{"level":30,"time":1759599556795,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/analytics/volume-trends","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556796,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.09099000133574,"msg":"request completed"}
+{"level":30,"time":1759599556798,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=12","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556799,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":0.7516310010105371,"msg":"request completed"}
+{"level":30,"time":1759599556802,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=chest","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556803,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":0.8563930001109838,"msg":"request completed"}
+{"level":30,"time":1759599556805,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=52","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556805,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":0.7224380001425743,"msg":"request completed"}
+{"level":30,"time":1759599556808,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=53","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556808,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":400},"responseTime":0.3582859989255667,"msg":"request completed"}
+{"level":30,"time":1759599556811,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"GET","url":"/api/analytics/volume-trends?muscle_group=invalid_muscle","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556811,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"responseTime":0.3625459987670183,"msg":"request completed"}
+{"level":30,"time":1759599556813,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=-5","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556814,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"responseTime":0.7057459987699986,"msg":"request completed"}
+{"level":30,"time":1759599556816,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"GET","url":"/api/analytics/volume-trends?weeks=abc","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556817,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":400},"responseTime":0.5068380013108253,"msg":"request completed"}
+{"level":30,"time":1759599556820,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"GET","url":"/api/analytics/volume-trends","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556823,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":401},"responseTime":3.3160629998892546,"msg":"request completed"}
+{"level":30,"time":1759599556828,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556831,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":2.930188998579979,"msg":"request completed"}
+{"level":30,"time":1759599556835,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556837,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":2.012965001165867,"msg":"request completed"}
+{"level":30,"time":1759599556839,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556839,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":401},"responseTime":0.3009460009634495,"msg":"request completed"}
+{"level":30,"time":1759599556840,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"GET","url":"/api/analytics/program-volume-analysis","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556843,"pid":209973,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":2.708652000874281,"msg":"request completed"}
 1..1
 Database connection closed

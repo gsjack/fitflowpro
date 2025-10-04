@@ -105,9 +105,11 @@ export default function VO2maxSessionCard({
   };
 
   const isCompleted = session.completion_status === 'completed';
-  const cardGradient = isCompleted
-    ? [colors.background.secondary, colors.background.tertiary]
-    : [colors.background.tertiary, colors.background.secondary];
+  const cardGradient = (
+    isCompleted
+      ? [colors.background.secondary, colors.background.tertiary]
+      : [colors.background.tertiary, colors.background.secondary]
+  ) as [string, string, ...string[]];
 
   return (
     <>
@@ -134,7 +136,7 @@ export default function VO2maxSessionCard({
                       size={24}
                       onPress={openMenu}
                       iconColor={colors.text.secondary}
-                      containerStyle={styles.iconButtonContainer}
+                      style={styles.iconButtonContainer}
                       accessibilityLabel="Session options"
                     />
                   }

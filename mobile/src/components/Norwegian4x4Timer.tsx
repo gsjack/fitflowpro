@@ -177,9 +177,11 @@ export default function Norwegian4x4Timer({ onComplete, onCancel }: Norwegian4x4
   };
 
   const isWorkPhase = currentPhase === 'work';
-  const gradientColors = isWorkPhase
-    ? [colors.error.dark, colors.background.tertiary]
-    : [colors.success.dark, colors.background.tertiary];
+  const gradientColors = (
+    isWorkPhase
+      ? [colors.error.dark, colors.background.tertiary]
+      : [colors.success.dark, colors.background.tertiary]
+  ) as [string, string, ...string[]];
 
   return (
     <>

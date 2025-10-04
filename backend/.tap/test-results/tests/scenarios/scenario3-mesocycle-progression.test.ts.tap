@@ -1,15 +1,15 @@
 TAP version 14
 # Subtest: Scenario 3: Mesocycle Progression
-{"level":30,"time":1759552508679,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552508894,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":213.80704100010917,"msg":"request completed"}
-{"level":30,"time":1759552508895,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509096,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":201.45824499987066,"msg":"request completed"}
+{"level":30,"time":1759599561332,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561571,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":236.9427659995854,"msg":"request completed"}
+{"level":30,"time":1759599561572,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561788,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":215.3090919982642,"msg":"request completed"}
     # Subtest: AC-1: Program starts in MEV phase
         ok 1 - Returns 200 OK
         ok 2 - Program starts in MEV phase
         ok 3 - Has mesocycle_week
         1..3
-    ok 1 - AC-1: Program starts in MEV phase # time=5.647ms
+    ok 1 - AC-1: Program starts in MEV phase # time=7.006ms
     
     # Subtest: AC-2: Advance MEV→MAV automatically
         ok 1 - Currently in MEV phase
@@ -19,47 +19,47 @@ TAP version 14
         ok 5 - Has volume multiplier
         ok 6 - Has exercises updated count
         1..6
-    ok 2 - AC-2: Advance MEV→MAV automatically # time=6.238ms
+    ok 2 - AC-2: Advance MEV→MAV automatically # time=11.71ms
     
-{"level":30,"time":1759552509096,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509101,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":4.109352000057697,"msg":"request completed"}
-{"level":30,"time":1759552509102,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509103,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":1.786622999701649,"msg":"request completed"}
-{"level":30,"time":1759552509109,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509111,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":1.4229569998569787,"msg":"request completed"}
-{"level":30,"time":1759552509112,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"PATCH","url":"/api/programs/406/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509114,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":2.1519659999758005,"msg":"request completed"}
-{"level":30,"time":1759552509117,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509323,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":201},"responseTime":206.65650099981576,"msg":"request completed"}
-{"level":30,"time":1759552509324,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509520,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":196.46902700001374,"msg":"request completed"}
+{"level":30,"time":1759599561789,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561794,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":5.644918000325561,"msg":"request completed"}
+{"level":30,"time":1759599561795,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561797,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":1.7366720009595156,"msg":"request completed"}
+{"level":30,"time":1759599561804,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561806,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":2.083015000447631,"msg":"request completed"}
+{"level":30,"time":1759599561808,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"PATCH","url":"/api/programs/519/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599561813,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":4.576207000762224,"msg":"request completed"}
+{"level":30,"time":1759599561817,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562033,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":201},"responseTime":215.22856499999762,"msg":"request completed"}
+{"level":30,"time":1759599562033,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562244,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":210.28960100002587,"msg":"request completed"}
     # Subtest: AC-3: Volume increases ~20% for MEV→MAV
         ok 1 - Volume multiplier 1.2 is ~1.20 (within 1.15-1.25 range)
         ok 2 - Actual volume increase 1.30x is reasonable
         1..2
-    ok 3 - AC-3: Volume increases ~20% for MEV→MAV # time=408.843ms
+    ok 3 - AC-3: Volume increases ~20% for MEV→MAV # time=436.103ms
     
-{"level":30,"time":1759552509520,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509522,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":200},"responseTime":1.0124960001558065,"msg":"request completed"}
-{"level":30,"time":1759552509522,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"PATCH","url":"/api/programs/407/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509523,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":200},"responseTime":0.9045910001732409,"msg":"request completed"}
-{"level":30,"time":1759552509523,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509525,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":200},"responseTime":1.0769600002095103,"msg":"request completed"}
-{"level":30,"time":1759552509526,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509527,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":200},"responseTime":0.8594729998148978,"msg":"request completed"}
-{"level":30,"time":1759552509527,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"PATCH","url":"/api/programs/406/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562244,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562246,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":200},"responseTime":2.0228110011667013,"msg":"request completed"}
+{"level":30,"time":1759599562247,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"PATCH","url":"/api/programs/522/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562249,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":200},"responseTime":1.714044000953436,"msg":"request completed"}
+{"level":30,"time":1759599562250,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562252,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":200},"responseTime":2.092933000996709,"msg":"request completed"}
+{"level":30,"time":1759599562255,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562257,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":200},"responseTime":2.0471860002726316,"msg":"request completed"}
+{"level":30,"time":1759599562257,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"PATCH","url":"/api/programs/519/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: AC-4 & AC-5: Advance MAV→MRV with ~15% volume increase
         ok 1 - Phase advancement succeeds
         ok 2 - Previous phase was MAV
         ok 3 - New phase is MRV
         ok 4 - Volume multiplier 1.15 is ~1.15 (within 1.10-1.20 range)
         1..4
-    ok 4 - AC-4 & AC-5: Advance MAV→MRV with ~15% volume increase # time=2.771ms
+    ok 4 - AC-4 & AC-5: Advance MAV→MRV with ~15% volume increase # time=7.326ms
     
-{"level":30,"time":1759552509528,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":200},"responseTime":0.7707039997912943,"msg":"request completed"}
-{"level":30,"time":1759552509529,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509530,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":0.9098290000110865,"msg":"request completed"}
-{"level":30,"time":1759552509530,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"PATCH","url":"/api/programs/406/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562259,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":200},"responseTime":1.9700809996575117,"msg":"request completed"}
+{"level":30,"time":1759599562264,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562265,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":1.6652239989489317,"msg":"request completed"}
+{"level":30,"time":1759599562266,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"PATCH","url":"/api/programs/519/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: AC-6 & AC-7: Advance MRV→Deload with ~50% volume decrease
         ok 1 - Phase advancement succeeds
         ok 2 - Previous phase was MRV
@@ -67,68 +67,68 @@ TAP version 14
         ok 4 - Volume multiplier 0.5 reduces volume by ~50%
         ok 5 - Volume multiplier 0.5 is at least 40%
         1..5
-    ok 5 - AC-6 & AC-7: Advance MRV→Deload with ~50% volume decrease # time=3.101ms
+    ok 5 - AC-6 & AC-7: Advance MRV→Deload with ~50% volume decrease # time=5.844ms
     
-{"level":30,"time":1759552509531,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":0.8624770003370941,"msg":"request completed"}
-{"level":30,"time":1759552509533,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509726,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":201},"responseTime":192.44062200002372,"msg":"request completed"}
-{"level":30,"time":1759552509726,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509919,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":192.79157699970528,"msg":"request completed"}
+{"level":30,"time":1759599562268,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":1.7183739989995956,"msg":"request completed"}
+{"level":30,"time":1759599562270,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562480,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":201},"responseTime":209.45499800145626,"msg":"request completed"}
+{"level":30,"time":1759599562480,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562678,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":198.2872439995408,"msg":"request completed"}
     # Subtest: AC-8: All exercises updated atomically
         ok 1 - All exercises were updated atomically
         ok 2 - Exercise count remains the same (no exercises lost)
         1..2
-    ok 6 - AC-8: All exercises updated atomically # time=390.253ms
+    ok 6 - AC-8: All exercises updated atomically # time=412.743ms
     
-{"level":30,"time":1759552509919,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509920,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":200},"responseTime":0.9691949998959899,"msg":"request completed"}
-{"level":30,"time":1759552509920,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"PATCH","url":"/api/programs/408/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509921,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":200},"responseTime":0.8005259996280074,"msg":"request completed"}
-{"level":30,"time":1759552509922,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552509923,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":200},"responseTime":0.934831999707967,"msg":"request completed"}
-{"level":30,"time":1759552509924,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510120,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":201},"responseTime":195.52427799999714,"msg":"request completed"}
-{"level":30,"time":1759552510120,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510314,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":200},"responseTime":194.4287409996614,"msg":"request completed"}
+{"level":30,"time":1759599562679,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562680,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":200},"responseTime":1.08470500074327,"msg":"request completed"}
+{"level":30,"time":1759599562680,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"PATCH","url":"/api/programs/529/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562681,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":200},"responseTime":0.7875300012528896,"msg":"request completed"}
+{"level":30,"time":1759599562681,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562682,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":200},"responseTime":0.7202720008790493,"msg":"request completed"}
+{"level":30,"time":1759599562683,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599562877,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":201},"responseTime":193.61598300002515,"msg":"request completed"}
+{"level":30,"time":1759599562877,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563070,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":200},"responseTime":192.19520200043917,"msg":"request completed"}
     # Subtest: AC-9: Manually specify target phase
         ok 1 - Starts in MEV phase
         ok 2 - Manual phase advancement succeeds
         ok 3 - Previous phase was MEV
         ok 4 - New phase is MRV (skipped MAV)
         1..4
-    ok 7 - AC-9: Manually specify target phase # time=394.649ms
+    ok 7 - AC-9: Manually specify target phase # time=390.055ms
     
-{"level":30,"time":1759552510315,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510316,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":200},"responseTime":1.2005110001191497,"msg":"request completed"}
-{"level":30,"time":1759552510317,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"PATCH","url":"/api/programs/409/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510318,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":200},"responseTime":1.0498620001599193,"msg":"request completed"}
-{"level":30,"time":1759552510320,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510515,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":201},"responseTime":195.59356199996546,"msg":"request completed"}
-{"level":30,"time":1759552510515,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510708,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":200},"responseTime":193.00459600007161,"msg":"request completed"}
+{"level":30,"time":1759599563070,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563071,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":200},"responseTime":0.973726999014616,"msg":"request completed"}
+{"level":30,"time":1759599563072,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"PATCH","url":"/api/programs/530/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563073,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":200},"responseTime":1.0078790001571178,"msg":"request completed"}
+{"level":30,"time":1759599563074,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563268,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":201},"responseTime":193.88955200091004,"msg":"request completed"}
+{"level":30,"time":1759599563268,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563461,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":200},"responseTime":192.63136100023985,"msg":"request completed"}
     # Subtest: AC-10: Proper phase progression sequence
         ok 1 - Advancing from mev
         ok 2 - Advancing to mav
-{"level":30,"time":1759552510709,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510710,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":200},"responseTime":0.8991430001333356,"msg":"request completed"}
-{"level":30,"time":1759552510710,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"PATCH","url":"/api/programs/410/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510711,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":200},"responseTime":0.9453090000897646,"msg":"request completed"}
-{"level":30,"time":1759552510711,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"PATCH","url":"/api/programs/410/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563461,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563462,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":200},"responseTime":0.8383039999753237,"msg":"request completed"}
+{"level":30,"time":1759599563462,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"PATCH","url":"/api/programs/531/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563463,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":200},"responseTime":0.7248120009899139,"msg":"request completed"}
+{"level":30,"time":1759599563464,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"PATCH","url":"/api/programs/531/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         ok 3 - Advancing from mav
         ok 4 - Advancing to mrv
-{"level":30,"time":1759552510712,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":200},"responseTime":0.8029010002501309,"msg":"request completed"}
-{"level":30,"time":1759552510713,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"PATCH","url":"/api/programs/410/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563464,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":200},"responseTime":0.7103550005704165,"msg":"request completed"}
+{"level":30,"time":1759599563465,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"PATCH","url":"/api/programs/531/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         ok 5 - Advancing from mrv
         ok 6 - Advancing to deload
         ok 7 - Final phase is Deload
         1..7
-    ok 8 - AC-10: Proper phase progression sequence # time=395.78ms
+    ok 8 - AC-10: Proper phase progression sequence # time=393.22ms
     
     1..8
-ok 1 - Scenario 3: Mesocycle Progression # time=2243.337ms
+ok 1 - Scenario 3: Mesocycle Progression # time=2473.133ms
 
-{"level":30,"time":1759552510713,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":200},"responseTime":0.7013509999960661,"msg":"request completed"}
-{"level":30,"time":1759552510714,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759552510715,"pid":45682,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":200},"responseTime":0.721047000028193,"msg":"request completed"}
+{"level":30,"time":1759599563466,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":200},"responseTime":0.6883550006896257,"msg":"request completed"}
+{"level":30,"time":1759599563466,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599563467,"pid":210189,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":200},"responseTime":0.7801959998905659,"msg":"request completed"}
 1..1
 Database connection closed

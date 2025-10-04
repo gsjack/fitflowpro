@@ -86,6 +86,7 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
                     default_reps: { type: 'string' },
                     default_rir: { type: 'number' },
                     description: { type: 'string' },
+                    video_url: { type: ['string', 'null'] },
                   },
                 },
               },
@@ -168,6 +169,7 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
               default_reps: { type: 'string' },
               default_rir: { type: 'number' },
               description: { type: 'string' },
+              video_url: { type: ['string', 'null'] },
             },
           },
           404: {

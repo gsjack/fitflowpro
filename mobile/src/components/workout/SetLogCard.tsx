@@ -437,8 +437,9 @@ const styles = StyleSheet.create({
       android: 'Roboto',
       web: 'system-ui',
     }),
+    // @ts-expect-error - fontVariantNumeric is not in React Native types but works on web
     fontVariantNumeric: 'tabular-nums', // Monospace numbers for alignment
-  },
+  } as const,
   rirContainer: {
     marginBottom: spacing.lg,
   },

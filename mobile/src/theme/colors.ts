@@ -91,11 +91,11 @@ export const colors = {
 
 // Gradient presets for common UI patterns
 export const gradients = {
-  primary: ['#4C6FFF', '#7B3FFF'],
-  success: ['#00D9A3', '#00A67D'],
-  warning: ['#FFB800', '#FF8A3D'],
-  card: ['#1A1F3A', '#252B4A'],
-  hero: ['#2A2F4A', '#1A1F3A'],
+  primary: ['#4C6FFF', '#7B3FFF'] as [string, string, ...string[]],
+  success: ['#00D9A3', '#00A67D'] as [string, string, ...string[]],
+  warning: ['#FFB800', '#FF8A3D'] as [string, string, ...string[]],
+  card: ['#1A1F3A', '#252B4A'] as [string, string, ...string[]],
+  hero: ['#2A2F4A', '#1A1F3A'] as [string, string, ...string[]],
 };
 
 // Shadow/elevation presets (for React Native Paper)

@@ -6,7 +6,7 @@ TAP version 14
         ok 3 - Week 4 1RM should be ~130kg, got 136.2kg
         ok 4 - 1RM should improve by at least 8kg over 4 weeks, improved by 12.8kg
         1..4
-    ok 1 - should track 1RM progression over 4 weeks (120kg → 130kg) # time=6.699ms
+    ok 1 - should track 1RM progression over 4 weeks (120kg → 130kg) # time=9.166ms
     
     # Subtest: should track volume trends with MEV/MAV/MRV landmarks
         ok 1 - Should have 4 weeks of data
@@ -19,14 +19,14 @@ TAP version 14
         ok 8 - Week 4 should have 10 sets
         ok 9 - Week 4 (deload) should be in MEV-MAV zone
         1..9
-    ok 2 - should track volume trends with MEV/MAV/MRV landmarks # time=3.54ms
+    ok 2 - should track volume trends with MEV/MAV/MRV landmarks # time=6.75ms
     
     # Subtest: should calculate adherence and consistency metrics
         ok 1 - Should have 24 completed workouts
         ok 2 - Adherence rate should be 100%
-        ok 3 - Average duration should be 50-60 minutes, got 53.7
+        ok 3 - Average duration should be 50-60 minutes, got 55.0
         1..3
-    ok 3 - should calculate adherence and consistency metrics # time=1.889ms
+    ok 3 - should calculate adherence and consistency metrics # time=1.996ms
     
     # Subtest: should verify deload compliance
         ok 1 - Week 3 should have 18 sets (MRV)
@@ -34,7 +34,7 @@ TAP version 14
         ok 3 - Deload should reduce volume by ~50%, reduced by 44%
         ok 4 - Deload should be compliant (≤60% of previous week)
         1..4
-    ok 4 - should verify deload compliance # time=3.51ms
+    ok 4 - should verify deload compliance # time=2.335ms
     
     # Subtest: should handle multiple muscle groups in analytics
         ok 1 - Should have 3 muscle groups
@@ -45,9 +45,9 @@ TAP version 14
         ok 6 - Back volume should be 9,600 kg
         ok 7 - Legs volume should be 9,600 kg
         1..7
-    ok 5 - should handle multiple muscle groups in analytics # time=2.978ms
+    ok 5 - should handle multiple muscle groups in analytics # time=4.612ms
     
     1..5
-ok 1 - Integration Test: Analytics and Progression Tracking (T076) # time=38.763ms
+ok 1 - Integration Test: Analytics and Progression Tracking (T076) # time=48.587ms
 
 1..1

@@ -39,6 +39,7 @@ export default defineConfig({
     testTimeout: 10000, // Integration tests may take longer
     hookTimeout: 10000,
     // Run tests serially to avoid database conflicts
+    // @ts-expect-error - threads may not be in latest vitest types
     threads: false,
     // Clear mocks between tests
     clearMocks: true,

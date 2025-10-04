@@ -141,12 +141,15 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
 
       const result = await swapExerciseMutation(selectedExerciseId, newExercise.id);
 
-      console.log(
-        `[PlannerScreen] Swapped ${result.old_exercise_name} → ${result.new_exercise_name}`
-      );
+      // Type guard: result is SwapExerciseResponse
+      if ('old_exercise_name' in result && 'new_exercise_name' in result) {
+        console.log(
+          `[PlannerScreen] Swapped ${result.old_exercise_name} → ${result.new_exercise_name}`
+        );
 
-      // Show success message
-      showSnackbar(`Swapped to ${result.new_exercise_name}`);
+        // Show success message
+        showSnackbar(`Swapped to ${result.new_exercise_name}`);
+      }
 
       // Show volume warning if present
       if (result.volume_warning) {
@@ -371,8 +374,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
                     size={20}
                     onPress={() => handleAdjustSets(item.id, item.target_sets - 1)}
                     disabled={isOffline || item.target_sets <= 1}
-                    style={styles.setButton}
-                    containerStyle={styles.iconButtonContainer}
+                    style={[styles.setButton, styles.iconButtonContainer]}
                     accessibilityLabel="Decrease sets"
                   />
                   <Text variant="bodySmall" style={styles.exerciseDetails}>
@@ -383,8 +385,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
                     size={20}
                     onPress={() => handleAdjustSets(item.id, item.target_sets + 1)}
                     disabled={isOffline || item.target_sets >= 10}
-                    style={styles.setButton}
-                    containerStyle={styles.iconButtonContainer}
+                    style={[styles.setButton, styles.iconButtonContainer]}
                     accessibilityLabel="Increase sets"
                   />
                 </View>
@@ -402,7 +403,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
                   size={24}
                   onPress={() => setMenuVisible(item.id)}
                   disabled={isOffline}
-                  containerStyle={styles.iconButtonContainer}
+                  style={styles.iconButtonContainer}
                   accessibilityLabel={`Options for ${item.exercise_name}`}
                   accessibilityHint="Show exercise options menu"
                   accessibilityRole="button"

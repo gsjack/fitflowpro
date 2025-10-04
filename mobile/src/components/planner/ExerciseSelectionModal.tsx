@@ -172,7 +172,6 @@ export default function ExerciseSelectionModal({
     <Card
       style={styles.exerciseCard}
       elevation={2}
-      accessible={true}
       accessibilityRole="button"
       accessibilityLabel={`Select ${item.name}`}
       accessibilityHint={`Primary muscle: ${item.primary_muscle_group}, Equipment: ${item.equipment}`}
@@ -238,8 +237,6 @@ export default function ExerciseSelectionModal({
         visible={visible}
         onDismiss={handleDismiss}
         contentContainerStyle={[styles.container, { backgroundColor: theme.colors.surface }]}
-        accessible={true}
-        accessibilityLabel="Exercise selection modal"
       >
         <View style={styles.modalContent}>
           {/* Header */}

@@ -399,7 +399,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
                   iconColor={colors.primary.main}
                   size={24}
                   onPress={() => setVideoModalVisible(true)}
-                  containerStyle={styles.infoButtonContainer}
+                  style={styles.infoButtonContainer}
                   accessibilityLabel="Watch exercise demonstration"
                 />
               </View>
@@ -409,7 +409,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
               iconColor={colors.text.secondary}
               size={24}
               onPress={handleCancelWorkout}
-              containerStyle={styles.closeButtonContainer}
+              style={styles.closeButtonContainer}
               accessibilityLabel="Cancel workout"
             />
           </View>
@@ -434,6 +434,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
               progress={progress}
               color={colors.primary.main}
               style={styles.progressBar}
+              // @ts-expect-error - animatedValue accepts Animated.Value but types are incorrect
               animatedValue={progressAnimValue}
             />
           </View>

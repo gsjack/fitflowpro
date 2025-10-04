@@ -1,9 +1,9 @@
 TAP version 14
 # Subtest: Program Management Endpoints Contract Tests
-{"level":30,"time":1759594755313,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755635,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":316.8663520012051,"msg":"request completed"}
-{"level":30,"time":1759594755637,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755949,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":312.1345979999751,"msg":"request completed"}
+{"level":30,"time":1759599556472,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556709,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":236.0392300002277,"msg":"request completed"}
+{"level":30,"time":1759599556710,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556936,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":225.39598300121725,"msg":"request completed"}
     # Subtest: GET /api/programs
         # Subtest: should return active program with full structure (200)
             ok 1 - Returns 200 OK
@@ -31,21 +31,21 @@ TAP version 14
             ok 23 - target_rir is between 0 and 4
             ok 24 - ProgramExercise has order_index
             1..24
-        ok 1 - should return active program with full structure (200) # time=21.588ms
+        ok 1 - should return active program with full structure (200) # time=16.067ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             ok 2 - Returns error message
             1..2
-        ok 2 - should return 401 without authentication # time=2.363ms
+        ok 2 - should return 401 without authentication # time=3.661ms
         
         # Subtest: should return 404 when user has no active program
             ok 1 - All users get a default program on registration - 404 scenario not applicable # SKIP
             1..1
-        ok 3 - should return 404 when user has no active program # time=0.994ms
+        ok 3 - should return 404 when user has no active program # time=1.027ms
         
         1..3
-    ok 1 - GET /api/programs # time=33.123ms
+    ok 1 - GET /api/programs # time=26.684ms
     
     # Subtest: PATCH /api/programs/:id/advance-phase
         # Subtest: should advance phase automatically (MEV→MAV) (200)
@@ -61,71 +61,71 @@ TAP version 14
             ok 10 - MEV advances to MAV
             ok 11 - MEV→MAV volume multiplier is ~1.2
             1..11
-        ok 1 - should advance phase automatically (MEV→MAV) (200) # time=10.427ms
+        ok 1 - should advance phase automatically (MEV→MAV) (200) # time=8.68ms
         
-{"level":30,"time":1759594755953,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755959,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":6.100087000057101,"msg":"request completed"}
-{"level":30,"time":1759594755978,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755979,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":401},"responseTime":1.020312000066042,"msg":"request completed"}
-{"level":30,"time":1759594755986,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755988,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":2.1110259983688593,"msg":"request completed"}
-{"level":30,"time":1759594755989,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"PATCH","url":"/api/programs/425/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594755992,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":2.7972870003432035,"msg":"request completed"}
-{"level":30,"time":1759594756000,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"PATCH","url":"/api/programs/425/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556939,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556944,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":5.227128000929952,"msg":"request completed"}
+{"level":30,"time":1759599556957,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556958,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":401},"responseTime":1.2008510008454323,"msg":"request completed"}
+{"level":30,"time":1759599556965,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556968,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":2.600958000868559,"msg":"request completed"}
+{"level":30,"time":1759599556969,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"PATCH","url":"/api/programs/504/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556973,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":200},"responseTime":3.3901639990508556,"msg":"request completed"}
+{"level":30,"time":1759599556979,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"PATCH","url":"/api/programs/504/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should advance phase manually to specific target (200)
             ok 1 - Returns 200 OK
             ok 2 - Phase advanced to target mrv
             ok 3 - Has volume_multiplier
             ok 4 - Has exercises_updated
             1..4
-        ok 2 - should advance phase manually to specific target (200) # time=4.629ms
+        ok 2 - should advance phase manually to specific target (200) # time=3.545ms
         
-{"level":30,"time":1759594756003,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":2.7104749996215105,"msg":"request completed"}
-{"level":30,"time":1759594756006,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"PATCH","url":"/api/programs/425/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756008,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":1.7519710008054972,"msg":"request completed"}
-{"level":30,"time":1759594756008,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"PATCH","url":"/api/programs/425/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556981,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":200},"responseTime":1.789682000875473,"msg":"request completed"}
+{"level":30,"time":1759599556983,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"PATCH","url":"/api/programs/504/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should transition to deload from MRV (200)
             ok 1 - Returns 200 OK
             ok 2 - Previous phase was MRV
             ok 3 - New phase is deload
             ok 4 - Deload reduces volume by ~50%
             1..4
-        ok 3 - should transition to deload from MRV (200) # time=6.636ms
+        ok 3 - should transition to deload from MRV (200) # time=7.354ms
         
-{"level":30,"time":1759594756009,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":200},"responseTime":1.3737110011279583,"msg":"request completed"}
-{"level":30,"time":1759594756015,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"PATCH","url":"/api/programs/425/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556986,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":200},"responseTime":2.5672249998897314,"msg":"request completed"}
+{"level":30,"time":1759599556986,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"PATCH","url":"/api/programs/504/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556988,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":200},"responseTime":1.4309769999235868,"msg":"request completed"}
+{"level":30,"time":1759599556992,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"PATCH","url":"/api/programs/504/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid phase transition
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 400 for invalid phase transition # time=7.617ms
+        ok 4 - should return 400 for invalid phase transition # time=4.907ms
         
-{"level":30,"time":1759594756016,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"err":{"type":"Error","message":"body/target_phase must be equal to one of the allowed values","stack":"Error: body/target_phase must be equal to one of the allowed values\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/target_phase","schemaPath":"#/properties/target_phase/enum","keyword":"enum","params":{"allowedValues":["mev","mav","mrv","deload"]},"message":"must be equal to one of the allowed values"}],"validationContext":"body"},"msg":"body/target_phase must be equal to one of the allowed values"}
-{"level":30,"time":1759594756020,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"responseTime":4.3280020002275705,"msg":"request completed"}
-{"level":30,"time":1759594756024,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"PATCH","url":"/api/programs/425/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556993,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"err":{"type":"Error","message":"body/target_phase must be equal to one of the allowed values","stack":"Error: body/target_phase must be equal to one of the allowed values\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/target_phase","schemaPath":"#/properties/target_phase/enum","keyword":"enum","params":{"allowedValues":["mev","mav","mrv","deload"]},"message":"must be equal to one of the allowed values"}],"validationContext":"body"},"msg":"body/target_phase must be equal to one of the allowed values"}
+{"level":30,"time":1759599556995,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"responseTime":3.1418779995292425,"msg":"request completed"}
+{"level":30,"time":1759599556997,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"PATCH","url":"/api/programs/504/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 when manual=true but target_phase missing
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 400 when manual=true but target_phase missing # time=2.301ms
+        ok 5 - should return 400 when manual=true but target_phase missing # time=2.407ms
         
-{"level":30,"time":1759594756025,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"responseTime":0.8709219992160797,"msg":"request completed"}
-{"level":30,"time":1759594756027,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"PATCH","url":"/api/programs/425/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599556998,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"responseTime":0.881046999245882,"msg":"request completed"}
+{"level":30,"time":1759599557001,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"PATCH","url":"/api/programs/504/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 6 - should return 401 without authentication # time=4.738ms
+        ok 6 - should return 401 without authentication # time=2.274ms
         
-{"level":30,"time":1759594756031,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":401},"responseTime":0.7577099986374378,"msg":"request completed"}
-{"level":30,"time":1759594756033,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"PATCH","url":"/api/programs/99999/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557002,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":401},"responseTime":1.1571300011128187,"msg":"request completed"}
+{"level":30,"time":1759599557004,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"PATCH","url":"/api/programs/99999/advance-phase","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent program
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 7 - should return 404 for non-existent program # time=3.166ms
+        ok 7 - should return 404 for non-existent program # time=2.383ms
         
         1..7
-    ok 2 - PATCH /api/programs/:id/advance-phase # time=51.928ms
+    ok 2 - PATCH /api/programs/:id/advance-phase # time=43.375ms
     
     # Subtest: GET /api/programs/:id/volume
         # Subtest: should return volume analysis per muscle group (200)
@@ -148,7 +148,7 @@ TAP version 14
             ok 17 - Warning has current_volume
             ok 18 - Warning has threshold
             1..18
-        ok 1 - should return volume analysis per muscle group (200) # time=24.005ms
+        ok 1 - should return volume analysis per muscle group (200) # time=16.621ms
         
         # Subtest: should classify volume zones correctly
             ok 1 - biceps: MEV ≤ planned < MAV → adequate
@@ -166,56 +166,56 @@ TAP version 14
             ok 13 - traps: MEV ≤ planned < MAV → adequate
             ok 14 - triceps: MAV ≤ planned ≤ MRV → optimal
             1..14
-        ok 2 - should classify volume zones correctly # time=5.999ms
+        ok 2 - should classify volume zones correctly # time=6.792ms
         
         # Subtest: should generate warnings for suboptimal volume
             ok 1 - Warning count matches below_mev muscle groups
             ok 2 - Warning count matches above_mrv muscle groups
             1..2
-        ok 3 - should generate warnings for suboptimal volume # time=3.471ms
+        ok 3 - should generate warnings for suboptimal volume # time=4.247ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 4 - should return 401 without authentication # time=1.542ms
+        ok 4 - should return 401 without authentication # time=1.453ms
         
         # Subtest: should return 404 for non-existent program
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 404 for non-existent program # time=1.862ms
+        ok 5 - should return 404 for non-existent program # time=2.217ms
         
-{"level":30,"time":1759594756035,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":404},"responseTime":1.9119080007076263,"msg":"request completed"}
-{"level":30,"time":1759594756038,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756040,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":2.0173690002411604,"msg":"request completed"}
-{"level":30,"time":1759594756041,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"GET","url":"/api/programs/425/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756061,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":20.11306400038302,"msg":"request completed"}
-{"level":30,"time":1759594756066,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"GET","url":"/api/programs/425/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756069,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":200},"responseTime":2.3262770008295774,"msg":"request completed"}
-{"level":30,"time":1759594756073,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"GET","url":"/api/programs/425/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756075,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":1.9370510000735521,"msg":"request completed"}
-{"level":30,"time":1759594756078,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"GET","url":"/api/programs/425/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756078,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":401},"responseTime":0.3784699998795986,"msg":"request completed"}
-{"level":30,"time":1759594756080,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"GET","url":"/api/programs/99999/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756081,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":404},"responseTime":0.6161409988999367,"msg":"request completed"}
-{"level":30,"time":1759594756083,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756407,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":201},"responseTime":324.27093599922955,"msg":"request completed"}
-{"level":30,"time":1759594756408,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756692,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":200},"responseTime":283.8409410007298,"msg":"request completed"}
+{"level":30,"time":1759599557005,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":404},"responseTime":1.0001259986311197,"msg":"request completed"}
+{"level":30,"time":1759599557010,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557012,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":200},"responseTime":2.223116999492049,"msg":"request completed"}
+{"level":30,"time":1759599557013,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"GET","url":"/api/programs/504/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557024,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":200},"responseTime":11.69973500072956,"msg":"request completed"}
+{"level":30,"time":1759599557030,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"GET","url":"/api/programs/504/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557033,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":200},"responseTime":2.4121070001274347,"msg":"request completed"}
+{"level":30,"time":1759599557038,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"GET","url":"/api/programs/504/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557041,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":200},"responseTime":2.510514000430703,"msg":"request completed"}
+{"level":30,"time":1759599557043,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"GET","url":"/api/programs/504/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557044,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":401},"responseTime":0.39921299926936626,"msg":"request completed"}
+{"level":30,"time":1759599557046,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"GET","url":"/api/programs/99999/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557047,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":404},"responseTime":0.8406790010631084,"msg":"request completed"}
+{"level":30,"time":1759599557049,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557271,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":201},"responseTime":222.04995900020003,"msg":"request completed"}
+{"level":30,"time":1759599557271,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557489,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":200},"responseTime":217.06574000045657,"msg":"request completed"}
         # Subtest: should return 404 for another user's program
             ok 1 - Returns 404 Not Found (prevents data leakage)
             1..1
-        ok 6 - should return 404 for another user's program # time=615.142ms
+        ok 6 - should return 404 for another user's program # time=444.665ms
         
         1..6
-    ok 3 - GET /api/programs/:id/volume # time=661.442ms
+    ok 3 - GET /api/programs/:id/volume # time=484.939ms
     
     1..3
-ok 1 - Program Management Endpoints Contract Tests # time=1957.236ms
+ok 1 - Program Management Endpoints Contract Tests # time=1338.686ms
 
-{"level":30,"time":1759594756693,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756695,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":200},"responseTime":2.6386770009994507,"msg":"request completed"}
-{"level":30,"time":1759594756696,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"GET","url":"/api/programs/432/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759594756697,"pid":141259,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":404},"responseTime":0.7856459990143776,"msg":"request completed"}
+{"level":30,"time":1759599557489,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"GET","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557491,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":200},"responseTime":1.9976690001785755,"msg":"request completed"}
+{"level":30,"time":1759599557492,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"GET","url":"/api/programs/510/volume","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759599557492,"pid":209999,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":404},"responseTime":0.6247300002723932,"msg":"request completed"}
 1..1
 Database connection closed

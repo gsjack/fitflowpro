@@ -130,7 +130,12 @@ export default function RecoveryAssessmentForm({
     try {
       await createMutation.mutateAsync(assessmentData);
       setSuccessDialogVisible(true);
-      onSubmit(assessmentData);
+      // Convert to onSubmit format (expected by parent component)
+      onSubmit({
+        sleep_quality: parseInt(sleepQuality, 10),
+        soreness_level: parseInt(sorenessLevel, 10),
+        motivation_level: parseInt(motivationLevel, 10),
+      });
     } catch (error) {
       console.error('[RecoveryAssessmentForm] Failed to submit assessment:', error);
       // Error handling could be improved with a toast/snackbar

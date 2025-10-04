@@ -84,6 +84,14 @@ export interface UpdateProgramExerciseResponse {
 }
 
 /**
+ * Generic response from program exercise mutations (swap, update, etc.)
+ */
+export type ProgramExerciseResponse =
+  | SwapExerciseResponse
+  | UpdateProgramExerciseResponse
+  | CreateProgramExerciseResponse;
+
+/**
  * Response from DELETE /api/program-exercises/:id
  */
 export interface DeleteProgramExerciseResponse {
