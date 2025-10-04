@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert, RefreshControl } from 'react-native';
 import { Card, Button, Text, Chip, ActivityIndicator, SegmentedButtons, Dialog, Portal, List, IconButton } from 'react-native-paper';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { useRecoveryStore, getRecoveryMessage } from '../stores/recoveryStore';
@@ -19,6 +19,8 @@ import GradientCard from '../components/common/GradientCard';
 import StatCard from '../components/common/StatCard';
 import { getAuthenticatedClient } from '../services/api/authApi';
 import { getQuoteOfTheDay } from '../constants/quotes';
+import { MuscleGroupVolumeBar } from '../components/analytics/MuscleGroupVolumeBar';
+import { useCurrentWeekVolume } from '../services/api/analyticsApi';
 
 interface DashboardScreenProps {
   userId: number;
@@ -72,6 +74,15 @@ export default function DashboardScreen({
   useWorkoutStore();
   const { todayAssessment, volumeAdjustment, getTodayAssessment, submitAssessment } = useRecoveryStore();
 
+  // T090: Add volume tracking data fetching with TanStack Query
+  const {
+    data: volumeData,
+    isLoading: isLoadingVolume,
+    error: volumeError,
+    refetch: refetchVolume,
+    isRefetching: isRefetchingVolume,
+  } = useCurrentWeekVolume();
+
   useEffect(() => {
     loadDashboardData();
   }, [userId]);
@@ -110,6 +121,15 @@ export default function DashboardScreen({
     } finally {
       setLoading(false);
     }
+  };
+
+  // T091: Pull-to-refresh handler
+  const handleRefresh = async () => {
+    // Refresh both dashboard data and volume data
+    await Promise.all([
+      loadDashboardData(),
+      refetchVolume(),
+    ]);
   };
 
   const handleStartWorkout = async () => {
@@ -211,8 +231,22 @@ export default function DashboardScreen({
 
   const quoteOfTheDay = getQuoteOfTheDay();
 
+  // T091: Determine if refreshing (either from pull-to-refresh or manual refetch)
+  const isRefreshing = isRefetchingVolume;
+
   return (
-    <ScrollView style={styles.container} accessibilityRole="scrollbar">
+    <ScrollView
+      style={styles.container}
+      accessibilityRole="scrollbar"
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={handleRefresh}
+          colors={[colors.primary.main]}
+          tintColor={colors.primary.main}
+        />
+      }
+    >
       {/* Hero Section with Date & Recovery */}
       <View style={styles.heroSection}>
         <Text variant="headlineLarge" style={styles.dateText}>
@@ -537,6 +571,79 @@ export default function DashboardScreen({
         </Card>
       )}
 
+      {/* T089: Weekly Volume Section */}
+      <Card style={styles.volumeCard}>
+        <Card.Title
+          title="This Week's Volume"
+          titleVariant="titleLarge"
+          titleStyle={styles.sectionTitle}
+        />
+        <Card.Content>
+          {isLoadingVolume && (
+            <View style={styles.volumeLoadingContainer}>
+              <ActivityIndicator size="large" color={colors.primary.main} />
+              <Text variant="bodyMedium" style={styles.loadingText}>
+                Loading volume data...
+              </Text>
+            </View>
+          )}
+
+          {volumeError && (
+            <View style={styles.errorContainer}>
+              <Text variant="bodyMedium" style={styles.errorText}>
+                Failed to load volume data
+              </Text>
+              <Button
+                mode="outlined"
+                onPress={() => refetchVolume()}
+                style={styles.retryButton}
+                compact
+              >
+                Retry
+              </Button>
+            </View>
+          )}
+
+          {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length > 0 && (
+            <>
+              {/* Filter to show only muscle groups with planned sets > 0 */}
+              {volumeData.muscle_groups
+                .filter((mg) => mg.planned_sets > 0)
+                .sort((a, b) => a.muscle_group.localeCompare(b.muscle_group))
+                .map((muscleGroup) => (
+                  <MuscleGroupVolumeBar
+                    key={muscleGroup.muscle_group}
+                    muscleGroup={muscleGroup.muscle_group}
+                    completedSets={muscleGroup.completed_sets}
+                    plannedSets={muscleGroup.planned_sets}
+                    mev={muscleGroup.mev}
+                    mav={muscleGroup.mav}
+                    mrv={muscleGroup.mrv}
+                    zone={muscleGroup.zone}
+                  />
+                ))}
+
+              {/* Week info */}
+              <Text variant="bodySmall" style={styles.weekInfoText}>
+                Week: {new Date(volumeData.week_start).toLocaleDateString()} -{' '}
+                {new Date(volumeData.week_end).toLocaleDateString()}
+              </Text>
+            </>
+          )}
+
+          {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length === 0 && (
+            <View style={styles.emptyVolumeContainer}>
+              <Text variant="bodyMedium" style={styles.emptyVolumeText}>
+                No training volume recorded this week
+              </Text>
+              <Text variant="bodySmall" style={styles.emptyVolumeHint}>
+                Complete workouts to track your weekly volume
+              </Text>
+            </View>
+          )}
+        </Card.Content>
+      </Card>
+
       {/* Workout Swap Dialog */}
       <Portal>
         <Dialog
@@ -803,5 +910,57 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary.main + '20',
     borderWidth: 1,
     borderColor: colors.primary.main,
+  },
+
+  // T089: Weekly Volume Section
+  volumeCard: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    backgroundColor: colors.background.secondary,
+    borderRadius: borderRadius.lg,
+  },
+  sectionTitle: {
+    color: colors.text.primary,
+    fontWeight: '600',
+  },
+  volumeLoadingContainer: {
+    padding: spacing.xl,
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  loadingText: {
+    color: colors.text.secondary,
+  },
+  errorContainer: {
+    padding: spacing.lg,
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  errorText: {
+    color: colors.error.main,
+    textAlign: 'center',
+  },
+  retryButton: {
+    borderColor: colors.primary.main,
+    borderWidth: 1,
+  },
+  weekInfoText: {
+    color: colors.text.tertiary,
+    textAlign: 'center',
+    marginTop: spacing.md,
+    fontStyle: 'italic',
+  },
+  emptyVolumeContainer: {
+    padding: spacing.xl,
+    alignItems: 'center',
+  },
+  emptyVolumeText: {
+    color: colors.text.secondary,
+    textAlign: 'center',
+    marginBottom: spacing.xs,
+  },
+  emptyVolumeHint: {
+    color: colors.text.tertiary,
+    textAlign: 'center',
   },
 });

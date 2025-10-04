@@ -19,6 +19,9 @@ import {
 } from '../services/api/analyticsApi';
 import { OneRMProgressionChart } from '../components/analytics/OneRMProgressionChart';
 import { VolumeChart } from '../components/analytics/VolumeChart';
+import { VolumeTrendsChart } from '../components/analytics/VolumeTrendsChart';
+import { WeeklyConsistencyCalendar } from '../components/analytics/WeeklyConsistencyCalendar';
+import VO2maxProgressionChart from '../components/VO2maxProgressionChart';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/typography';
 import StatCard from '../components/common/StatCard';
@@ -144,6 +147,10 @@ function VolumeTab({ startDate, endDate }: VolumeTabProps): React.JSX.Element {
         Periodization.
       </Text>
 
+      {/* Line chart showing volume trends over time */}
+      <VolumeTrendsChart weeks={8} />
+
+      {/* Bar chart showing weekly volume with MEV/MAV/MRV thresholds */}
       <VolumeChart startDate={startDate} endDate={endDate} />
     </View>
   );
@@ -208,6 +215,10 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
         Performance Stats
       </Text>
 
+      {/* Weekly Consistency Calendar (heatmap) */}
+      <WeeklyConsistencyCalendar weeks={12} />
+
+      {/* Stats Grid */}
       <View style={styles.statsGrid}>
         <StatCard
           label="Adherence Rate"
@@ -243,25 +254,21 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
 }
 
 /**
- * Cardio Tab - VO2max Progression
+ * Cardio Tab - VO2max Progression (T100)
  */
 function CardioTab(): React.JSX.Element {
   return (
-    <View style={styles.centerContent}>
-      <MaterialCommunityIcons
-        name="run"
-        size={64}
-        color={colors.text.disabled}
-      />
+    <View>
       <Text variant="titleLarge" style={styles.sectionTitle}>
-        Cardio Metrics
+        Cardio Performance
       </Text>
-      <Text variant="bodyMedium" style={styles.placeholderText}>
-        VO2max progression tracking coming soon
+      <Text variant="bodyMedium" style={styles.sectionDescription}>
+        Track your cardiovascular fitness improvements with VO2max estimation from Norwegian 4x4 and
+        Zone 2 protocols.
       </Text>
-      <Text variant="bodySmall" style={styles.placeholderSubtext}>
-        Track your cardiovascular fitness improvements with Norwegian 4x4 protocol
-      </Text>
+
+      {/* VO2max Progression Chart with date range selector */}
+      <VO2maxProgressionChart />
     </View>
   );
 }

@@ -1,223 +1,275 @@
 /**
- * Planner Screen (T061)
+ * Planner Screen (T061, T092-T096)
  *
  * Program planner showing:
  * - Display program days (Push A, Pull A, etc.)
- * - Exercise list with reordering capability
- * - MEV/MAV/MRV volume validation overlay
- * - Exercise swap search (filter by muscle group, equipment)
+ * - Exercise list with drag-and-drop reordering capability (T094)
+ * - MEV/MAV/MRV volume validation overlay (T092)
+ * - Exercise swap search with ExerciseSelectionModal (T093)
+ * - Phase progression with PhaseProgressIndicator (T096)
+ * - Offline detection and blocking overlay (T095)
  */
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import {
   Card,
   Button,
   Text,
   Divider,
-  Chip,
   ActivityIndicator,
-  Portal,
-  Modal,
-  Searchbar,
   IconButton,
+  Snackbar,
 } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as programDb from '../services/database/programDb';
-import {
-  VOLUME_LANDMARKS,
-  getVolumeZone,
-  getVolumeZoneColor,
-  type MuscleGroup,
-} from '../constants/volumeLandmarks';
+import NetInfo from '@react-native-community/netinfo';
+import DraggableFlatList, {
+  RenderItemParams,
+  ScaleDecorator,
+} from 'react-native-draggable-flatlist';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { colors } from '../theme/colors';
 
-interface PlannerScreenProps {
-  userId: number;
-}
+// API imports
+import { getUserProgram, Program } from '../services/api/programApi';
+import { getProgramVolumeAnalysis, ProgramVolumeAnalysis } from '../services/api/analyticsApi';
+import { swapExercise, reorderExercises, ReorderItem } from '../services/api/programExerciseApi';
+import { Exercise } from '../services/api/exerciseApi';
 
-interface VolumeValidation {
-  muscleGroup: MuscleGroup;
-  totalSets: number;
-  zone: 'under' | 'optimal' | 'approaching_limit' | 'overreaching';
-  message: string;
+// Component imports
+import PhaseProgressIndicator from '../components/planner/PhaseProgressIndicator';
+import ProgramVolumeOverview, {
+  MuscleGroupVolume,
+} from '../components/planner/ProgramVolumeOverview';
+import ExerciseSelectionModal from '../components/planner/ExerciseSelectionModal';
+import OfflineOverlay from '../components/common/OfflineOverlay';
+
+interface PlannerScreenProps {
+  userId?: number; // Optional for demo purposes
 }
 
 export default function PlannerScreen({ userId }: PlannerScreenProps) {
+  // Program state
   const [loading, setLoading] = useState(true);
-  const [program, setProgram] = useState<programDb.Program | null>(null);
-  const [programDays, setProgramDays] = useState<programDb.ProgramDay[]>([]);
-  const [selectedDay, setSelectedDay] = useState<programDb.ProgramDay | null>(null);
-  const [dayExercises, setDayExercises] = useState<programDb.ProgramExercise[]>([]);
-  const [volumeValidation, setVolumeValidation] = useState<VolumeValidation[]>([]);
+  const [program, setProgram] = useState<Program | null>(null);
+  const [selectedDayId, setSelectedDayId] = useState<number | null>(null);
+  const [volumeAnalysis, setVolumeAnalysis] = useState<ProgramVolumeAnalysis | null>(null);
 
-  // Exercise swap modal
+  // Offline state (T095)
+  const [isOffline, setIsOffline] = useState(false);
+
+  // Exercise swap modal state (T093)
   const [swapModalVisible, setSwapModalVisible] = useState(false);
-  const [selectedExercise, setSelectedExercise] = useState<programDb.ProgramExercise | null>(null);
-  const [availableExercises, setAvailableExercises] = useState<programDb.Exercise[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterMuscleGroup, setFilterMuscleGroup] = useState<string>('');
-  const [filterEquipment, setFilterEquipment] = useState<string>('');
+  const [selectedExerciseId, setSelectedExerciseId] = useState<number | null>(null);
+  const [swapMuscleGroupFilter, setSwapMuscleGroupFilter] = useState<string | undefined>(undefined);
 
+  // Snackbar state
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  /**
+   * Load program data on mount
+   */
   useEffect(() => {
-    loadProgramData();
-  }, [userId]);
+    void loadProgramData();
+  }, []);
 
+  /**
+   * Listen for network status changes (T095)
+   */
   useEffect(() => {
-    if (selectedDay) {
-      loadDayExercises(selectedDay.id);
-    }
-  }, [selectedDay]);
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsOffline(!state.isConnected);
+    });
+    return unsubscribe;
+  }, []);
 
-  useEffect(() => {
-    if (dayExercises.length > 0) {
-      calculateVolumeValidation();
-    }
-  }, [dayExercises]);
-
+  /**
+   * Load program and volume analysis from API
+   */
   const loadProgramData = async () => {
     try {
       setLoading(true);
 
       // Load user's active program
-      const userProgram = await programDb.getUserProgram(userId);
+      const userProgram = await getUserProgram();
       setProgram(userProgram);
 
-      if (userProgram) {
-        // Load program days
-        const days = await programDb.getProgramDays(userProgram.id);
-        setProgramDays(days);
-
-        // Select first day by default
-        if (days.length > 0) {
-          setSelectedDay(days[0]);
-        }
+      // Select first day by default
+      if (userProgram.program_days.length > 0) {
+        setSelectedDayId(userProgram.program_days[0].id);
       }
+
+      // Load volume analysis (T092)
+      const analysis = await getProgramVolumeAnalysis();
+      setVolumeAnalysis(analysis);
     } catch (error) {
       console.error('[PlannerScreen] Error loading program:', error);
+      showSnackbar('Failed to load program. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const loadDayExercises = async (programDayId: number) => {
-    try {
-      const exercises = await programDb.getProgramExercises(programDayId);
-      setDayExercises(exercises);
-    } catch (error) {
-      console.error('[PlannerScreen] Error loading exercises:', error);
-    }
-  };
-
-  const calculateVolumeValidation = () => {
-    // Group exercises by muscle group and sum sets
-    const muscleGroupVolumes: Record<string, number> = {};
-
-    dayExercises.forEach((exercise) => {
-      if (exercise.muscle_groups) {
-        try {
-          const groups = JSON.parse(exercise.muscle_groups) as string[];
-          groups.forEach((group) => {
-            muscleGroupVolumes[group] = (muscleGroupVolumes[group] || 0) + exercise.sets;
-          });
-        } catch (e) {
-          console.warn('[PlannerScreen] Failed to parse muscle groups:', e);
-        }
-      }
-    });
-
-    // Calculate validation for each muscle group
-    const validations: VolumeValidation[] = Object.entries(muscleGroupVolumes).map(
-      ([muscleGroup, totalSets]) => {
-        const zone = getVolumeZone(muscleGroup as MuscleGroup, totalSets);
-        const landmark = VOLUME_LANDMARKS[muscleGroup as MuscleGroup];
-
-        let message = '';
-        if (zone === 'under') {
-          message = `Below MEV (${landmark.mev} sets) - increase volume`;
-        } else if (zone === 'optimal') {
-          message = `Optimal range (${landmark.mev}-${landmark.mav} sets)`;
-        } else if (zone === 'approaching_limit') {
-          message = `Approaching MRV (${landmark.mrv} sets) - monitor recovery`;
-        } else {
-          message = `Over MRV (${landmark.mrv} sets) - reduce volume`;
-        }
-
-        return {
-          muscleGroup: muscleGroup as MuscleGroup,
-          totalSets,
-          zone,
-          message,
-        };
-      }
-    );
-
-    setVolumeValidation(validations);
-  };
-
-  const handleExerciseSwap = async (programExercise: programDb.ProgramExercise) => {
-    setSelectedExercise(programExercise);
-
-    // Load available exercises for swapping
-    const exercises = await programDb.getAllExercises();
-    setAvailableExercises(exercises);
+  /**
+   * Handle exercise swap (T093)
+   */
+  const handleExerciseSwap = (programExerciseId: number, muscleGroup?: string) => {
+    setSelectedExerciseId(programExerciseId);
+    setSwapMuscleGroupFilter(muscleGroup);
     setSwapModalVisible(true);
   };
 
-  const handleConfirmSwap = async (newExercise: programDb.Exercise) => {
-    if (!selectedExercise) return;
+  /**
+   * Confirm exercise swap (T093)
+   */
+  const handleConfirmSwap = async (newExercise: Exercise) => {
+    if (!selectedExerciseId) return;
 
     try {
-      // Swap the exercise
-      await programDb.swapExercise(selectedExercise.id, newExercise.id);
+      const result = await swapExercise(selectedExerciseId, newExercise.id);
 
-      // Reload exercises
-      if (selectedDay) {
-        await loadDayExercises(selectedDay.id);
+      console.log(
+        `[PlannerScreen] Swapped ${result.old_exercise_name} → ${result.new_exercise_name}`
+      );
+
+      // Show success message
+      showSnackbar(`Swapped to ${result.new_exercise_name}`);
+
+      // Show volume warning if present
+      if (result.volume_warning) {
+        showSnackbar(result.volume_warning);
       }
+
+      // Reload program data
+      await loadProgramData();
 
       // Close modal
       setSwapModalVisible(false);
-      setSelectedExercise(null);
-      setSearchQuery('');
-      setFilterMuscleGroup('');
-      setFilterEquipment('');
+      setSelectedExerciseId(null);
+      setSwapMuscleGroupFilter(undefined);
     } catch (error) {
       console.error('[PlannerScreen] Error swapping exercise:', error);
+      showSnackbar('Failed to swap exercise. Please try again.');
     }
   };
 
-  const handleMoveExercise = async (exerciseId: number, direction: 'up' | 'down') => {
-    const exerciseIndex = dayExercises.findIndex((ex) => ex.id === exerciseId);
-    if (exerciseIndex === -1) return;
-
-    const newIndex = direction === 'up' ? exerciseIndex - 1 : exerciseIndex + 1;
-    if (newIndex < 0 || newIndex >= dayExercises.length) return;
+  /**
+   * Handle drag-and-drop reorder (T094)
+   */
+  const handleReorder = async (data: any[]) => {
+    if (!selectedDayId) return;
 
     try {
-      // Update order indices
-      await programDb.updateExerciseOrder(dayExercises[exerciseIndex].id, newIndex);
-      await programDb.updateExerciseOrder(dayExercises[newIndex].id, exerciseIndex);
+      // Build reorder array
+      const reorderItems: ReorderItem[] = data.map((item, index) => ({
+        program_exercise_id: item.id,
+        new_order_index: index,
+      }));
 
-      // Reload exercises
-      if (selectedDay) {
-        await loadDayExercises(selectedDay.id);
-      }
+      // Call API
+      await reorderExercises(selectedDayId, reorderItems);
+
+      console.log('[PlannerScreen] Reordered exercises:', reorderItems);
+
+      // Reload program data
+      await loadProgramData();
     } catch (error) {
-      console.error('[PlannerScreen] Error reordering exercise:', error);
+      console.error('[PlannerScreen] Error reordering exercises:', error);
+      showSnackbar('Failed to reorder exercises. Please try again.');
     }
   };
 
-  const filteredExercises = availableExercises.filter((exercise) => {
-    const matchesSearch =
-      searchQuery === '' || exercise.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesMuscleGroup =
-      filterMuscleGroup === '' || exercise.muscle_groups.includes(filterMuscleGroup);
-    const matchesEquipment = filterEquipment === '' || exercise.equipment === filterEquipment;
+  /**
+   * Handle phase advancement (T096)
+   */
+  const handleAdvancePhase = async (newPhase: string, volumeMultiplier: number) => {
+    try {
+      console.log(`[PlannerScreen] Advanced to ${newPhase} (${volumeMultiplier}x volume)`);
 
-    return matchesSearch && matchesMuscleGroup && matchesEquipment;
-  });
+      // Show success message
+      showSnackbar(`Advanced to ${newPhase.toUpperCase()} phase`);
 
+      // Reload program data
+      await loadProgramData();
+    } catch (error) {
+      console.error('[PlannerScreen] Error handling phase advance:', error);
+    }
+  };
+
+  /**
+   * Show snackbar message
+   */
+  const showSnackbar = (message: string) => {
+    setSnackbarMessage(message);
+    setSnackbarVisible(true);
+  };
+
+  /**
+   * Get selected day's exercises
+   */
+  const selectedDayExercises =
+    program?.program_days.find((day) => day.id === selectedDayId)?.exercises || [];
+
+  /**
+   * Render draggable exercise item (T094)
+   */
+  const renderExerciseItem = ({ item, drag, isActive }: RenderItemParams<any>) => {
+    const muscleGroups = item.muscle_groups ? JSON.parse(item.muscle_groups) : [];
+    const primaryMuscleGroup = muscleGroups[0] || '';
+
+    return (
+      <ScaleDecorator>
+        <Card
+          style={[
+            styles.exerciseCard,
+            isActive && styles.exerciseCardDragging,
+          ]}
+          elevation={isActive ? 5 : 2}
+          onLongPress={drag}
+          disabled={isActive || isOffline}
+        >
+          <Card.Content style={styles.exerciseCardContent}>
+            <View style={styles.dragHandle}>
+              <MaterialCommunityIcons
+                name="drag-horizontal-variant"
+                size={24}
+                color={colors.text.secondary}
+              />
+            </View>
+            <View style={styles.exerciseInfo}>
+              <Text variant="bodyLarge" style={styles.exerciseName}>
+                {item.exercise_name}
+              </Text>
+              <Text variant="bodySmall" style={styles.exerciseDetails}>
+                {item.target_sets} sets × {item.target_rep_range} @ RIR {item.target_rir}
+              </Text>
+            </View>
+            <IconButton
+              icon="swap-horizontal"
+              size={20}
+              onPress={() => handleExerciseSwap(item.id, primaryMuscleGroup)}
+              disabled={isOffline}
+              accessibilityLabel={`Swap ${item.exercise_name}`}
+              accessibilityHint="Replace this exercise with a different one"
+              accessibilityRole="button"
+            />
+          </Card.Content>
+        </Card>
+      </ScaleDecorator>
+    );
+  };
+
+  // Offline overlay (T095)
+  if (isOffline) {
+    return (
+      <View style={styles.container}>
+        <OfflineOverlay message="Program editing requires internet connection" />
+      </View>
+    );
+  }
+
+  // Loading state
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -226,6 +278,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
     );
   }
 
+  // No program state
   if (!program) {
     return (
       <View style={styles.container}>
@@ -248,239 +301,131 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
     );
   }
 
-  return (
-    <ScrollView style={styles.container}>
-      {/* Program Info */}
-      <Card style={styles.card}>
-        <Card.Content>
-          <Text variant="titleLarge" style={styles.programTitle}>
-            {program.name}
-          </Text>
-          <View style={styles.programInfo}>
-            <Chip mode="flat" style={styles.phaseChip}>
-              Week {program.mesocycle_week} - {program.mesocycle_phase.toUpperCase()}
-            </Chip>
-          </View>
-        </Card.Content>
-      </Card>
+  const selectedDay = program.program_days.find((day) => day.id === selectedDayId);
 
-      {/* Program Days */}
-      <Card style={styles.card}>
-        <Card.Content>
-          <Text variant="titleMedium" style={styles.sectionTitle}>
-            Training Days
-          </Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.daysScroll}>
-            {programDays.map((day) => (
-              <TouchableOpacity
-                key={day.id}
-                onPress={() => setSelectedDay(day)}
-                style={[styles.dayChip, selectedDay?.id === day.id && styles.dayChipSelected]}
-              >
-                <Text
-                  variant="bodyMedium"
-                  style={[
-                    styles.dayChipText,
-                    selectedDay?.id === day.id && styles.dayChipTextSelected,
-                  ]}
+  return (
+    <GestureHandlerRootView style={styles.flex}>
+      <ScrollView style={styles.container}>
+        {/* Phase Progress Indicator (T096) */}
+        <PhaseProgressIndicator
+          currentPhase={program.mesocycle_phase}
+          currentWeek={program.mesocycle_week}
+          programId={program.id}
+          onAdvancePhase={handleAdvancePhase}
+        />
+
+        {/* Program Volume Overview (T092) */}
+        {volumeAnalysis && (
+          <ProgramVolumeOverview
+            muscleGroups={volumeAnalysis.muscle_groups.map(
+              (mg): MuscleGroupVolume => ({
+                muscle_group: mg.muscle_group,
+                planned_weekly_sets: mg.planned_weekly_sets,
+                mev: mg.mev,
+                mav: mg.mav,
+                mrv: mg.mrv,
+                zone: mg.zone as 'below_mev' | 'adequate' | 'optimal' | 'above_mrv',
+                warning: mg.warning,
+              })
+            )}
+          />
+        )}
+
+        {/* Program Days */}
+        <Card style={styles.card}>
+          <Card.Content>
+            <Text variant="titleMedium" style={styles.sectionTitle}>
+              Training Days
+            </Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.daysScroll}>
+              {program.program_days.map((day) => (
+                <Button
+                  key={day.id}
+                  mode={selectedDayId === day.id ? 'contained' : 'outlined'}
+                  onPress={() => setSelectedDayId(day.id)}
+                  style={styles.dayButton}
+                  compact
                 >
                   {day.day_name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </Card.Content>
-      </Card>
-
-      {/* Volume Validation */}
-      {volumeValidation.length > 0 && (
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text variant="titleMedium" style={styles.sectionTitle}>
-              Volume Validation
-            </Text>
-            <Divider style={styles.divider} />
-            {volumeValidation.map((validation) => (
-              <View key={validation.muscleGroup} style={styles.validationRow}>
-                <View style={styles.validationInfo}>
-                  <Text variant="bodyMedium" style={styles.validationMuscle}>
-                    {validation.muscleGroup.replace('_', ' ')}
-                  </Text>
-                  <Text variant="bodySmall" style={styles.validationMessage}>
-                    {validation.message}
-                  </Text>
-                </View>
-                <Chip
-                  mode="flat"
-                  style={[
-                    styles.validationChip,
-                    { backgroundColor: getVolumeZoneColor(validation.zone) + '20' },
-                  ]}
-                  textStyle={{ color: getVolumeZoneColor(validation.zone) }}
-                >
-                  {validation.totalSets} sets
-                </Chip>
-              </View>
-            ))}
+                </Button>
+              ))}
+            </ScrollView>
           </Card.Content>
         </Card>
-      )}
 
-      {/* Exercise List */}
-      {selectedDay && (
-        <Card style={styles.card}>
-          <Card.Content>
-            <Text variant="titleMedium" style={styles.sectionTitle}>
-              Exercises - {selectedDay.day_name}
-            </Text>
-            <Divider style={styles.divider} />
-            {dayExercises.length > 0 ? (
-              dayExercises.map((exercise, index) => (
-                <View key={exercise.id}>
-                  <View style={styles.exerciseRow}>
-                    <View style={styles.exerciseInfo}>
-                      <Text variant="bodyMedium" style={styles.exerciseName}>
-                        {index + 1}. {exercise.exercise_name}
-                      </Text>
-                      <Text variant="bodySmall" style={styles.exerciseDetails}>
-                        {exercise.sets} sets × {exercise.reps} reps @ RIR {exercise.rir}
-                      </Text>
-                    </View>
-                    <View style={styles.exerciseActions}>
-                      <IconButton
-                        icon="arrow-up"
-                        size={20}
-                        disabled={index === 0}
-                        onPress={() => handleMoveExercise(exercise.id, 'up')}
-                        accessibilityLabel={`Move ${exercise.exercise_name} up`}
-                        accessibilityHint="Reorders this exercise to appear earlier in the workout"
-                        accessibilityRole="button"
-                      />
-                      <IconButton
-                        icon="arrow-down"
-                        size={20}
-                        disabled={index === dayExercises.length - 1}
-                        onPress={() => handleMoveExercise(exercise.id, 'down')}
-                        accessibilityLabel={`Move ${exercise.exercise_name} down`}
-                        accessibilityHint="Reorders this exercise to appear later in the workout"
-                        accessibilityRole="button"
-                      />
-                      <IconButton
-                        icon="swap-horizontal"
-                        size={20}
-                        onPress={() => handleExerciseSwap(exercise)}
-                        accessibilityLabel={`Swap ${exercise.exercise_name}`}
-                        accessibilityHint="Replace this exercise with a different one"
-                        accessibilityRole="button"
-                      />
-                    </View>
-                  </View>
-                  {index < dayExercises.length - 1 && <Divider style={styles.divider} />}
-                </View>
-              ))
-            ) : (
-              <Text variant="bodyMedium" style={styles.emptyText}>
-                No exercises for this day
+        {/* Draggable Exercise List (T094) */}
+        {selectedDay && (
+          <Card style={styles.card}>
+            <Card.Content>
+              <Text variant="titleMedium" style={styles.sectionTitle}>
+                Exercises - {selectedDay.day_name}
               </Text>
-            )}
-          </Card.Content>
-        </Card>
-      )}
-
-      {/* Exercise Swap Modal */}
-      <Portal>
-        <Modal
-          visible={swapModalVisible}
-          onDismiss={() => setSwapModalVisible(false)}
-          contentContainerStyle={styles.modalContent}
-        >
-          <Text variant="titleMedium" style={styles.modalTitle} accessibilityRole="header">
-            Swap Exercise
-          </Text>
-          <Text
-            variant="bodySmall"
-            style={styles.modalSubtitle}
-            accessibilityLabel={`Current exercise: ${selectedExercise?.exercise_name}`}
-          >
-            Current: {selectedExercise?.exercise_name}
-          </Text>
-
-          <Searchbar
-            placeholder="Search exercises..."
-            onChangeText={setSearchQuery}
-            value={searchQuery}
-            style={styles.searchBar}
-            accessibilityLabel="Search exercises"
-            accessibilityHint="Filter exercises by name"
-            accessibilityRole="search"
-          />
-
-          <View style={styles.filterRow}>
-            <Button
-              mode={filterMuscleGroup === 'chest' ? 'contained' : 'outlined'}
-              onPress={() => setFilterMuscleGroup(filterMuscleGroup === 'chest' ? '' : 'chest')}
-              style={styles.filterButton}
-              compact
-            >
-              Chest
-            </Button>
-            <Button
-              mode={filterMuscleGroup === 'back' ? 'contained' : 'outlined'}
-              onPress={() => setFilterMuscleGroup(filterMuscleGroup === 'back' ? '' : 'back')}
-              style={styles.filterButton}
-              compact
-            >
-              Back
-            </Button>
-            <Button
-              mode={filterEquipment === 'barbell' ? 'contained' : 'outlined'}
-              onPress={() => setFilterEquipment(filterEquipment === 'barbell' ? '' : 'barbell')}
-              style={styles.filterButton}
-              compact
-            >
-              Barbell
-            </Button>
-          </View>
-
-          <FlatList
-            data={filteredExercises}
-            keyExtractor={(item) => item.id.toString()}
-            style={styles.exerciseList}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.exerciseOption}
-                onPress={() => handleConfirmSwap(item)}
-              >
-                <Text variant="bodyMedium">{item.name}</Text>
-                <Text variant="bodySmall" style={styles.exerciseOptionDetails}>
-                  {item.equipment} • {item.difficulty}
+              <Divider style={styles.divider} />
+              {selectedDayExercises.length > 0 ? (
+                <DraggableFlatList
+                  data={selectedDayExercises}
+                  onDragEnd={({ data }) => void handleReorder(data)}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={renderExerciseItem}
+                  containerStyle={styles.exerciseList}
+                />
+              ) : (
+                <Text variant="bodyMedium" style={styles.emptyText}>
+                  No exercises for this day
                 </Text>
-              </TouchableOpacity>
-            )}
-          />
+              )}
+            </Card.Content>
+          </Card>
+        )}
 
-          <Button mode="outlined" onPress={() => setSwapModalVisible(false)}>
-            Cancel
-          </Button>
-        </Modal>
-      </Portal>
-    </ScrollView>
+        {/* Exercise Swap Modal (T093) */}
+        <ExerciseSelectionModal
+          visible={swapModalVisible}
+          onDismiss={() => {
+            setSwapModalVisible(false);
+            setSelectedExerciseId(null);
+            setSwapMuscleGroupFilter(undefined);
+          }}
+          onSelectExercise={handleConfirmSwap}
+          muscleGroupFilter={swapMuscleGroupFilter}
+          excludeExercises={selectedDayExercises.map((ex) => ex.exercise_id)}
+        />
+
+        {/* Snackbar */}
+        <Snackbar
+          visible={snackbarVisible}
+          onDismiss={() => setSnackbarVisible(false)}
+          duration={3000}
+          action={{
+            label: 'Close',
+            onPress: () => setSnackbarVisible(false),
+          }}
+        >
+          {snackbarMessage}
+        </Snackbar>
+      </ScrollView>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#0A0E27', // Dark theme background
+    backgroundColor: colors.background.primary,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.background.primary,
   },
   card: {
-    margin: 16,
-    marginBottom: 0,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    backgroundColor: colors.background.secondary,
   },
   emptyCard: {
     margin: 16,
@@ -500,123 +445,57 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     textAlign: 'center',
   },
-  programTitle: {
-    fontWeight: 'bold',
-  },
-  programInfo: {
-    marginTop: 8,
-  },
-  phaseChip: {
-    alignSelf: 'flex-start',
-  },
   sectionTitle: {
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 12,
+    color: colors.text.primary,
   },
   daysScroll: {
     marginTop: 8,
   },
-  dayChip: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+  dayButton: {
     marginRight: 8,
-    borderRadius: 20,
-    backgroundColor: '#e5e7eb',
-  },
-  dayChipSelected: {
-    backgroundColor: '#3b82f6',
-  },
-  dayChipText: {
-    color: '#1f2937',
-  },
-  dayChipTextSelected: {
-    color: '#ffffff',
   },
   divider: {
     marginVertical: 12,
+    backgroundColor: colors.effects.divider,
   },
-  validationRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  exerciseList: {
+    marginTop: 8,
+  },
+  exerciseCard: {
     marginBottom: 12,
+    backgroundColor: colors.background.tertiary,
   },
-  validationInfo: {
-    flex: 1,
+  exerciseCardDragging: {
+    opacity: 0.8,
+    backgroundColor: colors.primary.main + '20',
   },
-  validationMuscle: {
-    fontWeight: '600',
-    textTransform: 'capitalize',
-  },
-  validationMessage: {
-    color: '#6b7280',
-    marginTop: 2,
-  },
-  validationChip: {
-    marginLeft: 12,
-  },
-  exerciseRow: {
+  exerciseCardContent: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 8,
+  },
+  dragHandle: {
+    marginRight: 12,
+    justifyContent: 'center',
   },
   exerciseInfo: {
     flex: 1,
   },
   exerciseName: {
-    fontWeight: '500',
-  },
-  exerciseDetails: {
-    color: '#6b7280',
-    marginTop: 4,
-  },
-  exerciseActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  emptyText: {
-    color: '#6b7280',
-    textAlign: 'center',
-    marginTop: 16,
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    margin: 20,
-    borderRadius: 8,
-    maxHeight: '80%',
-  },
-  modalTitle: {
-    fontWeight: 'bold',
+    fontWeight: '600',
+    color: colors.text.primary,
     marginBottom: 4,
   },
-  modalSubtitle: {
-    color: '#6b7280',
+  exerciseDetails: {
+    color: colors.text.secondary,
+    fontSize: 12,
+  },
+  emptyText: {
+    color: colors.text.secondary,
+    textAlign: 'center',
+    marginTop: 16,
     marginBottom: 16,
-  },
-  searchBar: {
-    marginBottom: 12,
-  },
-  filterRow: {
-    flexDirection: 'row',
-    gap: 8,
-    marginBottom: 12,
-  },
-  filterButton: {
-    flex: 1,
-  },
-  exerciseList: {
-    maxHeight: 300,
-    marginBottom: 16,
-  },
-  exerciseOption: {
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
-  },
-  exerciseOptionDetails: {
-    color: '#6b7280',
-    marginTop: 4,
   },
 });
