@@ -11,7 +11,7 @@
  */
 
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Animated } from 'react-native';
 import { Surface, Text, SegmentedButtons, ActivityIndicator, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -21,10 +21,12 @@ import { VolumeChart } from '../components/analytics/VolumeChart';
 import { VolumeTrendsChart } from '../components/analytics/VolumeTrendsChart';
 import { WeeklyConsistencyCalendar } from '../components/analytics/WeeklyConsistencyCalendar';
 import VO2maxProgressionChart from '../components/VO2maxProgressionChart';
+import BodyWeightChart from '../components/analytics/BodyWeightChart';
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/typography';
 import StatCard from '../components/common/StatCard';
 import { ChartSkeleton, StatCardSkeleton } from '../components/skeletons';
+import { useFadeIn } from '../utils/animations';
 
 /**
  * Tab options for analytics navigation
@@ -114,8 +116,10 @@ interface StrengthTabProps {
 }
 
 function StrengthTab({ startDate, endDate }: StrengthTabProps): React.JSX.Element {
+  const fadeAnim = useFadeIn(true);
+
   return (
-    <View>
+    <Animated.View style={{ opacity: fadeAnim }}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
         1RM Progression
       </Text>
@@ -124,7 +128,16 @@ function StrengthTab({ startDate, endDate }: StrengthTabProps): React.JSX.Elemen
       </Text>
 
       <OneRMProgressionChart startDate={startDate} endDate={endDate} />
-    </View>
+
+      <Text variant="titleLarge" style={[styles.sectionTitle, { marginTop: spacing.xl }]}>
+        Body Weight
+      </Text>
+      <Text variant="bodyMedium" style={styles.sectionDescription}>
+        Monitor body weight changes over time to track progress alongside strength gains.
+      </Text>
+
+      <BodyWeightChart unit="kg" />
+    </Animated.View>
   );
 }
 
@@ -137,8 +150,10 @@ interface VolumeTabProps {
 }
 
 function VolumeTab({ startDate, endDate }: VolumeTabProps): React.JSX.Element {
+  const fadeAnim = useFadeIn(true);
+
   return (
-    <View>
+    <Animated.View style={{ opacity: fadeAnim }}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
         Volume Trends
       </Text>
@@ -152,7 +167,7 @@ function VolumeTab({ startDate, endDate }: VolumeTabProps): React.JSX.Element {
 
       {/* Bar chart showing weekly volume with MEV/MAV/MRV thresholds */}
       <VolumeChart startDate={startDate} endDate={endDate} />
-    </View>
+    </Animated.View>
   );
 }
 
@@ -167,6 +182,7 @@ interface ConsistencyTabProps {
 
 function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.JSX.Element {
   const navigation = useNavigation();
+  const fadeAnim = useFadeIn(!isLoading && !!data);
 
   if (isLoading) {
     return (
@@ -221,7 +237,7 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
   const avgDurationMinutes = Math.round(data.avg_session_duration);
 
   return (
-    <View>
+    <Animated.View style={{ opacity: fadeAnim }}>
       <Text variant="headlineSmall" style={styles.sectionTitle}>
         Performance Stats
       </Text>
@@ -260,7 +276,7 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
           color={colors.success.main}
         />
       </View>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -268,8 +284,10 @@ function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.
  * Cardio Tab - VO2max Progression (T100)
  */
 function CardioTab(): React.JSX.Element {
+  const fadeAnim = useFadeIn(true);
+
   return (
-    <View>
+    <Animated.View style={{ opacity: fadeAnim }}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
         Cardio Performance
       </Text>
@@ -280,7 +298,7 @@ function CardioTab(): React.JSX.Element {
 
       {/* VO2max Progression Chart with date range selector */}
       <VO2maxProgressionChart />
-    </View>
+    </Animated.View>
   );
 }
 

@@ -6,7 +6,15 @@
  */
 
 import React, { useEffect, useState, useRef } from 'react';
-import { View, ScrollView, StyleSheet, AccessibilityInfo, findNodeHandle, Animated, Platform } from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  AccessibilityInfo,
+  findNodeHandle,
+  Animated,
+  Platform,
+} from 'react-native';
 import {
   Text,
   Button,
@@ -35,6 +43,8 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { getUnitLabel } from '../utils/unitConversion';
 import { useQuery } from '@tanstack/react-query';
 import { getLastPerformance } from '../services/api/exerciseApi';
+import { WorkoutExerciseSkeleton } from '../components/skeletons';
+import { useFadeIn } from '../utils/animations';
 
 interface WorkoutScreenProps {
   navigation?: any; // For future navigation implementation
@@ -337,6 +347,9 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
   const completedSetCount = completedSets.length;
   const progress = totalSets > 0 ? completedSetCount / totalSets : 0;
 
+  // Fade-in animation for content (triggered when exercise is loaded)
+  const fadeAnim = useFadeIn(!!currentExercise);
+
   // Milestone detection and celebration effect
   useEffect(() => {
     const currentProgress = progress;
@@ -456,45 +469,52 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
         </View>
 
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-          {/* Rest Timer */}
-          <RestTimer isActive={isTimerActive} onComplete={handleTimerComplete} />
+          {!currentExercise ? (
+            // Show skeleton while exercise is loading
+            <WorkoutExerciseSkeleton />
+          ) : (
+            <Animated.View style={{ opacity: fadeAnim }}>
+              {/* Rest Timer */}
+              <RestTimer isActive={isTimerActive} onComplete={handleTimerComplete} />
 
-          {/* Exercise History Card */}
-          <ExerciseHistoryCard
-            lastPerformance={lastPerformance}
-            isLoading={isLoadingHistory}
-            expanded={historyExpanded}
-            onToggle={() => setHistoryExpanded(!historyExpanded)}
-          />
+              {/* Exercise History Card */}
+              <ExerciseHistoryCard
+                lastPerformance={lastPerformance}
+                isLoading={isLoadingHistory}
+                expanded={historyExpanded}
+                onToggle={() => setHistoryExpanded(!historyExpanded)}
+              />
 
-          {/* Set Logging Card */}
-          <View ref={setLogCardRef}>
-            <SetLogCard
-              exerciseName={currentExercise.exercise_name}
-              setNumber={currentSetNumber}
-              targetReps={currentExercise.reps}
-              targetRir={currentExercise.rir}
-              previousWeight={previousSet?.weight}
-              previousReps={previousSet?.reps}
-              onLogSet={handleLogSet}
-            />
-          </View>
+              {/* Set Logging Card */}
+              <View ref={setLogCardRef}>
+                <SetLogCard
+                  exerciseName={currentExercise.exercise_name}
+                  setNumber={currentSetNumber}
+                  targetReps={currentExercise.reps}
+                  targetRir={currentExercise.rir}
+                  previousWeight={previousSet?.weight}
+                  previousReps={previousSet?.reps}
+                  onLogSet={handleLogSet}
+                />
+              </View>
 
-          {/* Complete Workout Button */}
-          {completedSetCount >= totalSets && (
-            <Button
-              mode="contained"
-              onPress={handleCompleteWorkout}
-              style={styles.completeWorkoutButton}
-              buttonColor={colors.success.main}
-              textColor="#000000"
-              contentStyle={styles.completeButtonContent}
-              labelStyle={styles.completeButtonLabel}
-              icon="check-circle"
-              accessibilityLabel="Complete workout"
-            >
-              Finish Workout
-            </Button>
+              {/* Complete Workout Button */}
+              {completedSetCount >= totalSets && (
+                <Button
+                  mode="contained"
+                  onPress={handleCompleteWorkout}
+                  style={styles.completeWorkoutButton}
+                  buttonColor={colors.success.main}
+                  textColor="#000000"
+                  contentStyle={styles.completeButtonContent}
+                  labelStyle={styles.completeButtonLabel}
+                  icon="check-circle"
+                  accessibilityLabel="Complete workout"
+                >
+                  Finish Workout
+                </Button>
+              )}
+            </Animated.View>
           )}
         </ScrollView>
       </LinearGradient>

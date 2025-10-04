@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert, RefreshControl, Platform } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert, RefreshControl, Platform, Animated } from 'react-native';
 import {
   Card,
   Button,
@@ -34,6 +34,8 @@ import { getQuoteOfTheDay } from '../constants/quotes';
 import { MuscleGroupVolumeBar } from '../components/analytics/MuscleGroupVolumeBar';
 import { useCurrentWeekVolume } from '../services/api/analyticsApi';
 import { WorkoutCardSkeleton, VolumeBarSkeleton } from '../components/skeletons';
+import BodyWeightWidget from '../components/dashboard/BodyWeightWidget';
+import { useFadeIn } from '../utils/animations';
 
 interface DashboardScreenProps {
   userId: number;
@@ -281,6 +283,9 @@ export default function DashboardScreen({
   // T091: Determine if refreshing (either from pull-to-refresh or manual refetch)
   const isRefreshing = isRefetchingVolume;
 
+  // Fade-in animation for content
+  const fadeAnim = useFadeIn(!loading);
+
   return (
     <ScrollView
       style={styles.container}
@@ -294,8 +299,9 @@ export default function DashboardScreen({
         />
       }
     >
-      {/* Hero Section with Date & Recovery */}
-      <View style={styles.heroSection}>
+      <Animated.View style={{ opacity: fadeAnim }}>
+        {/* Hero Section with Date & Recovery */}
+        <View style={styles.heroSection}>
         <Text variant="headlineLarge" style={styles.dateText}>
           {new Date().toLocaleDateString('en-US', {
             weekday: 'long',
@@ -699,6 +705,10 @@ export default function DashboardScreen({
           )}
         </Card.Content>
       </Card>
+
+      {/* Body Weight Widget */}
+      <BodyWeightWidget onWeightLogged={handleRefresh} />
+      </Animated.View>
 
       {/* Workout Swap Dialog */}
       <Portal>

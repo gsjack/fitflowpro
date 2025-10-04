@@ -1,0 +1,117 @@
+/**
+ * Workout Exercise Skeleton
+ *
+ * Skeleton loader for WorkoutScreen exercise loading state
+ * Matches layout of exercise header and set logging card
+ */
+
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { Card } from 'react-native-paper';
+import { colors } from '../../theme/colors';
+import { spacing, borderRadius } from '../../theme/typography';
+
+export function WorkoutExerciseSkeleton() {
+  return (
+    <View style={styles.container}>
+      <SkeletonPlaceholder
+        backgroundColor={colors.background.tertiary}
+        highlightColor={colors.background.secondary}
+        speed={1200}
+      >
+        {/* Header section */}
+        <View style={styles.header}>
+          <View style={styles.labelSkeleton} />
+          <View style={styles.titleSkeleton} />
+          <View style={styles.progressSkeleton} />
+        </View>
+
+        {/* Set logging card */}
+        <Card style={styles.card}>
+          <View style={styles.cardContent}>
+            {/* Input row */}
+            <View style={styles.inputRow}>
+              <View style={styles.inputSkeleton} />
+              <View style={styles.inputSkeleton} />
+              <View style={styles.inputSkeleton} />
+            </View>
+
+            {/* Previous set info */}
+            <View style={styles.previousSetRow}>
+              <View style={styles.previousSetLabel} />
+              <View style={styles.previousSetValue} />
+            </View>
+
+            {/* Log set button */}
+            <View style={styles.buttonSkeleton} />
+          </View>
+        </Card>
+      </SkeletonPlaceholder>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: spacing.lg,
+  },
+  header: {
+    marginBottom: spacing.lg,
+  },
+  labelSkeleton: {
+    width: 120,
+    height: 12,
+    borderRadius: 6,
+    marginBottom: spacing.xs,
+  },
+  titleSkeleton: {
+    width: '70%',
+    height: 28,
+    borderRadius: 6,
+    marginBottom: spacing.md,
+  },
+  progressSkeleton: {
+    width: '100%',
+    height: 12,
+    borderRadius: 6,
+  },
+  card: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    marginTop: spacing.md,
+  },
+  cardContent: {
+    gap: spacing.lg,
+  },
+  inputRow: {
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
+  inputSkeleton: {
+    flex: 1,
+    height: 56,
+    borderRadius: borderRadius.md,
+  },
+  previousSetRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  previousSetLabel: {
+    width: 120,
+    height: 14,
+    borderRadius: 6,
+  },
+  previousSetValue: {
+    width: 100,
+    height: 14,
+    borderRadius: 6,
+  },
+  buttonSkeleton: {
+    width: '100%',
+    height: 56,
+    borderRadius: borderRadius.md,
+  },
+});

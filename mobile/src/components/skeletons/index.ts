@@ -9,3 +9,4 @@ export { ChartSkeleton } from './ChartSkeleton';
 export { ExerciseListSkeleton } from './ExerciseListSkeleton';
 export { VolumeBarSkeleton } from './VolumeBarSkeleton';
 export { StatCardSkeleton } from './StatCardSkeleton';
+export { WorkoutExerciseSkeleton } from './WorkoutExerciseSkeleton';
