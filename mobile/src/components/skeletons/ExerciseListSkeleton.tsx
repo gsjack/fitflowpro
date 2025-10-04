@@ -3,12 +3,14 @@
  *
  * Skeleton loader for PlannerScreen exercise list
  * Matches layout of draggable exercise cards
+ *
+ * Web Compatibility: Shows simple loading indicator on web (skeleton library not web-compatible)
  */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { Card } from 'react-native-paper';
+import { Card, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/typography';
 
@@ -17,6 +19,21 @@ interface ExerciseListSkeletonProps {
 }
 
 export function ExerciseListSkeleton({ count = 5 }: ExerciseListSkeletonProps) {
+  // Web fallback: show simple loading indicators
+  if (Platform.OS === 'web') {
+    return (
+      <View style={styles.container}>
+        {Array.from({ length: count }).map((_, index) => (
+          <Card key={index} style={styles.card} elevation={2}>
+            <Card.Content style={[styles.content, styles.webLoadingContainer]}>
+              <ActivityIndicator size="small" color={colors.primary.main} />
+            </Card.Content>
+          </Card>
+        ))}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {Array.from({ length: count }).map((_, index) => (
@@ -70,6 +87,11 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingVertical: spacing.sm,
+  },
+  webLoadingContainer: {
+    minHeight: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',

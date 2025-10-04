@@ -3,16 +3,27 @@
  *
  * Skeleton loader for WorkoutScreen exercise loading state
  * Matches layout of exercise header and set logging card
+ *
+ * Web Compatibility: Shows simple loading indicator on web (skeleton library not web-compatible)
  */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { Card } from 'react-native-paper';
+import { Card, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
 
 export function WorkoutExerciseSkeleton() {
+  // Web fallback: show simple loading indicator
+  if (Platform.OS === 'web') {
+    return (
+      <View style={[styles.container, styles.webLoadingContainer]}>
+        <ActivityIndicator size="large" color={colors.primary.main} />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <SkeletonPlaceholder
@@ -55,6 +66,11 @@ export function WorkoutExerciseSkeleton() {
 const styles = StyleSheet.create({
   container: {
     padding: spacing.lg,
+  },
+  webLoadingContainer: {
+    minHeight: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     marginBottom: spacing.lg,

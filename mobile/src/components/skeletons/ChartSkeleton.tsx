@@ -3,12 +3,14 @@
  *
  * Skeleton loader for analytics charts (1RM progression, volume trends, etc.)
  * Simulates chart layout with title and placeholder graph
+ *
+ * Web Compatibility: Shows simple loading indicator on web (skeleton library not web-compatible)
  */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { Card } from 'react-native-paper';
+import { Card, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
 
@@ -18,6 +20,17 @@ interface ChartSkeletonProps {
 }
 
 export function ChartSkeleton({ height = 250, showLegend = false }: ChartSkeletonProps) {
+  // Web fallback: show simple loading indicator
+  if (Platform.OS === 'web') {
+    return (
+      <Card style={styles.card}>
+        <Card.Content style={[styles.webLoadingContainer, { height }]}>
+          <ActivityIndicator size="large" color={colors.primary.main} />
+        </Card.Content>
+      </Card>
+    );
+  }
+
   return (
     <Card style={styles.card}>
       <Card.Content>
@@ -82,6 +95,10 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
     backgroundColor: colors.background.secondary,
     borderRadius: borderRadius.lg,
+  },
+  webLoadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleSkeleton: {
     width: '50%',

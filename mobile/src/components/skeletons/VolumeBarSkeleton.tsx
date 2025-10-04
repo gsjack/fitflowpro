@@ -3,12 +3,14 @@
  *
  * Skeleton loader for MuscleGroupVolumeBar component
  * Used in DashboardScreen weekly volume section
+ *
+ * Web Compatibility: Shows simple loading indicator on web (skeleton library not web-compatible)
  */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { Surface } from 'react-native-paper';
+import { Surface, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 
 interface VolumeBarSkeletonProps {
@@ -16,6 +18,19 @@ interface VolumeBarSkeletonProps {
 }
 
 export function VolumeBarSkeleton({ count = 3 }: VolumeBarSkeletonProps) {
+  // Web fallback: show simple loading indicator
+  if (Platform.OS === 'web') {
+    return (
+      <View style={styles.container}>
+        {Array.from({ length: count }).map((_, index) => (
+          <Surface key={index} style={[styles.surface, styles.webLoadingContainer]} elevation={1}>
+            <ActivityIndicator size="small" color={colors.primary.main} />
+          </Surface>
+        ))}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {Array.from({ length: count }).map((_, index) => (
@@ -70,6 +85,11 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     backgroundColor: colors.background.secondary,
+  },
+  webLoadingContainer: {
+    minHeight: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',

@@ -3,12 +3,14 @@
  *
  * Skeleton loader for StatCard component
  * Used in AnalyticsScreen stats grid
+ *
+ * Web Compatibility: Shows simple loading indicator on web (skeleton library not web-compatible)
  */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import { Card } from 'react-native-paper';
+import { Card, ActivityIndicator } from 'react-native-paper';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
 
@@ -17,6 +19,21 @@ interface StatCardSkeletonProps {
 }
 
 export function StatCardSkeleton({ count = 3 }: StatCardSkeletonProps) {
+  // Web fallback: show simple loading indicators
+  if (Platform.OS === 'web') {
+    return (
+      <View style={styles.container}>
+        {Array.from({ length: count }).map((_, index) => (
+          <Card key={index} style={styles.card} elevation={2}>
+            <Card.Content style={[styles.content, styles.webLoadingContainer]}>
+              <ActivityIndicator size="small" color={colors.primary.main} />
+            </Card.Content>
+          </Card>
+        ))}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {Array.from({ length: count }).map((_, index) => (
@@ -62,6 +79,11 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: spacing.lg,
+  },
+  webLoadingContainer: {
+    minHeight: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     width: 120,
