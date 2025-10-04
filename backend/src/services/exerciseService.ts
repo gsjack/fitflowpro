@@ -175,3 +175,84 @@ export function getExerciseById(id: number): Exercise | undefined {
     secondary_muscle_groups: JSON.parse(row.secondary_muscle_groups || '[]'),
   };
 }
+
+/**
+ * Set performance data from previous workout
+ */
+export interface SetPerformance {
+  weight_kg: number;
+  reps: number;
+  rir: number;
+}
+
+/**
+ * Last performance data for an exercise
+ */
+export interface LastPerformance {
+  last_workout_date: string;
+  sets: SetPerformance[];
+  estimated_1rm: number;
+}
+
+/**
+ * Get last performance for a specific exercise by user
+ *
+ * Finds the most recent completed workout containing this exercise
+ * and returns all sets logged for that exercise with estimated 1RM.
+ *
+ * @param userId - User ID
+ * @param exerciseId - Exercise ID
+ * @returns Last performance data or null if no history exists
+ */
+export function getLastPerformance(userId: number, exerciseId: number): LastPerformance | null {
+  // Find the most recent completed workout containing this exercise
+  // Exclude in_progress workouts to avoid showing incomplete current session
+  const lastWorkoutSql = `
+    SELECT DISTINCT w.id, w.date
+    FROM workouts w
+    JOIN sets s ON s.workout_id = w.id
+    WHERE w.user_id = ?
+      AND s.exercise_id = ?
+      AND w.status = 'completed'
+    ORDER BY w.date DESC, w.completed_at DESC
+    LIMIT 1
+  `;
+
+  const lastWorkout = db.prepare(lastWorkoutSql).get(userId, exerciseId) as
+    | { id: number; date: string }
+    | undefined;
+
+  if (!lastWorkout) {
+    return null;
+  }
+
+  // Get all sets for this exercise from that workout
+  const setsSql = `
+    SELECT weight_kg, reps, rir
+    FROM sets
+    WHERE workout_id = ? AND exercise_id = ?
+    ORDER BY set_number ASC
+  `;
+
+  const sets = db.prepare(setsSql).all(lastWorkout.id, exerciseId) as SetPerformance[];
+
+  if (sets.length === 0) {
+    return null;
+  }
+
+  // Calculate estimated 1RM from the best set (highest 1RM estimate)
+  // Use Epley formula with RIR adjustment: 1RM = weight × (1 + (reps - rir) / 30)
+  let bestOneRM = 0;
+  sets.forEach((set) => {
+    const oneRM = set.weight_kg * (1 + (set.reps - set.rir) / 30);
+    if (oneRM > bestOneRM) {
+      bestOneRM = oneRM;
+    }
+  });
+
+  return {
+    last_workout_date: lastWorkout.date,
+    sets,
+    estimated_1rm: Math.round(bestOneRM * 10) / 10, // Round to 1 decimal place
+  };
+}

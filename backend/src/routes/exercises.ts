@@ -5,8 +5,13 @@
  */
 
 import { FastifyInstance } from 'fastify';
-import { getExercises, getExerciseById, ExerciseFilters } from '../services/exerciseService.js';
-import { authenticateJWT } from '../middleware/auth.js';
+import {
+  getExercises,
+  getExerciseById,
+  getLastPerformance,
+  ExerciseFilters,
+} from '../services/exerciseService.js';
+import { authenticateJWT, AuthenticatedRequest } from '../middleware/auth.js';
 
 /**
  * Query parameters for GET /api/exercises
@@ -205,6 +210,89 @@ export default async function exerciseRoutes(fastify: FastifyInstance) {
         request.log.error(error);
         return reply.status(500).send({
           error: 'Failed to retrieve exercise',
+        });
+      }
+    }
+  );
+
+  /**
+   * GET /api/exercises/:exerciseId/last-performance
+   *
+   * Get last performance data for an exercise (for workout history context)
+   */
+  fastify.get(
+    '/:exerciseId/last-performance',
+    {
+      preHandler: authenticateJWT,
+      schema: {
+        params: {
+          type: 'object',
+          required: ['exerciseId'],
+          properties: {
+            exerciseId: {
+              type: 'string',
+              description: 'Exercise ID',
+            },
+          },
+        },
+        response: {
+          200: {
+            type: 'object',
+            properties: {
+              last_workout_date: { type: 'string' },
+              sets: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    weight_kg: { type: 'number' },
+                    reps: { type: 'number' },
+                    rir: { type: 'number' },
+                  },
+                },
+              },
+              estimated_1rm: { type: 'number' },
+            },
+          },
+          204: {
+            type: 'null',
+            description: 'No history found for this exercise',
+          },
+          404: {
+            type: 'object',
+            properties: {
+              error: { type: 'string' },
+            },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const { exerciseId } = request.params as { exerciseId: string };
+      try {
+        const parsedExerciseId = parseInt(exerciseId, 10);
+
+        if (isNaN(parsedExerciseId)) {
+          return reply.status(400).send({
+            error: 'Invalid exercise ID',
+          });
+        }
+
+        // Get user ID from JWT token
+        const userId = (request as AuthenticatedRequest).user.userId;
+
+        const lastPerformance = getLastPerformance(userId, parsedExerciseId);
+
+        if (!lastPerformance) {
+          // No history - return 204 No Content
+          return reply.status(204).send();
+        }
+
+        return reply.status(200).send(lastPerformance);
+      } catch (error: unknown) {
+        request.log.error(error);
+        return reply.status(500).send({
+          error: 'Failed to retrieve last performance',
         });
       }
     }

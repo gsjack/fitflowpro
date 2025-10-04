@@ -27,11 +27,14 @@ import { getSetsForExercise, getWorkoutById } from '../services/database/workout
 import SetLogCard from '../components/workout/SetLogCard';
 import RestTimer from '../components/workout/RestTimer';
 import ExerciseVideoModal from '../components/workout/ExerciseVideoModal';
+import ExerciseHistoryCard from '../components/workout/ExerciseHistoryCard';
 import * as timerService from '../services/timer/timerService';
 import { colors } from '../theme/colors';
 import { spacing, borderRadius } from '../theme/typography';
 import { useSettingsStore } from '../stores/settingsStore';
 import { getUnitLabel } from '../utils/unitConversion';
+import { useQuery } from '@tanstack/react-query';
+import { getLastPerformance } from '../services/api/exerciseApi';
 
 interface WorkoutScreenProps {
   navigation?: any; // For future navigation implementation
@@ -59,6 +62,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
   const [checkedForActiveWorkout, setCheckedForActiveWorkout] = useState(false);
   const [cancelDialogVisible, setCancelDialogVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
+  const [historyExpanded, setHistoryExpanded] = useState(false);
 
   // Milestone celebration state
   const [milestoneMessage, setMilestoneMessage] = useState('');
@@ -68,6 +72,17 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
 
   // Accessibility: Ref for auto-focus after set completion
   const setLogCardRef = useRef<View>(null);
+
+  // Fetch last performance for current exercise
+  const {
+    data: lastPerformance,
+    isLoading: isLoadingHistory,
+  } = useQuery({
+    queryKey: ['exercise-history', currentExercise?.exercise_id],
+    queryFn: () => getLastPerformance(currentExercise!.exercise_id),
+    enabled: !!currentExercise,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes (doesn't change during workout)
+  });
 
   // Check for active workout on mount (resume if found)
   useEffect(() => {
@@ -443,6 +458,14 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
           {/* Rest Timer */}
           <RestTimer isActive={isTimerActive} onComplete={handleTimerComplete} />
+
+          {/* Exercise History Card */}
+          <ExerciseHistoryCard
+            lastPerformance={lastPerformance}
+            isLoading={isLoadingHistory}
+            expanded={historyExpanded}
+            onToggle={() => setHistoryExpanded(!historyExpanded)}
+          />
 
           {/* Set Logging Card */}
           <View ref={setLogCardRef}>

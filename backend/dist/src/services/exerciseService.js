@@ -98,4 +98,42 @@ export function getExerciseById(id) {
         secondary_muscle_groups: JSON.parse(row.secondary_muscle_groups || '[]'),
     };
 }
+export function getLastPerformance(userId, exerciseId) {
+    const lastWorkoutSql = `
+    SELECT DISTINCT w.id, w.date
+    FROM workouts w
+    JOIN sets s ON s.workout_id = w.id
+    WHERE w.user_id = ?
+      AND s.exercise_id = ?
+      AND w.status = 'completed'
+    ORDER BY w.date DESC, w.completed_at DESC
+    LIMIT 1
+  `;
+    const lastWorkout = db.prepare(lastWorkoutSql).get(userId, exerciseId);
+    if (!lastWorkout) {
+        return null;
+    }
+    const setsSql = `
+    SELECT weight_kg, reps, rir
+    FROM sets
+    WHERE workout_id = ? AND exercise_id = ?
+    ORDER BY set_number ASC
+  `;
+    const sets = db.prepare(setsSql).all(lastWorkout.id, exerciseId);
+    if (sets.length === 0) {
+        return null;
+    }
+    let bestOneRM = 0;
+    sets.forEach((set) => {
+        const oneRM = set.weight_kg * (1 + (set.reps - set.rir) / 30);
+        if (oneRM > bestOneRM) {
+            bestOneRM = oneRM;
+        }
+    });
+    return {
+        last_workout_date: lastWorkout.date,
+        sets,
+        estimated_1rm: Math.round(bestOneRM * 10) / 10,
+    };
+}
 //# sourceMappingURL=exerciseService.js.map

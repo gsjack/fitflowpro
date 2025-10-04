@@ -83,3 +83,59 @@ export async function getExerciseById(id: number): Promise<Exercise> {
 
   return response.data;
 }
+
+/**
+ * Set performance data from previous workout
+ */
+export interface SetPerformance {
+  weight_kg: number;
+  reps: number;
+  rir: number;
+}
+
+/**
+ * Last performance data for an exercise
+ */
+export interface LastPerformance {
+  last_workout_date: string;
+  sets: SetPerformance[];
+  estimated_1rm: number;
+}
+
+/**
+ * Get last performance for a specific exercise
+ *
+ * Returns the user's most recent completed performance for this exercise,
+ * including all sets logged and estimated 1RM.
+ *
+ * @param exerciseId - Exercise ID
+ * @returns Last performance data or null if no history exists
+ * @throws Error if API call fails (401 unauthorized, 500 server error)
+ *
+ * @example
+ * const lastPerformance = await getLastPerformance(1);
+ * if (lastPerformance) {
+ *   console.log(`Last workout: ${lastPerformance.last_workout_date}`);
+ *   console.log(`Sets: ${lastPerformance.sets.length}`);
+ *   console.log(`Est 1RM: ${lastPerformance.estimated_1rm}kg`);
+ * }
+ */
+export async function getLastPerformance(exerciseId: number): Promise<LastPerformance | null> {
+  const client = await getAuthenticatedClient();
+
+  try {
+    const response = await client.get<LastPerformance>(
+      `/api/exercises/${exerciseId}/last-performance`
+    );
+
+    return response.data;
+  } catch (error: any) {
+    // 204 No Content means no history - return null
+    if (error.response?.status === 204) {
+      return null;
+    }
+
+    // Re-throw other errors
+    throw error;
+  }
+}
