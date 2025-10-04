@@ -3,53 +3,53 @@ TAP version 14
     # Subtest: should return 401 unauthorized without JWT token
         ok 1 - Should return 401 Unauthorized
         1..1
-    ok 1 - should return 401 unauthorized without JWT token # time=96.245ms
+    ok 1 - should return 401 unauthorized without JWT token # time=48.924ms
     
     # Subtest: should validate request schema - missing required fields
         ok 1 - Should return 400 Bad Request or 401 if auth not implemented
         1..1
-    ok 2 - should validate request schema - missing required fields # time=8.269ms
+    ok 2 - should validate request schema - missing required fields # time=3.951ms
     
     # Subtest: should validate request schema - invalid date format
         ok 1 - Should return 400 for invalid date format or 401 if auth not implemented
         1..1
-    ok 3 - should validate request schema - invalid date format # time=7.01ms
+    ok 3 - should validate request schema - invalid date format # time=3.244ms
     
     # Subtest: should create workout and return 201 with correct schema
         ok 1 - Should return 201 Created (or 404/401 if not implemented yet)
         1..1
-    ok 4 - should create workout and return 201 with correct schema # time=5.383ms
+    ok 4 - should create workout and return 201 with correct schema # time=2.344ms
     
     1..4
-ok 1 - POST /api/workouts - Create workout session # time=124.83ms
+ok 1 - POST /api/workouts - Create workout session # time=62.49ms
 
 # Subtest: GET /api/workouts - List user workouts
     # Subtest: should return 401 unauthorized without JWT token
         ok 1 - Should return 401 Unauthorized
         1..1
-    ok 1 - should return 401 unauthorized without JWT token # time=13.796ms
+    ok 1 - should return 401 unauthorized without JWT token # time=8.565ms
     
     # Subtest: should list workouts without query parameters
         ok 1 - Should return 200 OK (or 404/401 if not implemented yet)
         1..1
-    ok 2 - should list workouts without query parameters # time=2.556ms
+    ok 2 - should list workouts without query parameters # time=2.087ms
     
     # Subtest: should filter workouts with start_date query parameter
         ok 1 - Should return 200 OK (or 404/401 if not implemented yet)
         1..1
-    ok 3 - should filter workouts with start_date query parameter # time=3.45ms
+    ok 3 - should filter workouts with start_date query parameter # time=1.576ms
     
     # Subtest: should filter workouts with end_date query parameter
         ok 1 - Should return 200 OK (or 404/401 if not implemented yet)
         1..1
-    ok 4 - should filter workouts with end_date query parameter # time=3.267ms
+    ok 4 - should filter workouts with end_date query parameter # time=1.56ms
     
     # Subtest: should filter workouts with both start_date and end_date
         ok 1 - Should return 200 OK (or 404/401 if not implemented yet)
         1..1
-    ok 5 - should filter workouts with both start_date and end_date # time=2.809ms
+    ok 5 - should filter workouts with both start_date and end_date # time=1.631ms
     
     1..5
-ok 2 - GET /api/workouts - List user workouts # time=32.02ms
+ok 2 - GET /api/workouts - List user workouts # time=18.699ms
 
 1..2

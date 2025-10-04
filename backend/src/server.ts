@@ -18,6 +18,7 @@ import exerciseRoutes from './routes/exercises.js';
 import programRoutes from './routes/programs.js';
 import programExerciseRoutes from './routes/program-exercises.js';
 import vo2maxRoutes from './routes/vo2max.js';
+import bodyWeightRoutes from './routes/body-weight.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fitflow-dev-secret-change-in-production';
 const PORT = parseInt(process.env.PORT || '3000', 10);
@@ -65,6 +66,7 @@ export async function buildApp() {
   await app.register(programRoutes, { prefix: '/api' });
   await app.register(programExerciseRoutes, { prefix: '/api' });
   await app.register(vo2maxRoutes, { prefix: '/api' });
+  await app.register(bodyWeightRoutes, { prefix: '/api' });
 
   return app;
 }

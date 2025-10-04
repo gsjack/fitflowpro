@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, Platform } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import darkTheme from './src/theme/darkTheme';
 import { colors } from './src/theme/colors';
+
+// Disable react-native-screens on web (causes requireNativeComponent errors)
+if (Platform.OS === 'web') {
+  try {
+    const screens = require('react-native-screens');
+    if (screens && screens.enableScreens) {
+      screens.enableScreens(false);
+    }
+  } catch (e) {
+    // react-native-screens not available or already disabled
+  }
+}
 
 // Import screens
 import AuthScreen from './src/screens/AuthScreen';
@@ -45,9 +57,9 @@ export type DashboardStackParamList = {
 };
 
 // Create navigators
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
-const DashboardStack = createNativeStackNavigator<DashboardStackParamList>();
+const DashboardStack = createStackNavigator<DashboardStackParamList>();
 
 // Create QueryClient for TanStack Query
 const queryClient = new QueryClient();

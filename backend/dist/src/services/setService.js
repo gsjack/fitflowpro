@@ -12,6 +12,23 @@ export function logSet(workoutId, exerciseId, setNumber, weightKg, reps, rir, ti
     if (notes && notes.length > 500) {
         throw new Error('Notes must be 500 characters or less');
     }
+    let finalSetNumber = setNumber;
+    if (finalSetNumber === undefined) {
+        const existingSets = db
+            .prepare('SELECT COUNT(*) as count FROM sets WHERE workout_id = ? AND exercise_id = ?')
+            .get(workoutId, exerciseId);
+        finalSetNumber = existingSets.count + 1;
+    }
+    let finalTimestamp;
+    if (timestamp === undefined) {
+        finalTimestamp = Date.now();
+    }
+    else if (typeof timestamp === 'string') {
+        finalTimestamp = new Date(timestamp).getTime();
+    }
+    else {
+        finalTimestamp = timestamp;
+    }
     if (localId) {
         const existingSet = db
             .prepare(`SELECT id, weight_kg, reps, rir FROM sets
@@ -30,7 +47,7 @@ export function logSet(workoutId, exerciseId, setNumber, weightKg, reps, rir, ti
             };
         }
     }
-    const result = stmtLogSet.run(workoutId, exerciseId, setNumber, weightKg, reps, rir, timestamp, notes ?? null);
+    const result = stmtLogSet.run(workoutId, exerciseId, finalSetNumber, weightKg, reps, rir, finalTimestamp, notes ?? null);
     const setId = result.lastInsertRowid;
     const estimated1RM = calculateOneRepMax(weightKg, reps, rir);
     console.log(`Set logged: workout=${workoutId}, exercise=${exerciseId}, ` +

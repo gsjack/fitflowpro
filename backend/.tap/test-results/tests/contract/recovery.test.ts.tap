@@ -1,49 +1,49 @@
 TAP version 14
 # Subtest: POST /api/recovery-assessments - Contract Tests
-{"level":30,"time":1759599556342,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599556585,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":242.34268200024962,"msg":"request completed"}
+{"level":30,"time":1759600070358,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070620,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":257.4642360005528,"msg":"request completed"}
     # Subtest: should return 401 when no JWT token provided
         ok 1 - returns 401 Unauthorized
         1..1
-    ok 1 - should return 401 when no JWT token provided # time=6.92ms
+    ok 1 - should return 401 when no JWT token provided # time=5.494ms
     
-{"level":30,"time":1759599556587,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599556590,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":401},"responseTime":2.703693998977542,"msg":"request completed"}
-{"level":30,"time":1759599556596,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070622,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070624,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":401},"responseTime":1.9603029992431402,"msg":"request completed"}
+{"level":30,"time":1759600070629,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: should validate request schema - all fields required
         ok 1 - returns 400 Bad Request for missing fields
         1..1
-    ok 2 - should validate request schema - all fields required # time=3.437ms
+    ok 2 - should validate request schema - all fields required # time=2.665ms
     
-{"level":30,"time":1759599556597,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"err":{"type":"Error","message":"body must have required property 'sleep_quality'","stack":"Error: body must have required property 'sleep_quality'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"sleep_quality"},"message":"must have required property 'sleep_quality'"}],"validationContext":"body"},"msg":"body must have required property 'sleep_quality'"}
-{"level":30,"time":1759599556598,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"responseTime":2.3106280006468296,"msg":"request completed"}
-{"level":30,"time":1759599556600,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070630,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"err":{"type":"Error","message":"body must have required property 'sleep_quality'","stack":"Error: body must have required property 'sleep_quality'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"sleep_quality"},"message":"must have required property 'sleep_quality'"}],"validationContext":"body"},"msg":"body must have required property 'sleep_quality'"}
+{"level":30,"time":1759600070631,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":400},"responseTime":1.8262790013104677,"msg":"request completed"}
+{"level":30,"time":1759600070632,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: should validate sleep_quality range (1-5)
         ok 1 - returns 400 for sleep_quality > 5
         1..1
-    ok 3 - should validate sleep_quality range (1-5) # time=2.191ms
+    ok 3 - should validate sleep_quality range (1-5) # time=1.329ms
     
-{"level":30,"time":1759599556600,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"err":{"type":"Error","message":"body/sleep_quality must be <= 5","stack":"Error: body/sleep_quality must be <= 5\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/sleep_quality","schemaPath":"#/properties/sleep_quality/maximum","keyword":"maximum","params":{"comparison":"<=","limit":5},"message":"must be <= 5"}],"validationContext":"body"},"msg":"body/sleep_quality must be <= 5"}
-{"level":30,"time":1759599556601,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"responseTime":0.7946540005505085,"msg":"request completed"}
-{"level":30,"time":1759599556604,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070633,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"err":{"type":"Error","message":"body/sleep_quality must be <= 5","stack":"Error: body/sleep_quality must be <= 5\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/sleep_quality","schemaPath":"#/properties/sleep_quality/maximum","keyword":"maximum","params":{"comparison":"<=","limit":5},"message":"must be <= 5"}],"validationContext":"body"},"msg":"body/sleep_quality must be <= 5"}
+{"level":30,"time":1759600070633,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":400},"responseTime":0.617535999044776,"msg":"request completed"}
+{"level":30,"time":1759600070635,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: should validate muscle_soreness range (1-5)
         ok 1 - returns 400 for muscle_soreness < 1
         1..1
-    ok 4 - should validate muscle_soreness range (1-5) # time=1.608ms
+    ok 4 - should validate muscle_soreness range (1-5) # time=1.415ms
     
-{"level":30,"time":1759599556604,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"err":{"type":"Error","message":"body/muscle_soreness must be >= 1","stack":"Error: body/muscle_soreness must be >= 1\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/muscle_soreness","schemaPath":"#/properties/muscle_soreness/minimum","keyword":"minimum","params":{"comparison":">=","limit":1},"message":"must be >= 1"}],"validationContext":"body"},"msg":"body/muscle_soreness must be >= 1"}
-{"level":30,"time":1759599556604,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"responseTime":0.6560190003365278,"msg":"request completed"}
-{"level":30,"time":1759599556606,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070635,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"err":{"type":"Error","message":"body/muscle_soreness must be >= 1","stack":"Error: body/muscle_soreness must be >= 1\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/muscle_soreness","schemaPath":"#/properties/muscle_soreness/minimum","keyword":"minimum","params":{"comparison":">=","limit":1},"message":"must be >= 1"}],"validationContext":"body"},"msg":"body/muscle_soreness must be >= 1"}
+{"level":30,"time":1759600070635,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":400},"responseTime":0.6141840014606714,"msg":"request completed"}
+{"level":30,"time":1759600070637,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: should validate mental_motivation range (1-5)
         ok 1 - returns 400 for mental_motivation > 5
         1..1
-    ok 5 - should validate mental_motivation range (1-5) # time=2.519ms
+    ok 5 - should validate mental_motivation range (1-5) # time=1.168ms
     
-{"level":30,"time":1759599556606,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"err":{"type":"Error","message":"body/mental_motivation must be <= 5","stack":"Error: body/mental_motivation must be <= 5\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/mental_motivation","schemaPath":"#/properties/mental_motivation/maximum","keyword":"maximum","params":{"comparison":"<=","limit":5},"message":"must be <= 5"}],"validationContext":"body"},"msg":"body/mental_motivation must be <= 5"}
-{"level":30,"time":1759599556607,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"responseTime":0.867289001122117,"msg":"request completed"}
-{"level":30,"time":1759599556610,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment created: user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=12 (sleep=4, soreness=3, motivation=5), adjustment=none
+{"level":30,"time":1759600070637,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"err":{"type":"Error","message":"body/mental_motivation must be <= 5","stack":"Error: body/mental_motivation must be <= 5\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/mental_motivation","schemaPath":"#/properties/mental_motivation/maximum","keyword":"maximum","params":{"comparison":"<=","limit":5},"message":"must be <= 5"}],"validationContext":"body"},"msg":"body/mental_motivation must be <= 5"}
+{"level":30,"time":1759600070637,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"responseTime":0.5252760015428066,"msg":"request completed"}
+{"level":30,"time":1759600070639,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment created: user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=12 (sleep=4, soreness=3, motivation=5), adjustment=none
     # Subtest: should create recovery assessment with valid data
         ok 1 - returns 201 Created
         ok 2 - response includes total_score
@@ -51,12 +51,12 @@ Recovery assessment created: user=638, date=2025-10-02, score=12 (sleep=4, soren
         ok 4 - response includes volume_adjustment
         ok 5 - volume_adjustment is a string
         1..5
-    ok 6 - should create recovery assessment with valid data # time=8.219ms
+    ok 6 - should create recovery assessment with valid data # time=6.13ms
     
-{"level":30,"time":1759599556616,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":201},"responseTime":6.217127999290824,"msg":"request completed"}
-{"level":30,"time":1759599556618,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=9 (sleep=3, soreness=3, motivation=3), adjustment=reduce_1_set
+{"level":30,"time":1759600070643,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":201},"responseTime":4.165401000529528,"msg":"request completed"}
+{"level":30,"time":1759600070646,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=9 (sleep=3, soreness=3, motivation=3), adjustment=reduce_1_set
     # Subtest: should return response schema with correct fields
         ok 1 - returns 201 Created
         ok 2 - response has total_score property
@@ -64,139 +64,139 @@ Recovery assessment created: user=638, date=2025-10-02, score=9 (sleep=3, sorene
         ok 4 - total_score is a number
         ok 5 - total_score in range 3-15
         1..5
-    ok 7 - should return response schema with correct fields # time=3.221ms
+    ok 7 - should return response schema with correct fields # time=2.851ms
     
-{"level":30,"time":1759599556620,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":201},"responseTime":1.2035739999264479,"msg":"request completed"}
-{"level":30,"time":1759599556623,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=15 (sleep=5, soreness=5, motivation=5), adjustment=none
+{"level":30,"time":1759600070647,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":201},"responseTime":1.1762660015374422,"msg":"request completed"}
+{"level":30,"time":1759600070650,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=15 (sleep=5, soreness=5, motivation=5), adjustment=none
     # Subtest: should apply auto-regulation logic: score 12-15 → no adjustment
         ok 1 - returns 201 Created
         ok 2 - total_score = 5 + 5 + 5 = 15
         ok 3 - volume_adjustment is "none" for score 15
         1..3
-    ok 8 - should apply auto-regulation logic: score 12-15 → no adjustment # time=3.089ms
+    ok 8 - should apply auto-regulation logic: score 12-15 → no adjustment # time=2.568ms
     
-{"level":30,"time":1759599556624,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":201},"responseTime":1.3866280000656843,"msg":"request completed"}
-{"level":30,"time":1759599556627,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=10 (sleep=3, soreness=3, motivation=4), adjustment=reduce_1_set
+{"level":30,"time":1759600070651,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":201},"responseTime":1.2921319995075464,"msg":"request completed"}
+{"level":30,"time":1759600070653,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=10 (sleep=3, soreness=3, motivation=4), adjustment=reduce_1_set
     # Subtest: should apply auto-regulation logic: score 9-11 → reduce_1_set
         ok 1 - returns 201 Created
         ok 2 - total_score = 3 + 3 + 4 = 10
         ok 3 - volume_adjustment is "reduce_1_set" for score 10
         1..3
-    ok 9 - should apply auto-regulation logic: score 9-11 → reduce_1_set # time=3.215ms
+    ok 9 - should apply auto-regulation logic: score 9-11 → reduce_1_set # time=2.801ms
     
-{"level":30,"time":1759599556629,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":201},"responseTime":1.4350979998707771,"msg":"request completed"}
-{"level":30,"time":1759599556631,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=8 (sleep=2, soreness=3, motivation=3), adjustment=reduce_2_sets
+{"level":30,"time":1759600070655,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":201},"responseTime":1.6113070007413626,"msg":"request completed"}
+{"level":30,"time":1759600070657,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=8 (sleep=2, soreness=3, motivation=3), adjustment=reduce_2_sets
     # Subtest: should apply auto-regulation logic: score 6-8 → reduce_2_sets (FR-009)
         ok 1 - returns 201 Created
         ok 2 - total_score = 2 + 3 + 3 = 8
         ok 3 - volume_adjustment is "reduce_2_sets" for score 8 (per FR-009)
         1..3
-    ok 10 - should apply auto-regulation logic: score 6-8 → reduce_2_sets (FR-009) # time=1.877ms
+    ok 10 - should apply auto-regulation logic: score 6-8 → reduce_2_sets (FR-009) # time=2.196ms
     
-{"level":30,"time":1759599556632,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":201},"responseTime":0.9209959991276264,"msg":"request completed"}
-{"level":30,"time":1759599556634,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=4 (sleep=1, soreness=1, motivation=2), adjustment=rest_day
+{"level":30,"time":1759600070658,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":201},"responseTime":1.058373998850584,"msg":"request completed"}
+{"level":30,"time":1759600070660,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=4 (sleep=1, soreness=1, motivation=2), adjustment=rest_day
     # Subtest: should apply auto-regulation logic: score 3-5 → rest_day
         ok 1 - returns 201 Created
         ok 2 - total_score = 1 + 1 + 2 = 4
         ok 3 - volume_adjustment is "rest_day" for score 4
         1..3
-    ok 11 - should apply auto-regulation logic: score 3-5 → rest_day # time=2.118ms
+    ok 11 - should apply auto-regulation logic: score 3-5 → rest_day # time=2.696ms
     
-{"level":30,"time":1759599556635,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":201},"responseTime":0.9009520001709461,"msg":"request completed"}
-{"level":30,"time":1759599556637,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=9 (sleep=3, soreness=3, motivation=3), adjustment=reduce_1_set
+{"level":30,"time":1759600070661,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":201},"responseTime":1.2095800004899502,"msg":"request completed"}
+{"level":30,"time":1759600070663,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=9 (sleep=3, soreness=3, motivation=3), adjustment=reduce_1_set
     # Subtest: should validate volume_adjustment enum values
         ok 1 - returns 201 Created
         ok 2 - volume_adjustment is one of the valid enum values
         1..2
-    ok 12 - should validate volume_adjustment enum values # time=3.239ms
+    ok 12 - should validate volume_adjustment enum values # time=2.552ms
     
-{"level":30,"time":1759599556639,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":201},"responseTime":1.8505140002816916,"msg":"request completed"}
-{"level":30,"time":1759599556641,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070665,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":201},"responseTime":1.1954030003398657,"msg":"request completed"}
+{"level":30,"time":1759600070667,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: should validate date format
         ok 1 - returns 400 for invalid date format
         1..1
-    ok 13 - should validate date format # time=1.515ms
+    ok 13 - should validate date format # time=1.751ms
     
-{"level":30,"time":1759599556641,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"err":{"type":"Error","message":"body/date must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\"","stack":"Error: body/date must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\"\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/date","schemaPath":"#/properties/date/pattern","keyword":"pattern","params":{"pattern":"^\\d{4}-\\d{2}-\\d{2}$"},"message":"must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\""}],"validationContext":"body"},"msg":"body/date must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\""}
-{"level":30,"time":1759599556641,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"responseTime":0.7099360004067421,"msg":"request completed"}
-{"level":30,"time":1759599556643,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=3 (sleep=1, soreness=1, motivation=1), adjustment=rest_day
+{"level":30,"time":1759600070667,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"err":{"type":"Error","message":"body/date must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\"","stack":"Error: body/date must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\"\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/date","schemaPath":"#/properties/date/pattern","keyword":"pattern","params":{"pattern":"^\\d{4}-\\d{2}-\\d{2}$"},"message":"must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\""}],"validationContext":"body"},"msg":"body/date must match pattern \"^\\d{4}-\\d{2}-\\d{2}$\""}
+{"level":30,"time":1759600070668,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"responseTime":0.8179100006818771,"msg":"request completed"}
+{"level":30,"time":1759600070670,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=3 (sleep=1, soreness=1, motivation=1), adjustment=rest_day
     # Subtest: should calculate edge case: minimum score (3)
         ok 1 - returns 201 Created
         ok 2 - total_score = 1 + 1 + 1 = 3 (minimum)
         ok 3 - volume_adjustment is "rest_day" for minimum score
         1..3
-    ok 14 - should calculate edge case: minimum score (3) # time=2.154ms
+    ok 14 - should calculate edge case: minimum score (3) # time=2.865ms
     
-{"level":30,"time":1759599556644,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":201},"responseTime":1.1074029989540577,"msg":"request completed"}
-{"level":30,"time":1759599556646,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=12 (sleep=4, soreness=4, motivation=4), adjustment=none
+{"level":30,"time":1759600070671,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":201},"responseTime":1.5793890003114939,"msg":"request completed"}
+{"level":30,"time":1759600070673,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=12 (sleep=4, soreness=4, motivation=4), adjustment=none
     # Subtest: should calculate boundary: score 12 → no adjustment
         ok 1 - returns 201 Created
         ok 2 - total_score = 4 + 4 + 4 = 12
         ok 3 - volume_adjustment is "none" for score 12 (boundary)
         1..3
-    ok 15 - should calculate boundary: score 12 → no adjustment # time=2.171ms
+    ok 15 - should calculate boundary: score 12 → no adjustment # time=2.324ms
     
-{"level":30,"time":1759599556647,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":201},"responseTime":1.030647000297904,"msg":"request completed"}
-{"level":30,"time":1759599556649,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=11 (sleep=4, soreness=4, motivation=3), adjustment=reduce_1_set
+{"level":30,"time":1759600070674,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":201},"responseTime":1.1090089995414019,"msg":"request completed"}
+{"level":30,"time":1759600070676,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=11 (sleep=4, soreness=4, motivation=3), adjustment=reduce_1_set
     # Subtest: should calculate boundary: score 11 → reduce_1_set
         ok 1 - returns 201 Created
         ok 2 - total_score = 4 + 4 + 3 = 11
         ok 3 - volume_adjustment is "reduce_1_set" for score 11 (boundary)
         1..3
-    ok 16 - should calculate boundary: score 11 → reduce_1_set # time=2.213ms
+    ok 16 - should calculate boundary: score 11 → reduce_1_set # time=2.414ms
     
-{"level":30,"time":1759599556650,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":201},"responseTime":1.2280889991670847,"msg":"request completed"}
-{"level":30,"time":1759599556652,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=9 (sleep=3, soreness=3, motivation=3), adjustment=reduce_1_set
+{"level":30,"time":1759600070678,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":201},"responseTime":1.2146090008318424,"msg":"request completed"}
+{"level":30,"time":1759600070680,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=9 (sleep=3, soreness=3, motivation=3), adjustment=reduce_1_set
     # Subtest: should calculate boundary: score 9 → reduce_1_set
         ok 1 - returns 201 Created
         ok 2 - total_score = 3 + 3 + 3 = 9
         ok 3 - volume_adjustment is "reduce_1_set" for score 9 (boundary)
         1..3
-    ok 17 - should calculate boundary: score 9 → reduce_1_set # time=2.126ms
+    ok 17 - should calculate boundary: score 9 → reduce_1_set # time=3.265ms
     
-{"level":30,"time":1759599556653,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":201},"responseTime":1.1250720005482435,"msg":"request completed"}
-{"level":30,"time":1759599556654,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=6 (sleep=2, soreness=2, motivation=2), adjustment=reduce_2_sets
+{"level":30,"time":1759600070681,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":201},"responseTime":1.2390529997646809,"msg":"request completed"}
+{"level":30,"time":1759600070684,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=6 (sleep=2, soreness=2, motivation=2), adjustment=reduce_2_sets
     # Subtest: should calculate boundary: score 6 → reduce_2_sets
         ok 1 - returns 201 Created
         ok 2 - total_score = 2 + 2 + 2 = 6
         ok 3 - volume_adjustment is "reduce_2_sets" for score 6 (boundary)
         1..3
-    ok 18 - should calculate boundary: score 6 → reduce_2_sets # time=2.313ms
+    ok 18 - should calculate boundary: score 6 → reduce_2_sets # time=2.881ms
     
-{"level":30,"time":1759599556656,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":201},"responseTime":1.136667000129819,"msg":"request completed"}
-{"level":30,"time":1759599556657,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-Recovery assessment updated: id=363, user=638, date=2025-10-02
-Recovery assessment created: user=638, date=2025-10-02, score=5 (sleep=2, soreness=2, motivation=1), adjustment=rest_day
+Recovery assessment updated: id=364, user=668, date=2025-10-02
+Recovery assessment created: user=668, date=2025-10-02, score=5 (sleep=2, soreness=2, motivation=1), adjustment=rest_day
     # Subtest: should calculate boundary: score 5 → rest_day
         ok 1 - returns 201 Created
         ok 2 - total_score = 2 + 2 + 1 = 5
         ok 3 - volume_adjustment is "rest_day" for score 5 (boundary)
         1..3
-    ok 19 - should calculate boundary: score 5 → rest_day # time=1.969ms
+    ok 19 - should calculate boundary: score 5 → rest_day # time=2.564ms
     
     1..19
-ok 1 - POST /api/recovery-assessments - Contract Tests # time=619.926ms
+{"level":30,"time":1759600070685,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":201},"responseTime":1.566957000643015,"msg":"request completed"}
+{"level":30,"time":1759600070687,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/recovery-assessments","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+ok 1 - POST /api/recovery-assessments - Contract Tests # time=696.226ms
 
-{"level":30,"time":1759599556658,"pid":210007,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":201},"responseTime":0.9843419995158911,"msg":"request completed"}
+{"level":30,"time":1759600070689,"pid":215084,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":201},"responseTime":1.3586909994482994,"msg":"request completed"}
 1..1
 Database connection closed

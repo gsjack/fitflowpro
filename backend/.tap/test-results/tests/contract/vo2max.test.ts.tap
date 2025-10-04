@@ -1,11 +1,11 @@
 TAP version 14
 # Subtest: VO2max Cardio Tracking Endpoints Contract Tests
-{"level":30,"time":1759599556615,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599556857,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":240.33432600088418,"msg":"request completed"}
-{"level":30,"time":1759599556858,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557082,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":223.4849179983139,"msg":"request completed"}
+{"level":30,"time":1759600070426,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070658,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":229.96544099971652,"msg":"request completed"}
+{"level":30,"time":1759600070658,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070895,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":236.3591949995607,"msg":"request completed"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
-[VO2max] Session created: id=424, workout=793, protocol=4x4, duration=32min, VO2max=48.5
+[VO2max] Session created: id=456, workout=853, protocol=4x4, duration=32min, VO2max=48.5
     # Subtest: POST /api/vo2max-sessions
         # Subtest: should log VO2max session successfully (201)
             ok 1 - Returns 201 Created
@@ -14,150 +14,150 @@ TAP version 14
             ok 4 - VO2max is positive value
             ok 5 - Returns valid completion_status
             1..5
-        ok 1 - should log VO2max session successfully (201) # time=13.332ms
+        ok 1 - should log VO2max session successfully (201) # time=20.776ms
         
-{"level":30,"time":1759599557085,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557093,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":201},"responseTime":7.975730000063777,"msg":"request completed"}
-{"level":30,"time":1759599557100,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070903,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070918,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":201},"responseTime":14.977800000458956,"msg":"request completed"}
+{"level":30,"time":1759600070926,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=170)
-[VO2max] Session created: id=425, workout=794, protocol=4x4, duration=30min, VO2max=48.5
+[VO2max] Session created: id=457, workout=854, protocol=4x4, duration=30min, VO2max=48.5
         # Subtest: should calculate VO2max using Cooper formula when HR provided (201)
             ok 1 - Returns 201 Created
             ok 2 - VO2max calculated when HR provided
             ok 3 - VO2max is numeric
             1..3
-        ok 2 - should calculate VO2max using Cooper formula when HR provided (201) # time=5.436ms
+        ok 2 - should calculate VO2max using Cooper formula when HR provided (201) # time=4.005ms
         
-{"level":30,"time":1759599557104,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":201},"responseTime":3.837635999545455,"msg":"request completed"}
-{"level":30,"time":1759599557106,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-[VO2max] Session created: id=426, workout=795, protocol=4x4, duration=28min, VO2max=N/A
+{"level":30,"time":1759600070928,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":201},"responseTime":2.2944940011948347,"msg":"request completed"}
+{"level":30,"time":1759600070931,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=458, workout=855, protocol=4x4, duration=28min, VO2max=N/A
         # Subtest: should accept session without heart rate data (201)
             ok 1 - Returns 201 Created
             ok 2 - Returns session_id
             1..2
-        ok 3 - should accept session without heart rate data (201) # time=3.527ms
+        ok 3 - should accept session without heart rate data (201) # time=3.269ms
         
-{"level":30,"time":1759599557108,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":201},"responseTime":2.0054909996688366,"msg":"request completed"}
-{"level":30,"time":1759599557111,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070933,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":201},"responseTime":1.9603739995509386,"msg":"request completed"}
+{"level":30,"time":1759600070935,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid average_heart_rate (below minimum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 400 for invalid average_heart_rate (below minimum) # time=3.576ms
+        ok 4 - should return 400 for invalid average_heart_rate (below minimum) # time=4.373ms
         
-{"level":30,"time":1759599557112,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"err":{"type":"Error","message":"body/average_heart_rate must be >= 60","stack":"Error: body/average_heart_rate must be >= 60\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/average_heart_rate","schemaPath":"#/properties/average_heart_rate/minimum","keyword":"minimum","params":{"comparison":">=","limit":60},"message":"must be >= 60"}],"validationContext":"body"},"msg":"body/average_heart_rate must be >= 60"}
-{"level":30,"time":1759599557113,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"responseTime":2.289256000891328,"msg":"request completed"}
-{"level":30,"time":1759599557115,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070937,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"err":{"type":"Error","message":"body/average_heart_rate must be >= 60","stack":"Error: body/average_heart_rate must be >= 60\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/average_heart_rate","schemaPath":"#/properties/average_heart_rate/minimum","keyword":"minimum","params":{"comparison":">=","limit":60},"message":"must be >= 60"}],"validationContext":"body"},"msg":"body/average_heart_rate must be >= 60"}
+{"level":30,"time":1759600070939,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":400},"responseTime":2.9888550005853176,"msg":"request completed"}
+{"level":30,"time":1759600070941,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid average_heart_rate (above maximum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 400 for invalid average_heart_rate (above maximum) # time=2.581ms
+        ok 5 - should return 400 for invalid average_heart_rate (above maximum) # time=1.735ms
         
-{"level":30,"time":1759599557116,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":400},"err":{"type":"Error","message":"body/average_heart_rate must be <= 220","stack":"Error: body/average_heart_rate must be <= 220\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/average_heart_rate","schemaPath":"#/properties/average_heart_rate/maximum","keyword":"maximum","params":{"comparison":"<=","limit":220},"message":"must be <= 220"}],"validationContext":"body"},"msg":"body/average_heart_rate must be <= 220"}
-{"level":30,"time":1759599557116,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":400},"responseTime":0.7222279999405146,"msg":"request completed"}
-{"level":30,"time":1759599557119,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070941,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":400},"err":{"type":"Error","message":"body/average_heart_rate must be <= 220","stack":"Error: body/average_heart_rate must be <= 220\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/average_heart_rate","schemaPath":"#/properties/average_heart_rate/maximum","keyword":"maximum","params":{"comparison":"<=","limit":220},"message":"must be <= 220"}],"validationContext":"body"},"msg":"body/average_heart_rate must be <= 220"}
+{"level":30,"time":1759600070941,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":400},"responseTime":0.6465900000184774,"msg":"request completed"}
+{"level":30,"time":1759600070943,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid peak_heart_rate (below minimum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 6 - should return 400 for invalid peak_heart_rate (below minimum) # time=1.905ms
+        ok 6 - should return 400 for invalid peak_heart_rate (below minimum) # time=2.172ms
         
-{"level":30,"time":1759599557119,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":400},"err":{"type":"Error","message":"body/peak_heart_rate must be >= 60","stack":"Error: body/peak_heart_rate must be >= 60\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/peak_heart_rate","schemaPath":"#/properties/peak_heart_rate/minimum","keyword":"minimum","params":{"comparison":">=","limit":60},"message":"must be >= 60"}],"validationContext":"body"},"msg":"body/peak_heart_rate must be >= 60"}
-{"level":30,"time":1759599557119,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":400},"responseTime":0.7400380000472069,"msg":"request completed"}
-{"level":30,"time":1759599557124,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070944,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":400},"err":{"type":"Error","message":"body/peak_heart_rate must be >= 60","stack":"Error: body/peak_heart_rate must be >= 60\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/peak_heart_rate","schemaPath":"#/properties/peak_heart_rate/minimum","keyword":"minimum","params":{"comparison":">=","limit":60},"message":"must be >= 60"}],"validationContext":"body"},"msg":"body/peak_heart_rate must be >= 60"}
+{"level":30,"time":1759600070944,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":400},"responseTime":0.7730730008333921,"msg":"request completed"}
+{"level":30,"time":1759600070946,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid peak_heart_rate (above maximum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 7 - should return 400 for invalid peak_heart_rate (above maximum) # time=3.675ms
+        ok 7 - should return 400 for invalid peak_heart_rate (above maximum) # time=2.11ms
         
-{"level":30,"time":1759599557126,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":400},"err":{"type":"Error","message":"body/peak_heart_rate must be <= 220","stack":"Error: body/peak_heart_rate must be <= 220\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/peak_heart_rate","schemaPath":"#/properties/peak_heart_rate/maximum","keyword":"maximum","params":{"comparison":"<=","limit":220},"message":"must be <= 220"}],"validationContext":"body"},"msg":"body/peak_heart_rate must be <= 220"}
-{"level":30,"time":1759599557126,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":400},"responseTime":1.7469389997422695,"msg":"request completed"}
-{"level":30,"time":1759599557130,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070947,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":400},"err":{"type":"Error","message":"body/peak_heart_rate must be <= 220","stack":"Error: body/peak_heart_rate must be <= 220\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/peak_heart_rate","schemaPath":"#/properties/peak_heart_rate/maximum","keyword":"maximum","params":{"comparison":"<=","limit":220},"message":"must be <= 220"}],"validationContext":"body"},"msg":"body/peak_heart_rate must be <= 220"}
+{"level":30,"time":1759600070947,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":400},"responseTime":0.7715360000729561,"msg":"request completed"}
+{"level":30,"time":1759600070950,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid duration_minutes (below minimum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 8 - should return 400 for invalid duration_minutes (below minimum) # time=2.203ms
+        ok 8 - should return 400 for invalid duration_minutes (below minimum) # time=2.999ms
         
-{"level":30,"time":1759599557130,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"err":{"type":"Error","message":"body/duration_minutes must be >= 10","stack":"Error: body/duration_minutes must be >= 10\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/duration_minutes","schemaPath":"#/properties/duration_minutes/minimum","keyword":"minimum","params":{"comparison":">=","limit":10},"message":"must be >= 10"}],"validationContext":"body"},"msg":"body/duration_minutes must be >= 10"}
-{"level":30,"time":1759599557131,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"responseTime":0.7395479995757341,"msg":"request completed"}
-{"level":30,"time":1759599557132,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070950,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"err":{"type":"Error","message":"body/duration_minutes must be >= 10","stack":"Error: body/duration_minutes must be >= 10\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/duration_minutes","schemaPath":"#/properties/duration_minutes/minimum","keyword":"minimum","params":{"comparison":">=","limit":10},"message":"must be >= 10"}],"validationContext":"body"},"msg":"body/duration_minutes must be >= 10"}
+{"level":30,"time":1759600070951,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":400},"responseTime":0.7341009993106127,"msg":"request completed"}
+{"level":30,"time":1759600070953,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid duration_minutes (above maximum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 9 - should return 400 for invalid duration_minutes (above maximum) # time=2.778ms
+        ok 9 - should return 400 for invalid duration_minutes (above maximum) # time=1.99ms
         
-{"level":30,"time":1759599557133,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"err":{"type":"Error","message":"body/duration_minutes must be <= 120","stack":"Error: body/duration_minutes must be <= 120\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/duration_minutes","schemaPath":"#/properties/duration_minutes/maximum","keyword":"maximum","params":{"comparison":"<=","limit":120},"message":"must be <= 120"}],"validationContext":"body"},"msg":"body/duration_minutes must be <= 120"}
-{"level":30,"time":1759599557133,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"responseTime":0.7044190000742674,"msg":"request completed"}
-{"level":30,"time":1759599557136,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070954,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"err":{"type":"Error","message":"body/duration_minutes must be <= 120","stack":"Error: body/duration_minutes must be <= 120\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/duration_minutes","schemaPath":"#/properties/duration_minutes/maximum","keyword":"maximum","params":{"comparison":"<=","limit":120},"message":"must be <= 120"}],"validationContext":"body"},"msg":"body/duration_minutes must be <= 120"}
+{"level":30,"time":1759600070954,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":400},"responseTime":0.6866790000349283,"msg":"request completed"}
+{"level":30,"time":1759600070956,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid intervals_completed (above maximum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 10 - should return 400 for invalid intervals_completed (above maximum) # time=2.019ms
+        ok 10 - should return 400 for invalid intervals_completed (above maximum) # time=1.89ms
         
-{"level":30,"time":1759599557137,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":400},"err":{"type":"Error","message":"body/intervals_completed must be <= 4","stack":"Error: body/intervals_completed must be <= 4\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/intervals_completed","schemaPath":"#/properties/intervals_completed/maximum","keyword":"maximum","params":{"comparison":"<=","limit":4},"message":"must be <= 4"}],"validationContext":"body"},"msg":"body/intervals_completed must be <= 4"}
-{"level":30,"time":1759599557137,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":400},"responseTime":0.697155000641942,"msg":"request completed"}
-{"level":30,"time":1759599557142,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070956,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":400},"err":{"type":"Error","message":"body/intervals_completed must be <= 4","stack":"Error: body/intervals_completed must be <= 4\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/intervals_completed","schemaPath":"#/properties/intervals_completed/maximum","keyword":"maximum","params":{"comparison":"<=","limit":4},"message":"must be <= 4"}],"validationContext":"body"},"msg":"body/intervals_completed must be <= 4"}
+{"level":30,"time":1759600070957,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":400},"responseTime":0.6832569986581802,"msg":"request completed"}
+{"level":30,"time":1759600070958,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid rpe (below minimum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 11 - should return 400 for invalid rpe (below minimum) # time=5.628ms
+        ok 11 - should return 400 for invalid rpe (below minimum) # time=1.525ms
         
+{"level":30,"time":1759600070959,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":400},"err":{"type":"Error","message":"body/rpe must be >= 1","stack":"Error: body/rpe must be >= 1\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/rpe","schemaPath":"#/properties/rpe/minimum","keyword":"minimum","params":{"comparison":">=","limit":1},"message":"must be >= 1"}],"validationContext":"body"},"msg":"body/rpe must be >= 1"}
+{"level":30,"time":1759600070959,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":400},"responseTime":0.5283490009605885,"msg":"request completed"}
+{"level":30,"time":1759600070961,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid rpe (above maximum)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 12 - should return 400 for invalid rpe (above maximum) # time=2.385ms
+        ok 12 - should return 400 for invalid rpe (above maximum) # time=1.403ms
         
-{"level":30,"time":1759599557143,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":400},"err":{"type":"Error","message":"body/rpe must be >= 1","stack":"Error: body/rpe must be >= 1\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/rpe","schemaPath":"#/properties/rpe/minimum","keyword":"minimum","params":{"comparison":">=","limit":1},"message":"must be >= 1"}],"validationContext":"body"},"msg":"body/rpe must be >= 1"}
-{"level":30,"time":1759599557144,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":400},"responseTime":1.3132949993014336,"msg":"request completed"}
-{"level":30,"time":1759599557146,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557147,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"err":{"type":"Error","message":"body/rpe must be <= 10","stack":"Error: body/rpe must be <= 10\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/rpe","schemaPath":"#/properties/rpe/maximum","keyword":"maximum","params":{"comparison":"<=","limit":10},"message":"must be <= 10"}],"validationContext":"body"},"msg":"body/rpe must be <= 10"}
-{"level":30,"time":1759599557147,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"responseTime":1.1727050002664328,"msg":"request completed"}
-{"level":30,"time":1759599557149,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070961,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"err":{"type":"Error","message":"body/rpe must be <= 10","stack":"Error: body/rpe must be <= 10\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/rpe","schemaPath":"#/properties/rpe/maximum","keyword":"maximum","params":{"comparison":"<=","limit":10},"message":"must be <= 10"}],"validationContext":"body"},"msg":"body/rpe must be <= 10"}
+{"level":30,"time":1759600070961,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":400},"responseTime":0.5182920005172491,"msg":"request completed"}
+{"level":30,"time":1759600070963,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing required fields
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 13 - should return 400 for missing required fields # time=4.401ms
+        ok 13 - should return 400 for missing required fields # time=1.401ms
         
-{"level":30,"time":1759599557150,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":400},"err":{"type":"Error","message":"body must have required property 'date'","stack":"Error: body must have required property 'date'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"date"},"message":"must have required property 'date'"}],"validationContext":"body"},"msg":"body must have required property 'date'"}
-{"level":30,"time":1759599557151,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":400},"responseTime":1.6463670004159212,"msg":"request completed"}
-{"level":30,"time":1759599557155,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070963,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":400},"err":{"type":"Error","message":"body must have required property 'date'","stack":"Error: body must have required property 'date'\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"date"},"message":"must have required property 'date'"}],"validationContext":"body"},"msg":"body must have required property 'date'"}
+{"level":30,"time":1759600070963,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":400},"responseTime":0.49489500001072884,"msg":"request completed"}
+{"level":30,"time":1759600070965,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for notes exceeding max length
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 14 - should return 400 for notes exceeding max length # time=2.565ms
+        ok 14 - should return 400 for notes exceeding max length # time=1.954ms
         
-{"level":30,"time":1759599557156,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":400},"err":{"type":"Error","message":"body/notes must NOT have more than 500 characters","stack":"Error: body/notes must NOT have more than 500 characters\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/notes","schemaPath":"#/properties/notes/maxLength","keyword":"maxLength","params":{"limit":500},"message":"must NOT have more than 500 characters"}],"validationContext":"body"},"msg":"body/notes must NOT have more than 500 characters"}
-{"level":30,"time":1759599557156,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":400},"responseTime":1.0302979983389378,"msg":"request completed"}
-{"level":30,"time":1759599557159,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070965,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":400},"err":{"type":"Error","message":"body/notes must NOT have more than 500 characters","stack":"Error: body/notes must NOT have more than 500 characters\n    at defaultSchemaErrorFormatter (/home/asigator/fitness2025/backend/node_modules/fastify/lib/context.js:114:10)\n    at wrapValidationError (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:249:17)\n    at validate (/home/asigator/fitness2025/backend/node_modules/fastify/lib/validation.js:167:16)\n    at preValidationCallback (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:93:25)\n    at handler (/home/asigator/fitness2025/backend/node_modules/fastify/lib/handleRequest.js:77:7)\n    at /home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at done (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:304:5)\n    at Request.onEnd (/home/asigator/fitness2025/backend/node_modules/fastify/lib/contentTypeParser.js:283:27)","statusCode":400,"code":"FST_ERR_VALIDATION","validation":[{"instancePath":"/notes","schemaPath":"#/properties/notes/maxLength","keyword":"maxLength","params":{"limit":500},"message":"must NOT have more than 500 characters"}],"validationContext":"body"},"msg":"body/notes must NOT have more than 500 characters"}
+{"level":30,"time":1759600070966,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":400},"responseTime":0.7536570001393557,"msg":"request completed"}
+{"level":30,"time":1759600070968,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 15 - should return 401 without authentication # time=3.411ms
+        ok 15 - should return 401 without authentication # time=2.025ms
         
         1..15
-    ok 1 - POST /api/vo2max-sessions # time=80.087ms
+    ok 1 - POST /api/vo2max-sessions # time=74.034ms
     
-{"level":30,"time":1759599557161,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":401},"responseTime":1.5677269995212555,"msg":"request completed"}
-{"level":30,"time":1759599557165,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070969,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":401},"responseTime":1.017935998737812,"msg":"request completed"}
+{"level":30,"time":1759600070972,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=160)
-[VO2max] Session created: id=427, workout=797, protocol=4x4, duration=30min, VO2max=48.5
-{"level":30,"time":1759599557168,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":201},"responseTime":3.2008940000087023,"msg":"request completed"}
-{"level":30,"time":1759599557168,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=459, workout=856, protocol=4x4, duration=30min, VO2max=48.5
+{"level":30,"time":1759600070974,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":201},"responseTime":2.4459800012409687,"msg":"request completed"}
+{"level":30,"time":1759600070974,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
-[VO2max] Session created: id=428, workout=798, protocol=4x4, duration=28min, VO2max=48.5
-{"level":30,"time":1759599557170,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":201},"responseTime":2.169268999248743,"msg":"request completed"}
-{"level":30,"time":1759599557171,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=460, workout=857, protocol=4x4, duration=28min, VO2max=48.5
+{"level":30,"time":1759600070976,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":201},"responseTime":1.8101449999958277,"msg":"request completed"}
+{"level":30,"time":1759600070977,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=170)
-[VO2max] Session created: id=429, workout=799, protocol=4x4, duration=32min, VO2max=48.5
+[VO2max] Session created: id=461, workout=858, protocol=4x4, duration=32min, VO2max=48.5
     # Subtest: GET /api/vo2max-sessions
         # Subtest: should return all sessions without filters (200)
             ok 1 - Returns 200 OK
@@ -174,73 +174,73 @@ TAP version 14
             ok 12 - Session has valid completion_status
             ok 13 - Session has created_at timestamp
             1..13
-        ok 1 - should return all sessions without filters (200) # time=8.675ms
+        ok 1 - should return all sessions without filters (200) # time=4.147ms
         
         # Subtest: should support pagination with limit (200)
             ok 1 - Returns 200 OK
             ok 2 - Respects limit parameter
             ok 3 - Returns has_more field
             1..3
-        ok 2 - should support pagination with limit (200) # time=5.093ms
+        ok 2 - should support pagination with limit (200) # time=2.652ms
         
         # Subtest: should support pagination with offset (200)
             ok 1 - Returns 200 OK
             ok 2 - Respects limit parameter
             1..2
-        ok 3 - should support pagination with offset (200) # time=4.086ms
+        ok 3 - should support pagination with offset (200) # time=2.807ms
         
         # Subtest: should filter by start_date (200)
             ok 1 - Returns 200 OK
             ok 2 - All sessions are on or after start_date
             1..2
-        ok 4 - should filter by start_date (200) # time=3.149ms
+        ok 4 - should filter by start_date (200) # time=3.141ms
         
         # Subtest: should filter by end_date (200)
             ok 1 - Returns 200 OK
             ok 2 - All sessions are on or before end_date
             1..2
-        ok 5 - should filter by end_date (200) # time=4.657ms
+        ok 5 - should filter by end_date (200) # time=4.879ms
         
         # Subtest: should filter by date range (200)
             ok 1 - Returns 200 OK
             ok 2 - All sessions are within date range
             1..2
-        ok 6 - should filter by date range (200) # time=6.184ms
+        ok 6 - should filter by date range (200) # time=3.506ms
         
         # Subtest: should respect maximum limit of 200 (200)
             ok 1 - Returns 200 OK
             ok 2 - Enforces maximum limit of 200
             1..2
-        ok 7 - should respect maximum limit of 200 (200) # time=4.033ms
+        ok 7 - should respect maximum limit of 200 (200) # time=6.03ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 8 - should return 401 without authentication # time=1.893ms
+        ok 8 - should return 401 without authentication # time=3.276ms
         
         1..8
-    ok 2 - GET /api/vo2max-sessions # time=58.413ms
+    ok 2 - GET /api/vo2max-sessions # time=49.059ms
     
-{"level":30,"time":1759599557173,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":201},"responseTime":2.2708180006593466,"msg":"request completed"}
-{"level":30,"time":1759599557174,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"GET","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557178,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":200},"responseTime":2.221230998635292,"msg":"request completed"}
-{"level":30,"time":1759599557184,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"GET","url":"/api/vo2max-sessions?limit=2","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557186,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":200},"responseTime":2.104805998504162,"msg":"request completed"}
-{"level":30,"time":1759599557192,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"GET","url":"/api/vo2max-sessions?limit=1&offset=1","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557194,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":200},"responseTime":2.221440000459552,"msg":"request completed"}
-{"level":30,"time":1759599557196,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"GET","url":"/api/vo2max-sessions?start_date=2025-10-02","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557198,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":200},"responseTime":1.2512060012668371,"msg":"request completed"}
-{"level":30,"time":1759599557202,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"GET","url":"/api/vo2max-sessions?end_date=2025-10-02","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557203,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":200},"responseTime":1.328311000019312,"msg":"request completed"}
-{"level":30,"time":1759599557206,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"GET","url":"/api/vo2max-sessions?start_date=2025-10-01&end_date=2025-10-02","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557207,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":200},"responseTime":1.0461519993841648,"msg":"request completed"}
-{"level":30,"time":1759599557215,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"GET","url":"/api/vo2max-sessions?limit=300","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557216,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":200},"responseTime":1.2194279991090298,"msg":"request completed"}
-{"level":30,"time":1759599557220,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"GET","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557221,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":401},"responseTime":0.4956630002707243,"msg":"request completed"}
-{"level":30,"time":1759599557225,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070978,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":201},"responseTime":1.7250780016183853,"msg":"request completed"}
+{"level":30,"time":1759600070979,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"GET","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070981,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":200},"responseTime":1.5905639994889498,"msg":"request completed"}
+{"level":30,"time":1759600070984,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"GET","url":"/api/vo2max-sessions?limit=2","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070985,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":200},"responseTime":0.966881999745965,"msg":"request completed"}
+{"level":30,"time":1759600070987,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"GET","url":"/api/vo2max-sessions?limit=1&offset=1","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070988,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":200},"responseTime":0.951656999066472,"msg":"request completed"}
+{"level":30,"time":1759600070993,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"GET","url":"/api/vo2max-sessions?start_date=2025-10-02","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600070995,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":200},"responseTime":1.4017139989882708,"msg":"request completed"}
+{"level":30,"time":1759600070999,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"GET","url":"/api/vo2max-sessions?end_date=2025-10-02","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071001,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":200},"responseTime":1.850093999877572,"msg":"request completed"}
+{"level":30,"time":1759600071005,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"GET","url":"/api/vo2max-sessions?start_date=2025-10-01&end_date=2025-10-02","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071006,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":200},"responseTime":1.1632059998810291,"msg":"request completed"}
+{"level":30,"time":1759600071009,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"GET","url":"/api/vo2max-sessions?limit=300","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071013,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":200},"responseTime":3.5285889990627766,"msg":"request completed"}
+{"level":30,"time":1759600071018,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"GET","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071018,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":401},"responseTime":0.5135420002043247,"msg":"request completed"}
+{"level":30,"time":1759600071021,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
 [VO2max] Auto-calculated VO2max: 48.5 ml/kg/min (age=30, HR=165)
-[VO2max] Session created: id=430, workout=800, protocol=4x4, duration=32min, VO2max=48.5
+[VO2max] Session created: id=462, workout=859, protocol=4x4, duration=32min, VO2max=48.5
     # Subtest: GET /api/vo2max-sessions/:id
         # Subtest: should return session details by ID (200)
             ok 1 - Returns 200 OK
@@ -258,13 +258,13 @@ TAP version 14
             ok 13 - Has notes
             ok 14 - Has created_at timestamp
             1..14
-        ok 1 - should return session details by ID (200) # time=4.612ms
+        ok 1 - should return session details by ID (200) # time=3.916ms
         
-{"level":30,"time":1759599557228,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":201},"responseTime":3.36502099968493,"msg":"request completed"}
-{"level":30,"time":1759599557230,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"GET","url":"/api/vo2max-sessions/430","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557231,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":200},"responseTime":1.0550919994711876,"msg":"request completed"}
-{"level":30,"time":1759599557237,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-[VO2max] Session created: id=431, workout=801, protocol=4x4, duration=25min, VO2max=N/A
+{"level":30,"time":1759600071025,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":201},"responseTime":3.6813309993594885,"msg":"request completed"}
+{"level":30,"time":1759600071026,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"GET","url":"/api/vo2max-sessions/462","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071027,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":200},"responseTime":0.8669390007853508,"msg":"request completed"}
+{"level":30,"time":1759600071031,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"POST","url":"/api/vo2max-sessions","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+[VO2max] Session created: id=463, workout=860, protocol=4x4, duration=25min, VO2max=N/A
         # Subtest: should return session with nullable fields when not provided (200)
             ok 1 - Returns 200 OK
             ok 2 - Returns correct session
@@ -274,42 +274,42 @@ TAP version 14
             ok 6 - estimated_vo2max is nullable
             ok 7 - notes is nullable
             1..7
-        ok 2 - should return session with nullable fields when not provided (200) # time=5.679ms
+        ok 2 - should return session with nullable fields when not provided (200) # time=4.294ms
         
         # Subtest: should return 404 for non-existent session
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 3 - should return 404 for non-existent session # time=2.793ms
+        ok 3 - should return 404 for non-existent session # time=1.442ms
         
-{"level":30,"time":1759599557239,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":201},"responseTime":2.424049999564886,"msg":"request completed"}
-{"level":30,"time":1759599557240,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","req":{"method":"GET","url":"/api/vo2max-sessions/431","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557240,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","res":{"statusCode":200},"responseTime":0.62466000020504,"msg":"request completed"}
-{"level":30,"time":1759599557244,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","req":{"method":"GET","url":"/api/vo2max-sessions/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557245,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","res":{"statusCode":404},"responseTime":0.7359170001000166,"msg":"request completed"}
-{"level":30,"time":1759599557248,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557502,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","res":{"statusCode":201},"responseTime":253.86900000087917,"msg":"request completed"}
-{"level":30,"time":1759599557502,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557724,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","res":{"statusCode":200},"responseTime":222.0326390005648,"msg":"request completed"}
+{"level":30,"time":1759600071032,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":201},"responseTime":1.8175480011850595,"msg":"request completed"}
+{"level":30,"time":1759600071033,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","req":{"method":"GET","url":"/api/vo2max-sessions/463","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071033,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","res":{"statusCode":200},"responseTime":0.39683800004422665,"msg":"request completed"}
+{"level":30,"time":1759600071036,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","req":{"method":"GET","url":"/api/vo2max-sessions/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071036,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","res":{"statusCode":404},"responseTime":0.4157650005072355,"msg":"request completed"}
+{"level":30,"time":1759600071038,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071255,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","res":{"statusCode":201},"responseTime":217.26299799978733,"msg":"request completed"}
+{"level":30,"time":1759600071255,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071461,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","res":{"statusCode":200},"responseTime":205.4506809990853,"msg":"request completed"}
         # Subtest: should return 404 for session belonging to another user
             ok 1 - Returns 404 Not Found for other users session
             1..1
-        ok 4 - should return 404 for session belonging to another user # time=479.689ms
+        ok 4 - should return 404 for session belonging to another user # time=425.692ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 5 - should return 401 without authentication # time=2.566ms
+        ok 5 - should return 401 without authentication # time=1.09ms
         
         1..5
-    ok 3 - GET /api/vo2max-sessions/:id # time=508.019ms
+    ok 3 - GET /api/vo2max-sessions/:id # time=444.743ms
     
     1..3
-ok 1 - VO2max Cardio Tracking Endpoints Contract Tests # time=1403.93ms
+ok 1 - VO2max Cardio Tracking Endpoints Contract Tests # time=1383.796ms
 
-{"level":30,"time":1759599557725,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","req":{"method":"GET","url":"/api/vo2max-sessions/430","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557726,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","res":{"statusCode":404},"responseTime":0.842424999922514,"msg":"request completed"}
-{"level":30,"time":1759599557729,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","req":{"method":"GET","url":"/api/vo2max-sessions/430","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759599557729,"pid":210025,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","res":{"statusCode":401},"responseTime":0.38321899995207787,"msg":"request completed"}
+{"level":30,"time":1759600071461,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","req":{"method":"GET","url":"/api/vo2max-sessions/462","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071462,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","res":{"statusCode":404},"responseTime":0.8546479996293783,"msg":"request completed"}
+{"level":30,"time":1759600071464,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","req":{"method":"GET","url":"/api/vo2max-sessions/462","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759600071465,"pid":215106,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","res":{"statusCode":401},"responseTime":0.2529649995267391,"msg":"request completed"}
 1..1
 Database connection closed

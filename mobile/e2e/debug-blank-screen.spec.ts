@@ -10,6 +10,7 @@ test('debug blank screen', async ({ page }) => {
   // Listen for page errors
   page.on('pageerror', error => {
     console.log(`[PAGE ERROR]:`, error.message);
+    console.log(`[STACK]:`, error.stack);
   });
 
   console.log('Navigating to app...');
