@@ -7,6 +7,8 @@ import { getAuthenticatedClient } from './authApi';
  * Provides API calls and React Query hooks for analytics endpoints:
  * - 1RM progression tracking
  * - Volume trends by muscle group
+ * - Current week volume tracking
+ * - Program volume analysis
  * - Consistency metrics
  *
  * All endpoints use TanStack Query for automatic caching and background refresh.
@@ -34,6 +36,74 @@ export interface VolumeTrendDataPoint {
   mev: number; // Minimum Effective Volume
   mav: number; // Maximum Adaptive Volume
   mrv: number; // Maximum Recoverable Volume
+}
+
+/**
+ * Muscle group volume data
+ */
+export interface MuscleGroupVolume {
+  muscle_group: string;
+  completed_sets: number;
+  planned_sets: number;
+  remaining_sets: number;
+  mev: number;
+  mav: number;
+  mrv: number;
+  completion_percentage: number;
+  zone: 'below_mev' | 'adequate' | 'optimal' | 'above_mrv' | 'on_track';
+  warning: string | null;
+}
+
+/**
+ * Current week volume analysis
+ */
+export interface CurrentWeekVolume {
+  week_start: string;
+  week_end: string;
+  muscle_groups: MuscleGroupVolume[];
+}
+
+/**
+ * Volume trends week data
+ */
+export interface VolumeTrendsWeek {
+  week_start: string;
+  muscle_groups: Array<{
+    muscle_group: string;
+    completed_sets: number;
+    mev: number;
+    mav: number;
+    mrv: number;
+  }>;
+}
+
+/**
+ * Volume trends response
+ */
+export interface VolumeTrends {
+  weeks: VolumeTrendsWeek[];
+}
+
+/**
+ * Program volume analysis muscle group
+ */
+export interface ProgramMuscleGroupVolume {
+  muscle_group: string;
+  planned_weekly_sets: number;
+  mev: number;
+  mav: number;
+  mrv: number;
+  zone: string;
+  warning: string | null;
+}
+
+/**
+ * Program volume analysis
+ */
+export interface ProgramVolumeAnalysis {
+  program_id: number;
+  mesocycle_phase: string;
+  muscle_groups: ProgramMuscleGroupVolume[];
 }
 
 /**
@@ -114,6 +184,60 @@ export async function getConsistencyMetrics(): Promise<ConsistencyMetrics> {
 }
 
 /**
+ * Get current week volume tracking
+ *
+ * @returns Current week volume with completed and planned sets per muscle group
+ * @throws Error if API call fails (401 unauthorized)
+ */
+export async function getCurrentWeekVolume(): Promise<CurrentWeekVolume> {
+  const client = await getAuthenticatedClient();
+
+  const response = await client.get<CurrentWeekVolume>('/api/analytics/volume-current-week');
+
+  return response.data;
+}
+
+/**
+ * Get historical volume trends over multiple weeks
+ *
+ * @param weeks - Number of weeks to retrieve (default: 8, max: 52)
+ * @param muscleGroup - Optional filter for specific muscle group
+ * @returns Volume trends data with weekly breakdowns
+ * @throws Error if API call fails (401 unauthorized, 400 validation)
+ */
+export async function getVolumeTrendsHistory(
+  weeks?: number,
+  muscleGroup?: string
+): Promise<VolumeTrends> {
+  const client = await getAuthenticatedClient();
+
+  const response = await client.get<VolumeTrends>('/api/analytics/volume-trends', {
+    params: {
+      ...(weeks !== undefined ? { weeks } : {}),
+      ...(muscleGroup !== undefined ? { muscle_group: muscleGroup } : {}),
+    },
+  });
+
+  return response.data;
+}
+
+/**
+ * Get program volume analysis for active program
+ *
+ * @returns Program volume analysis with planned weekly sets and zones
+ * @throws Error if API call fails (401 unauthorized, 404 no active program)
+ */
+export async function getProgramVolumeAnalysis(): Promise<ProgramVolumeAnalysis> {
+  const client = await getAuthenticatedClient();
+
+  const response = await client.get<ProgramVolumeAnalysis>(
+    '/api/analytics/program-volume-analysis'
+  );
+
+  return response.data;
+}
+
+/**
  * React Query hook for 1RM progression
  *
  * Automatically caches data for 5 minutes and refreshes in background.
@@ -181,6 +305,71 @@ export function useConsistencyMetrics(): UseQueryResult<ConsistencyMetrics, Erro
   return useQuery({
     queryKey: ['analytics', 'consistency'],
     queryFn: getConsistencyMetrics,
+    staleTime: ANALYTICS_STALE_TIME,
+    gcTime: ANALYTICS_CACHE_TIME,
+    retry: 2,
+  });
+}
+
+/**
+ * React Query hook for current week volume
+ *
+ * Automatically caches data for 5 minutes and refreshes in background.
+ *
+ * @returns TanStack Query result with current week volume data
+ *
+ * @example
+ * const { data, isLoading, error } = useCurrentWeekVolume();
+ */
+export function useCurrentWeekVolume(): UseQueryResult<CurrentWeekVolume, Error> {
+  return useQuery({
+    queryKey: ['analytics', 'volume-current-week'],
+    queryFn: getCurrentWeekVolume,
+    staleTime: ANALYTICS_STALE_TIME,
+    gcTime: ANALYTICS_CACHE_TIME,
+    retry: 2,
+  });
+}
+
+/**
+ * React Query hook for volume trends history
+ *
+ * Automatically caches data for 5 minutes and refreshes in background.
+ *
+ * @param weeks - Number of weeks to retrieve (default: 8, max: 52)
+ * @param muscleGroup - Optional filter for specific muscle group
+ * @returns TanStack Query result with volume trends data
+ *
+ * @example
+ * const { data, isLoading, error } = useVolumeTrendsHistory(12, 'chest');
+ */
+export function useVolumeTrendsHistory(
+  weeks?: number,
+  muscleGroup?: string
+): UseQueryResult<VolumeTrends, Error> {
+  return useQuery({
+    queryKey: ['analytics', 'volume-trends', weeks, muscleGroup],
+    queryFn: () => getVolumeTrendsHistory(weeks, muscleGroup),
+    staleTime: ANALYTICS_STALE_TIME,
+    gcTime: ANALYTICS_CACHE_TIME,
+    retry: 2,
+  });
+}
+
+/**
+ * React Query hook for program volume analysis
+ *
+ * Automatically caches data for 5 minutes and refreshes in background.
+ *
+ * @returns TanStack Query result with program volume analysis
+ *
+ * @example
+ * const { data, isLoading, error } = useProgramVolumeAnalysis();
+ */
+export function useProgramVolumeAnalysis(): UseQueryResult<ProgramVolumeAnalysis, Error> {
+  return useQuery({
+    queryKey: ['analytics', 'program-volume-analysis'],
+    queryFn: getProgramVolumeAnalysis,
     staleTime: ANALYTICS_STALE_TIME,
     gcTime: ANALYTICS_CACHE_TIME,
     retry: 2,
