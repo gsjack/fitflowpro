@@ -90,7 +90,7 @@ export function createWorkout(userId: number, programDayId: number, date: string
 function getProgramExercises(programDayId: number) {
   return db
     .prepare(
-      `SELECT pe.*, e.name as exercise_name
+      `SELECT pe.*, e.name as exercise_name, e.video_url
        FROM program_exercises pe
        JOIN exercises e ON pe.exercise_id = e.id
        WHERE pe.program_day_id = ?

@@ -21,6 +21,7 @@ export interface Exercise {
   default_reps: string;
   default_rir: number;
   description: string;
+  video_url?: string; // YouTube demonstration video URL
 }
 
 /**
@@ -120,7 +121,8 @@ export function getExercises(filters: ExerciseFilters = {}): Exercise[] {
       default_sets,
       default_reps,
       default_rir,
-      description
+      description,
+      video_url
     FROM exercises
     ${whereClause}
     ORDER BY name
@@ -155,7 +157,8 @@ export function getExerciseById(id: number): Exercise | undefined {
       default_sets,
       default_reps,
       default_rir,
-      description
+      description,
+      video_url
     FROM exercises
     WHERE id = ?
   `;

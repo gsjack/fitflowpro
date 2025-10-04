@@ -23,6 +23,7 @@ export interface ProgramExercise {
   sets: number;
   reps: string;
   rir: number;
+  video_url?: string;
 }
 
 // API configuration

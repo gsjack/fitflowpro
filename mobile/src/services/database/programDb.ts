@@ -46,6 +46,7 @@ export interface ProgramExercise {
   sets: number;
   reps: string;
   rir: number;
+  video_url?: string;
 }
 
 export interface Exercise {
@@ -58,6 +59,7 @@ export interface Exercise {
   default_reps: string;
   default_rir: number;
   notes?: string;
+  video_url?: string;
 }
 
 /**

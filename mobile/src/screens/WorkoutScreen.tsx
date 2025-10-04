@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useState, useRef } from 'react';
-import { View, ScrollView, StyleSheet, AccessibilityInfo, findNodeHandle } from 'react-native';
+import { View, ScrollView, StyleSheet, AccessibilityInfo, findNodeHandle, Animated, Platform } from 'react-native';
 import {
   Text,
   Button,
@@ -15,17 +15,23 @@ import {
   Dialog,
   Portal,
   Paragraph,
+  Snackbar,
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { useWorkoutStore } from '../stores/workoutStore';
 import { type ProgramExercise } from '../services/database/programDb';
 import { getSetsForExercise, getWorkoutById } from '../services/database/workoutDb';
 import SetLogCard from '../components/workout/SetLogCard';
 import RestTimer from '../components/workout/RestTimer';
+import ExerciseVideoModal from '../components/workout/ExerciseVideoModal';
 import * as timerService from '../services/timer/timerService';
 import { colors } from '../theme/colors';
 import { spacing, borderRadius } from '../theme/typography';
+import { useSettingsStore } from '../stores/settingsStore';
+import { getUnitLabel } from '../utils/unitConversion';
 
 interface WorkoutScreenProps {
   navigation?: any; // For future navigation implementation
@@ -33,6 +39,7 @@ interface WorkoutScreenProps {
 
 export default function WorkoutScreen({}: WorkoutScreenProps) {
   const navigation = useNavigation();
+  const { weightUnit } = useSettingsStore();
   const {
     currentWorkout,
     exerciseIndex,
@@ -51,6 +58,13 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
   const [previousSet, setPreviousSet] = useState<{ weight: number; reps: number } | null>(null);
   const [checkedForActiveWorkout, setCheckedForActiveWorkout] = useState(false);
   const [cancelDialogVisible, setCancelDialogVisible] = useState(false);
+  const [videoModalVisible, setVideoModalVisible] = useState(false);
+
+  // Milestone celebration state
+  const [milestoneMessage, setMilestoneMessage] = useState('');
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const previousProgressRef = useRef(0);
+  const progressAnimValue = useRef(new Animated.Value(0)).current;
 
   // Accessibility: Ref for auto-focus after set completion
   const setLogCardRef = useRef<View>(null);
@@ -204,8 +218,9 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
       }
 
       // Accessibility: Announce set completion to screen reader
+      const unitLabel = getUnitLabel(weightUnit);
       AccessibilityInfo.announceForAccessibility(
-        `Set ${currentSetNumber} completed. ${weightKg} kilograms for ${reps} reps. Rest timer started.`
+        `Set ${currentSetNumber} completed. ${weightKg} ${unitLabel} for ${reps} reps. Rest timer started.`
       );
 
       // Start rest timer (3 minutes = 180 seconds)
@@ -280,12 +295,23 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
           style={styles.gradient}
         >
           <View style={styles.emptyState}>
-            <Text variant="headlineSmall" style={styles.emptyTitle}>
-              No Active Workout
+            <MaterialCommunityIcons name="dumbbell" size={80} color={colors.text.disabled} />
+            <Text variant="headlineMedium" style={styles.emptyTitle}>
+              No active workout
             </Text>
             <Text variant="bodyMedium" style={styles.emptyDescription}>
-              Start a workout from the Dashboard
+              Return to Dashboard to start a workout from your program
             </Text>
+            <Button
+              mode="contained"
+              icon="home"
+              onPress={() => navigation.navigate('Dashboard' as never)}
+              style={styles.emptyStateCTA}
+              contentStyle={styles.emptyStateCtaContent}
+              accessibilityLabel="Go to Dashboard"
+            >
+              Go to Dashboard
+            </Button>
           </View>
         </LinearGradient>
       </View>
@@ -295,6 +321,61 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
   const totalSets = exercises.reduce((sum, ex) => sum + ex.sets, 0);
   const completedSetCount = completedSets.length;
   const progress = totalSets > 0 ? completedSetCount / totalSets : 0;
+
+  // Milestone detection and celebration effect
+  useEffect(() => {
+    const currentProgress = progress;
+    const previousProgress = previousProgressRef.current;
+
+    // Define milestones with celebration messages
+    const milestones = [
+      { threshold: 0.25, message: 'Great start! 💪' },
+      { threshold: 0.5, message: 'Halfway there! 🔥' },
+      { threshold: 0.75, message: 'Almost done! 💯' },
+      { threshold: 1.0, message: 'Workout complete! 🎉' },
+    ];
+
+    // Check if we crossed any milestone
+    milestones.forEach((milestone) => {
+      if (previousProgress < milestone.threshold && currentProgress >= milestone.threshold) {
+        console.log(
+          `[WorkoutScreen] Milestone reached: ${milestone.threshold * 100}% - ${milestone.message}`
+        );
+
+        // Show celebration message
+        setMilestoneMessage(milestone.message);
+        setSnackbarVisible(true);
+
+        // Trigger haptic feedback (native platforms only)
+        if (Platform.OS !== 'web') {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch((error) => {
+            console.warn('[WorkoutScreen] Haptics failed:', error);
+          });
+
+          // Additional light haptic burst for extra celebration
+          setTimeout(() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch((error) => {
+              console.warn('[WorkoutScreen] Haptics burst failed:', error);
+            });
+          }, 100);
+        }
+
+        // Accessibility: Announce milestone to screen reader
+        AccessibilityInfo.announceForAccessibility(milestone.message);
+      }
+    });
+
+    previousProgressRef.current = currentProgress;
+  }, [progress]);
+
+  // Animate progress bar smoothly
+  useEffect(() => {
+    Animated.timing(progressAnimValue, {
+      toValue: progress,
+      duration: 300,
+      useNativeDriver: false, // ProgressBar doesn't support native driver
+    }).start();
+  }, [progress, progressAnimValue]);
 
   return (
     <View style={styles.container}>
@@ -309,15 +390,26 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
               <Text variant="labelMedium" style={styles.headerLabel}>
                 ACTIVE WORKOUT
               </Text>
-              <Text variant="headlineSmall" style={styles.headerTitle}>
-                {currentExercise.exercise_name}
-              </Text>
+              <View style={styles.exerciseTitleRow}>
+                <Text variant="headlineMedium" style={styles.headerTitle}>
+                  {currentExercise.exercise_name}
+                </Text>
+                <IconButton
+                  icon="information-outline"
+                  iconColor={colors.primary.main}
+                  size={24}
+                  onPress={() => setVideoModalVisible(true)}
+                  containerStyle={styles.infoButtonContainer}
+                  accessibilityLabel="Watch exercise demonstration"
+                />
+              </View>
             </View>
             <IconButton
               icon="close"
               iconColor={colors.text.secondary}
               size={24}
               onPress={handleCancelWorkout}
+              containerStyle={styles.closeButtonContainer}
               accessibilityLabel="Cancel workout"
             />
           </View>
@@ -331,10 +423,10 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
             accessibilityValue={{ min: 0, max: totalSets, now: completedSetCount }}
           >
             <View style={styles.progressHeader}>
-              <Text variant="titleSmall" style={styles.progressText}>
+              <Text variant="headlineMedium" style={styles.progressText}>
                 Set {currentSetNumber} of {currentExercise.sets}
               </Text>
-              <Text variant="bodySmall" style={styles.progressTotal}>
+              <Text variant="bodyLarge" style={styles.progressTotal}>
                 {completedSetCount}/{totalSets} total
               </Text>
             </View>
@@ -342,6 +434,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
               progress={progress}
               color={colors.primary.main}
               style={styles.progressBar}
+              animatedValue={progressAnimValue}
             />
           </View>
         </View>
@@ -404,6 +497,30 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
           </Dialog.Actions>
         </Dialog>
       </Portal>
+
+      {/* Milestone Celebration Snackbar */}
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={2000}
+        style={styles.milestoneSnackbar}
+        wrapperStyle={styles.snackbarWrapper}
+        action={{
+          label: 'Nice!',
+          onPress: () => setSnackbarVisible(false),
+          textColor: colors.text.primary,
+        }}
+      >
+        <Text style={styles.milestoneText}>{milestoneMessage}</Text>
+      </Snackbar>
+
+      {/* Exercise Video Modal */}
+      <ExerciseVideoModal
+        visible={videoModalVisible}
+        onDismiss={() => setVideoModalVisible(false)}
+        exerciseName={currentExercise.exercise_name}
+        videoUrl={currentExercise.video_url}
+      />
     </View>
   );
 }
@@ -426,11 +543,23 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     color: colors.text.primary,
+    marginTop: spacing.lg,
     marginBottom: spacing.sm,
+    textAlign: 'center',
   },
   emptyDescription: {
-    color: colors.text.tertiary,
+    color: colors.text.secondary,
     textAlign: 'center',
+    marginBottom: spacing.xl,
+    paddingHorizontal: spacing.md,
+  },
+  emptyStateCTA: {
+    marginTop: spacing.md,
+    borderRadius: 8,
+  },
+  emptyStateCtaContent: {
+    height: 48,
+    paddingHorizontal: spacing.lg,
   },
 
   // Header
@@ -459,6 +588,17 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: colors.text.primary,
     fontWeight: '700',
+    flex: 1,
+  },
+  exerciseTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  infoButtonContainer: {
+    minWidth: 48,
+    minHeight: 48,
+    marginLeft: spacing.xs,
   },
 
   // Progress
@@ -475,13 +615,16 @@ const styles = StyleSheet.create({
   progressText: {
     color: colors.text.primary,
     fontWeight: '600',
+    fontSize: 28, // FIX P0-2: Increased to 28px for better readability during workouts
   },
   progressTotal: {
     color: colors.text.tertiary,
+    fontSize: 18, // FIX P0-2: Increased from default 16px for better readability during workouts
+    fontWeight: '500',
   },
   progressBar: {
-    height: 8,
-    borderRadius: 4,
+    height: 12,
+    borderRadius: 6,
     backgroundColor: colors.background.tertiary,
   },
 
@@ -511,5 +654,23 @@ const styles = StyleSheet.create({
   // Cancel Dialog
   cancelDialog: {
     backgroundColor: colors.background.secondary,
+  },
+  closeButtonContainer: {
+    minWidth: 48,
+    minHeight: 48,
+  },
+
+  // Milestone Celebration
+  snackbarWrapper: {
+    bottom: 80, // Positioned above bottom navigation
+  },
+  milestoneSnackbar: {
+    backgroundColor: colors.success.main,
+    borderRadius: borderRadius.md,
+  },
+  milestoneText: {
+    color: colors.text.primary,
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS exercises (
   default_sets INTEGER NOT NULL,
   default_reps TEXT NOT NULL,  -- Format: "6-8", "8-10", "10-12"
   default_rir INTEGER NOT NULL CHECK(default_rir >= 0 AND default_rir <= 4),
-  notes TEXT
+  notes TEXT,
+  video_url TEXT  -- YouTube demonstration video for form guidance
 );
 
 -- Training Programs
