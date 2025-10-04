@@ -14,6 +14,7 @@ import { colors } from './src/theme/colors';
 import AuthScreen from './src/screens/AuthScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
 import WorkoutScreen from './src/screens/WorkoutScreen';
+import VO2maxWorkoutScreen from './src/screens/VO2maxWorkoutScreen';
 import AnalyticsScreen from './src/screens/AnalyticsScreen';
 import PlannerScreen from './src/screens/PlannerScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -40,6 +41,7 @@ export type MainTabParamList = {
 export type DashboardStackParamList = {
   DashboardHome: undefined;
   Workout: undefined;
+  VO2maxWorkout: undefined;
 };
 
 // Create navigators
@@ -60,6 +62,7 @@ function DashboardStackNavigator() {
     <DashboardStack.Navigator screenOptions={{ headerShown: false }}>
       <DashboardStack.Screen name="DashboardHome" component={DashboardWrapper} />
       <DashboardStack.Screen name="Workout" component={WorkoutScreen} />
+      <DashboardStack.Screen name="VO2maxWorkout" component={VO2maxWorkoutScreen} />
     </DashboardStack.Navigator>
   );
 }
@@ -88,12 +91,24 @@ function DashboardWrapper() {
     <DashboardScreen
       userId={userId}
       onStartWorkout={async (programDayId: number, date: string) => {
-        // Start workout via store and navigate to WorkoutScreen
+        // Start workout via store and navigate to correct screen based on day_type
         try {
           console.log('[Dashboard] Starting workout...');
           await useWorkoutStore.getState().startWorkout(userId, programDayId, date);
-          console.log('[Dashboard] Workout started, navigating to WorkoutScreen');
-          navigation.navigate('Workout' as never);
+
+          // Check workout type to determine which screen to navigate to
+          const currentWorkout = useWorkoutStore.getState().currentWorkout;
+          const workoutType = currentWorkout?.dayType;
+
+          console.log('[Dashboard] Workout started, type:', workoutType);
+
+          if (workoutType === 'vo2max') {
+            console.log('[Dashboard] Navigating to VO2maxWorkoutScreen');
+            navigation.navigate('VO2maxWorkout' as never);
+          } else {
+            console.log('[Dashboard] Navigating to WorkoutScreen');
+            navigation.navigate('Workout' as never);
+          }
         } catch (error) {
           console.error('[DashboardWrapper] Failed to start workout:', error);
         }

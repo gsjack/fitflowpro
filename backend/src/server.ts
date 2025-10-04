@@ -8,6 +8,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
 import workoutRoutes from './routes/workouts.js';
 import setRoutes from './routes/sets.js';
 import recoveryRoutes from './routes/recovery.js';
@@ -54,6 +55,7 @@ export async function buildApp() {
 
   // Register routes
   await app.register(authRoutes, { prefix: '/api' });
+  await app.register(userRoutes, { prefix: '/api' });
   await app.register(workoutRoutes, { prefix: '/api' });
   await app.register(setRoutes, { prefix: '/api' });
   await app.register(recoveryRoutes, { prefix: '/api' });

@@ -33,6 +33,7 @@ interface WorkoutState {
     programDayId: number;
     date: string;
     startedAt: number;
+    dayType?: 'strength' | 'vo2max' | null;
   } | null;
 
   // Progress tracking
@@ -143,6 +144,7 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
           programDayId: workout.program_day_id,
           date: workout.date,
           startedAt: workout.started_at ?? Date.now(),
+          dayType: workoutWithExercises?.day_type,
         },
         exerciseIndex: startExerciseIndex,
         completedSets: sets.map((s) => ({
@@ -399,6 +401,7 @@ export const useWorkoutStore = create<WorkoutState>((set, get) => ({
           programDayId: workout.program_day_id,
           date: workout.date,
           startedAt: workout.started_at ?? Date.now(),
+          dayType: workout.day_type,
         },
         exerciseIndex: resumeExerciseIndex,
         completedSets: sets.map((s) => ({

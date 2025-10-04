@@ -262,6 +262,82 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
   );
 
   /**
+   * GET /api/workouts/:id
+   *
+   * Get a single workout by ID with full exercise details
+   *
+   * Requires JWT authentication
+   */
+  fastify.get<{ Params: { id: string } }>(
+    '/workouts/:id',
+    {
+      preHandler: authenticateJWT,
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+          },
+          required: ['id'],
+        },
+      },
+    },
+    async (request, reply) => {
+      try {
+        const workoutId = parseInt(request.params.id, 10);
+        const authenticatedUser = (request as AuthenticatedRequest).user;
+
+        if (isNaN(workoutId)) {
+          return reply.status(400).send({ error: 'Invalid workout ID' });
+        }
+
+        // Fetch specific workout
+        const workout = stmtGetWorkoutById.get(workoutId) as any;
+
+        if (!workout) {
+          return reply.status(404).send({ error: 'Workout not found' });
+        }
+
+        // Verify ownership
+        if (workout.user_id !== authenticatedUser.userId) {
+          return reply.status(403).send({ error: 'Not authorized to access this workout' });
+        }
+
+        // Get program_day info and exercises
+        const programDay = db
+          .prepare('SELECT day_name, day_type FROM program_days WHERE id = ?')
+          .get(workout.program_day_id) as any;
+
+        const exercises = db
+          .prepare(
+            `
+            SELECT pe.*, e.name as exercise_name
+            FROM program_exercises pe
+            JOIN exercises e ON pe.exercise_id = e.id
+            WHERE pe.program_day_id = ?
+            ORDER BY pe.order_index ASC
+          `
+          )
+          .all(workout.program_day_id);
+
+        const workoutWithDetails = {
+          ...workout,
+          day_name: programDay?.day_name || null,
+          day_type: programDay?.day_type || null,
+          exercises,
+        };
+
+        return reply.status(200).send(workoutWithDetails);
+      } catch (error) {
+        fastify.log.error(error);
+        return reply.status(500).send({
+          error: 'Failed to fetch workout',
+        });
+      }
+    }
+  );
+
+  /**
    * PATCH /api/workouts/:id
    *
    * Update workout status (e.g., mark as completed) or change program_day_id
