@@ -206,9 +206,7 @@ export default async function vo2maxRoutes(fastify) {
                 workoutId = workoutResult.lastInsertRowid;
             }
             else {
-                const workout = db
-                    .prepare('SELECT user_id FROM workouts WHERE id = ?')
-                    .get(workoutId);
+                const workout = db.prepare('SELECT user_id FROM workouts WHERE id = ?').get(workoutId);
                 if (!workout || workout.user_id !== authenticatedUser.userId) {
                     return reply.status(403).send({
                         error: 'Not authorized to access this workout',

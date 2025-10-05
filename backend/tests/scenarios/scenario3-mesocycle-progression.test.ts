@@ -25,14 +25,12 @@ tap.test('Scenario 3: Mesocycle Progression', async (t) => {
 
   // Setup: Create test user and get auth token
   let authToken: string;
-  let userId: number;
-  let programId: number;
 
   await t.before(async () => {
     const testUsername = `test-scenario3-${Date.now()}@example.com`;
 
     // Register user
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {
@@ -44,8 +42,7 @@ tap.test('Scenario 3: Mesocycle Progression', async (t) => {
       },
     });
 
-    const registerBody = registerResponse.json();
-    userId = registerBody.user_id;
+    const _registerBody = registerResponse.json();
 
     // Login
     const loginResponse = await app.inject({
@@ -69,7 +66,6 @@ tap.test('Scenario 3: Mesocycle Progression', async (t) => {
     });
 
     const program = programResponse.json();
-    programId = program.id;
   });
 
   // AC-1: Program starts in MEV phase
@@ -128,7 +124,7 @@ tap.test('Scenario 3: Mesocycle Progression', async (t) => {
   await t.test('AC-3: Volume increases ~20% for MEV→MAV', async (t) => {
     // Reset to MEV phase by creating a new user
     const testUsername = `test-volume-mev-${Date.now()}@example.com`;
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {
@@ -332,7 +328,7 @@ tap.test('Scenario 3: Mesocycle Progression', async (t) => {
   await t.test('AC-8: All exercises updated atomically', async (t) => {
     // Create a fresh user to test atomic updates
     const testUsername = `test-atomic-${Date.now()}@example.com`;
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {
@@ -421,7 +417,7 @@ tap.test('Scenario 3: Mesocycle Progression', async (t) => {
   await t.test('AC-9: Manually specify target phase', async (t) => {
     // Create a fresh user
     const testUsername = `test-manual-${Date.now()}@example.com`;
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {
@@ -481,7 +477,7 @@ tap.test('Scenario 3: Mesocycle Progression', async (t) => {
   await t.test('AC-10: Proper phase progression sequence', async (t) => {
     // Create a fresh user to test full cycle
     const testUsername = `test-progression-${Date.now()}@example.com`;
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {

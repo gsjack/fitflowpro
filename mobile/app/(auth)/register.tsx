@@ -23,6 +23,7 @@ import {
 import {
   Text,
   TextInput,
+  Button,
   SegmentedButtons,
   ActivityIndicator,
   useTheme,
@@ -30,7 +31,6 @@ import {
 } from 'react-native-paper';
 import { Link, useRouter } from 'expo-router';
 import { register } from '../../src/services/api/authApi';
-import { colors } from '../../src/theme/colors';
 
 type ExperienceLevel = 'beginner' | 'intermediate' | 'advanced';
 
@@ -108,14 +108,17 @@ export default function RegisterScreen() {
     setIsLoading(true);
 
     try {
-      await register(email, password, undefined, undefined, experienceLevel);
+      const result = await register(email, password, undefined, undefined, experienceLevel);
 
-      console.log('[RegisterScreen] Registration successful, navigating to dashboard');
+      console.log('[RegisterScreen] Registration successful');
+      console.log('[RegisterScreen] Token in response:', !!result.token);
 
       // API-only mode - backend handles program creation
       // No local database or seeding needed
 
-      // Navigate to dashboard
+      // Navigate to dashboard - this will trigger _layout.tsx to recheck auth
+      // The register() function already awaits storeToken(), so token is definitely stored
+      console.log('[RegisterScreen] Navigating to dashboard');
       router.replace('/(tabs)');
     } catch (err) {
       console.error('[RegisterScreen] Registration failed:', err);
@@ -223,7 +226,7 @@ export default function RegisterScreen() {
           </Text>
           <SegmentedButtons
             value={experienceLevel}
-            onValueChange={(value) => setExperienceLevel(value as ExperienceLevel)}
+            onValueChange={(value) => setExperienceLevel(value)}
             buttons={[
               { value: 'beginner', label: 'Beginner' },
               { value: 'intermediate', label: 'Intermediate' },
@@ -244,60 +247,20 @@ export default function RegisterScreen() {
             </Text>
           )}
 
-          {/* Submit Button - Web-compatible implementation */}
-          {Platform.OS === 'web' ? (
-            // Web: Use native button with onClick for proper event handling
-            <button
-              type="button"
-              onClick={() => {
-                console.log('[RegisterScreen] Web button onClick triggered!');
-                void handleRegister();
-              }}
-              disabled={isLoading}
-              style={{
-                marginTop: 24,
-                minHeight: 56,
-                borderRadius: 12,
-                backgroundColor: theme.colors.primary,
-                color: '#FFFFFF',
-                fontSize: 18,
-                fontWeight: 'bold',
-                border: 'none',
-                cursor: isLoading ? 'not-allowed' : 'pointer',
-                opacity: isLoading ? 0.6 : 1,
-                width: '100%',
-              }}
-            >
-              {isLoading ? <ActivityIndicator size="small" color="#fff" /> : 'Create Account'}
-            </button>
-          ) : (
-            // Native: Use Pressable
-            <Pressable
-              onPress={() => {
-                console.log('[RegisterScreen] Native Pressable onPress triggered!');
-                void handleRegister();
-              }}
-              disabled={isLoading}
-              style={({ pressed }) => [
-                styles.submitButton,
-                {
-                  backgroundColor: pressed ? theme.colors.primaryContainer : theme.colors.primary,
-                  opacity: isLoading ? 0.6 : 1,
-                },
-              ]}
-              accessibilityLabel="Create account"
-              accessibilityHint="Register a new account"
-              accessibilityRole="button"
-            >
-              <View style={styles.buttonContent}>
-                {isLoading ? (
-                  <ActivityIndicator size="small" color="#fff" />
-                ) : (
-                  <Text style={styles.buttonText}>Create Account</Text>
-                )}
-              </View>
-            </Pressable>
-          )}
+          {/* Submit Button - React Native Paper for cross-platform compatibility */}
+          <Button
+            mode="contained"
+            onPress={handleRegister}
+            loading={isLoading}
+            disabled={isLoading}
+            style={styles.submitButton}
+            contentStyle={styles.buttonContent}
+            labelStyle={styles.buttonText}
+            accessibilityLabel="Create account"
+            accessibilityHint="Register a new account"
+          >
+            Create Account
+          </Button>
 
           {/* Link to Login */}
           <View style={styles.linkContainer}>
@@ -306,7 +269,10 @@ export default function RegisterScreen() {
             </Text>
             <Link href="/(auth)/login" asChild>
               <Pressable accessibilityRole="link" accessibilityLabel="Go to login">
-                <Text variant="bodyMedium" style={[styles.linkText, { color: theme.colors.primary }]}>
+                <Text
+                  variant="bodyMedium"
+                  style={[styles.linkText, { color: theme.colors.primary }]}
+                >
                   Login
                 </Text>
               </Pressable>

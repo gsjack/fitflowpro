@@ -490,7 +490,8 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
               No Active Program
             </Text>
             <Text variant="bodyMedium" style={styles.emptySubtitle}>
-              Create your personalized training program based on Renaissance Periodization principles
+              Create your personalized training program based on Renaissance Periodization
+              principles
             </Text>
             <Text variant="bodySmall" style={styles.emptyHelperText}>
               Your program will automatically progress through MEV → MAV → MRV phases

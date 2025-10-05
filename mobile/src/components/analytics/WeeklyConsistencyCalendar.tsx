@@ -14,10 +14,10 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Surface, Text, Portal, Dialog, Paragraph, Button, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { format, parseISO, startOfWeek, addDays, isSameDay, differenceInDays } from 'date-fns';
+import { format, startOfWeek, addDays, isSameDay, differenceInDays } from 'date-fns';
 import { useConsistencyMetrics } from '../../services/api/analyticsApi';
 import { colors } from '../../theme/colors';
 
@@ -39,7 +39,6 @@ interface DayData {
 export function WeeklyConsistencyCalendar({
   weeks = 12,
 }: WeeklyConsistencyCalendarProps): React.JSX.Element {
-  const theme = useTheme();
   const [selectedDay, setSelectedDay] = useState<DayData | null>(null);
   const [dialogVisible, setDialogVisible] = useState(false);
 

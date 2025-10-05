@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { View, StyleSheet, Linking, Platform } from 'react-native';
+import { View, StyleSheet, Linking } from 'react-native';
 import { Portal, Dialog, Button, Paragraph, Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../theme/colors';
@@ -51,12 +51,7 @@ export default function ExerciseVideoModal({
 
   return (
     <Portal>
-      <Dialog
-        visible={visible}
-        onDismiss={onDismiss}
-        style={styles.dialog}
-        dismissable={true}
-      >
+      <Dialog visible={visible} onDismiss={onDismiss} style={styles.dialog} dismissable={true}>
         <Dialog.Title style={styles.title}>Exercise Demonstration</Dialog.Title>
 
         <Dialog.Content>
@@ -75,8 +70,8 @@ export default function ExerciseVideoModal({
           {videoUrl ? (
             <>
               <Paragraph style={styles.description}>
-                Watch a demonstration video to learn proper form and technique. The video will
-                open in YouTube.
+                Watch a demonstration video to learn proper form and technique. The video will open
+                in YouTube.
               </Paragraph>
 
               <View style={styles.videoIconContainer}>

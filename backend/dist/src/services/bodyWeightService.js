@@ -1,31 +1,7 @@
-const MIN_WEIGHT_KG = 30;
-const MAX_WEIGHT_KG = 300;
-function validateWeight(weight_kg) {
-    if (weight_kg < MIN_WEIGHT_KG || weight_kg > MAX_WEIGHT_KG) {
-        throw new Error(`Weight must be between ${MIN_WEIGHT_KG}kg and ${MAX_WEIGHT_KG}kg`);
-    }
-}
-function validateAndFormatDate(date) {
-    if (date === undefined || date === '') {
-        const today = new Date();
-        const formatted = today.toISOString().split('T')[0];
-        return formatted;
-    }
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateRegex.test(date)) {
-        throw new Error('Date must be in ISO 8601 format (YYYY-MM-DD)');
-    }
-    const inputDate = new Date(date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (inputDate > today) {
-        throw new Error('Date cannot be in the future');
-    }
-    return date;
-}
+import { validateBodyWeight, validateAndFormatDate } from '../utils/validation.js';
 export function logBodyWeight(db, params) {
     const { user_id, weight_kg, notes } = params;
-    validateWeight(weight_kg);
+    validateBodyWeight(weight_kg);
     const date = validateAndFormatDate(params.date);
     const existingEntry = db.prepare(`
     SELECT id FROM body_weight

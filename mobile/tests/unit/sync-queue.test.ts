@@ -52,8 +52,13 @@ class SyncQueue {
       if (item.synced) return false;
       if (item.retryCount >= this.maxRetries) return false;
 
-      // Exponential backoff: 1s, 2s, 4s, 8s, 16s
-      const backoffDelay = this.baseDelay * Math.pow(2, item.retryCount);
+      // First attempt (retryCount = 0) is always ready
+      if (item.retryCount === 0) return true;
+
+      // Exponential backoff for retries: 1s, 2s, 4s, 8s, 16s
+      // After 1st failure (retryCount=1): wait 1s
+      // After 2nd failure (retryCount=2): wait 2s
+      const backoffDelay = this.baseDelay * Math.pow(2, item.retryCount - 1);
       const nextAttemptTime = item.lastAttempt + backoffDelay;
 
       return currentTime >= nextAttemptTime;

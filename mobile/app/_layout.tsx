@@ -14,27 +14,32 @@ export default function RootLayout() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check authentication status on mount
+    // Check authentication status on mount AND when segments change
     const checkAuth = async () => {
+      console.log('[_layout] checkAuth called, segments:', segments);
       const token = await getToken();
-      setIsAuthenticated(!!token);
+      console.log('[_layout] Token retrieved:', !!token);
+      console.log('[_layout] Setting isAuthenticated to:', !!token);
+
+      const isAuth = !!token;
+      setIsAuthenticated(isAuth);
+
+      // Handle navigation AFTER auth state is determined
+      const inAuthGroup = segments[0] === '(auth)';
+      console.log('[_layout] inAuthGroup:', inAuthGroup, 'isAuth:', isAuth);
+
+      if (!isAuth && !inAuthGroup) {
+        // Redirect to login if not authenticated
+        console.log('[_layout] Not authenticated, redirecting to login');
+        router.replace('/(auth)/login');
+      } else if (isAuth && inAuthGroup) {
+        // Redirect to home if authenticated
+        console.log('[_layout] Authenticated in auth group, redirecting to tabs');
+        router.replace('/(tabs)');
+      }
     };
     void checkAuth();
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated === null) return; // Wait for auth check
-
-    const inAuthGroup = segments[0] === '(auth)';
-
-    if (!isAuthenticated && !inAuthGroup) {
-      // Redirect to login if not authenticated
-      router.replace('/(auth)/login');
-    } else if (isAuthenticated && inAuthGroup) {
-      // Redirect to home if authenticated
-      router.replace('/(tabs)');
-    }
-  }, [isAuthenticated, segments]);
+  }, [segments]); // Re-check auth whenever route changes
 
   return (
     <QueryClientProvider client={queryClient}>

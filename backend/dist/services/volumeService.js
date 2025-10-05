@@ -152,9 +152,8 @@ export function getCurrentWeekVolume(userId) {
     const muscleGroups = [];
     muscleGroupMap.forEach((mg) => {
         mg.remaining_sets = Math.max(0, mg.planned_sets - mg.completed_sets);
-        mg.completion_percentage = mg.planned_sets > 0
-            ? Math.round((mg.completed_sets / mg.planned_sets) * 100 * 10) / 10
-            : 0;
+        mg.completion_percentage =
+            mg.planned_sets > 0 ? Math.round((mg.completed_sets / mg.planned_sets) * 100 * 10) / 10 : 0;
         mg.zone = classifyZoneWithOnTrack(mg.completed_sets, mg.planned_sets, mg.mev, mg.mav, mg.mrv);
         mg.warning = generateWarning(mg.zone, mg.muscle_group);
         muscleGroups.push(mg);
@@ -172,7 +171,7 @@ export function getVolumeHistory(userId, weeks = 8, muscleGroupFilter) {
     }
     const endDate = new Date();
     const startDate = new Date();
-    startDate.setDate(endDate.getDate() - (weeks * 7));
+    startDate.setDate(endDate.getDate() - weeks * 7);
     const query = db.prepare(`
     SELECT
       w.date,
@@ -190,7 +189,11 @@ export function getVolumeHistory(userId, weeks = 8, muscleGroupFilter) {
     GROUP BY w.date, mg.value
     ORDER BY w.date
   `);
-    const params = [userId, startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]];
+    const params = [
+        userId,
+        startDate.toISOString().split('T')[0],
+        endDate.toISOString().split('T')[0],
+    ];
     if (muscleGroupFilter) {
         params.push(muscleGroupFilter);
     }

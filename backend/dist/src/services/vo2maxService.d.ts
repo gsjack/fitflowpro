@@ -9,6 +9,24 @@ export interface VO2maxSession {
     estimated_vo2max: number | null;
     synced: number;
 }
+export interface VO2maxSessionWithDetails {
+    id: number;
+    workout_id: number;
+    protocol: string;
+    duration_seconds: number;
+    intervals_completed: number | null;
+    average_hr: number | null;
+    peak_hr: number | null;
+    estimated_vo2max: number | null;
+    synced: number;
+    rpe: number | null;
+    notes: string | null;
+    completion_status: string | null;
+    created_at: number;
+    user_id: number;
+    date: string;
+    status?: string;
+}
 export interface VO2maxSessionData {
     workout_id: number;
     user_id: number;
@@ -34,7 +52,7 @@ export interface VO2maxProgressionPoint {
 }
 export declare function estimateVO2max(age: number, _averageHR?: number): number;
 export declare function createVO2maxSession(data: VO2maxSessionData): number;
-export declare function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSession[];
+export declare function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSessionWithDetails[];
 export declare function getVO2maxProgression(userId: number, startDate?: string, endDate?: string): VO2maxProgressionPoint[];
-export declare function getVO2maxSessionById(sessionId: number, userId: number): VO2maxSession | null;
+export declare function getVO2maxSessionById(sessionId: number, userId: number): VO2maxSessionWithDetails | null;
 //# sourceMappingURL=vo2maxService.d.ts.map

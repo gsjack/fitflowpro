@@ -9,7 +9,7 @@ import { Surface, Text, ActivityIndicator, SegmentedButtons } from 'react-native
 import { Svg, Line, Circle, Polyline, Text as SvgText } from 'react-native-svg';
 import { useQuery } from '@tanstack/react-query';
 import { getBodyWeightHistory, type BodyWeightEntry } from '../../services/api/bodyWeightApi';
-import { getAuthenticatedClient } from '../../services/api/authApi';
+import { getToken } from '../../services/api/authApi';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
 
@@ -36,7 +36,10 @@ function formatWeight(weightKg: number, unit: 'kg' | 'lbs'): number {
 /**
  * Calculate linear regression for trend line
  */
-function calculateTrendLine(data: { x: number; y: number }[]): { slope: number; intercept: number } {
+function calculateTrendLine(data: { x: number; y: number }[]): {
+  slope: number;
+  intercept: number;
+} {
   const n = data.length;
   if (n === 0) return { slope: 0, intercept: 0 };
 
@@ -55,14 +58,18 @@ export default function BodyWeightChart({ unit = 'kg' }: BodyWeightChartProps) {
   const [dateRange, setDateRange] = useState<DateRange>('90');
 
   // Fetch body weight history
-  const { data: entries, isLoading, error } = useQuery<BodyWeightEntry[]>({
+  const {
+    data: entries,
+    isLoading,
+    error,
+  } = useQuery<BodyWeightEntry[]>({
     queryKey: ['bodyWeight', 'history', dateRange],
     queryFn: async () => {
-      const client = await getAuthenticatedClient();
-      if (!client?.token) {
+      const token = await getToken();
+      if (!token) {
         throw new Error('Not authenticated');
       }
-      return getBodyWeightHistory(client.token, parseInt(dateRange, 10));
+      return getBodyWeightHistory(token, parseInt(dateRange, 10));
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
@@ -116,7 +123,9 @@ export default function BodyWeightChart({ unit = 'kg' }: BodyWeightChartProps) {
         x: points.length - 1,
         y: slope * (points.length - 1) + intercept,
         sx: PADDING.left + plotWidth,
-        sy: PADDING.top + ((yMax - (slope * (points.length - 1) + intercept)) / (yMax - yMin)) * plotHeight,
+        sy:
+          PADDING.top +
+          ((yMax - (slope * (points.length - 1) + intercept)) / (yMax - yMin)) * plotHeight,
       },
     ];
 
@@ -211,7 +220,7 @@ export default function BodyWeightChart({ unit = 'kg' }: BodyWeightChartProps) {
       <View style={styles.dateRangeContainer}>
         <SegmentedButtons
           value={dateRange}
-          onValueChange={(value) => setDateRange(value as DateRange)}
+          onValueChange={(value) => setDateRange(value)}
           buttons={[
             { value: '30', label: '30d' },
             { value: '90', label: '90d' },
@@ -239,7 +248,14 @@ export default function BodyWeightChart({ unit = 'kg' }: BodyWeightChartProps) {
             variant="titleMedium"
             style={[
               styles.statValue,
-              { color: stats.change > 0 ? colors.error.main : stats.change < 0 ? colors.success.main : colors.text.primary },
+              {
+                color:
+                  stats.change > 0
+                    ? colors.error.main
+                    : stats.change < 0
+                      ? colors.success.main
+                      : colors.text.primary,
+              },
             ]}
           >
             {stats.change > 0 ? '+' : ''}
@@ -318,7 +334,7 @@ export default function BodyWeightChart({ unit = 'kg' }: BodyWeightChartProps) {
               cy={point.sy}
               r="4"
               fill={colors.primary.main}
-              stroke={colors.background.paper}
+              stroke={colors.background.secondary}
               strokeWidth="2"
             />
           ))}
@@ -348,7 +364,8 @@ export default function BodyWeightChart({ unit = 'kg' }: BodyWeightChartProps) {
       {/* Footer info */}
       <View style={styles.footer}>
         <Text variant="bodySmall" style={styles.footerText}>
-          {stats.totalEntries} entries • Trend: {stats.change > 0 ? '↑' : stats.change < 0 ? '↓' : '→'}{' '}
+          {stats.totalEntries} entries • Trend:{' '}
+          {stats.change > 0 ? '↑' : stats.change < 0 ? '↓' : '→'}{' '}
           {Math.abs(stats.percentChange).toFixed(1)}%
         </Text>
       </View>
@@ -361,7 +378,7 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.md,
     marginBottom: spacing.md,
     borderRadius: borderRadius.lg,
-    backgroundColor: colors.background.paper,
+    backgroundColor: colors.background.secondary,
     padding: spacing.md,
   },
   header: {
@@ -401,7 +418,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: colors.divider,
+    borderTopColor: colors.text.tertiary,
   },
   footerText: {
     color: colors.text.secondary,

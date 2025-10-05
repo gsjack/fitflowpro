@@ -17,6 +17,7 @@ import {
   stmtValidateProgramDayOwnership,
   db,
 } from '../database/db.js';
+import { validateDateFormat } from '../utils/validation.js';
 
 /**
  * Workout interface matching database schema + program day info
@@ -66,10 +67,8 @@ export interface WorkoutWithExercises extends Workout {
  * @returns The created workout object
  */
 export function createWorkout(userId: number, programDayId: number, date: string): Workout {
-  // Validate date format (basic check)
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-    throw new Error('Invalid date format. Expected YYYY-MM-DD');
-  }
+  // Validate date format
+  validateDateFormat(date);
 
   // Insert workout with default status=not_started
   const result = stmtCreateWorkout.run(userId, programDayId, date);
@@ -87,7 +86,7 @@ export function createWorkout(userId: number, programDayId: number, date: string
  * @param programDayId - Program day ID
  * @returns Array of exercises with sets/reps
  */
-function getProgramExercises(programDayId: number) {
+function getProgramExercises(programDayId: number): ProgramExerciseWithName[] {
   return db
     .prepare(
       `SELECT pe.*, e.name as exercise_name, e.video_url
@@ -96,7 +95,7 @@ function getProgramExercises(programDayId: number) {
        WHERE pe.program_day_id = ?
        ORDER BY pe.order_index ASC`
     )
-    .all(programDayId);
+    .all(programDayId) as ProgramExerciseWithName[];
 }
 
 /**

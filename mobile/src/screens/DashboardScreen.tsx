@@ -7,7 +7,15 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert, RefreshControl, Platform, Animated } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  RefreshControl,
+  Platform,
+  Animated,
+} from 'react-native';
 import {
   Card,
   Button,
@@ -302,213 +310,328 @@ export default function DashboardScreen({
       <Animated.View style={{ opacity: fadeAnim }}>
         {/* Hero Section with Date & Recovery */}
         <View style={styles.heroSection}>
-        <Text variant="headlineLarge" style={styles.dateText}>
-          {new Date().toLocaleDateString('en-US', {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </Text>
-
-        {/* Quote of the Day */}
-        <View style={styles.quoteContainer}>
-          <Text variant="bodyMedium" style={styles.quoteText}>
-            "{quoteOfTheDay}"
+          <Text variant="headlineLarge" style={styles.dateText}>
+            {new Date().toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'long',
+              day: 'numeric',
+            })}
           </Text>
+
+          {/* Quote of the Day */}
+          <View style={styles.quoteContainer}>
+            <Text variant="bodyMedium" style={styles.quoteText}>
+              "{quoteOfTheDay}"
+            </Text>
+          </View>
+
+          {todayAssessment ? (
+            <View style={styles.recoveryPrompt}>
+              <Text variant="bodySmall" style={styles.promptTitle}>
+                Recovery Check ✓
+              </Text>
+              <View style={styles.recoveryLoggedState}>
+                <Text variant="bodyMedium" style={styles.recoveryScoreText}>
+                  {todayAssessment.total_score}/15
+                </Text>
+                <Text variant="bodySmall" style={styles.recoveryMessageText}>
+                  {getRecoveryMessage(volumeAdjustment)}
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.recoveryPrompt}>
+              <Text variant="bodySmall" style={styles.promptTitle}>
+                Sleep • Soreness • Motivation
+              </Text>
+
+              <View style={styles.compactQuestions}>
+                {/* Question 1: Sleep Quality */}
+                <View style={styles.compactQuestion}>
+                  <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
+                    Sleep Quality: 1 = Terrible, 5 = Excellent
+                  </Text>
+                  <SegmentedButtons
+                    value={sleepQuality}
+                    onValueChange={(value) => {
+                      setSleepQuality(value);
+                      if (Platform.OS !== 'web') {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                      }
+                    }}
+                    buttons={[
+                      { value: '1', label: '😫 1' },
+                      { value: '2', label: '😴 2' },
+                      { value: '3', label: '😐 3' },
+                      { value: '4', label: '🙂 4' },
+                      { value: '5', label: '😃 5' },
+                    ]}
+                    style={styles.segmentedButtons}
+                  />
+                </View>
+
+                {/* Question 2: Muscle Soreness */}
+                <View style={styles.compactQuestion}>
+                  <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
+                    Muscle Soreness: 1 = Very sore, 5 = No soreness
+                  </Text>
+                  <SegmentedButtons
+                    value={muscleSoreness}
+                    onValueChange={(value) => {
+                      setMuscleSoreness(value);
+                      if (Platform.OS !== 'web') {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                      }
+                    }}
+                    buttons={[
+                      { value: '1', label: '🔥 1' },
+                      { value: '2', label: '😣 2' },
+                      { value: '3', label: '😐 3' },
+                      { value: '4', label: '🙂 4' },
+                      { value: '5', label: '💪 5' },
+                    ]}
+                    style={styles.segmentedButtons}
+                  />
+                </View>
+
+                {/* Question 3: Mental Motivation */}
+                <View style={styles.compactQuestion}>
+                  <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
+                    Motivation: 1 = Very low, 5 = Very high
+                  </Text>
+                  <SegmentedButtons
+                    value={mentalMotivation}
+                    onValueChange={(value) => {
+                      setMentalMotivation(value);
+                      if (Platform.OS !== 'web') {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                      }
+                    }}
+                    buttons={[
+                      { value: '1', label: '😞 1' },
+                      { value: '2', label: '😕 2' },
+                      { value: '3', label: '😐 3' },
+                      { value: '4', label: '😊 4' },
+                      { value: '5', label: '🔥 5' },
+                    ]}
+                    style={styles.segmentedButtons}
+                  />
+                </View>
+
+                {/* Submit Button */}
+                <Button
+                  mode="text"
+                  onPress={handleSubmitRecoveryAssessment}
+                  style={styles.submitButtonMinimal}
+                  disabled={!allQuestionsAnswered || isSubmitting}
+                  loading={isSubmitting}
+                  accessibilityLabel="Submit recovery assessment"
+                  compact
+                >
+                  {allQuestionsAnswered
+                    ? `Submit (${parseInt(sleepQuality) + parseInt(muscleSoreness) + parseInt(mentalMotivation)}/15)`
+                    : 'Submit'}
+                </Button>
+              </View>
+            </View>
+          )}
         </View>
 
-        {todayAssessment ? (
-          <View style={styles.recoveryPrompt}>
-            <Text variant="bodySmall" style={styles.promptTitle}>
-              Recovery Check ✓
-            </Text>
-            <View style={styles.recoveryLoggedState}>
-              <Text variant="bodyMedium" style={styles.recoveryScoreText}>
-                {todayAssessment.total_score}/15
-              </Text>
-              <Text variant="bodySmall" style={styles.recoveryMessageText}>
-                {getRecoveryMessage(volumeAdjustment)}
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.recoveryPrompt}>
-            <Text variant="bodySmall" style={styles.promptTitle}>
-              Sleep • Soreness • Motivation
-            </Text>
-
-            <View style={styles.compactQuestions}>
-              {/* Question 1: Sleep Quality */}
-              <View style={styles.compactQuestion}>
-                <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
-                  Sleep Quality: 1 = Terrible, 5 = Excellent
+        {/* Today's Workout Card */}
+        {todayWorkout ? (
+          <GradientCard
+            gradient={
+              todayWorkout.status === 'completed'
+                ? ([colors.success.dark, colors.background.secondary] as [
+                    string,
+                    string,
+                    ...string[],
+                  ])
+                : todayWorkout.status === 'in_progress'
+                  ? ([colors.primary.dark, colors.background.secondary] as [
+                      string,
+                      string,
+                      ...string[],
+                    ])
+                  : gradients.hero
+            }
+            style={styles.workoutCard}
+            accessibilityLabel={`Today's workout: ${todayWorkout.day_name || 'Workout'}`}
+          >
+            <View style={styles.workoutCardContent}>
+              {/* Header with Status */}
+              <View style={styles.workoutHeader}>
+                <Text variant="labelMedium" style={styles.workoutLabel}>
+                  TODAY'S WORKOUT
                 </Text>
-                <SegmentedButtons
-                  value={sleepQuality}
-                  onValueChange={(value) => {
-                    setSleepQuality(value);
-                    if (Platform.OS !== 'web') {
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }
-                  }}
-                  buttons={[
-                    { value: '1', label: '😫 1' },
-                    { value: '2', label: '😴 2' },
-                    { value: '3', label: '😐 3' },
-                    { value: '4', label: '🙂 4' },
-                    { value: '5', label: '😃 5' },
-                  ]}
-                  style={styles.segmentedButtons}
-                />
+                <View style={styles.headerActions}>
+                  <Chip
+                    mode="flat"
+                    style={[
+                      styles.statusChipNew,
+                      { backgroundColor: getStatusColor(todayWorkout.status) + '30' },
+                    ]}
+                    textStyle={{ color: getStatusColor(todayWorkout.status), fontWeight: '600' }}
+                  >
+                    {todayWorkout.status.replace('_', ' ').toUpperCase()}
+                  </Chip>
+                  {todayWorkout.status === 'not_started' && (
+                    <IconButton
+                      icon="swap-horizontal"
+                      size={24}
+                      iconColor={colors.primary.main}
+                      onPress={handleOpenSwapDialog}
+                      accessibilityLabel="Change workout"
+                      style={[styles.swapButton, styles.swapButtonContainer]}
+                    />
+                  )}
+                </View>
               </View>
 
-              {/* Question 2: Muscle Soreness */}
-              <View style={styles.compactQuestion}>
-                <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
-                  Muscle Soreness: 1 = Very sore, 5 = No soreness
-                </Text>
-                <SegmentedButtons
-                  value={muscleSoreness}
-                  onValueChange={(value) => {
-                    setMuscleSoreness(value);
-                    if (Platform.OS !== 'web') {
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }
-                  }}
-                  buttons={[
-                    { value: '1', label: '🔥 1' },
-                    { value: '2', label: '😣 2' },
-                    { value: '3', label: '😐 3' },
-                    { value: '4', label: '🙂 4' },
-                    { value: '5', label: '💪 5' },
-                  ]}
-                  style={styles.segmentedButtons}
-                />
-              </View>
-
-              {/* Question 3: Mental Motivation */}
-              <View style={styles.compactQuestion}>
-                <Text variant="bodySmall" style={styles.recoveryScaleHelper}>
-                  Motivation: 1 = Very low, 5 = Very high
-                </Text>
-                <SegmentedButtons
-                  value={mentalMotivation}
-                  onValueChange={(value) => {
-                    setMentalMotivation(value);
-                    if (Platform.OS !== 'web') {
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }
-                  }}
-                  buttons={[
-                    { value: '1', label: '😞 1' },
-                    { value: '2', label: '😕 2' },
-                    { value: '3', label: '😐 3' },
-                    { value: '4', label: '😊 4' },
-                    { value: '5', label: '🔥 5' },
-                  ]}
-                  style={styles.segmentedButtons}
-                />
-              </View>
-
-              {/* Submit Button */}
-              <Button
-                mode="text"
-                onPress={handleSubmitRecoveryAssessment}
-                style={styles.submitButtonMinimal}
-                disabled={!allQuestionsAnswered || isSubmitting}
-                loading={isSubmitting}
-                accessibilityLabel="Submit recovery assessment"
-                compact
-              >
-                {allQuestionsAnswered
-                  ? `Submit (${parseInt(sleepQuality) + parseInt(muscleSoreness) + parseInt(mentalMotivation)}/15)`
-                  : 'Submit'}
-              </Button>
-            </View>
-          </View>
-        )}
-      </View>
-
-      {/* Today's Workout Card */}
-      {todayWorkout ? (
-        <GradientCard
-          gradient={
-            todayWorkout.status === 'completed'
-              ? ([colors.success.dark, colors.background.secondary] as [string, string, ...string[]])
-              : todayWorkout.status === 'in_progress'
-                ? ([colors.primary.dark, colors.background.secondary] as [string, string, ...string[]])
-                : gradients.hero
-          }
-          style={styles.workoutCard}
-          accessibilityLabel={`Today's workout: ${todayWorkout.day_name || 'Workout'}`}
-        >
-          <View style={styles.workoutCardContent}>
-            {/* Header with Status */}
-            <View style={styles.workoutHeader}>
-              <Text variant="labelMedium" style={styles.workoutLabel}>
-                TODAY'S WORKOUT
+              {/* Workout Name */}
+              <Text variant="headlineLarge" style={styles.workoutNameNew}>
+                {todayWorkout.day_name || 'Workout'}
               </Text>
-              <View style={styles.headerActions}>
-                <Chip
-                  mode="flat"
-                  style={[
-                    styles.statusChipNew,
-                    { backgroundColor: getStatusColor(todayWorkout.status) + '30' },
-                  ]}
-                  textStyle={{ color: getStatusColor(todayWorkout.status), fontWeight: '600' }}
+
+              {/* Workout Type */}
+              <Text variant="bodyMedium" style={styles.workoutTypeNew}>
+                {todayWorkout.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}
+              </Text>
+
+              {/* Exercise Details */}
+              {todayWorkout.exercises && todayWorkout.exercises.length > 0 && (
+                <View style={styles.exerciseDetails}>
+                  <Text variant="labelMedium" style={styles.exerciseHeader}>
+                    WORKOUT EXERCISES
+                  </Text>
+                  {todayWorkout.exercises.map((exercise, index) => (
+                    <View key={exercise.id} style={styles.exerciseItem}>
+                      <View style={styles.exerciseInfo}>
+                        <Text variant="bodyMedium" style={styles.exerciseName}>
+                          {index + 1}. {exercise.exercise_name}
+                        </Text>
+                        <Text variant="bodySmall" style={styles.exerciseSpecs}>
+                          {exercise.sets} sets × {exercise.reps} reps @ {exercise.rir} RIR
+                        </Text>
+                      </View>
+                    </View>
+                  ))}
+                  <Text variant="bodySmall" style={styles.exerciseSummary}>
+                    {todayWorkout.exercises.length} exercises •{' '}
+                    {todayWorkout.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
+                  </Text>
+                </View>
+              )}
+
+              {/* Action Button or Metrics */}
+              {todayWorkout.status === 'not_started' && (
+                <Button
+                  mode="contained"
+                  onPress={handleStartWorkout}
+                  style={styles.workoutActionButton}
+                  buttonColor={colors.primary.main}
+                  contentStyle={styles.buttonContent}
+                  labelStyle={styles.buttonLabel}
+                  icon="play"
+                  accessibilityLabel="Start workout"
                 >
-                  {todayWorkout.status.replace('_', ' ').toUpperCase()}
-                </Chip>
-                {todayWorkout.status === 'not_started' && (
-                  <IconButton
-                    icon="swap-horizontal"
-                    size={24}
-                    iconColor={colors.primary.main}
-                    onPress={handleOpenSwapDialog}
-                    accessibilityLabel="Change workout"
-                    style={[styles.swapButton, styles.swapButtonContainer]}
-                  />
-                )}
-              </View>
-            </View>
+                  Start Workout
+                </Button>
+              )}
 
-            {/* Workout Name */}
-            <Text variant="headlineLarge" style={styles.workoutNameNew}>
-              {todayWorkout.day_name || 'Workout'}
-            </Text>
+              {todayWorkout.status === 'in_progress' && (
+                <Button
+                  mode="contained"
+                  onPress={handleStartWorkout}
+                  style={styles.workoutActionButton}
+                  buttonColor={colors.success.main}
+                  textColor="#000000"
+                  contentStyle={styles.buttonContent}
+                  labelStyle={styles.buttonLabel}
+                  icon="play-circle"
+                  accessibilityLabel="Resume workout"
+                >
+                  Resume Workout
+                </Button>
+              )}
 
-            {/* Workout Type */}
-            <Text variant="bodyMedium" style={styles.workoutTypeNew}>
-              {todayWorkout.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}
-            </Text>
-
-            {/* Exercise Details */}
-            {todayWorkout.exercises && todayWorkout.exercises.length > 0 && (
-              <View style={styles.exerciseDetails}>
-                <Text variant="labelMedium" style={styles.exerciseHeader}>
-                  WORKOUT EXERCISES
-                </Text>
-                {todayWorkout.exercises.map((exercise, index) => (
-                  <View key={exercise.id} style={styles.exerciseItem}>
-                    <View style={styles.exerciseInfo}>
-                      <Text variant="bodyMedium" style={styles.exerciseName}>
-                        {index + 1}. {exercise.exercise_name}
+              {todayWorkout.status === 'completed' && (
+                <View style={styles.completedMetrics}>
+                  <View style={styles.metricItem}>
+                    <Text variant="displaySmall" style={styles.metricValue}>
+                      {todayWorkout.total_volume_kg?.toFixed(0) || '0'}
+                    </Text>
+                    <Text variant="bodySmall" style={styles.metricLabel}>
+                      kg volume
+                    </Text>
+                  </View>
+                  {todayWorkout.average_rir !== undefined && (
+                    <View style={styles.metricItem}>
+                      <Text variant="displaySmall" style={styles.metricValue}>
+                        {todayWorkout.average_rir?.toFixed(1) ?? 'N/A'}
                       </Text>
-                      <Text variant="bodySmall" style={styles.exerciseSpecs}>
-                        {exercise.sets} sets × {exercise.reps} reps @ {exercise.rir} RIR
+                      <Text variant="bodySmall" style={styles.metricLabel}>
+                        avg RIR
                       </Text>
                     </View>
-                  </View>
-                ))}
-                <Text variant="bodySmall" style={styles.exerciseSummary}>
-                  {todayWorkout.exercises.length} exercises •{' '}
-                  {todayWorkout.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
+                  )}
+                </View>
+              )}
+            </View>
+          </GradientCard>
+        ) : recommendedProgramDay ? (
+          <GradientCard
+            gradient={gradients.hero}
+            style={styles.workoutCard}
+            accessibilityLabel={`Recommended workout: ${recommendedProgramDay.day_name}`}
+          >
+            <View style={styles.workoutCardContent}>
+              {/* Header with Recommended Label */}
+              <View style={styles.workoutHeader}>
+                <Text variant="labelMedium" style={styles.workoutLabel}>
+                  RECOMMENDED
                 </Text>
               </View>
-            )}
 
-            {/* Action Button or Metrics */}
-            {todayWorkout.status === 'not_started' && (
+              {/* Workout Name */}
+              <Text variant="headlineLarge" style={styles.workoutNameNew}>
+                {recommendedProgramDay.day_name}
+              </Text>
+
+              {/* Workout Type */}
+              <Text variant="bodyMedium" style={styles.workoutTypeNew}>
+                {recommendedProgramDay.day_type === 'vo2max'
+                  ? 'VO2max Cardio'
+                  : 'Strength Training'}
+              </Text>
+
+              {/* Exercise Details */}
+              {recommendedProgramDay.exercises && recommendedProgramDay.exercises.length > 0 && (
+                <View style={styles.exerciseDetails}>
+                  <Text variant="labelMedium" style={styles.exerciseHeader}>
+                    WORKOUT EXERCISES
+                  </Text>
+                  {recommendedProgramDay.exercises.map((exercise, index) => (
+                    <View key={exercise.id} style={styles.exerciseItem}>
+                      <View style={styles.exerciseInfo}>
+                        <Text variant="bodyMedium" style={styles.exerciseName}>
+                          {index + 1}. {exercise.exercise_name}
+                        </Text>
+                        <Text variant="bodySmall" style={styles.exerciseSpecs}>
+                          {exercise.sets} sets × {exercise.reps} reps @ {exercise.rir} RIR
+                        </Text>
+                      </View>
+                    </View>
+                  ))}
+                  <Text variant="bodySmall" style={styles.exerciseSummary}>
+                    {recommendedProgramDay.exercises.length} exercises •{' '}
+                    {recommendedProgramDay.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total
+                    sets
+                  </Text>
+                </View>
+              )}
+
+              {/* Action Button */}
               <Button
                 mode="contained"
                 onPress={handleStartWorkout}
@@ -521,193 +644,89 @@ export default function DashboardScreen({
               >
                 Start Workout
               </Button>
-            )}
-
-            {todayWorkout.status === 'in_progress' && (
-              <Button
-                mode="contained"
-                onPress={handleStartWorkout}
-                style={styles.workoutActionButton}
-                buttonColor={colors.success.main}
-                textColor="#000000"
-                contentStyle={styles.buttonContent}
-                labelStyle={styles.buttonLabel}
-                icon="play-circle"
-                accessibilityLabel="Resume workout"
-              >
-                Resume Workout
-              </Button>
-            )}
-
-            {todayWorkout.status === 'completed' && (
-              <View style={styles.completedMetrics}>
-                <View style={styles.metricItem}>
-                  <Text variant="displaySmall" style={styles.metricValue}>
-                    {todayWorkout.total_volume_kg?.toFixed(0) || '0'}
-                  </Text>
-                  <Text variant="bodySmall" style={styles.metricLabel}>
-                    kg volume
-                  </Text>
-                </View>
-                {todayWorkout.average_rir !== undefined && (
-                  <View style={styles.metricItem}>
-                    <Text variant="displaySmall" style={styles.metricValue}>
-                      {todayWorkout.average_rir?.toFixed(1) ?? 'N/A'}
-                    </Text>
-                    <Text variant="bodySmall" style={styles.metricLabel}>
-                      avg RIR
-                    </Text>
-                  </View>
-                )}
-              </View>
-            )}
-          </View>
-        </GradientCard>
-      ) : recommendedProgramDay ? (
-        <GradientCard
-          gradient={gradients.hero}
-          style={styles.workoutCard}
-          accessibilityLabel={`Recommended workout: ${recommendedProgramDay.day_name}`}
-        >
-          <View style={styles.workoutCardContent}>
-            {/* Header with Recommended Label */}
-            <View style={styles.workoutHeader}>
-              <Text variant="labelMedium" style={styles.workoutLabel}>
-                RECOMMENDED
-              </Text>
             </View>
+          </GradientCard>
+        ) : (
+          <Card style={styles.emptyWorkoutCard}>
+            <Card.Content style={styles.emptyContent}>
+              <Text variant="headlineSmall" style={styles.emptyTitle}>
+                No Workout Today
+              </Text>
+              <Text variant="bodyMedium" style={styles.emptyDescription}>
+                Head to the Planner to schedule your training
+              </Text>
+            </Card.Content>
+          </Card>
+        )}
 
-            {/* Workout Name */}
-            <Text variant="headlineLarge" style={styles.workoutNameNew}>
-              {recommendedProgramDay.day_name}
-            </Text>
+        {/* T089: Weekly Volume Section */}
+        <Card style={styles.volumeCard}>
+          <Card.Title
+            title="This Week's Volume"
+            titleVariant="titleLarge"
+            titleStyle={styles.sectionTitle}
+          />
+          <Card.Content>
+            {isLoadingVolume && <VolumeBarSkeleton count={3} />}
 
-            {/* Workout Type */}
-            <Text variant="bodyMedium" style={styles.workoutTypeNew}>
-              {recommendedProgramDay.day_type === 'vo2max' ? 'VO2max Cardio' : 'Strength Training'}
-            </Text>
-
-            {/* Exercise Details */}
-            {recommendedProgramDay.exercises && recommendedProgramDay.exercises.length > 0 && (
-              <View style={styles.exerciseDetails}>
-                <Text variant="labelMedium" style={styles.exerciseHeader}>
-                  WORKOUT EXERCISES
+            {volumeError && (
+              <View style={styles.errorContainer}>
+                <Text variant="bodyMedium" style={styles.errorText}>
+                  Failed to load volume data
                 </Text>
-                {recommendedProgramDay.exercises.map((exercise, index) => (
-                  <View key={exercise.id} style={styles.exerciseItem}>
-                    <View style={styles.exerciseInfo}>
-                      <Text variant="bodyMedium" style={styles.exerciseName}>
-                        {index + 1}. {exercise.exercise_name}
-                      </Text>
-                      <Text variant="bodySmall" style={styles.exerciseSpecs}>
-                        {exercise.sets} sets × {exercise.reps} reps @ {exercise.rir} RIR
-                      </Text>
-                    </View>
-                  </View>
-                ))}
-                <Text variant="bodySmall" style={styles.exerciseSummary}>
-                  {recommendedProgramDay.exercises.length} exercises •{' '}
-                  {recommendedProgramDay.exercises.reduce((sum, ex) => sum + ex.sets, 0)} total sets
-                </Text>
+                <Button
+                  mode="outlined"
+                  onPress={() => refetchVolume()}
+                  style={styles.retryButton}
+                  compact
+                >
+                  Retry
+                </Button>
               </View>
             )}
 
-            {/* Action Button */}
-            <Button
-              mode="contained"
-              onPress={handleStartWorkout}
-              style={styles.workoutActionButton}
-              buttonColor={colors.primary.main}
-              contentStyle={styles.buttonContent}
-              labelStyle={styles.buttonLabel}
-              icon="play"
-              accessibilityLabel="Start workout"
-            >
-              Start Workout
-            </Button>
-          </View>
-        </GradientCard>
-      ) : (
-        <Card style={styles.emptyWorkoutCard}>
-          <Card.Content style={styles.emptyContent}>
-            <Text variant="headlineSmall" style={styles.emptyTitle}>
-              No Workout Today
-            </Text>
-            <Text variant="bodyMedium" style={styles.emptyDescription}>
-              Head to the Planner to schedule your training
-            </Text>
+            {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length > 0 && (
+              <>
+                {/* Filter to show only muscle groups with planned sets > 0 */}
+                {volumeData.muscle_groups
+                  .filter((mg) => mg.planned_sets > 0)
+                  .sort((a, b) => a.muscle_group.localeCompare(b.muscle_group))
+                  .map((muscleGroup) => (
+                    <MuscleGroupVolumeBar
+                      key={muscleGroup.muscle_group}
+                      muscleGroup={muscleGroup.muscle_group}
+                      completedSets={muscleGroup.completed_sets}
+                      plannedSets={muscleGroup.planned_sets}
+                      mev={muscleGroup.mev}
+                      mav={muscleGroup.mav}
+                      mrv={muscleGroup.mrv}
+                      zone={muscleGroup.zone}
+                    />
+                  ))}
+
+                {/* Week info */}
+                <Text variant="bodySmall" style={styles.weekInfoText}>
+                  Week: {new Date(volumeData.week_start).toLocaleDateString()} -{' '}
+                  {new Date(volumeData.week_end).toLocaleDateString()}
+                </Text>
+              </>
+            )}
+
+            {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length === 0 && (
+              <View style={styles.emptyVolumeContainer}>
+                <Text variant="bodyMedium" style={styles.emptyVolumeText}>
+                  No training volume recorded this week
+                </Text>
+                <Text variant="bodySmall" style={styles.emptyVolumeHint}>
+                  Complete workouts to track your weekly volume
+                </Text>
+              </View>
+            )}
           </Card.Content>
         </Card>
-      )}
 
-      {/* T089: Weekly Volume Section */}
-      <Card style={styles.volumeCard}>
-        <Card.Title
-          title="This Week's Volume"
-          titleVariant="titleLarge"
-          titleStyle={styles.sectionTitle}
-        />
-        <Card.Content>
-          {isLoadingVolume && <VolumeBarSkeleton count={3} />}
-
-          {volumeError && (
-            <View style={styles.errorContainer}>
-              <Text variant="bodyMedium" style={styles.errorText}>
-                Failed to load volume data
-              </Text>
-              <Button
-                mode="outlined"
-                onPress={() => refetchVolume()}
-                style={styles.retryButton}
-                compact
-              >
-                Retry
-              </Button>
-            </View>
-          )}
-
-          {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length > 0 && (
-            <>
-              {/* Filter to show only muscle groups with planned sets > 0 */}
-              {volumeData.muscle_groups
-                .filter((mg) => mg.planned_sets > 0)
-                .sort((a, b) => a.muscle_group.localeCompare(b.muscle_group))
-                .map((muscleGroup) => (
-                  <MuscleGroupVolumeBar
-                    key={muscleGroup.muscle_group}
-                    muscleGroup={muscleGroup.muscle_group}
-                    completedSets={muscleGroup.completed_sets}
-                    plannedSets={muscleGroup.planned_sets}
-                    mev={muscleGroup.mev}
-                    mav={muscleGroup.mav}
-                    mrv={muscleGroup.mrv}
-                    zone={muscleGroup.zone}
-                  />
-                ))}
-
-              {/* Week info */}
-              <Text variant="bodySmall" style={styles.weekInfoText}>
-                Week: {new Date(volumeData.week_start).toLocaleDateString()} -{' '}
-                {new Date(volumeData.week_end).toLocaleDateString()}
-              </Text>
-            </>
-          )}
-
-          {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length === 0 && (
-            <View style={styles.emptyVolumeContainer}>
-              <Text variant="bodyMedium" style={styles.emptyVolumeText}>
-                No training volume recorded this week
-              </Text>
-              <Text variant="bodySmall" style={styles.emptyVolumeHint}>
-                Complete workouts to track your weekly volume
-              </Text>
-            </View>
-          )}
-        </Card.Content>
-      </Card>
-
-      {/* Body Weight Widget */}
-      <BodyWeightWidget onWeightLogged={handleRefresh} />
+        {/* Body Weight Widget */}
+        <BodyWeightWidget onWeightLogged={handleRefresh} />
       </Animated.View>
 
       {/* Workout Swap Dialog */}

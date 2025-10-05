@@ -1,16 +1,25 @@
-import { stmtLogSet, db, calculateOneRepMax } from '../database/db.js';
+import { stmtLogSet, db } from '../database/db.js';
+import { calculateOneRepMax, roundToDecimals } from '../utils/calculations.js';
+import { validateSetParameters, validateNotes } from '../utils/validation.js';
 export function logSet(workoutId, exerciseId, setNumber, weightKg, reps, rir, timestamp, localId, notes) {
-    if (weightKg < 0 || weightKg > 500) {
-        throw new Error('Weight must be between 0 and 500 kg');
+    validateSetParameters(weightKg, reps, rir);
+    validateNotes(notes);
+    let finalSetNumber = setNumber;
+    if (finalSetNumber === undefined) {
+        const existingSets = db
+            .prepare('SELECT COUNT(*) as count FROM sets WHERE workout_id = ? AND exercise_id = ?')
+            .get(workoutId, exerciseId);
+        finalSetNumber = existingSets.count + 1;
     }
-    if (reps < 1 || reps > 50) {
-        throw new Error('Reps must be between 1 and 50');
+    let finalTimestamp;
+    if (timestamp === undefined) {
+        finalTimestamp = Date.now();
     }
-    if (rir < 0 || rir > 4) {
-        throw new Error('RIR must be between 0 and 4');
+    else if (typeof timestamp === 'string') {
+        finalTimestamp = new Date(timestamp).getTime();
     }
-    if (notes && notes.length > 500) {
-        throw new Error('Notes must be 500 characters or less');
+    else {
+        finalTimestamp = timestamp;
     }
     if (localId) {
         const existingSet = db
@@ -30,11 +39,11 @@ export function logSet(workoutId, exerciseId, setNumber, weightKg, reps, rir, ti
             };
         }
     }
-    const result = stmtLogSet.run(workoutId, exerciseId, setNumber, weightKg, reps, rir, timestamp, notes ?? null);
+    const result = stmtLogSet.run(workoutId, exerciseId, finalSetNumber, weightKg, reps, rir, finalTimestamp, notes ?? null);
     const setId = result.lastInsertRowid;
     const estimated1RM = calculateOneRepMax(weightKg, reps, rir);
     console.log(`Set logged: workout=${workoutId}, exercise=${exerciseId}, ` +
-        `${weightKg}kg × ${reps} @ RIR ${rir} (Est. 1RM: ${estimated1RM.toFixed(1)}kg)`);
+        `${weightKg}kg × ${reps} @ RIR ${rir} (Est. 1RM: ${roundToDecimals(estimated1RM, 1)}kg)`);
     return {
         id: setId,
         localId: localId ?? null,

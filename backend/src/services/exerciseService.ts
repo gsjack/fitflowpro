@@ -5,6 +5,8 @@
  */
 
 import { db } from '../database/db.js';
+import { VALID_MUSCLE_GROUPS } from '../utils/constants.js';
+import { calculateOneRepMax, roundToDecimals } from '../utils/calculations.js';
 
 /**
  * Exercise entity with typed fields
@@ -35,28 +37,6 @@ export interface ExerciseFilters {
 }
 
 /**
- * Valid muscle groups for validation
- */
-const VALID_MUSCLE_GROUPS = [
-  'chest',
-  'back', // Alias for lats/mid_back exercises
-  'lats',
-  'mid_back',
-  'rear_delts',
-  'front_delts',
-  'side_delts',
-  'triceps',
-  'biceps',
-  'forearms',
-  'quads',
-  'hamstrings',
-  'glutes',
-  'calves',
-  'abs',
-  'obliques',
-];
-
-/**
  * Get exercises with optional filtering
  *
  * @param filters - Optional filters for muscle_group, equipment, movement_pattern, difficulty
@@ -64,7 +44,10 @@ const VALID_MUSCLE_GROUPS = [
  */
 export function getExercises(filters: ExerciseFilters = {}): Exercise[] {
   // Validate muscle_group if provided
-  if (filters.muscle_group && !VALID_MUSCLE_GROUPS.includes(filters.muscle_group)) {
+  if (
+    filters.muscle_group &&
+    !VALID_MUSCLE_GROUPS.includes(filters.muscle_group as (typeof VALID_MUSCLE_GROUPS)[number])
+  ) {
     throw new Error(
       `Invalid muscle_group: ${filters.muscle_group}. Valid options: ${VALID_MUSCLE_GROUPS.join(', ')}`
     );
@@ -241,10 +224,9 @@ export function getLastPerformance(userId: number, exerciseId: number): LastPerf
   }
 
   // Calculate estimated 1RM from the best set (highest 1RM estimate)
-  // Use Epley formula with RIR adjustment: 1RM = weight × (1 + (reps - rir) / 30)
   let bestOneRM = 0;
   sets.forEach((set) => {
-    const oneRM = set.weight_kg * (1 + (set.reps - set.rir) / 30);
+    const oneRM = calculateOneRepMax(set.weight_kg, set.reps, set.rir);
     if (oneRM > bestOneRM) {
       bestOneRM = oneRM;
     }
@@ -253,6 +235,6 @@ export function getLastPerformance(userId: number, exerciseId: number): LastPerf
   return {
     last_workout_date: lastWorkout.date,
     sets,
-    estimated_1rm: Math.round(bestOneRM * 10) / 10, // Round to 1 decimal place
+    estimated_1rm: roundToDecimals(bestOneRM, 1),
   };
 }

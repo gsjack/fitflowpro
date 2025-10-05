@@ -1,4 +1,5 @@
 import Database from 'better-sqlite3';
+import { validateBodyWeight, validateAndFormatDate } from '../utils/validation.js';
 
 export interface BodyWeightEntry {
   id: number;
@@ -16,48 +17,6 @@ export interface LogBodyWeightParams {
   notes?: string;
 }
 
-const MIN_WEIGHT_KG = 30;
-const MAX_WEIGHT_KG = 300;
-
-/**
- * Validates weight is within physiological range
- */
-function validateWeight(weight_kg: number): void {
-  if (weight_kg < MIN_WEIGHT_KG || weight_kg > MAX_WEIGHT_KG) {
-    throw new Error(`Weight must be between ${MIN_WEIGHT_KG}kg and ${MAX_WEIGHT_KG}kg`);
-  }
-}
-
-/**
- * Validates and formats date to ISO 8601 (YYYY-MM-DD)
- * Returns undefined if no date provided (will be handled by default value in SQL)
- */
-function validateAndFormatDate(date: string | undefined): string {
-  if (date === undefined || date === '') {
-    // Default to today
-    const today = new Date();
-    const formatted = today.toISOString().split('T')[0];
-    return formatted;
-  }
-
-  // Validate ISO 8601 date format
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (!dateRegex.test(date)) {
-    throw new Error('Date must be in ISO 8601 format (YYYY-MM-DD)');
-  }
-
-  // Validate date is not in the future
-  const inputDate = new Date(date);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  if (inputDate > today) {
-    throw new Error('Date cannot be in the future');
-  }
-
-  return date;
-}
-
 /**
  * Log body weight entry
  */
@@ -67,10 +26,8 @@ export function logBodyWeight(
 ): BodyWeightEntry {
   const { user_id, weight_kg, notes } = params;
 
-  // Validate weight
-  validateWeight(weight_kg);
-
-  // Validate and format date
+  // Validate weight and format date
+  validateBodyWeight(weight_kg);
   const date = validateAndFormatDate(params.date);
 
   // Check if entry already exists for this date

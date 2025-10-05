@@ -8,12 +8,10 @@
 import bcrypt from 'bcrypt';
 import { stmtGetUserByUsername, stmtCreateUser } from '../database/db.js';
 import { createDefaultProgram } from './programService.js';
+import { BCRYPT_COST, JWT_EXPIRATION } from '../utils/constants.js';
 
-// Bcrypt cost factor (constitutional requirement)
-const BCRYPT_COST = 12;
-
-// JWT expiration (30 days - justified violation for home server use case)
-export const JWT_EXPIRATION = '30d';
+// Re-export for backward compatibility
+export { JWT_EXPIRATION };
 
 /**
  * User interface (excluding password_hash for security)

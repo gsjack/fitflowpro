@@ -43,9 +43,9 @@ export async function logBodyWeight(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
 
   if (!response.ok) {
@@ -63,14 +63,11 @@ export async function getBodyWeightHistory(
   token: string,
   limit: number = 30
 ): Promise<BodyWeightEntry[]> {
-  const response = await fetch(
-    `${API_BASE_URL}/api/body-weight?limit=${limit}`,
-    {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    }
-  );
+  const response = await fetch(`${API_BASE_URL}/api/body-weight?limit=${limit}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   if (!response.ok) {
     throw new Error('Failed to fetch body weight history');
@@ -82,15 +79,12 @@ export async function getBodyWeightHistory(
 /**
  * Delete body weight entry
  */
-export async function deleteBodyWeight(
-  token: string,
-  id: number
-): Promise<void> {
+export async function deleteBodyWeight(token: string, id: number): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/api/body-weight/${id}`, {
     method: 'DELETE',
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {
@@ -102,13 +96,11 @@ export async function deleteBodyWeight(
 /**
  * Get latest body weight with change stats
  */
-export async function getLatestBodyWeight(
-  token: string
-): Promise<LatestWeightResponse> {
+export async function getLatestBodyWeight(token: string): Promise<LatestWeightResponse> {
   const response = await fetch(`${API_BASE_URL}/api/body-weight/latest`, {
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {

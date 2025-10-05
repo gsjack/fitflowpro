@@ -142,7 +142,8 @@ export default function ExerciseHistoryCard({
             {/* Show indicator if there are more sets */}
             {lastPerformance.sets.length > 3 && (
               <Text variant="bodySmall" style={styles.moreIndicator}>
-                +{lastPerformance.sets.length - 3} more set{lastPerformance.sets.length - 3 > 1 ? 's' : ''}
+                +{lastPerformance.sets.length - 3} more set
+                {lastPerformance.sets.length - 3 > 1 ? 's' : ''}
               </Text>
             )}
 

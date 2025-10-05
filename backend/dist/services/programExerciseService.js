@@ -1,22 +1,5 @@
 import { db } from '../database/db.js';
-const VOLUME_LANDMARKS = {
-    chest: { mev: 8, mav: 14, mrv: 22 },
-    back_lats: { mev: 10, mav: 16, mrv: 26 },
-    back_traps: { mev: 6, mav: 12, mrv: 20 },
-    shoulders_front: { mev: 4, mav: 8, mrv: 14 },
-    shoulders_side: { mev: 8, mav: 16, mrv: 26 },
-    shoulders_rear: { mev: 8, mav: 14, mrv: 22 },
-    biceps: { mev: 6, mav: 12, mrv: 20 },
-    triceps: { mev: 6, mav: 12, mrv: 22 },
-    quads: { mev: 8, mav: 14, mrv: 24 },
-    hamstrings: { mev: 6, mav: 12, mrv: 20 },
-    glutes: { mev: 6, mav: 12, mrv: 20 },
-    calves: { mev: 8, mav: 14, mrv: 22 },
-    abs: { mev: 8, mav: 16, mrv: 28 },
-    front_delts: { mev: 4, mav: 8, mrv: 14 },
-    side_delts: { mev: 8, mav: 16, mrv: 26 },
-    rear_delts: { mev: 8, mav: 14, mrv: 22 },
-};
+import { VOLUME_LANDMARKS } from '../utils/constants.js';
 export function getProgramExercises(filters = {}) {
     let query = `
     SELECT
@@ -162,7 +145,7 @@ export function swapExercise(programExerciseId, newExerciseId) {
         new_exercise_name: newExercise.name,
     };
 }
-export function reorderExercises(programDayId, newOrder) {
+export function reorderExercises(_programDayId, newOrder) {
     const reorder = db.transaction(() => {
         const updateStmt = db.prepare('UPDATE program_exercises SET order_index = ? WHERE id = ?');
         for (const item of newOrder) {
@@ -219,7 +202,7 @@ function calculateVolumeWarning(programDayId, operation, sets, exercise, oldSets
     }
     return checkVolumeThresholds(muscleVolume, muscleGroups, sets, operation);
 }
-function checkVolumeThresholds(muscleVolume, muscleGroups, sets, operation) {
+function checkVolumeThresholds(muscleVolume, muscleGroups, _sets, operation) {
     const warnings = [];
     for (const mg of muscleGroups) {
         const currentVolume = muscleVolume[mg] || 0;

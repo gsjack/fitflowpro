@@ -25,7 +25,7 @@ interface GradientCardProps {
 
 export default function GradientCard({
   children,
-  gradient = gradients.card as [string, string, ...string[]],
+  gradient = gradients.card,
   style,
   onPress,
   elevation = 4,

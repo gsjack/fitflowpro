@@ -1,4 +1,4 @@
-import { get1RMProgression, getConsistencyMetrics, } from '../services/analyticsService.js';
+import { get1RMProgression, getConsistencyMetrics } from '../services/analyticsService.js';
 import { getCurrentWeekVolume, getVolumeHistory, getProgramVolumeAnalysis, } from '../services/volumeService.js';
 import { authenticateJWT } from '../middleware/auth.js';
 const oneRMProgressionSchema = {
@@ -128,10 +128,24 @@ export default async function analyticsRoutes(fastify) {
             }
             if (muscle_group) {
                 const validMuscleGroups = [
-                    'chest', 'back', 'shoulders', 'quads', 'hamstrings',
-                    'glutes', 'biceps', 'triceps', 'calves', 'abs',
-                    'back_lats', 'back_traps', 'shoulders_front', 'shoulders_side', 'shoulders_rear',
-                    'front_delts', 'side_delts', 'rear_delts'
+                    'chest',
+                    'back',
+                    'shoulders',
+                    'quads',
+                    'hamstrings',
+                    'glutes',
+                    'biceps',
+                    'triceps',
+                    'calves',
+                    'abs',
+                    'back_lats',
+                    'back_traps',
+                    'shoulders_front',
+                    'shoulders_side',
+                    'shoulders_rear',
+                    'front_delts',
+                    'side_delts',
+                    'rear_delts',
                 ];
                 if (!validMuscleGroups.includes(muscle_group)) {
                     return reply.status(400).send({

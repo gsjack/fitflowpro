@@ -269,7 +269,7 @@ export function getProgramDayExercises(programDayId: number): ProgramExerciseWit
     ORDER BY pe.order_index
   `);
 
-  return stmt.all(programDayId);
+  return stmt.all(programDayId) as ProgramExerciseWithDetails[];
 }
 
 /**

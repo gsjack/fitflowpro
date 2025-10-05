@@ -122,7 +122,12 @@ export default async function programDaysRoutes(fastify) {
                 });
             }
             const dayOfWeek = new Date().getDay();
-            const dayMapping = [6, 1, 2, 3, 4, 5, 6];
+            if (dayOfWeek === 0) {
+                return reply.status(404).send({
+                    error: 'No program day scheduled for today (rest day)',
+                });
+            }
+            const dayMapping = [0, 1, 2, 3, 4, 5, 6];
             const targetDayOfWeek = dayMapping[dayOfWeek];
             const programDayStmt = db.prepare(`
           SELECT
@@ -168,6 +173,38 @@ export default async function programDaysRoutes(fastify) {
             fastify.log.error(error);
             return reply.status(500).send({
                 error: 'Failed to get recommended program day',
+            });
+        }
+    });
+    fastify.post('/program-days', {
+        preHandler: authenticateJWT,
+    }, async (request, reply) => {
+        try {
+            const authenticatedUser = request.user;
+            const { program_id, name, day_of_week } = request.body;
+            const programStmt = db.prepare(`
+          SELECT id FROM programs WHERE id = ? AND user_id = ?
+        `);
+            const program = programStmt.get(program_id, authenticatedUser.userId);
+            if (!program) {
+                return reply.status(404).send({ error: 'Program not found' });
+            }
+            const insertStmt = db.prepare(`
+          INSERT INTO program_days (program_id, day_name, day_of_week, day_type)
+          VALUES (?, ?, ?, 'strength')
+        `);
+            const result = insertStmt.run(program_id, name, day_of_week);
+            return reply.status(201).send({
+                program_day_id: result.lastInsertRowid,
+                program_id,
+                name,
+                day_of_week
+            });
+        }
+        catch (error) {
+            fastify.log.error(error);
+            return reply.status(500).send({
+                error: 'Failed to create program day',
             });
         }
     });

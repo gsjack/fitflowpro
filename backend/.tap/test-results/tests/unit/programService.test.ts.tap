@@ -9,32 +9,32 @@ TAP version 14
         ok 6 - All exercises updated
         ok 7 - Program phase updated to MAV
         ok 8 - Week counter reset to 1
-        ok 9 - Exercise 11261: 3 sets → 4 sets (rounded)
-        ok 10 - Exercise 11262: 4 sets → 5 sets (rounded)
-        ok 11 - Exercise 11263: 3 sets → 4 sets (rounded)
-        ok 12 - Exercise 11264: 3 sets → 4 sets (rounded)
-        ok 13 - Exercise 11265: 4 sets → 5 sets (rounded)
-        ok 14 - Exercise 11266: 3 sets → 4 sets (rounded)
-        ok 15 - Exercise 11267: 3 sets → 4 sets (rounded)
-        ok 16 - Exercise 11268: 4 sets → 5 sets (rounded)
-        ok 17 - Exercise 11269: 4 sets → 5 sets (rounded)
-        ok 18 - Exercise 11270: 3 sets → 4 sets (rounded)
-        ok 19 - Exercise 11271: 3 sets → 4 sets (rounded)
-        ok 20 - Exercise 11272: 3 sets → 4 sets (rounded)
-        ok 21 - Exercise 11273: 3 sets → 4 sets (rounded)
-        ok 22 - Exercise 11274: 4 sets → 5 sets (rounded)
-        ok 23 - Exercise 11275: 3 sets → 4 sets (rounded)
-        ok 24 - Exercise 11276: 4 sets → 5 sets (rounded)
-        ok 25 - Exercise 11277: 3 sets → 4 sets (rounded)
-        ok 26 - Exercise 11278: 3 sets → 4 sets (rounded)
-        ok 27 - Exercise 11279: 3 sets → 4 sets (rounded)
-        ok 28 - Exercise 11280: 4 sets → 5 sets (rounded)
-        ok 29 - Exercise 11281: 3 sets → 4 sets (rounded)
-        ok 30 - Exercise 11282: 4 sets → 5 sets (rounded)
-        ok 31 - Exercise 11283: 3 sets → 4 sets (rounded)
-        ok 32 - Exercise 11284: 3 sets → 4 sets (rounded)
+        ok 9 - Exercise 29282: 3 sets → 4 sets (rounded)
+        ok 10 - Exercise 29283: 4 sets → 5 sets (rounded)
+        ok 11 - Exercise 29284: 3 sets → 4 sets (rounded)
+        ok 12 - Exercise 29285: 3 sets → 4 sets (rounded)
+        ok 13 - Exercise 29286: 4 sets → 5 sets (rounded)
+        ok 14 - Exercise 29287: 3 sets → 4 sets (rounded)
+        ok 15 - Exercise 29288: 3 sets → 4 sets (rounded)
+        ok 16 - Exercise 29289: 4 sets → 5 sets (rounded)
+        ok 17 - Exercise 29290: 4 sets → 5 sets (rounded)
+        ok 18 - Exercise 29291: 3 sets → 4 sets (rounded)
+        ok 19 - Exercise 29292: 3 sets → 4 sets (rounded)
+        ok 20 - Exercise 29293: 3 sets → 4 sets (rounded)
+        ok 21 - Exercise 29294: 3 sets → 4 sets (rounded)
+        ok 22 - Exercise 29295: 4 sets → 5 sets (rounded)
+        ok 23 - Exercise 29296: 3 sets → 4 sets (rounded)
+        ok 24 - Exercise 29297: 4 sets → 5 sets (rounded)
+        ok 25 - Exercise 29298: 3 sets → 4 sets (rounded)
+        ok 26 - Exercise 29299: 3 sets → 4 sets (rounded)
+        ok 27 - Exercise 29300: 3 sets → 4 sets (rounded)
+        ok 28 - Exercise 29301: 4 sets → 5 sets (rounded)
+        ok 29 - Exercise 29302: 3 sets → 4 sets (rounded)
+        ok 30 - Exercise 29303: 4 sets → 5 sets (rounded)
+        ok 31 - Exercise 29304: 3 sets → 4 sets (rounded)
+        ok 32 - Exercise 29305: 3 sets → 4 sets (rounded)
         1..32
-    ok 1 - MEV → MAV: Automatic progression with +20% volume # time=13.099ms
+    ok 1 - MEV → MAV: Automatic progression with +20% volume # time=12.543ms
     
     # Subtest: MAV → MRV: Automatic progression with +15% volume
         ok 1 - Program is in MAV phase
@@ -42,32 +42,32 @@ TAP version 14
         ok 3 - New phase is MRV
         ok 4 - Volume multiplier is 1.15
         ok 5 - All exercises updated
-        ok 6 - Exercise 11261: 4 sets → 5 sets (rounded)
-        ok 7 - Exercise 11262: 5 sets → 6 sets (rounded)
-        ok 8 - Exercise 11263: 4 sets → 5 sets (rounded)
-        ok 9 - Exercise 11264: 4 sets → 5 sets (rounded)
-        ok 10 - Exercise 11265: 5 sets → 6 sets (rounded)
-        ok 11 - Exercise 11266: 4 sets → 5 sets (rounded)
-        ok 12 - Exercise 11267: 4 sets → 5 sets (rounded)
-        ok 13 - Exercise 11268: 5 sets → 6 sets (rounded)
-        ok 14 - Exercise 11269: 5 sets → 6 sets (rounded)
-        ok 15 - Exercise 11270: 4 sets → 5 sets (rounded)
-        ok 16 - Exercise 11271: 4 sets → 5 sets (rounded)
-        ok 17 - Exercise 11272: 4 sets → 5 sets (rounded)
-        ok 18 - Exercise 11273: 4 sets → 5 sets (rounded)
-        ok 19 - Exercise 11274: 5 sets → 6 sets (rounded)
-        ok 20 - Exercise 11275: 4 sets → 5 sets (rounded)
-        ok 21 - Exercise 11276: 5 sets → 6 sets (rounded)
-        ok 22 - Exercise 11277: 4 sets → 5 sets (rounded)
-        ok 23 - Exercise 11278: 4 sets → 5 sets (rounded)
-        ok 24 - Exercise 11279: 4 sets → 5 sets (rounded)
-        ok 25 - Exercise 11280: 5 sets → 6 sets (rounded)
-        ok 26 - Exercise 11281: 4 sets → 5 sets (rounded)
-        ok 27 - Exercise 11282: 5 sets → 6 sets (rounded)
-        ok 28 - Exercise 11283: 4 sets → 5 sets (rounded)
-        ok 29 - Exercise 11284: 4 sets → 5 sets (rounded)
+        ok 6 - Exercise 29282: 4 sets → 5 sets (rounded)
+        ok 7 - Exercise 29283: 5 sets → 6 sets (rounded)
+        ok 8 - Exercise 29284: 4 sets → 5 sets (rounded)
+        ok 9 - Exercise 29285: 4 sets → 5 sets (rounded)
+        ok 10 - Exercise 29286: 5 sets → 6 sets (rounded)
+        ok 11 - Exercise 29287: 4 sets → 5 sets (rounded)
+        ok 12 - Exercise 29288: 4 sets → 5 sets (rounded)
+        ok 13 - Exercise 29289: 5 sets → 6 sets (rounded)
+        ok 14 - Exercise 29290: 5 sets → 6 sets (rounded)
+        ok 15 - Exercise 29291: 4 sets → 5 sets (rounded)
+        ok 16 - Exercise 29292: 4 sets → 5 sets (rounded)
+        ok 17 - Exercise 29293: 4 sets → 5 sets (rounded)
+        ok 18 - Exercise 29294: 4 sets → 5 sets (rounded)
+        ok 19 - Exercise 29295: 5 sets → 6 sets (rounded)
+        ok 20 - Exercise 29296: 4 sets → 5 sets (rounded)
+        ok 21 - Exercise 29297: 5 sets → 6 sets (rounded)
+        ok 22 - Exercise 29298: 4 sets → 5 sets (rounded)
+        ok 23 - Exercise 29299: 4 sets → 5 sets (rounded)
+        ok 24 - Exercise 29300: 4 sets → 5 sets (rounded)
+        ok 25 - Exercise 29301: 5 sets → 6 sets (rounded)
+        ok 26 - Exercise 29302: 4 sets → 5 sets (rounded)
+        ok 27 - Exercise 29303: 5 sets → 6 sets (rounded)
+        ok 28 - Exercise 29304: 4 sets → 5 sets (rounded)
+        ok 29 - Exercise 29305: 4 sets → 5 sets (rounded)
         1..29
-    ok 2 - MAV → MRV: Automatic progression with +15% volume # time=7.016ms
+    ok 2 - MAV → MRV: Automatic progression with +15% volume # time=8.21ms
     
     # Subtest: MRV → Deload: Automatic progression with -50% volume
         ok 1 - Program is in MRV phase
@@ -75,68 +75,36 @@ TAP version 14
         ok 3 - New phase is Deload
         ok 4 - Volume multiplier is 0.5
         ok 5 - All exercises updated
-        ok 6 - Exercise 11261: 5 sets → 3 sets (rounded)
-        ok 7 - Exercise 11262: 6 sets → 3 sets (rounded)
-        ok 8 - Exercise 11263: 5 sets → 3 sets (rounded)
-        ok 9 - Exercise 11264: 5 sets → 3 sets (rounded)
-        ok 10 - Exercise 11265: 6 sets → 3 sets (rounded)
-        ok 11 - Exercise 11266: 5 sets → 3 sets (rounded)
-        ok 12 - Exercise 11267: 5 sets → 3 sets (rounded)
-        ok 13 - Exercise 11268: 6 sets → 3 sets (rounded)
-        ok 14 - Exercise 11269: 6 sets → 3 sets (rounded)
-        ok 15 - Exercise 11270: 5 sets → 3 sets (rounded)
-        ok 16 - Exercise 11271: 5 sets → 3 sets (rounded)
-        ok 17 - Exercise 11272: 5 sets → 3 sets (rounded)
-        ok 18 - Exercise 11273: 5 sets → 3 sets (rounded)
-        ok 19 - Exercise 11274: 6 sets → 3 sets (rounded)
-        ok 20 - Exercise 11275: 5 sets → 3 sets (rounded)
-        ok 21 - Exercise 11276: 6 sets → 3 sets (rounded)
-        ok 22 - Exercise 11277: 5 sets → 3 sets (rounded)
-        ok 23 - Exercise 11278: 5 sets → 3 sets (rounded)
-        ok 24 - Exercise 11279: 5 sets → 3 sets (rounded)
-        ok 25 - Exercise 11280: 6 sets → 3 sets (rounded)
-        ok 26 - Exercise 11281: 5 sets → 3 sets (rounded)
-        ok 27 - Exercise 11282: 6 sets → 3 sets (rounded)
-        ok 28 - Exercise 11283: 5 sets → 3 sets (rounded)
-        ok 29 - Exercise 11284: 5 sets → 3 sets (rounded)
+        ok 6 - Exercise 29282: 5 sets → 3 sets (rounded)
+        ok 7 - Exercise 29283: 6 sets → 3 sets (rounded)
+        ok 8 - Exercise 29284: 5 sets → 3 sets (rounded)
+        ok 9 - Exercise 29285: 5 sets → 3 sets (rounded)
+        ok 10 - Exercise 29286: 6 sets → 3 sets (rounded)
+        ok 11 - Exercise 29287: 5 sets → 3 sets (rounded)
+        ok 12 - Exercise 29288: 5 sets → 3 sets (rounded)
+        ok 13 - Exercise 29289: 6 sets → 3 sets (rounded)
+        ok 14 - Exercise 29290: 6 sets → 3 sets (rounded)
+        ok 15 - Exercise 29291: 5 sets → 3 sets (rounded)
+        ok 16 - Exercise 29292: 5 sets → 3 sets (rounded)
+        ok 17 - Exercise 29293: 5 sets → 3 sets (rounded)
+        ok 18 - Exercise 29294: 5 sets → 3 sets (rounded)
+        ok 19 - Exercise 29295: 6 sets → 3 sets (rounded)
+        ok 20 - Exercise 29296: 5 sets → 3 sets (rounded)
+        ok 21 - Exercise 29297: 6 sets → 3 sets (rounded)
+        ok 22 - Exercise 29298: 5 sets → 3 sets (rounded)
+        ok 23 - Exercise 29299: 5 sets → 3 sets (rounded)
+        ok 24 - Exercise 29300: 5 sets → 3 sets (rounded)
+        ok 25 - Exercise 29301: 6 sets → 3 sets (rounded)
+        ok 26 - Exercise 29302: 5 sets → 3 sets (rounded)
+        ok 27 - Exercise 29303: 6 sets → 3 sets (rounded)
+        ok 28 - Exercise 29304: 5 sets → 3 sets (rounded)
+        ok 29 - Exercise 29305: 5 sets → 3 sets (rounded)
         1..29
-    ok 3 - MRV → Deload: Automatic progression with -50% volume # time=4.739ms
+    ok 3 - MRV → Deload: Automatic progression with -50% volume # time=12.236ms
     
     # Subtest: Deload → MEV: Automatic progression with 2.0x volume (baseline reset)
         ok 1 - Program is in Deload phase
-        ok 2 - Previous phase was Deload
-        ok 3 - New phase is MEV (cycle completes)
-        ok 4 - Volume multiplier is 2.0 (baseline reset)
-        ok 5 - All exercises updated
-        ok 6 - Exercise 11261: 3 sets → 6 sets (baseline reset)
-        ok 7 - Exercise 11262: 3 sets → 6 sets (baseline reset)
-        ok 8 - Exercise 11263: 3 sets → 6 sets (baseline reset)
-        ok 9 - Exercise 11264: 3 sets → 6 sets (baseline reset)
-        ok 10 - Exercise 11265: 3 sets → 6 sets (baseline reset)
-        ok 11 - Exercise 11266: 3 sets → 6 sets (baseline reset)
-        ok 12 - Exercise 11267: 3 sets → 6 sets (baseline reset)
-        ok 13 - Exercise 11268: 3 sets → 6 sets (baseline reset)
-        ok 14 - Exercise 11269: 3 sets → 6 sets (baseline reset)
-        ok 15 - Exercise 11270: 3 sets → 6 sets (baseline reset)
-        ok 16 - Exercise 11271: 3 sets → 6 sets (baseline reset)
-        ok 17 - Exercise 11272: 3 sets → 6 sets (baseline reset)
-        ok 18 - Exercise 11273: 3 sets → 6 sets (baseline reset)
-        ok 19 - Exercise 11274: 3 sets → 6 sets (baseline reset)
-        ok 20 - Exercise 11275: 3 sets → 6 sets (baseline reset)
-        ok 21 - Exercise 11276: 3 sets → 6 sets (baseline reset)
-        ok 22 - Exercise 11277: 3 sets → 6 sets (baseline reset)
-        ok 23 - Exercise 11278: 3 sets → 6 sets (baseline reset)
-        ok 24 - Exercise 11279: 3 sets → 6 sets (baseline reset)
-        ok 25 - Exercise 11280: 3 sets → 6 sets (baseline reset)
-        ok 26 - Exercise 11281: 3 sets → 6 sets (baseline reset)
-        ok 27 - Exercise 11282: 3 sets → 6 sets (baseline reset)
-        ok 28 - Exercise 11283: 3 sets → 6 sets (baseline reset)
-        ok 29 - Exercise 11284: 3 sets → 6 sets (baseline reset)
-        1..29
-    ok 4 - Deload → MEV: Automatic progression with 2.0x volume (baseline reset) # time=10.763ms
-    
-    # Subtest: Manual phase transition: MEV → MRV (skip MAV)
-        not ok 1 - database is locked
+        not ok 2 - database is locked
           ---
           stack: >
             <anonymous> (src/services/programService.ts:388:20)
@@ -146,14 +114,14 @@ TAP version 14
           
             advancePhase (src/services/programService.ts:407:10)
           
-            Test.<anonymous> (tests/unit/programService.test.ts:218:20)
+            Test.<anonymous> (tests/unit/programService.test.ts:181:20)
           at:
             fileName: src/services/programService.ts
             lineNumber: 388
             columnNumber: 20
             functionName: <anonymous>
           type: SqliteError
-          code: SQLITE_BUSY
+          code: SQLITE_BUSY_SNAPSHOT
           tapCaught: returnedPromiseRejection
           source: |2
                   for (const exercise of exercises) {
@@ -164,42 +132,51 @@ TAP version 14
                   }
           ...
         
-        1..1
-    not ok 5 - Manual phase transition: MEV → MRV (skip MAV) # time=30.031ms
+        1..2
+    not ok 4 - Deload → MEV: Automatic progression with 2.0x volume (baseline reset) # time=28.182ms
       ---
       at:
         fileName: tests/unit/programService.test.ts
-        lineNumber: 205
+        lineNumber: 166
         columnNumber: 11
         typeName: Test
       source: >2
           });
       
-          await t.test('Manual phase transition: MEV → MRV (skip MAV)', async (t) => {
+          await t.test('Deload → MEV: Automatic progression with 2.0x volume (baseline reset)', async (t) => {
         ----------^
-            // Reset program to MEV
-            db.prepare('UPDATE programs SET mesocycle_phase = ? WHERE id = ?').run('mev', programId);
+            // Ensure program is in Deload phase (reset from previous tests)
+            db.prepare('UPDATE programs SET mesocycle_phase = ? WHERE id = ?').run('deload', programId);
       ...
+    
+    # Subtest: Manual phase transition: MEV → MRV (skip MAV)
+        ok 1 - Previous phase was MEV
+        ok 2 - New phase is MRV (skipped MAV)
+        ok 3 - Volume multiplier is positive
+        ok 4 - All exercises updated
+        ok 5 - Program phase updated to MRV
+        1..5
+    ok 5 - Manual phase transition: MEV → MRV (skip MAV) # time=3.705ms
     
     # Subtest: Error: Invalid target_phase
         ok 1 - Throws error for invalid phase
         1..1
-    ok 6 - Error: Invalid target_phase # time=2.303ms
+    ok 6 - Error: Invalid target_phase # time=2.413ms
     
     # Subtest: Error: Manual=true but target_phase missing
         ok 1 - Throws error when manual=true but target_phase is missing
         1..1
-    ok 7 - Error: Manual=true but target_phase missing # time=0.705ms
+    ok 7 - Error: Manual=true but target_phase missing # time=0.446ms
     
     # Subtest: Error: Program not found
         ok 1 - Throws error for non-existent program
         1..1
-    ok 8 - Error: Program not found # time=0.947ms
+    ok 8 - Error: Program not found # time=0.757ms
     
     # Subtest: Transaction atomicity: All exercises updated together
         ok 1 - All exercises updated in single transaction
         1..1
-    ok 9 - Transaction atomicity: All exercises updated together # time=1.769ms
+    ok 9 - Transaction atomicity: All exercises updated together # time=2.615ms
     
     # Subtest: Volume calculation example: MEV 10 sets → MAV 12 sets
         ok 1 - Started from MEV
@@ -207,10 +184,10 @@ TAP version 14
         ok 3 - Multiplier is 1.2
         ok 4 - MEV 10 sets × 1.2 = MAV 12 sets
         1..4
-    ok 10 - Volume calculation example: MEV 10 sets → MAV 12 sets # time=1.573ms
+    ok 10 - Volume calculation example: MEV 10 sets → MAV 12 sets # time=2.354ms
     
     1..10
-not ok 1 - Program Service - advancePhase() # time=96.986ms
+not ok 1 - Program Service - advancePhase() # time=102.609ms
   ---
   at:
     fileName: tests/unit/programService.test.ts

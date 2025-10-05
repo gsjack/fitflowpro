@@ -65,14 +65,12 @@ export default async function recoveryRoutes(fastify) {
                     error: error.message,
                 });
             }
-            if (error instanceof Error &&
-                error.message.includes('FOREIGN KEY constraint failed')) {
+            if (error instanceof Error && error.message.includes('FOREIGN KEY constraint failed')) {
                 return reply.status(400).send({
                     error: 'Invalid user_id',
                 });
             }
-            if (error instanceof Error &&
-                error.message.includes('UNIQUE constraint failed')) {
+            if (error instanceof Error && error.message.includes('UNIQUE constraint failed')) {
                 return reply.status(400).send({
                     error: 'Recovery assessment already exists for this date',
                 });

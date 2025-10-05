@@ -1,6 +1,6 @@
 import tap from 'tap';
 import Database from 'better-sqlite3';
-import { join } from 'path';
+
 
 /**
  * Integration Test T076: Analytics and Progression Tracking
@@ -9,8 +9,6 @@ import { join } from 'path';
  * - Seed 4 weeks data, verify 1RM progression 120kg→130kg
  * - Verify volume trends, adherence 100%
  */
-
-const TEST_DB_PATH = join(process.cwd(), 'tests', 'integration', 'test-analytics.db');
 
 tap.test('Integration Test: Analytics and Progression Tracking (T076)', async (t) => {
   let db: Database.Database;
@@ -121,11 +119,6 @@ tap.test('Integration Test: Analytics and Progression Tracking (T076)', async (t
     }
 
     // Calculate 1RM progression using Epley formula with RIR adjustment
-    // 1RM = weight × (1 + (reps - rir) / 30)
-    const calculate1RM = (weight: number, reps: number, rir: number): number => {
-      return weight * (1 + (reps - rir) / 30);
-    };
-
     // Query for 1RM progression
     const progressionQuery = db.prepare(`
       SELECT

@@ -1,1 +1,1 @@
-{"version":3,"file":"program-exercises.d.ts","sourceRoot":"","sources":["../../src/routes/program-exercises.ts"],"names":[],"mappings":"AAaA,OAAO,EAAE,eAAe,EAAgC,MAAM,SAAS,CAAC;AA8ExE,wBAA8B,qBAAqB,CAAC,OAAO,EAAE,eAAe,iBAia3E"}
+{"version":3,"file":"program-exercises.d.ts","sourceRoot":"","sources":["../../src/routes/program-exercises.ts"],"names":[],"mappings":"AAaA,OAAO,EAAE,eAAe,EAAgC,MAAM,SAAS,CAAC;AA8ExE,wBAA8B,qBAAqB,CAAC,OAAO,EAAE,eAAe,iBA4a3E"}

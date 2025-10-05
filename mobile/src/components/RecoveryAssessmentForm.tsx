@@ -149,7 +149,7 @@ export default function RecoveryAssessmentForm({
       <ScrollView style={styles.scrollView}>
         <Card style={styles.card} elevation={4}>
           <LinearGradient
-            colors={gradients.card as [string, string, ...string[]]}
+            colors={gradients.card}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.gradient}

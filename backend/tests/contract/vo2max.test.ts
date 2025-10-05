@@ -20,7 +20,6 @@ tap.test('VO2max Cardio Tracking Endpoints Contract Tests', async (t) => {
 
   // Create test user and get auth token
   let authToken: string;
-  let userId: number;
 
   await t.before(async () => {
     const registerResponse = await app.inject({
@@ -36,7 +35,6 @@ tap.test('VO2max Cardio Tracking Endpoints Contract Tests', async (t) => {
     });
 
     const registerBody = registerResponse.json();
-    userId = registerBody.userId;
 
     const loginResponse = await app.inject({
       method: 'POST',

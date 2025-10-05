@@ -58,8 +58,6 @@ export default function PhaseProgressIndicator({
   programId,
   onAdvancePhase,
 }: PhaseProgressIndicatorProps) {
-  const theme = useTheme();
-
   // Advance state
   const [isAdvancing, setIsAdvancing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -320,10 +318,7 @@ export default function PhaseProgressIndicator({
 
       {/* Confirmation Dialog (React Native Paper, NOT Alert.alert) */}
       <Portal>
-        <Dialog
-          visible={confirmDialogVisible}
-          onDismiss={handleCancelAdvance}
-        >
+        <Dialog visible={confirmDialogVisible} onDismiss={handleCancelAdvance}>
           <Dialog.Title>Advance to {nextConfig.label} Phase?</Dialog.Title>
           <Dialog.Content>
             <Paragraph>

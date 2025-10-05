@@ -1,0 +1,34 @@
+# Environment files (contain secrets)
+.env
+.env.local
+.env.production
+backend/.env
+mobile/.env
+
+# Keep example files
+!.env.example
+!backend/.env.example
+!mobile/.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo

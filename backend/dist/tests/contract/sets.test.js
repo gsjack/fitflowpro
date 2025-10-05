@@ -2,6 +2,18 @@ import { test } from 'tap';
 import { buildApp } from '../../src/server.js';
 test('POST /api/sets - contract validation', async (t) => {
     const app = await buildApp();
+    const registerResponse = await app.inject({
+        method: 'POST',
+        url: '/api/auth/register',
+        payload: {
+            username: `test-sets-${Date.now()}@example.com`,
+            password: 'SecurePass123!',
+            age: 28,
+            weight_kg: 75,
+            experience_level: 'intermediate'
+        }
+    });
+    const { token } = registerResponse.json();
     await t.test('returns 201 with valid set data', async (t) => {
         const validSetData = {
             workout_id: 1,
@@ -17,7 +29,7 @@ test('POST /api/sets - contract validation', async (t) => {
             method: 'POST',
             url: '/api/sets',
             headers: {
-                'Authorization': 'Bearer valid-jwt-token',
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             payload: validSetData,

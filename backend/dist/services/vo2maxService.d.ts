@@ -34,7 +34,7 @@ export interface VO2maxProgressionPoint {
 }
 export declare function estimateVO2max(age: number, _averageHR?: number): number;
 export declare function createVO2maxSession(data: VO2maxSessionData): number;
-export declare function getVO2maxSessions(filters: VO2maxSessionFilters): any[];
+export declare function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSession[];
 export declare function getVO2maxProgression(userId: number, startDate?: string, endDate?: string): VO2maxProgressionPoint[];
-export declare function getVO2maxSessionById(sessionId: number, userId: number): any | null;
+export declare function getVO2maxSessionById(sessionId: number, userId: number): VO2maxSession | null;
 //# sourceMappingURL=vo2maxService.d.ts.map

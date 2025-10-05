@@ -23,14 +23,12 @@ tap.test('Scenario 5: Muscle Volume Tracking', async (t) => {
 
   // Setup: Create test user and get auth token
   let authToken: string;
-  let userId: number;
-  let programId: number;
 
   await t.before(async () => {
     const testUsername = `test-scenario5-${Date.now()}@example.com`;
 
     // Register user
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {
@@ -42,8 +40,7 @@ tap.test('Scenario 5: Muscle Volume Tracking', async (t) => {
       },
     });
 
-    const registerBody = registerResponse.json();
-    userId = registerBody.user_id;
+    const _registerBody = registerResponse.json();
 
     // Login
     const loginResponse = await app.inject({
@@ -67,7 +64,6 @@ tap.test('Scenario 5: Muscle Volume Tracking', async (t) => {
     });
 
     const program = programResponse.json();
-    programId = program.id;
   });
 
   // AC-1: Retrieve volume analysis per muscle group

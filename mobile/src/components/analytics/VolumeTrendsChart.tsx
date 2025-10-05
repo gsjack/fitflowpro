@@ -15,18 +15,11 @@
 
 import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import {
-  Surface,
-  Text,
-  Chip,
-  ActivityIndicator,
-  useTheme,
-  MD3Theme,
-} from 'react-native-paper';
+import { Surface, Text, Chip, ActivityIndicator, useTheme, MD3Theme } from 'react-native-paper';
 import { Svg, Line, Circle, Text as SvgText, Polyline } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { format, parseISO } from 'date-fns';
-import { useVolumeTrendsHistory, VolumeTrends } from '../../services/api/analyticsApi';
+import { useVolumeTrendsHistory } from '../../services/api/analyticsApi';
 import { colors } from '../../theme/colors';
 import { VOLUME_LANDMARKS, MuscleGroup } from '../../constants/volumeLandmarks';
 import { ChartSkeleton } from '../skeletons';

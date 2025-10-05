@@ -1,8 +1,7 @@
 import { stmtCreateWorkout, stmtGetWorkoutsByUser, stmtGetWorkoutsByUserDateRange, stmtUpdateWorkoutStatus, stmtUpdateWorkoutProgramDay, stmtGetWorkoutById, stmtValidateProgramDayOwnership, db, } from '../database/db.js';
+import { validateDateFormat } from '../utils/validation.js';
 export function createWorkout(userId, programDayId, date) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-        throw new Error('Invalid date format. Expected YYYY-MM-DD');
-    }
+    validateDateFormat(date);
     const result = stmtCreateWorkout.run(userId, programDayId, date);
     const workoutId = result.lastInsertRowid;
     const workout = db.prepare('SELECT * FROM workouts WHERE id = ?').get(workoutId);

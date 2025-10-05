@@ -22,7 +22,6 @@ import {
   ActivityIndicator,
   Chip,
 } from 'react-native-paper';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { format } from 'date-fns';
 import Norwegian4x4Timer from '../components/Norwegian4x4Timer';
 import { useCreateVO2maxSession } from '../services/api/vo2maxApi';

@@ -351,10 +351,7 @@ export default function AlternativeExerciseSuggestions({
 
       {/* Confirmation Dialog (React Native Paper, NOT Alert.alert) */}
       <Portal>
-        <Dialog
-          visible={confirmDialogVisible}
-          onDismiss={handleCancelSwap}
-        >
+        <Dialog visible={confirmDialogVisible} onDismiss={handleCancelSwap}>
           <Dialog.Title>Confirm Exercise Swap</Dialog.Title>
           <Dialog.Content>
             <Paragraph>

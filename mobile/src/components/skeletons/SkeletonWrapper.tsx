@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { View, StyleSheet, Platform, Animated } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 
 // Only import skeleton placeholder on native platforms
 let SkeletonPlaceholder: any = null;

@@ -1,4 +1,5 @@
-export declare const JWT_EXPIRATION = "30d";
+import { JWT_EXPIRATION } from '../utils/constants.js';
+export { JWT_EXPIRATION };
 export interface User {
     id: number;
     username: string;

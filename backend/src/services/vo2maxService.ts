@@ -25,6 +25,29 @@ export interface VO2maxSession {
 }
 
 /**
+ * Extended VO2max session with workout details (for queries with JOIN)
+ */
+export interface VO2maxSessionWithDetails {
+  id: number;
+  workout_id: number;
+  protocol: string;
+  duration_seconds: number;
+  intervals_completed: number | null;
+  average_hr: number | null;
+  peak_hr: number | null;
+  estimated_vo2max: number | null;
+  synced: number;
+  rpe: number | null;
+  notes: string | null;
+  completion_status: string | null;
+  created_at: number;
+  // From workout join
+  user_id: number;
+  date: string;
+  status?: string;
+}
+
+/**
  * VO2max session creation data
  */
 export interface VO2maxSessionData {
@@ -226,7 +249,7 @@ export function createVO2maxSession(data: VO2maxSessionData): number {
  * @param filters - Filter options
  * @returns Array of VO2max sessions with workout and user data
  */
-export function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSession[] {
+export function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSessionWithDetails[] {
   const { user_id, start_date, end_date, protocol_type, limit = 50, offset = 0 } = filters;
 
   // Enforce maximum limit of 200
@@ -268,7 +291,7 @@ export function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSession[
   query += ` ORDER BY w.date DESC LIMIT ? OFFSET ?`;
   params.push(effectiveLimit, offset);
 
-  const sessions = db.prepare(query).all(...params);
+  const sessions = db.prepare(query).all(...params) as VO2maxSessionWithDetails[];
 
   return sessions;
 }
@@ -334,7 +357,7 @@ export function getVO2maxProgression(
  * @param userId - User ID (for ownership validation)
  * @returns VO2max session or null if not found
  */
-export function getVO2maxSessionById(sessionId: number, userId: number): VO2maxSession | null {
+export function getVO2maxSessionById(sessionId: number, userId: number): VO2maxSessionWithDetails | null {
   const session = db
     .prepare(
       `
@@ -348,7 +371,7 @@ export function getVO2maxSessionById(sessionId: number, userId: number): VO2maxS
       WHERE v.id = ? AND w.user_id = ?
     `
     )
-    .get(sessionId, userId);
+    .get(sessionId, userId) as VO2maxSessionWithDetails | undefined;
 
   return session || null;
 }

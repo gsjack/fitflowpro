@@ -101,7 +101,7 @@ tap.test('POST /api/workouts - Create workout session', async (t) => {
     );
 
     if (response.status === 201) {
-      const data = await response.json();
+      const data = await response.json() as any;
 
       // Validate response schema matches Workout object from OpenAPI spec
       t.ok(data.id, 'Response should include workout id');
@@ -121,10 +121,10 @@ tap.test('POST /api/workouts - Create workout session', async (t) => {
       );
 
       // Optional fields (may be null initially)
-      t.type(data.started_at, ['number', 'null'], 'started_at should be integer or null');
-      t.type(data.completed_at, ['number', 'null'], 'completed_at should be integer or null');
-      t.type(data.total_volume_kg, ['number', 'null'], 'total_volume_kg should be number or null');
-      t.type(data.average_rir, ['number', 'null'], 'average_rir should be number or null');
+      t.type(data.started_at, 'number', 'started_at should be integer or null');
+      t.type(data.completed_at, 'number', 'completed_at should be integer or null');
+      t.type(data.total_volume_kg, 'number', 'total_volume_kg should be number or null');
+      t.type(data.average_rir, 'number', 'average_rir should be number or null');
     }
   });
 });

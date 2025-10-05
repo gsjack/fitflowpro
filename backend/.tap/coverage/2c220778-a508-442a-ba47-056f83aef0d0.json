@@ -1,0 +1,889 @@
+{
+  "result": [
+    {
+      "scriptId": "324",
+      "url": "file:///home/asigator/fitness2025/backend/src/database/db.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 28100,
+              "count": 1
+            },
+            {
+              "startOffset": 450,
+              "endOffset": 498,
+              "count": 0
+            },
+            {
+              "startOffset": 593,
+              "endOffset": 606,
+              "count": 0
+            },
+            {
+              "startOffset": 1192,
+              "endOffset": 1219,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "initializeSchema",
+          "ranges": [
+            {
+              "startOffset": 784,
+              "endOffset": 917,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "isInitialized",
+          "ranges": [
+            {
+              "startOffset": 941,
+              "endOffset": 1168,
+              "count": 1
+            },
+            {
+              "startOffset": 1131,
+              "endOffset": 1166,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "calculateOneRepMax",
+          "ranges": [
+            {
+              "startOffset": 6163,
+              "endOffset": 6234,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "calculateVolumeAdjustment",
+          "ranges": [
+            {
+              "startOffset": 6277,
+              "endOffset": 6481,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "executeWithTiming",
+          "ranges": [
+            {
+              "startOffset": 6516,
+              "endOffset": 6775,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "transaction",
+          "ranges": [
+            {
+              "startOffset": 6804,
+              "endOffset": 6848,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "batchInsert",
+          "ranges": [
+            {
+              "startOffset": 6877,
+              "endOffset": 7049,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "closeDatabase",
+          "ranges": [
+            {
+              "startOffset": 7080,
+              "endOffset": 7152,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7173,
+              "endOffset": 7203,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7227,
+              "endOffset": 7278,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 7303,
+              "endOffset": 7354,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "325",
+      "url": "file:///home/asigator/fitness2025/backend/src/services/vo2maxService.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 27160,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "estimateVO2max",
+          "ranges": [
+            {
+              "startOffset": 47,
+              "endOffset": 244,
+              "count": 13
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "validateSessionData",
+          "ranges": [
+            {
+              "startOffset": 245,
+              "endOffset": 1984,
+              "count": 21
+            },
+            {
+              "startOffset": 317,
+              "endOffset": 347,
+              "count": 20
+            },
+            {
+              "startOffset": 349,
+              "endOffset": 428,
+              "count": 2
+            },
+            {
+              "startOffset": 428,
+              "endOffset": 475,
+              "count": 19
+            },
+            {
+              "startOffset": 475,
+              "endOffset": 510,
+              "count": 10
+            },
+            {
+              "startOffset": 512,
+              "endOffset": 688,
+              "count": 10
+            },
+            {
+              "startOffset": 555,
+              "endOffset": 587,
+              "count": 9
+            },
+            {
+              "startOffset": 589,
+              "endOffset": 682,
+              "count": 2
+            },
+            {
+              "startOffset": 688,
+              "endOffset": 732,
+              "count": 17
+            },
+            {
+              "startOffset": 732,
+              "endOffset": 764,
+              "count": 5
+            },
+            {
+              "startOffset": 766,
+              "endOffset": 933,
+              "count": 5
+            },
+            {
+              "startOffset": 806,
+              "endOffset": 835,
+              "count": 4
+            },
+            {
+              "startOffset": 837,
+              "endOffset": 927,
+              "count": 2
+            },
+            {
+              "startOffset": 933,
+              "endOffset": 978,
+              "count": 15
+            },
+            {
+              "startOffset": 978,
+              "endOffset": 1011,
+              "count": 6
+            },
+            {
+              "startOffset": 1013,
+              "endOffset": 1195,
+              "count": 6
+            },
+            {
+              "startOffset": 1056,
+              "endOffset": 1087,
+              "count": 5
+            },
+            {
+              "startOffset": 1089,
+              "endOffset": 1189,
+              "count": 2
+            },
+            {
+              "startOffset": 1195,
+              "endOffset": 1244,
+              "count": 13
+            },
+            {
+              "startOffset": 1244,
+              "endOffset": 1743,
+              "count": 11
+            },
+            {
+              "startOffset": 1415,
+              "endOffset": 1510,
+              "count": 1
+            },
+            {
+              "startOffset": 1520,
+              "endOffset": 1589,
+              "count": 10
+            },
+            {
+              "startOffset": 1591,
+              "endOffset": 1737,
+              "count": 0
+            },
+            {
+              "startOffset": 1743,
+              "endOffset": 1982,
+              "count": 2
+            },
+            {
+              "startOffset": 1831,
+              "endOffset": 1976,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "createVO2maxSession",
+          "ranges": [
+            {
+              "startOffset": 1992,
+              "endOffset": 3558,
+              "count": 21
+            },
+            {
+              "startOffset": 2120,
+              "endOffset": 2127,
+              "count": 10
+            },
+            {
+              "startOffset": 2128,
+              "endOffset": 2137,
+              "count": 2
+            },
+            {
+              "startOffset": 2282,
+              "endOffset": 2322,
+              "count": 8
+            },
+            {
+              "startOffset": 2324,
+              "endOffset": 2829,
+              "count": 7
+            },
+            {
+              "startOffset": 2712,
+              "endOffset": 2823,
+              "count": 0
+            },
+            {
+              "startOffset": 2829,
+              "endOffset": 3168,
+              "count": 12
+            },
+            {
+              "startOffset": 3168,
+              "endOffset": 3175,
+              "count": 2
+            },
+            {
+              "startOffset": 3201,
+              "endOffset": 3208,
+              "count": 4
+            },
+            {
+              "startOffset": 3231,
+              "endOffset": 3238,
+              "count": 9
+            },
+            {
+              "startOffset": 3256,
+              "endOffset": 3263,
+              "count": 1
+            },
+            {
+              "startOffset": 3509,
+              "endOffset": 3518,
+              "count": 11
+            },
+            {
+              "startOffset": 3522,
+              "endOffset": 3530,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getVO2maxSessions",
+          "ranges": [
+            {
+              "startOffset": 3566,
+              "endOffset": 4511,
+              "count": 7
+            },
+            {
+              "startOffset": 3982,
+              "endOffset": 4059,
+              "count": 2
+            },
+            {
+              "startOffset": 4078,
+              "endOffset": 4153,
+              "count": 2
+            },
+            {
+              "startOffset": 4177,
+              "endOffset": 4337,
+              "count": 2
+            },
+            {
+              "startOffset": 4240,
+              "endOffset": 4247,
+              "count": 1
+            },
+            {
+              "startOffset": 4248,
+              "endOffset": 4257,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getVO2maxProgression",
+          "ranges": [
+            {
+              "startOffset": 4519,
+              "endOffset": 5262,
+              "count": 4
+            },
+            {
+              "startOffset": 4853,
+              "endOffset": 4929,
+              "count": 2
+            },
+            {
+              "startOffset": 4947,
+              "endOffset": 5021,
+              "count": 2
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 5136,
+              "endOffset": 5258,
+              "count": 8
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getVO2maxSessionById",
+          "ranges": [
+            {
+              "startOffset": 5270,
+              "endOffset": 5623,
+              "count": 3
+            },
+            {
+              "startOffset": 5613,
+              "endOffset": 5620,
+              "count": 2
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    }
+  ],
+  "timestamp": 38988.302331,
+  "source-map-cache": {
+    "file:///home/asigator/fitness2025/backend/src/database/db.ts": {
+      "lineLengths": [
+        38,
+        57,
+        37,
+        36,
+        50,
+        38,
+        57,
+        69,
+        33,
+        27,
+        44,
+        1,
+        41,
+        78,
+        3,
+        32,
+        33,
+        35,
+        31,
+        32,
+        54,
+        20,
+        47,
+        2,
+        29,
+        9,
+        25,
+        90,
+        19,
+        24,
+        5,
+        11,
+        21,
+        5,
+        2,
+        23,
+        23,
+        1,
+        90,
+        78,
+        42,
+        103,
+        30,
+        3,
+        75,
+        45,
+        70,
+        36,
+        3,
+        49,
+        38,
+        17,
+        55,
+        21,
+        22,
+        3,
+        58,
+        38,
+        17,
+        55,
+        53,
+        22,
+        3,
+        51,
+        17,
+        88,
+        14,
+        3,
+        55,
+        17,
+        24,
+        14,
+        3,
+        46,
+        37,
+        3,
+        59,
+        14,
+        22,
+        41,
+        35,
+        3,
+        38,
+        104,
+        36,
+        3,
+        48,
+        37,
+        13,
+        42,
+        24,
+        23,
+        3,
+        47,
+        52,
+        3,
+        47,
+        45,
+        3,
+        45,
+        41,
+        3,
+        56,
+        36,
+        69,
+        53,
+        3,
+        36,
+        3,
+        59,
+        36,
+        32,
+        3,
+        51,
+        31,
+        64,
+        49,
+        3,
+        33,
+        3,
+        57,
+        52,
+        3,
+        46,
+        8,
+        11,
+        69,
+        13,
+        40,
+        75,
+        17,
+        17,
+        3,
+        44,
+        8,
+        38,
+        29,
+        13,
+        40,
+        42,
+        21,
+        35,
+        44,
+        15,
+        15,
+        3,
+        50,
+        8,
+        75,
+        31,
+        102,
+        15,
+        19,
+        3,
+        48,
+        49,
+        3,
+        51,
+        42,
+        84,
+        3,
+        27,
+        3,
+        51,
+        24,
+        65,
+        19,
+        3,
+        51,
+        47,
+        3,
+        46,
+        78,
+        24,
+        3,
+        50,
+        26,
+        19,
+        25,
+        9,
+        3,
+        58,
+        44,
+        2,
+        58,
+        25,
+        22,
+        24,
+        30,
+        24,
+        31,
+        22,
+        2,
+        48,
+        29,
+        24,
+        40,
+        23,
+        96,
+        5,
+        18,
+        2,
+        36,
+        32,
+        2,
+        47,
+        46,
+        35,
+        27,
+        9,
+        7,
+        20,
+        2,
+        36,
+        15,
+        46,
+        2,
+        26,
+        20,
+        3,
+        28,
+        20,
+        20,
+        3,
+        29,
+        20,
+        20,
+        3,
+        18,
+        20724
+      ],
+      "data": {
+        "version": 3,
+        "file": "/home/asigator/fitness2025/backend/src/database/db.ts",
+        "sources": [
+          "file:///home/asigator/fitness2025/backend/src/database/db.ts"
+        ],
+        "names": [],
+        "mappings": "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",
+        "sourcesContent": [
+          "/**\n * Backend Database Initialization\n *\n * Initializes better-sqlite3 with performance optimizations:\n * - WAL mode for concurrent reads\n * - 64MB cache for query performance\n * - 256MB memory-mapped I/O\n * - Prepared statements for common queries\n */\n\nimport Database, { Statement } from 'better-sqlite3';\nimport { readFileSync, mkdirSync, existsSync } from 'fs';\nimport { join, dirname } from 'path';\nimport { fileURLToPath } from 'url';\n\n// Get the directory of this module file\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = dirname(__filename);\n\n// Database file path - from dist/database to backend root\nconst DB_PATH = join(__dirname, '../../data/fitflow.db');\nconst SCHEMA_PATH = join(__dirname, '../../src/database/schema.sql');\n\n// Ensure data directory exists\nconst dataDir = dirname(DB_PATH);\nif (!existsSync(dataDir)) {\n  mkdirSync(dataDir, { recursive: true });\n}\n\n// Initialize database\nexport const db: Database.Database = new Database(DB_PATH, {\n  verbose: process.env.NODE_ENV === 'development' ? console.log : undefined,\n});\n\n// Apply performance optimizations\ndb.pragma('journal_mode = WAL');\ndb.pragma('cache_size = -64000'); // 64MB cache\ndb.pragma('mmap_size = 268435456'); // 256MB memory-mapped I/O\ndb.pragma('foreign_keys = ON');\n\n// Initialize schema on first run\nconst initializeSchema = (): void => {\n  const schema = readFileSync(SCHEMA_PATH, 'utf-8');\n  db.exec(schema);\n  console.log('Database schema initialized');\n};\n\n// Check if database is initialized (check for users table)\nconst isInitialized = (): boolean => {\n  try {\n    const result = db\n      .prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name='users'\")\n      .get();\n    return !!result;\n  } catch {\n    return false;\n  }\n};\n\n// Initialize if needed\nif (!isInitialized()) {\n  initializeSchema();\n}\n\n// ============================================================================\n// Prepared Statements (Common Queries)\n// ============================================================================\n\n// User Operations\nexport const stmtGetUserByUsername: Statement = db.prepare(\n  'SELECT * FROM users WHERE username = ?'\n);\n\nexport const stmtGetUserById: Statement = db.prepare('SELECT * FROM users WHERE id = ?');\n\nexport const stmtCreateUser: Statement = db.prepare(`\n  INSERT INTO users (username, password_hash, age, weight_kg, experience_level, created_at, updated_at)\n  VALUES (?, ?, ?, ?, ?, ?, ?)\n`);\n\nexport const stmtDeleteUser: Statement = db.prepare('DELETE FROM users WHERE id = ?');\n\n// Workout Operations\nexport const stmtCreateWorkout: Statement = db.prepare(`\n  INSERT INTO workouts (user_id, program_day_id, date, status, synced)\n  VALUES (?, ?, ?, 'not_started', 1)\n`);\n\nexport const stmtGetWorkoutsByUser: Statement = db.prepare(`\n  SELECT w.*, pd.day_name, pd.day_type\n  FROM workouts w\n  LEFT JOIN program_days pd ON w.program_day_id = pd.id\n  WHERE w.user_id = ?\n  ORDER BY w.date DESC\n`);\n\nexport const stmtGetWorkoutsByUserDateRange: Statement = db.prepare(`\n  SELECT w.*, pd.day_name, pd.day_type\n  FROM workouts w\n  LEFT JOIN program_days pd ON w.program_day_id = pd.id\n  WHERE w.user_id = ? AND w.date >= ? AND w.date <= ?\n  ORDER BY w.date DESC\n`);\n\nexport const stmtUpdateWorkoutStatus: Statement = db.prepare(`\n  UPDATE workouts\n  SET status = ?, started_at = ?, completed_at = ?, total_volume_kg = ?, average_rir = ?\n  WHERE id = ?\n`);\n\nexport const stmtUpdateWorkoutProgramDay: Statement = db.prepare(`\n  UPDATE workouts\n  SET program_day_id = ?\n  WHERE id = ?\n`);\n\nexport const stmtGetWorkoutById: Statement = db.prepare(`\n  SELECT * FROM workouts WHERE id = ?\n`);\n\nexport const stmtValidateProgramDayOwnership: Statement = db.prepare(`\n  SELECT pd.id\n  FROM program_days pd\n  JOIN programs p ON pd.program_id = p.id\n  WHERE pd.id = ? AND p.user_id = ?\n`);\n\n// Set Operations\nexport const stmtLogSet: Statement = db.prepare(`\n  INSERT INTO sets (workout_id, exercise_id, set_number, weight_kg, reps, rir, timestamp, notes, synced)\n  VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetSetsByWorkout: Statement = db.prepare(`\n  SELECT s.*, e.name as exercise_name\n  FROM sets s\n  JOIN exercises e ON s.exercise_id = e.id\n  WHERE s.workout_id = ?\n  ORDER BY s.set_number\n`);\n\nexport const stmtGetSetByLocalId: Statement = db.prepare(`\n  SELECT * FROM sets WHERE id = ? AND workout_id = ?\n`);\n\nexport const stmtGetUnsyncedSets: Statement = db.prepare(`\n  SELECT * FROM sets WHERE synced = 0 LIMIT ?\n`);\n\nexport const stmtMarkSetSynced: Statement = db.prepare(`\n  UPDATE sets SET synced = 1 WHERE id = ?\n`);\n\n// Recovery Assessment Operations\nexport const stmtCreateRecoveryAssessment: Statement = db.prepare(`\n  INSERT INTO recovery_assessments (\n    user_id, date, sleep_quality, muscle_soreness, mental_motivation,\n    total_score, volume_adjustment, timestamp, synced\n  )\n  VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetRecoveryAssessmentByDate: Statement = db.prepare(`\n  SELECT * FROM recovery_assessments\n  WHERE user_id = ? AND date = ?\n`);\n\n// VO2max Session Operations\nexport const stmtCreateVO2maxSession: Statement = db.prepare(`\n  INSERT INTO vo2max_sessions (\n    workout_id, protocol, duration_seconds, intervals_completed,\n    average_hr, peak_hr, estimated_vo2max, synced\n  )\n  VALUES (?, ?, ?, ?, ?, ?, ?, 1)\n`);\n\nexport const stmtGetVO2maxSessionByWorkout: Statement = db.prepare(`\n  SELECT * FROM vo2max_sessions WHERE workout_id = ?\n`);\n\n// Analytics Queries\nexport const stmt1RMProgression: Statement = db.prepare(`\n  SELECT\n    w.date,\n    MAX(s.weight_kg * (1 + (s.reps - s.rir) / 30.0)) as estimated_1rm\n  FROM sets s\n  JOIN workouts w ON s.workout_id = w.id\n  WHERE w.user_id = ? AND s.exercise_id = ? AND w.date >= ? AND w.date <= ?\n  GROUP BY w.date\n  ORDER BY w.date\n`);\n\nexport const stmtVolumeTrends: Statement = db.prepare(`\n  SELECT\n    strftime('%Y-%W', w.date) as week,\n    COUNT(s.id) as total_sets\n  FROM sets s\n  JOIN workouts w ON s.workout_id = w.id\n  JOIN exercises e ON s.exercise_id = e.id\n  WHERE w.user_id = ?\n    AND w.date >= ? AND w.date <= ?\n    AND e.muscle_groups LIKE '%' || ? || '%'\n  GROUP BY week\n  ORDER BY week\n`);\n\nexport const stmtConsistencyMetrics: Statement = db.prepare(`\n  SELECT\n    COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_workouts,\n    COUNT(*) as total_workouts,\n    AVG(CASE WHEN completed_at IS NOT NULL THEN completed_at - started_at END) as avg_session_duration\n  FROM workouts\n  WHERE user_id = ?\n`);\n\n// Active Session Operations\nexport const stmtGetActiveSession: Statement = db.prepare(`\n  SELECT * FROM active_sessions WHERE user_id = ?\n`);\n\nexport const stmtCreateActiveSession: Statement = db.prepare(`\n  INSERT OR REPLACE INTO active_sessions (\n    user_id, workout_id, current_exercise_index, started_at, last_activity_at, state\n  )\n  VALUES (?, ?, ?, ?, ?, ?)\n`);\n\nexport const stmtUpdateActiveSession: Statement = db.prepare(`\n  UPDATE active_sessions\n  SET current_exercise_index = ?, last_activity_at = ?, state = ?\n  WHERE user_id = ?\n`);\n\nexport const stmtDeleteActiveSession: Statement = db.prepare(`\n  DELETE FROM active_sessions WHERE user_id = ?\n`);\n\n// Audit Log Operations\nexport const stmtCreateAuditLog: Statement = db.prepare(`\n  INSERT INTO audit_logs (user_id, event_type, ip_address, timestamp, details)\n  VALUES (?, ?, ?, ?, ?)\n`);\n\nexport const stmtGetAuditLogsByUser: Statement = db.prepare(`\n  SELECT * FROM audit_logs\n  WHERE user_id = ?\n  ORDER BY timestamp DESC\n  LIMIT ?\n`);\n\n// ============================================================================\n// Helper Functions\n// ============================================================================\n\n/**\n * Calculate estimated 1RM using Epley formula with RIR adjustment\n * Formula: 1RM = weight × (1 + (reps - rir) / 30)\n */\nexport const calculateOneRepMax = (weight: number, reps: number, rir: number): number => {\n  return weight * (1 + (reps - rir) / 30);\n};\n\n/**\n * Calculate recovery score auto-regulation adjustment\n * Ranges: 12-15 = none, 9-11 = reduce_1_set, 6-8 = reduce_2_sets, 3-5 = rest_day\n */\nexport const calculateVolumeAdjustment = (\n  totalScore: number\n): 'none' | 'reduce_1_set' | 'reduce_2_sets' | 'rest_day' => {\n  if (totalScore >= 12) return 'none';\n  if (totalScore >= 9) return 'reduce_1_set';\n  if (totalScore >= 6) return 'reduce_2_sets';\n  return 'rest_day';\n};\n\n/**\n * Execute query with performance timing\n */\nexport const executeWithTiming = <T>(name: string, fn: () => T): T => {\n  const start = Date.now();\n  const result = fn();\n  const duration = Date.now() - start;\n\n  if (duration > 5) {\n    console.warn(`[PERFORMANCE WARNING] Query \"${name}\" took ${duration}ms (target: <5ms)`);\n  }\n\n  return result;\n};\n\n// ============================================================================\n// Transaction Helpers\n// ============================================================================\n\n/**\n * Execute function within transaction\n */\nexport const transaction = <T>(fn: () => T): T => {\n  return db.transaction(fn)();\n};\n\n/**\n * Batch insert with transaction\n */\nexport const batchInsert = <T>(stmt: Database.Statement, records: T[]): void => {\n  const insert = db.transaction((items: T[]) => {\n    for (const item of items) {\n      stmt.run(item);\n    }\n  });\n\n  insert(records);\n};\n\n// ============================================================================\n// Cleanup\n// ============================================================================\n\n/**\n * Close database connection\n */\nexport const closeDatabase = (): void => {\n  db.close();\n  console.log('Database connection closed');\n};\n\n// Handle process termination\nprocess.on('exit', () => {\n  closeDatabase();\n});\n\nprocess.on('SIGINT', () => {\n  closeDatabase();\n  process.exit(0);\n});\n\nprocess.on('SIGTERM', () => {\n  closeDatabase();\n  process.exit(0);\n});\n\nexport default db;\n"
+        ],
+        "sourceRoot": ""
+      }
+    },
+    "file:///home/asigator/fitness2025/backend/src/services/vo2maxService.ts": {
+      "lineLengths": [
+        39,
+        49,
+        28,
+        25,
+        46,
+        50,
+        1,
+        36,
+        68,
+        71,
+        5,
+        84,
+        76,
+        81,
+        9,
+        5,
+        78,
+        70,
+        78,
+        9,
+        5,
+        80,
+        75,
+        88,
+        9,
+        5,
+        49,
+        90,
+        79,
+        79,
+        13,
+        9,
+        71,
+        134,
+        9,
+        5,
+        46,
+        41,
+        133,
+        9,
+        5,
+        1,
+        43,
+        30,
+        78,
+        55,
+        48,
+        81,
+        92,
+        31,
+        80,
+        101,
+        68,
+        9,
+        14,
+        85,
+        9,
+        5,
+        21,
+        47,
+        68,
+        65,
+        7,
+        42,
+        191,
+        45,
+        91,
+        118,
+        21,
+        1,
+        44,
+        93,
+        48,
+        17,
+        10,
+        10,
+        13,
+        16,
+        14,
+        26,
+        42,
+        23,
+        4,
+        29,
+        21,
+        36,
+        32,
+        5,
+        19,
+        36,
+        30,
+        5,
+        24,
+        79,
+        39,
+        32,
+        5,
+        54,
+        40,
+        54,
+        20,
+        1,
+        66,
+        17,
+        10,
+        13,
+        25,
+        16,
+        26,
+        42,
+        23,
+        40,
+        4,
+        28,
+        20,
+        36,
+        31,
+        5,
+        18,
+        36,
+        29,
+        5,
+        36,
+        53,
+        34,
+        23,
+        47,
+        31,
+        8,
+        1,
+        57,
+        22,
+        18,
+        12,
+        12,
+        15,
+        18,
+        16,
+        28,
+        44,
+        38,
+        6,
+        32,
+        27,
+        1,
+        21536
+      ],
+      "data": {
+        "version": 3,
+        "file": "/home/asigator/fitness2025/backend/src/services/vo2maxService.ts",
+        "sources": [
+          "file:///home/asigator/fitness2025/backend/src/services/vo2maxService.ts"
+        ],
+        "names": [],
+        "mappings": "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",
+        "sourcesContent": [
+          "/**\n * VO2max Service\n *\n * Business logic for cardio session tracking with Norwegian 4x4 protocol:\n * - Creating VO2max sessions with Cooper formula estimation\n * - Filtering sessions by date range and protocol\n * - Tracking VO2max progression over time\n */\n\nimport { db } from '../database/db.js';\n\n/**\n * VO2max session interface matching database schema\n */\nexport interface VO2maxSession {\n  id: number;\n  workout_id: number;\n  protocol: '4x4' | 'zone2';\n  duration_seconds: number;\n  intervals_completed: number | null;\n  average_hr: number | null;\n  peak_hr: number | null;\n  estimated_vo2max: number | null;\n  synced: number;\n}\n\n/**\n * Extended VO2max session with workout details (for queries with JOIN)\n */\nexport interface VO2maxSessionWithDetails {\n  id: number;\n  workout_id: number;\n  protocol: string;\n  duration_seconds: number;\n  intervals_completed: number | null;\n  average_hr: number | null;\n  peak_hr: number | null;\n  estimated_vo2max: number | null;\n  synced: number;\n  rpe: number | null;\n  notes: string | null;\n  completion_status: string | null;\n  created_at: number;\n  // From workout join\n  user_id: number;\n  date: string;\n  status?: string;\n}\n\n/**\n * VO2max session creation data\n */\nexport interface VO2maxSessionData {\n  workout_id: number;\n  user_id: number; // For age lookup in Cooper formula\n  protocol_type: 'norwegian_4x4' | 'zone2';\n  duration_minutes: number;\n  intervals_completed?: number;\n  average_heart_rate?: number;\n  peak_heart_rate?: number;\n  estimated_vo2max?: number; // Optional - will be calculated if not provided\n}\n\n/**\n * VO2max session filter options\n */\nexport interface VO2maxSessionFilters {\n  user_id: number;\n  start_date?: string;\n  end_date?: string;\n  protocol_type?: 'norwegian_4x4' | 'zone2';\n  limit?: number;\n  offset?: number;\n}\n\n/**\n * VO2max progression data point\n */\nexport interface VO2maxProgressionPoint {\n  date: string;\n  estimated_vo2max: number;\n  protocol: string;\n}\n\n/**\n * Estimate VO2max using Cooper Formula\n *\n * Cooper Formula: VO2max = 15.3 × (max_hr / resting_hr)\n *\n * This is a simplified estimation that uses maximum heart rate (220 - age)\n * and assumes a standard resting heart rate of 60 bpm.\n *\n * @param age - User's age in years\n * @param averageHR - Average heart rate during session (optional, not used in Cooper formula)\n * @returns Estimated VO2max in ml/kg/min, clamped to physiological range 20-80\n */\nexport function estimateVO2max(age: number, _averageHR?: number): number {\n  const maxHR = 220 - age;\n  const restingHR = 60; // Standard assumption\n\n  // Cooper Formula\n  const vo2max = 15.3 * (maxHR / restingHR);\n\n  // Clamp to physiological range: 20.0 - 80.0 ml/kg/min\n  return Math.max(20.0, Math.min(80.0, vo2max));\n}\n\n/**\n * Validate VO2max session input data\n *\n * Enforces physiological constraints per Migration 003:\n * - Duration: 10-120 minutes (600-7200 seconds)\n * - Heart rate: 60-220 bpm\n * - VO2max: 20-80 ml/kg/min\n * - Norwegian 4x4: 4 intervals max\n *\n * @param data - Session data to validate\n * @throws Error if validation fails\n */\nfunction validateSessionData(data: VO2maxSessionData): void {\n  // Validate duration (10-120 minutes)\n  if (data.duration_minutes < 10 || data.duration_minutes > 120) {\n    throw new Error('Duration must be between 10 and 120 minutes');\n  }\n\n  // Validate average heart rate if provided\n  if (data.average_heart_rate !== undefined && data.average_heart_rate !== null) {\n    if (data.average_heart_rate < 60 || data.average_heart_rate > 220) {\n      throw new Error('Average heart rate must be between 60 and 220 bpm');\n    }\n  }\n\n  // Validate peak heart rate if provided\n  if (data.peak_heart_rate !== undefined && data.peak_heart_rate !== null) {\n    if (data.peak_heart_rate < 60 || data.peak_heart_rate > 220) {\n      throw new Error('Peak heart rate must be between 60 and 220 bpm');\n    }\n  }\n\n  // Validate estimated VO2max if provided\n  if (data.estimated_vo2max !== undefined && data.estimated_vo2max !== null) {\n    if (data.estimated_vo2max < 20.0 || data.estimated_vo2max > 80.0) {\n      throw new Error('Estimated VO2max must be between 20.0 and 80.0 ml/kg/min');\n    }\n  }\n\n  // Validate Norwegian 4x4 intervals\n  if (data.protocol_type === 'norwegian_4x4') {\n    if (data.intervals_completed !== undefined && data.intervals_completed !== null) {\n      if (data.intervals_completed < 0 || data.intervals_completed > 4) {\n        throw new Error('Norwegian 4x4 protocol allows 0-4 intervals');\n      }\n    }\n\n    // Norwegian 4x4 should be 28-32 minutes (4 × [4min work + 3min rest])\n    // Allow some flexibility but warn if duration is unusual\n    if (data.duration_minutes < 20 || data.duration_minutes > 40) {\n      console.warn(\n        `[VO2max] Norwegian 4x4 duration ${data.duration_minutes} minutes is outside typical range (28-32 minutes)`\n      );\n    }\n  } else if (data.protocol_type === 'zone2') {\n    // Zone 2 should be continuous, 45-120 minutes\n    if (data.duration_minutes < 30) {\n      console.warn(\n        `[VO2max] Zone 2 duration ${data.duration_minutes} minutes is shorter than typical range (45-120 minutes)`\n      );\n    }\n  }\n}\n\n/**\n * Create a new VO2max session with automatic VO2max estimation\n *\n * If estimated_vo2max is not provided and average_heart_rate is available,\n * the service will auto-calculate estimated_vo2max using the Cooper formula.\n *\n * @param data - VO2max session creation data\n * @returns The created VO2max session ID\n */\nexport function createVO2maxSession(data: VO2maxSessionData): number {\n  // Validate input data\n  validateSessionData(data);\n\n  // Convert protocol type to database format\n  const protocol: '4x4' | 'zone2' = data.protocol_type === 'norwegian_4x4' ? '4x4' : 'zone2';\n\n  // Convert duration from minutes to seconds\n  const durationSeconds = data.duration_minutes * 60;\n\n  // Auto-calculate estimated_vo2max if not provided and HR available\n  let estimatedVO2max = data.estimated_vo2max;\n\n  if (estimatedVO2max === undefined && data.average_heart_rate !== undefined) {\n    // Get user's age for Cooper formula\n    const user = db.prepare('SELECT id, age FROM users WHERE id = ?').get(data.user_id) as\n      | { id: number; age: number }\n      | undefined;\n\n    if (user && user.age) {\n      estimatedVO2max = estimateVO2max(user.age, data.average_heart_rate);\n      console.log(\n        `[VO2max] Auto-calculated VO2max: ${estimatedVO2max.toFixed(1)} ml/kg/min ` +\n          `(age=${user.age}, HR=${data.average_heart_rate})`\n      );\n    } else {\n      console.warn(`[VO2max] Cannot calculate VO2max: user age not available`);\n    }\n  }\n\n  // Insert VO2max session\n  const result = db\n    .prepare(\n      `INSERT INTO vo2max_sessions (\n        workout_id, protocol, duration_seconds, intervals_completed,\n        average_hr, peak_hr, estimated_vo2max, synced, created_at\n      )\n      VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)`\n    )\n    .run(\n      data.workout_id,\n      protocol,\n      durationSeconds,\n      data.intervals_completed ?? null,\n      data.average_heart_rate ?? null,\n      data.peak_heart_rate ?? null,\n      estimatedVO2max ?? null,\n      Date.now()\n    );\n\n  const sessionId = result.lastInsertRowid as number;\n\n  console.log(\n    `[VO2max] Session created: id=${sessionId}, workout=${data.workout_id}, ` +\n      `protocol=${protocol}, duration=${data.duration_minutes}min, VO2max=${estimatedVO2max?.toFixed(1) ?? 'N/A'}`\n  );\n\n  return sessionId;\n}\n\n/**\n * Get VO2max sessions with optional filtering\n *\n * Supports filtering by:\n * - Date range (start_date, end_date)\n * - Protocol type (norwegian_4x4, zone2)\n * - Pagination (limit, offset)\n *\n * @param filters - Filter options\n * @returns Array of VO2max sessions with workout and user data\n */\nexport function getVO2maxSessions(filters: VO2maxSessionFilters): VO2maxSessionWithDetails[] {\n  const { user_id, start_date, end_date, protocol_type, limit = 50, offset = 0 } = filters;\n\n  // Enforce maximum limit of 200\n  const effectiveLimit = Math.min(limit, 200);\n\n  // Build query with filters\n  let query = `\n    SELECT\n      v.*,\n      w.date,\n      w.user_id,\n      w.status\n    FROM vo2max_sessions v\n    JOIN workouts w ON v.workout_id = w.id\n    WHERE w.user_id = ?\n  `;\n\n  const params: (string | number)[] = [user_id];\n\n  // Add date range filters\n  if (start_date) {\n    query += ` AND w.date >= ?`;\n    params.push(start_date);\n  }\n\n  if (end_date) {\n    query += ` AND w.date <= ?`;\n    params.push(end_date);\n  }\n\n  // Add protocol filter (convert to database format)\n  if (protocol_type) {\n    const dbProtocol = protocol_type === 'norwegian_4x4' ? '4x4' : 'zone2';\n    query += ` AND v.protocol = ?`;\n    params.push(dbProtocol);\n  }\n\n  // Add ordering and pagination\n  query += ` ORDER BY w.date DESC LIMIT ? OFFSET ?`;\n  params.push(effectiveLimit, offset);\n\n  const sessions = db.prepare(query).all(...params) as VO2maxSessionWithDetails[];\n\n  return sessions;\n}\n\n/**\n * Get VO2max progression over time for a user\n *\n * Returns all VO2max estimates ordered by date, allowing tracking\n * of cardiovascular fitness improvements.\n *\n * @param userId - User ID\n * @param startDate - Optional start date filter (YYYY-MM-DD)\n * @param endDate - Optional end date filter (YYYY-MM-DD)\n * @returns Array of progression data points\n */\nexport function getVO2maxProgression(\n  userId: number,\n  startDate?: string,\n  endDate?: string\n): VO2maxProgressionPoint[] {\n  let query = `\n    SELECT\n      w.date,\n      v.estimated_vo2max,\n      v.protocol\n    FROM vo2max_sessions v\n    JOIN workouts w ON v.workout_id = w.id\n    WHERE w.user_id = ?\n      AND v.estimated_vo2max IS NOT NULL\n  `;\n\n  const params: (string | number)[] = [userId];\n\n  if (startDate) {\n    query += ` AND w.date >= ?`;\n    params.push(startDate);\n  }\n\n  if (endDate) {\n    query += ` AND w.date <= ?`;\n    params.push(endDate);\n  }\n\n  query += ` ORDER BY w.date ASC`;\n\n  const results = db.prepare(query).all(...params) as Array<{\n    date: string;\n    estimated_vo2max: number;\n    protocol: string;\n  }>;\n\n  return results.map((row) => ({\n    date: row.date,\n    estimated_vo2max: row.estimated_vo2max,\n    protocol: row.protocol,\n  }));\n}\n\n/**\n * Get a single VO2max session by ID\n *\n * @param sessionId - VO2max session ID\n * @param userId - User ID (for ownership validation)\n * @returns VO2max session or null if not found\n */\nexport function getVO2maxSessionById(sessionId: number, userId: number): VO2maxSessionWithDetails | null {\n  const session = db\n    .prepare(\n      `\n      SELECT\n        v.*,\n        w.date,\n        w.user_id,\n        w.status\n      FROM vo2max_sessions v\n      JOIN workouts w ON v.workout_id = w.id\n      WHERE v.id = ? AND w.user_id = ?\n    `\n    )\n    .get(sessionId, userId) as VO2maxSessionWithDetails | undefined;\n\n  return session || null;\n}\n"
+        ],
+        "sourceRoot": ""
+      }
+    }
+  }
+}

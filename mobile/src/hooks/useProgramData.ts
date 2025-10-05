@@ -7,10 +7,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getUserProgram, Program } from '../services/api/programApi';
-import {
-  getProgramVolumeAnalysis,
-  ProgramVolumeAnalysis,
-} from '../services/api/analyticsApi';
+import { getProgramVolumeAnalysis, ProgramVolumeAnalysis } from '../services/api/analyticsApi';
 import {
   swapExercise as swapExerciseApi,
   reorderExercises as reorderExercisesApi,
@@ -31,18 +28,13 @@ export interface UseProgramDataReturn {
     programExerciseId: number,
     newExerciseId: number
   ) => Promise<ProgramExerciseResponse>;
-  reorderExercises: (
-    programDayId: number,
-    newOrder: ReorderItem[]
-  ) => Promise<void>;
+  reorderExercises: (programDayId: number, newOrder: ReorderItem[]) => Promise<void>;
   updateExercise: (
     programExerciseId: number,
     updates: UpdateProgramExerciseRequest
   ) => Promise<ProgramExerciseResponse>;
   deleteExercise: (programExerciseId: number) => Promise<void>;
-  addExercise: (
-    request: CreateProgramExerciseRequest
-  ) => Promise<ProgramExerciseResponse>;
+  addExercise: (request: CreateProgramExerciseRequest) => Promise<ProgramExerciseResponse>;
 }
 
 export function useProgramData(): UseProgramDataReturn {
@@ -64,13 +56,8 @@ export function useProgramData(): UseProgramDataReturn {
 
   // Mutation: Reorder exercises
   const reorderMutation = useMutation({
-    mutationFn: ({
-      programDayId,
-      newOrder,
-    }: {
-      programDayId: number;
-      newOrder: ReorderItem[];
-    }) => reorderExercisesApi(programDayId, newOrder),
+    mutationFn: ({ programDayId, newOrder }: { programDayId: number; newOrder: ReorderItem[] }) =>
+      reorderExercisesApi(programDayId, newOrder),
     onMutate: async ({ programDayId, newOrder }) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: ['program'] });
@@ -91,11 +78,11 @@ export function useProgramData(): UseProgramDataReturn {
               // Reorder exercises based on newOrder
               const reorderedExercises = [...day.exercises].sort((a, b) => {
                 const aOrder =
-                  newOrder.find((item) => item.program_exercise_id === a.id)
-                    ?.new_order_index ?? a.order_index;
+                  newOrder.find((item) => item.program_exercise_id === a.id)?.new_order_index ??
+                  a.order_index;
                 const bOrder =
-                  newOrder.find((item) => item.program_exercise_id === b.id)
-                    ?.new_order_index ?? b.order_index;
+                  newOrder.find((item) => item.program_exercise_id === b.id)?.new_order_index ??
+                  b.order_index;
                 return aOrder - bOrder;
               });
 
@@ -184,8 +171,7 @@ export function useProgramData(): UseProgramDataReturn {
                 return {
                   ...ex,
                   target_sets: updates.target_sets ?? ex.target_sets,
-                  target_rep_range:
-                    updates.target_rep_range ?? ex.target_rep_range,
+                  target_rep_range: updates.target_rep_range ?? ex.target_rep_range,
                   target_rir: updates.target_rir ?? ex.target_rir,
                 };
               }),
@@ -210,8 +196,7 @@ export function useProgramData(): UseProgramDataReturn {
 
   // Mutation: Delete exercise
   const deleteMutation = useMutation({
-    mutationFn: (programExerciseId: number) =>
-      deleteProgramExerciseApi(programExerciseId),
+    mutationFn: (programExerciseId: number) => deleteProgramExerciseApi(programExerciseId),
     onMutate: async (programExerciseId) => {
       await queryClient.cancelQueries({ queryKey: ['program'] });
       const previousProgram = queryClient.getQueryData<Program>(['program']);
@@ -225,9 +210,7 @@ export function useProgramData(): UseProgramDataReturn {
             ...old,
             program_days: old.program_days.map((day) => ({
               ...day,
-              exercises: day.exercises.filter(
-                (ex) => ex.id !== programExerciseId
-              ),
+              exercises: day.exercises.filter((ex) => ex.id !== programExerciseId),
             })),
           };
         });
@@ -248,8 +231,7 @@ export function useProgramData(): UseProgramDataReturn {
 
   // Mutation: Add exercise
   const addMutation = useMutation({
-    mutationFn: (request: CreateProgramExerciseRequest) =>
-      addProgramExerciseApi(request),
+    mutationFn: (request: CreateProgramExerciseRequest) => addProgramExerciseApi(request),
     onMutate: async (request) => {
       await queryClient.cancelQueries({ queryKey: ['program'] });
       const previousProgram = queryClient.getQueryData<Program>(['program']);
@@ -280,10 +262,7 @@ export function useProgramData(): UseProgramDataReturn {
     reorderExercises: async (programDayId: number, newOrder: ReorderItem[]) => {
       await reorderMutation.mutateAsync({ programDayId, newOrder });
     },
-    updateExercise: async (
-      programExerciseId: number,
-      updates: UpdateProgramExerciseRequest
-    ) => {
+    updateExercise: async (programExerciseId: number, updates: UpdateProgramExerciseRequest) => {
       return updateMutation.mutateAsync({ programExerciseId, updates });
     },
     deleteExercise: async (programExerciseId: number) => {

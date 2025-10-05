@@ -42,7 +42,7 @@ test('verify exercise names change during workout progression', async ({ page })
 
   // Check if there's a Start Workout or Resume Workout button
   console.log('Step 2: Looking for workout controls...');
-  const bodyText = await page.textContent('body');
+  const _bodyText = await page.textContent('body');
 
   let workoutStarted = false;
 

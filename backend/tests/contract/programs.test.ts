@@ -131,7 +131,7 @@ tap.test('Program Management Endpoints Contract Tests', async (t) => {
       // Note: In actual implementation, all users get a default program on registration.
       // This test validates the 404 behavior for edge cases where no program exists.
       // We skip this test as it's not applicable to the current design.
-      t.skip('All users get a default program on registration - 404 scenario not applicable');
+      t.skip();
     });
   });
 

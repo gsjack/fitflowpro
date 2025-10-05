@@ -11,7 +11,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import { Surface, Text, Button, ActivityIndicator, SegmentedButtons } from 'react-native-paper';
+import { Surface, Text, SegmentedButtons } from 'react-native-paper';
 import { Svg, Line, Circle, Polyline, Text as SvgText } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useVO2maxProgression } from '../services/api/vo2maxApi';

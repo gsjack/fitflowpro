@@ -46,13 +46,9 @@ import { getLastPerformance } from '../../src/services/api/exerciseApi';
 import { WorkoutExerciseSkeleton } from '../../src/components/skeletons';
 import { useFadeIn } from '../../src/utils/animations';
 
-interface WorkoutScreenProps {
-  navigation?: any; // For future navigation implementation
-}
-
 export default function WorkoutScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams();
+  const _params = useLocalSearchParams();
   const { weightUnit } = useSettingsStore();
   const {
     currentWorkout,
@@ -85,10 +81,7 @@ export default function WorkoutScreen() {
   const setLogCardRef = useRef<View>(null);
 
   // Fetch last performance for current exercise
-  const {
-    data: lastPerformance,
-    isLoading: isLoadingHistory,
-  } = useQuery({
+  const { data: lastPerformance, isLoading: isLoadingHistory } = useQuery({
     queryKey: ['exercise-history', currentExercise?.exercise_id],
     queryFn: () => getLastPerformance(currentExercise!.exercise_id),
     enabled: !!currentExercise,
@@ -104,7 +97,7 @@ export default function WorkoutScreen() {
     const checkActiveWorkout = async () => {
       try {
         // Import getUserId to get current user
-        const { getUserId } = await import('../services/api/authApi');
+        const { getUserId } = await import('../../src/services/api/authApi');
         const userId = await getUserId();
 
         if (!userId) {
@@ -113,7 +106,7 @@ export default function WorkoutScreen() {
         }
 
         // Import workoutDb to check for in-progress workout
-        const workoutDb = await import('../services/database/workoutDb');
+        const workoutDb = await import('../../src/services/database/workoutDb');
         const todayWorkout = await workoutDb.getTodayWorkout(userId);
 
         if (todayWorkout && todayWorkout.status === 'in_progress') {

@@ -152,7 +152,7 @@ test('complete workout via API only (fast)', async ({ request }) => {
       });
 
       expect(setResponse.ok()).toBeTruthy();
-      const set = await setResponse.json();
+      const _set = await setResponse.json();
 
       const setDuration = Date.now() - setStart;
       setTimes.push(setDuration);

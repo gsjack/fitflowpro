@@ -6,28 +6,7 @@
  */
 
 import { db } from '../database/db.js';
-
-/**
- * Volume landmarks for muscle groups (from analyticsService)
- */
-const VOLUME_LANDMARKS: Record<string, { mev: number; mav: number; mrv: number }> = {
-  chest: { mev: 8, mav: 14, mrv: 22 },
-  back_lats: { mev: 10, mav: 16, mrv: 26 },
-  back_traps: { mev: 6, mav: 12, mrv: 20 },
-  shoulders_front: { mev: 4, mav: 8, mrv: 14 },
-  shoulders_side: { mev: 8, mav: 16, mrv: 26 },
-  shoulders_rear: { mev: 8, mav: 14, mrv: 22 },
-  biceps: { mev: 6, mav: 12, mrv: 20 },
-  triceps: { mev: 6, mav: 12, mrv: 22 },
-  quads: { mev: 8, mav: 14, mrv: 24 },
-  hamstrings: { mev: 6, mav: 12, mrv: 20 },
-  glutes: { mev: 6, mav: 12, mrv: 20 },
-  calves: { mev: 8, mav: 14, mrv: 22 },
-  abs: { mev: 8, mav: 16, mrv: 28 },
-  front_delts: { mev: 4, mav: 8, mrv: 14 }, // Alias for shoulders_front
-  side_delts: { mev: 8, mav: 16, mrv: 26 }, // Alias for shoulders_side
-  rear_delts: { mev: 8, mav: 14, mrv: 22 }, // Alias for shoulders_rear
-};
+import { VOLUME_LANDMARKS } from '../utils/constants.js';
 
 /**
  * Program Exercise Data

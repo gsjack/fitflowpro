@@ -17,6 +17,7 @@ import {
   getVO2maxProgression,
   VO2maxSessionData,
   VO2maxSessionFilters,
+  VO2maxSessionWithDetails,
 } from '../services/vo2maxService.js';
 import { authenticateJWT, AuthenticatedRequest } from '../middleware/auth.js';
 import { db } from '../database/db.js';
@@ -263,7 +264,7 @@ interface VO2maxSessionResponse {
 /**
  * Transform database row to API response format
  */
-function transformSessionToResponse(row: {
+function transformSessionToResponse(row: VO2maxSessionWithDetails | {
   id: number;
   user_id: number;
   workout_id: number;
@@ -275,9 +276,9 @@ function transformSessionToResponse(row: {
   estimated_vo2max: number | null;
   intervals_completed: number | null;
   rpe: number | null;
-  completion_status?: string;
+  completion_status: string | null;
   notes: string | null;
-  created_at?: number;
+  created_at: number;
 }): VO2maxSessionResponse {
   return {
     id: row.id,
@@ -293,7 +294,7 @@ function transformSessionToResponse(row: {
     rpe: row.rpe,
     completion_status: row.completion_status || 'incomplete',
     notes: row.notes,
-    created_at: row.created_at,
+    created_at: row.created_at || Date.now(),
   };
 }
 
@@ -427,7 +428,22 @@ export default async function vo2maxRoutes(fastify: FastifyInstance) {
             WHERE v.id = ?
           `
           )
-          .get(sessionId);
+          .get(sessionId) as {
+            id: number;
+            user_id: number;
+            workout_id: number;
+            date: string;
+            duration_seconds: number;
+            protocol: string;
+            average_hr: number | null;
+            peak_hr: number | null;
+            estimated_vo2max: number | null;
+            intervals_completed: number | null;
+            rpe: number | null;
+            completion_status: string | null;
+            notes: string | null;
+            created_at: number;
+          };
 
         const response = transformSessionToResponse(createdSession);
 
@@ -711,6 +727,9 @@ export default async function vo2maxRoutes(fastify: FastifyInstance) {
 
         // Fetch updated session
         const updatedSession = getVO2maxSessionById(sessionId, authenticatedUser.userId);
+        if (!updatedSession) {
+          return reply.status(404).send({ error: 'Session not found after update' });
+        }
         const response = transformSessionToResponse(updatedSession);
 
         return reply.status(200).send(response);

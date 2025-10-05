@@ -1,4 +1,4 @@
-import { getExercises, getExerciseById } from '../services/exerciseService.js';
+import { getExercises, getExerciseById, getLastPerformance, } from '../services/exerciseService.js';
 import { authenticateJWT } from '../middleware/auth.js';
 export default async function exerciseRoutes(fastify) {
     fastify.get('/', {
@@ -51,6 +51,7 @@ export default async function exerciseRoutes(fastify) {
                                     default_reps: { type: 'string' },
                                     default_rir: { type: 'number' },
                                     description: { type: 'string' },
+                                    video_url: { type: ['string', 'null'] },
                                 },
                             },
                         },
@@ -75,9 +76,10 @@ export default async function exerciseRoutes(fastify) {
             });
         }
         catch (error) {
-            if (error.message?.includes('Invalid muscle_group')) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            if (errorMessage.includes('Invalid muscle_group')) {
                 return reply.status(400).send({
-                    error: error.message,
+                    error: errorMessage,
                 });
             }
             request.log.error(error);
@@ -117,6 +119,7 @@ export default async function exerciseRoutes(fastify) {
                         default_reps: { type: 'string' },
                         default_rir: { type: 'number' },
                         description: { type: 'string' },
+                        video_url: { type: ['string', 'null'] },
                     },
                 },
                 404: {
@@ -148,6 +151,73 @@ export default async function exerciseRoutes(fastify) {
             request.log.error(error);
             return reply.status(500).send({
                 error: 'Failed to retrieve exercise',
+            });
+        }
+    });
+    fastify.get('/:exerciseId/last-performance', {
+        preHandler: authenticateJWT,
+        schema: {
+            params: {
+                type: 'object',
+                required: ['exerciseId'],
+                properties: {
+                    exerciseId: {
+                        type: 'string',
+                        description: 'Exercise ID',
+                    },
+                },
+            },
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        last_workout_date: { type: 'string' },
+                        sets: {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    weight_kg: { type: 'number' },
+                                    reps: { type: 'number' },
+                                    rir: { type: 'number' },
+                                },
+                            },
+                        },
+                        estimated_1rm: { type: 'number' },
+                    },
+                },
+                204: {
+                    type: 'null',
+                    description: 'No history found for this exercise',
+                },
+                404: {
+                    type: 'object',
+                    properties: {
+                        error: { type: 'string' },
+                    },
+                },
+            },
+        },
+    }, async (request, reply) => {
+        const { exerciseId } = request.params;
+        try {
+            const parsedExerciseId = parseInt(exerciseId, 10);
+            if (isNaN(parsedExerciseId)) {
+                return reply.status(400).send({
+                    error: 'Invalid exercise ID',
+                });
+            }
+            const userId = request.user.userId;
+            const lastPerformance = getLastPerformance(userId, parsedExerciseId);
+            if (!lastPerformance) {
+                return reply.status(204).send();
+            }
+            return reply.status(200).send(lastPerformance);
+        }
+        catch (error) {
+            request.log.error(error);
+            return reply.status(500).send({
+                error: 'Failed to retrieve last performance',
             });
         }
     });

@@ -170,7 +170,7 @@ function transformSessionToResponse(row) {
         rpe: row.rpe,
         completion_status: row.completion_status || 'incomplete',
         notes: row.notes,
-        created_at: row.created_at,
+        created_at: row.created_at || Date.now(),
     };
 }
 export default async function vo2maxRoutes(fastify) {
@@ -426,6 +426,9 @@ export default async function vo2maxRoutes(fastify) {
         `;
             db.prepare(query).run(...params);
             const updatedSession = getVO2maxSessionById(sessionId, authenticatedUser.userId);
+            if (!updatedSession) {
+                return reply.status(404).send({ error: 'Session not found after update' });
+            }
             const response = transformSessionToResponse(updatedSession);
             return reply.status(200).send(response);
         }

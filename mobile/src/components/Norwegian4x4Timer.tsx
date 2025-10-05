@@ -37,12 +37,6 @@ interface Norwegian4x4TimerProps {
 
 type Phase = 'work' | 'recovery';
 
-interface IntervalPhase {
-  intervalNumber: number; // 1-4
-  phase: Phase;
-  duration: number; // seconds
-}
-
 // Protocol configuration
 const WORK_DURATION = 4 * 60; // 4 minutes
 const RECOVERY_DURATION = 3 * 60; // 3 minutes

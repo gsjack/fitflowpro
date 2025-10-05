@@ -14,7 +14,6 @@ import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet, Animated } from 'react-native';
 import { Surface, Text, SegmentedButtons, ActivityIndicator, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { useConsistencyMetrics } from '../services/api/analyticsApi';
 import { OneRMProgressionChart } from '../components/analytics/OneRMProgressionChart';
 import { VolumeChart } from '../components/analytics/VolumeChart';
@@ -181,7 +180,6 @@ interface ConsistencyTabProps {
 }
 
 function ConsistencyTab({ data, isLoading, error }: ConsistencyTabProps): React.JSX.Element {
-  const navigation = useNavigation();
   const fadeAnim = useFadeIn(!isLoading && !!data);
 
   if (isLoading) {

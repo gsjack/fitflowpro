@@ -54,7 +54,11 @@ export default async function programExerciseRoutes(fastify) {
         try {
             const authenticatedUser = request.user;
             const body = request.body;
-            if (!body.program_day_id || !body.exercise_id || body.target_sets === undefined || !body.target_rep_range || body.target_rir === undefined) {
+            if (!body.program_day_id ||
+                !body.exercise_id ||
+                body.target_sets === undefined ||
+                !body.target_rep_range ||
+                body.target_rir === undefined) {
                 return reply.status(400).send({
                     error: 'Missing required fields: program_day_id, exercise_id, target_sets, target_rep_range, target_rir',
                 });
@@ -90,9 +94,10 @@ export default async function programExerciseRoutes(fastify) {
             return reply.status(201).send(result);
         }
         catch (error) {
-            if (error.message?.includes('not found')) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            if (errorMessage.includes('not found')) {
                 return reply.status(404).send({
-                    error: error.message,
+                    error: errorMessage,
                 });
             }
             fastify.log.error(error);
@@ -157,9 +162,10 @@ export default async function programExerciseRoutes(fastify) {
             return reply.status(200).send(result);
         }
         catch (error) {
-            if (error.message?.includes('not found')) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            if (errorMessage.includes('not found')) {
                 return reply.status(404).send({
-                    error: error.message,
+                    error: errorMessage,
                 });
             }
             fastify.log.error(error);
@@ -182,9 +188,10 @@ export default async function programExerciseRoutes(fastify) {
             return reply.status(200).send(result);
         }
         catch (error) {
-            if (error.message?.includes('not found')) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            if (errorMessage.includes('not found')) {
                 return reply.status(404).send({
-                    error: error.message,
+                    error: errorMessage,
                 });
             }
             fastify.log.error(error);
@@ -213,14 +220,15 @@ export default async function programExerciseRoutes(fastify) {
             return reply.status(200).send(result);
         }
         catch (error) {
-            if (error.message?.includes('not found')) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            if (errorMessage.includes('not found')) {
                 return reply.status(404).send({
-                    error: error.message,
+                    error: errorMessage,
                 });
             }
-            if (error.message?.includes('incompatible')) {
+            if (errorMessage.includes('incompatible')) {
                 return reply.status(400).send({
-                    error: error.message,
+                    error: errorMessage,
                 });
             }
             fastify.log.error(error);

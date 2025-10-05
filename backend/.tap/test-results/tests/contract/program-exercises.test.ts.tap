@@ -1,1425 +1,350 @@
 TAP version 14
 # Subtest: Program Exercise Editor Endpoints Contract Tests
-{"level":30,"time":1759600070207,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070493,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":284.983286999166,"msg":"request completed"}
-{"level":30,"time":1759600070494,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070729,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":235.32365999929607,"msg":"request completed"}
-{"level":30,"time":1759600070730,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=barbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070735,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":5.462282000109553,"msg":"request completed"}
-{"level":30,"time":1759600070736,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=dumbbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070737,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":0.7917899992316961,"msg":"request completed"}
-{"level":30,"time":1759600070737,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises?muscle_group=back","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070738,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":0.8771359995007515,"msg":"request completed"}
-{"level":30,"time":1759600070738,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070739,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":409},"responseTime":1.1657899990677834,"msg":"request completed"}
-{"level":30,"time":1759600070740,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070742,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","msg":"Route POST:/api/program-days not found"}
-{"level":30,"time":1759600070742,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":404},"responseTime":1.9852359984070063,"msg":"request completed"}
-{"level":30,"time":1759600070745,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673939864,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","req":{"method":"POST","url":"/api/auth/register","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940189,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1","res":{"statusCode":201},"responseTime":323.5338459983468,"msg":"request completed"}
+{"level":30,"time":1759673940190,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","req":{"method":"POST","url":"/api/auth/login","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940461,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-2","res":{"statusCode":200},"responseTime":270.907904997468,"msg":"request completed"}
+{"level":30,"time":1759673940462,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=barbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940468,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-3","res":{"statusCode":200},"responseTime":5.498078994452953,"msg":"request completed"}
+{"level":30,"time":1759673940468,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","req":{"method":"GET","url":"/api/exercises?muscle_group=chest&equipment=dumbbell","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940469,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-4","res":{"statusCode":200},"responseTime":0.8861509934067726,"msg":"request completed"}
+{"level":30,"time":1759673940469,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","req":{"method":"GET","url":"/api/exercises?muscle_group=back","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940470,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-5","res":{"statusCode":200},"responseTime":0.9424439966678619,"msg":"request completed"}
+{"level":30,"time":1759673940471,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","req":{"method":"POST","url":"/api/programs","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940472,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-6","res":{"statusCode":409},"responseTime":1.323571003973484,"msg":"request completed"}
+{"level":30,"time":1759673940473,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940474,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-7","res":{"statusCode":201},"responseTime":1.1766230016946793,"msg":"request completed"}
+{"level":30,"time":1759673940479,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T009: POST /api/program-exercises
         # Subtest: should add exercise to program day (201)
-            not ok 1 - Returns 201 Created
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 145
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:145:9)
-              source: >2
-                      });
-              
-                      t.equal(response.statusCode, 201, 'Returns 201 Created');
-                --------^
-                      const body = response.json();
-                      t.type(body.program_exercise_id, 'number', 'Returns program_exercise_id');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -201
-                +404
-              ...
-            
-            not ok 2 - Returns program_exercise_id
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 147
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:147:9)
-              source: >2
-                      t.equal(response.statusCode, 201, 'Returns 201 Created');
-                      const body = response.json();
-                      t.type(body.program_exercise_id, 'number', 'Returns program_exercise_id');
-                --------^
-                      t.ok(body.volume_warning === null || typeof body.volume_warning === 'string', 'Returns volume_warning (nullable)');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -number
-                +undefined
-              ...
-            
-            not ok 3 - Returns volume_warning (nullable)
-              ---
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 148
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:148:9)
-              source: >2
-                      const body = response.json();
-                      t.type(body.program_exercise_id, 'number', 'Returns program_exercise_id');
-                      t.ok(body.volume_warning === null || typeof body.volume_warning === 'string', 'Returns volume_warning (nullable)');
-                --------^
-              
-                      // Store for later tests
-              ...
-            
+            ok 1 - Returns 201 Created
+            ok 2 - Returns program_exercise_id
+            ok 3 - Returns volume_warning (nullable)
             1..3
-        not ok 1 - should add exercise to program day (201) # time=48.341ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 129
-            columnNumber: 13
-            typeName: Test
-          source: |2
-              // T009: Contract test POST /api/program-exercises
-              await t.test('T009: POST /api/program-exercises', async (t) => {
-                await t.test('should add exercise to program day (201)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'POST',
-          ...
+        ok 1 - should add exercise to program day (201) # time=12.147ms
         
-{"level":30,"time":1759600070746,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":404},"responseTime":1.2825649995356798,"msg":"request completed"}
-{"level":30,"time":1759600070799,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940482,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-8","res":{"statusCode":201},"responseTime":2.955353006720543,"msg":"request completed"}
+{"level":30,"time":1759673940492,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should allow duplicate exercises for drop sets (201)
-            not ok 1 - Returns 201 Created (allows duplicates)
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 170
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:170:9)
-              source: >2
-                      });
-              
-                      t.equal(response.statusCode, 201, 'Returns 201 Created (allows duplicates)');
-                --------^
-                      const body = response.json();
-                      t.type(body.program_exercise_id, 'number', 'Returns program_exercise_id');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -201
-                +404
-              ...
-            
-            not ok 2 - Returns program_exercise_id
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 172
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:172:9)
-              source: >2
-                      t.equal(response.statusCode, 201, 'Returns 201 Created (allows duplicates)');
-                      const body = response.json();
-                      t.type(body.program_exercise_id, 'number', 'Returns program_exercise_id');
-                --------^
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -number
-                +undefined
-              ...
-            
+            ok 1 - Returns 201 Created (allows duplicates)
+            ok 2 - Returns program_exercise_id
             1..2
-        not ok 2 - should allow duplicate exercises for drop sets (201) # time=18.237ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 154
-            columnNumber: 13
-            typeName: Test
-          source: >2
-                });
-          
-                await t.test('should allow duplicate exercises for drop sets (201)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'POST',
-          ...
+        ok 2 - should allow duplicate exercises for drop sets (201) # time=4.208ms
         
-{"level":30,"time":1759600070802,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":404},"responseTime":2.213757999241352,"msg":"request completed"}
-{"level":30,"time":1759600070827,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070827,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070835,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070836,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070836,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070837,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940494,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-9","res":{"statusCode":201},"responseTime":2.3715460002422333,"msg":"request completed"}
+{"level":30,"time":1759673940496,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940497,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940497,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940497,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940497,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940497,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return volume warning when exceeding MRV (201)
-            not ok 1 - Returns volume warning for MRV
-              ---
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 200
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:200:9)
-              source: >2
-              
-                      // Should warn about exceeding MRV (Chest MRV ~22 sets, we've added 4+2+6*4=30 sets)
-                      t.ok(body.volume_warning?.includes('MRV') || body.volume_warning?.includes('exceeds'), 'Returns volume warning for MRV');
-                --------^
-                    });
-              ...
-            
+            ok 1 - Returns volume warning for MRV
             1..1
-        not ok 3 - should return volume warning when exceeding MRV (201) # time=20.552ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 175
-            columnNumber: 13
-            typeName: Test
-          source: >2
-                });
-          
-                await t.test('should return volume warning when exceeding MRV (201)', async (t) => {
-            ------------^
-                  // Add many exercises to push volume over MRV
-                  const promises = [];
-          ...
+        ok 3 - should return volume warning when exceeding MRV (201) # time=10.341ms
         
-{"level":30,"time":1759600070838,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":404},"responseTime":10.775034999474883,"msg":"request completed"}
-{"level":30,"time":1759600070838,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":404},"responseTime":11.069486001506448,"msg":"request completed"}
-{"level":30,"time":1759600070839,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":404},"responseTime":3.124975999817252,"msg":"request completed"}
-{"level":30,"time":1759600070839,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":404},"responseTime":2.990531999617815,"msg":"request completed"}
-{"level":30,"time":1759600070840,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":404},"responseTime":3.177496001124382,"msg":"request completed"}
-{"level":30,"time":1759600070840,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":404},"responseTime":3.4165629986673594,"msg":"request completed"}
-{"level":30,"time":1759600070851,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940499,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-a","res":{"statusCode":201},"responseTime":2.3681930005550385,"msg":"request completed"}
+{"level":30,"time":1759673940500,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-b","res":{"statusCode":201},"responseTime":3.4160289987921715,"msg":"request completed"}
+{"level":30,"time":1759673940501,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-c","res":{"statusCode":201},"responseTime":4.510238006711006,"msg":"request completed"}
+{"level":30,"time":1759673940502,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-d","res":{"statusCode":201},"responseTime":5.593902006745338,"msg":"request completed"}
+{"level":30,"time":1759673940504,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-e","res":{"statusCode":201},"responseTime":6.681757003068924,"msg":"request completed"}
+{"level":30,"time":1759673940505,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-f","res":{"statusCode":201},"responseTime":7.672251999378204,"msg":"request completed"}
+{"level":30,"time":1759673940508,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should accept optional order_index (201)
-            not ok 1 - Returns 201 Created
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 220
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:220:9)
-              source: >2
-                      });
-              
-                      t.equal(response.statusCode, 201, 'Returns 201 Created');
-                --------^
-                      const body = response.json();
-                      t.type(body.program_exercise_id, 'number', 'Returns program_exercise_id');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -201
-                +404
-              ...
-            
-            not ok 2 - Returns program_exercise_id
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 222
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:222:9)
-              source: >2
-                      t.equal(response.statusCode, 201, 'Returns 201 Created');
-                      const body = response.json();
-                      t.type(body.program_exercise_id, 'number', 'Returns program_exercise_id');
-                --------^
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -number
-                +undefined
-              ...
-            
+            ok 1 - Returns 201 Created
+            ok 2 - Returns program_exercise_id
             1..2
-        not ok 4 - should accept optional order_index (201) # time=16.203ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 203
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should accept optional order_index (201)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'POST',
-          ...
+        ok 4 - should accept optional order_index (201) # time=7.116ms
         
-{"level":30,"time":1759600070852,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":404},"responseTime":1.0637510009109974,"msg":"request completed"}
-{"level":30,"time":1759600070873,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940512,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-g","res":{"statusCode":201},"responseTime":3.367348000407219,"msg":"request completed"}
+{"level":30,"time":1759673940517,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_sets (< 1)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 400 for invalid target_sets (< 1) # time=2.407ms
+        ok 5 - should return 400 for invalid target_sets (< 1) # time=4.873ms
         
-{"level":30,"time":1759600070874,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":400},"responseTime":0.810716999694705,"msg":"request completed"}
-{"level":30,"time":1759600070876,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940518,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-h","res":{"statusCode":400},"responseTime":1.2888590022921562,"msg":"request completed"}
+{"level":30,"time":1759673940523,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_sets (> 10)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 6 - should return 400 for invalid target_sets (> 10) # time=2.139ms
+        ok 6 - should return 400 for invalid target_sets (> 10) # time=3.187ms
         
+{"level":30,"time":1759673940524,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":400},"responseTime":1.4748469963669777,"msg":"request completed"}
+{"level":30,"time":1759673940527,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rep_range format
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 7 - should return 400 for invalid target_rep_range format # time=1.813ms
+        ok 7 - should return 400 for invalid target_rep_range format # time=2.612ms
         
-{"level":30,"time":1759600070877,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-i","res":{"statusCode":400},"responseTime":0.7286539990454912,"msg":"request completed"}
-{"level":30,"time":1759600070880,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940528,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":400},"responseTime":1.2626679986715317,"msg":"request completed"}
+{"level":30,"time":1759673940530,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rir (< 0)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 8 - should return 400 for invalid target_rir (< 0) # time=1.902ms
+        ok 8 - should return 400 for invalid target_rir (< 0) # time=2.634ms
         
-{"level":30,"time":1759600070880,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-j","res":{"statusCode":400},"responseTime":0.6398849990218878,"msg":"request completed"}
-{"level":30,"time":1759600070882,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940532,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":400},"responseTime":1.216781996190548,"msg":"request completed"}
+{"level":30,"time":1759673940534,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rir (> 4)
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 9 - should return 400 for invalid target_rir (> 4) # time=1.694ms
+        ok 9 - should return 400 for invalid target_rir (> 4) # time=3.745ms
         
-{"level":30,"time":1759600070883,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-k","res":{"statusCode":400},"responseTime":0.6824890002608299,"msg":"request completed"}
-{"level":30,"time":1759600070885,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600070886,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":400},"responseTime":0.6149519998580217,"msg":"request completed"}
-{"level":30,"time":1759600070889,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940535,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-l","res":{"statusCode":400},"responseTime":0.7931220009922981,"msg":"request completed"}
+{"level":30,"time":1759673940539,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing required fields
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 10 - should return 400 for missing required fields # time=1.984ms
+        ok 10 - should return 400 for missing required fields # time=2.421ms
         
+{"level":30,"time":1759673940540,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":400},"responseTime":0.8881070017814636,"msg":"request completed"}
+{"level":30,"time":1759673940543,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent program_day_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-{"level":30,"time":1759600070890,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-m","res":{"statusCode":400},"responseTime":0.839351998642087,"msg":"request completed"}
-{"level":30,"time":1759600070892,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-        ok 11 - should return 404 for non-existent program_day_id # time=2.259ms
+        ok 11 - should return 404 for non-existent program_day_id # time=2.885ms
         
-{"level":30,"time":1759600070893,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":404},"responseTime":0.9360119998455048,"msg":"request completed"}
-{"level":30,"time":1759600070895,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940544,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-n","res":{"statusCode":404},"responseTime":1.332858994603157,"msg":"request completed"}
+{"level":30,"time":1759673940546,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 12 - should return 404 for non-existent exercise_id # time=2.273ms
+        ok 12 - should return 404 for non-existent exercise_id # time=2.622ms
         
-{"level":30,"time":1759600070896,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":404},"responseTime":0.9389459993690252,"msg":"request completed"}
-{"level":30,"time":1759600070898,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940547,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-o","res":{"statusCode":404},"responseTime":1.0187110006809235,"msg":"request completed"}
+{"level":30,"time":1759673940550,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 13 - should return 401 without authentication # time=3.119ms
+        ok 13 - should return 401 without authentication # time=3.289ms
         
         1..13
-    not ok 1 - T009: POST /api/program-exercises # time=158.845ms
-      ---
-      at:
-        fileName: tests/contract/program-exercises.test.ts
-        lineNumber: 128
-        columnNumber: 11
-        typeName: Test
-      source: |2
-      
-          // T009: Contract test POST /api/program-exercises
-          await t.test('T009: POST /api/program-exercises', async (t) => {
-        ----------^
-            await t.test('should add exercise to program day (201)', async (t) => {
-              const response = await app.inject({
-      ...
+    ok 1 - T009: POST /api/program-exercises # time=79.417ms
     
-{"level":30,"time":1759600070900,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":401},"responseTime":1.5010280013084412,"msg":"request completed"}
-{"level":30,"time":1759600070911,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940551,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-p","res":{"statusCode":401},"responseTime":1.3773479983210564,"msg":"request completed"}
+{"level":30,"time":1759673940557,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T010: PATCH /api/program-exercises/:id
         # Subtest: should update target_sets (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 421
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:421:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
-            not ok 2 - Returns updated=true
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 423
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:423:9)
-              source: >2
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-                --------^
-                      t.ok(body.volume_warning === null || typeof body.volume_warning === 'string', 'Returns volume_warning (nullable)');
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -true
-                +undefined
-              ...
-            
-            not ok 3 - Returns volume_warning (nullable)
-              ---
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 424
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:424:9)
-              source: >2
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-                      t.ok(body.volume_warning === null || typeof body.volume_warning === 'string', 'Returns volume_warning (nullable)');
-                --------^
-                    });
-              ...
-            
+            ok 1 - Returns 200 OK
+            ok 2 - Returns updated=true
+            ok 3 - Returns volume_warning (nullable)
             1..3
-        not ok 1 - should update target_sets (200) # time=19.125ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 409
-            columnNumber: 13
-            typeName: Test
-          source: |2
-              // T010: Contract test PATCH /api/program-exercises/:id
-              await t.test('T010: PATCH /api/program-exercises/:id', async (t) => {
-                await t.test('should update target_sets (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 1 - should update target_sets (200) # time=4.404ms
         
-{"level":30,"time":1759600070913,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":404},"responseTime":1.3978029992431402,"msg":"request completed"}
-{"level":30,"time":1759600070935,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940560,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-q","res":{"statusCode":200},"responseTime":2.1979179978370667,"msg":"request completed"}
+{"level":30,"time":1759673940563,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should update target_rep_range (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 439
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:439:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
-            not ok 2 - Returns updated=true
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 441
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:441:9)
-              source: |2
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-                --------^
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -true
-                +undefined
-              ...
-            
+            ok 1 - Returns 200 OK
+            ok 2 - Returns updated=true
             1..2
-        not ok 2 - should update target_rep_range (200) # time=12.786ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 427
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should update target_rep_range (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 2 - should update target_rep_range (200) # time=2.574ms
         
-{"level":30,"time":1759600070936,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":404},"responseTime":1.7493830006569624,"msg":"request completed"}
-{"level":30,"time":1759600070951,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940564,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-r","res":{"statusCode":200},"responseTime":1.3923639953136444,"msg":"request completed"}
+{"level":30,"time":1759673940567,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should update target_rir (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 456
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:456:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
-            not ok 2 - Returns updated=true
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 458
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:458:9)
-              source: |2
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-                --------^
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -true
-                +undefined
-              ...
-            
+            ok 1 - Returns 200 OK
+            ok 2 - Returns updated=true
             1..2
-        not ok 3 - should update target_rir (200) # time=9.506ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 444
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should update target_rir (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 3 - should update target_rir (200) # time=2.908ms
         
-{"level":30,"time":1759600070952,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":404},"responseTime":0.7396879997104406,"msg":"request completed"}
-{"level":30,"time":1759600070963,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940568,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-s","res":{"statusCode":200},"responseTime":0.9337840005755424,"msg":"request completed"}
+{"level":30,"time":1759673940571,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should update multiple fields at once (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 475
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:475:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
-            not ok 2 - Returns updated=true
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 477
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:477:9)
-              source: |2
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                      const body = response.json();
-                      t.equal(body.updated, true, 'Returns updated=true');
-                --------^
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -true
-                +undefined
-              ...
-            
+            ok 1 - Returns 200 OK
+            ok 2 - Returns updated=true
             1..2
-        not ok 4 - should update multiple fields at once (200) # time=11.084ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 461
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should update multiple fields at once (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 4 - should update multiple fields at once (200) # time=3.562ms
         
-{"level":30,"time":1759600070963,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":404},"responseTime":0.624379999935627,"msg":"request completed"}
-{"level":30,"time":1759600070977,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940572,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-t","res":{"statusCode":200},"responseTime":1.724321998655796,"msg":"request completed"}
+{"level":30,"time":1759673940575,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_sets
-            not ok 1 - Returns 400 Bad Request
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 492
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:492:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 400, 'Returns 400 Bad Request');
-                --------^
-                      const body = response.json();
-                      t.ok(body.error, 'Returns error message');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -400
-                +404
-              ...
-            
+            ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        not ok 5 - should return 400 for invalid target_sets # time=7.94ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 480
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should return 400 for invalid target_sets', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 5 - should return 400 for invalid target_sets # time=2.603ms
         
-{"level":30,"time":1759600070978,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":404},"responseTime":0.7359170001000166,"msg":"request completed"}
-{"level":30,"time":1759600070989,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940576,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-u","res":{"statusCode":400},"responseTime":0.7993380054831505,"msg":"request completed"}
+{"level":30,"time":1759673940579,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rep_range format
-            not ok 1 - Returns 400 Bad Request
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 509
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:509:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 400, 'Returns 400 Bad Request');
-                --------^
-                      const body = response.json();
-                      t.ok(body.error, 'Returns error message');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -400
-                +404
-              ...
-            
+            ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        not ok 6 - should return 400 for invalid target_rep_range format # time=6.252ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 497
-            columnNumber: 13
-            typeName: Test
-          source: >2
-                });
-          
-                await t.test('should return 400 for invalid target_rep_range format', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 6 - should return 400 for invalid target_rep_range format # time=2.704ms
         
-{"level":30,"time":1759600070990,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":404},"responseTime":0.8442409988492727,"msg":"request completed"}
-{"level":30,"time":1759600070998,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940580,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-v","res":{"statusCode":400},"responseTime":1.0427369996905327,"msg":"request completed"}
+{"level":30,"time":1759673940582,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid target_rir
-            not ok 1 - Returns 400 Bad Request
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 526
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:526:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 400, 'Returns 400 Bad Request');
-                --------^
-                      const body = response.json();
-                      t.ok(body.error, 'Returns error message');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -400
-                +404
-              ...
-            
+            ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        not ok 7 - should return 400 for invalid target_rir # time=13.622ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 514
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should return 400 for invalid target_rir', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 7 - should return 400 for invalid target_rir # time=2.542ms
         
-{"level":30,"time":1759600070999,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","res":{"statusCode":404},"responseTime":0.9307039994746447,"msg":"request completed"}
-{"level":30,"time":1759600071016,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","req":{"method":"PATCH","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940583,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-w","res":{"statusCode":400},"responseTime":0.8627540022134781,"msg":"request completed"}
+{"level":30,"time":1759673940586,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","req":{"method":"PATCH","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent program_exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 8 - should return 404 for non-existent program_exercise_id # time=3.144ms
+        ok 8 - should return 404 for non-existent program_exercise_id # time=1.782ms
         
-{"level":30,"time":1759600071018,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","res":{"statusCode":404},"responseTime":1.8486969992518425,"msg":"request completed"}
-{"level":30,"time":1759600071020,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","req":{"method":"PATCH","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940587,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-x","res":{"statusCode":404},"responseTime":0.7859980016946793,"msg":"request completed"}
+{"level":30,"time":1759673940589,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","req":{"method":"PATCH","url":"/api/program-exercises/29078","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 9 - should return 401 without authentication # time=1.343ms
+        ok 9 - should return 401 without authentication # time=2.261ms
         
         1..9
-    not ok 2 - T010: PATCH /api/program-exercises/:id # time=112.157ms
-      ---
-      at:
-        fileName: tests/contract/program-exercises.test.ts
-        lineNumber: 408
-        columnNumber: 11
-        typeName: Test
-      source: |2
-      
-          // T010: Contract test PATCH /api/program-exercises/:id
-          await t.test('T010: PATCH /api/program-exercises/:id', async (t) => {
-        ----------^
-            await t.test('should update target_sets (200)', async (t) => {
-              const response = await app.inject({
-      ...
+    ok 2 - T010: PATCH /api/program-exercises/:id # time=36.459ms
     
-{"level":30,"time":1759600071021,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","res":{"statusCode":401},"responseTime":0.5543989986181259,"msg":"request completed"}
-{"level":30,"time":1759600071026,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940590,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-y","res":{"statusCode":401},"responseTime":0.7524750009179115,"msg":"request completed"}
+{"level":30,"time":1759673940595,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","req":{"method":"PUT","url":"/api/program-exercises/29078/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T012: PUT /api/program-exercises/:id/swap
         # Subtest: should swap exercise with compatible alternative (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 575
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:575:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = response.json();
-                      t.equal(body.swapped, true, 'Returns swapped=true');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
-            not ok 2 - Returns swapped=true
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 577
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:577:9)
-              source: |2
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                      const body = response.json();
-                      t.equal(body.swapped, true, 'Returns swapped=true');
-                --------^
-                      t.type(body.old_exercise_name, 'string', 'Returns old_exercise_name');
-                      t.type(body.new_exercise_name, 'string', 'Returns new_exercise_name');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -true
-                +undefined
-              ...
-            
-            not ok 3 - Returns old_exercise_name
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 578
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:578:9)
-              source: >2
-                      const body = response.json();
-                      t.equal(body.swapped, true, 'Returns swapped=true');
-                      t.type(body.old_exercise_name, 'string', 'Returns old_exercise_name');
-                --------^
-                      t.type(body.new_exercise_name, 'string', 'Returns new_exercise_name');
-                      t.not(body.old_exercise_name, body.new_exercise_name, 'Exercise names are different');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -string
-                +undefined
-              ...
-            
-            not ok 4 - Returns new_exercise_name
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 579
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:579:9)
-              source: >2
-                      t.equal(body.swapped, true, 'Returns swapped=true');
-                      t.type(body.old_exercise_name, 'string', 'Returns old_exercise_name');
-                      t.type(body.new_exercise_name, 'string', 'Returns new_exercise_name');
-                --------^
-                      t.not(body.old_exercise_name, body.new_exercise_name, 'Exercise names are different');
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -string
-                +undefined
-              ...
-            
-            not ok 5 - Exercise names are different
-              ---
-              compare: "!=="
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 580
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:580:9)
-              source: >2
-                      t.type(body.old_exercise_name, 'string', 'Returns old_exercise_name');
-                      t.type(body.new_exercise_name, 'string', 'Returns new_exercise_name');
-                      t.not(body.old_exercise_name, body.new_exercise_name, 'Exercise names are different');
-                --------^
-                    });
-              ...
-            
+            ok 1 - Returns 200 OK
+            ok 2 - Returns swapped=true
+            ok 3 - Returns old_exercise_name
+            ok 4 - Returns new_exercise_name
+            ok 5 - Exercise names are different
             1..5
-        not ok 1 - should swap exercise with compatible alternative (200) # time=21.25ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 563
-            columnNumber: 13
-            typeName: Test
-          source: >2
-              // T012: Contract test PUT /api/program-exercises/:id/swap
-              await t.test('T012: PUT /api/program-exercises/:id/swap', async (t) => {
-                await t.test('should swap exercise with compatible alternative (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PUT',
-          ...
+        ok 1 - should swap exercise with compatible alternative (200) # time=4.936ms
         
-{"level":30,"time":1759600071027,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","res":{"statusCode":404},"responseTime":0.9448820017278194,"msg":"request completed"}
-{"level":30,"time":1759600071050,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940598,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-z","res":{"statusCode":200},"responseTime":2.273277997970581,"msg":"request completed"}
+{"level":30,"time":1759673940601,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","req":{"method":"PUT","url":"/api/program-exercises/29078/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for incompatible muscle groups
-            not ok 1 - Returns 400 Bad Request
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 595
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:595:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 400, 'Returns 400 Bad Request');
-                --------^
-                      const body = response.json();
-                      t.ok(body.error, 'Returns error message');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -400
-                +404
-              ...
-            
+            ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
-            not ok 3 - Error mentions incompatibility
-              ---
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 598
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:598:9)
-              source: >2
-                      const body = response.json();
-                      t.ok(body.error, 'Returns error message');
-                      t.ok(body.error.includes('incompatible') || body.error.includes('muscle'), 'Error mentions incompatibility');
-                --------^
-                    });
-              ...
-            
+            ok 3 - Error mentions incompatibility
             1..3
-        not ok 2 - should return 400 for incompatible muscle groups # time=8.243ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 583
-            columnNumber: 13
-            typeName: Test
-          source: >2
-                });
-          
-                await t.test('should return 400 for incompatible muscle groups', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PUT',
-          ...
+        ok 2 - should return 400 for incompatible muscle groups # time=2.225ms
         
-{"level":30,"time":1759600071051,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","res":{"statusCode":404},"responseTime":0.8348129987716675,"msg":"request completed"}
-{"level":30,"time":1759600071061,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940602,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-10","res":{"statusCode":400},"responseTime":0.9530600011348724,"msg":"request completed"}
+{"level":30,"time":1759673940605,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","req":{"method":"PUT","url":"/api/program-exercises/29078/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing new_exercise_id
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 3 - should return 400 for missing new_exercise_id # time=1.818ms
+        ok 3 - should return 400 for missing new_exercise_id # time=12.477ms
         
-{"level":30,"time":1759600071062,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","res":{"statusCode":400},"responseTime":0.7092379983514547,"msg":"request completed"}
-{"level":30,"time":1759600071063,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","req":{"method":"PUT","url":"/api/program-exercises/99999/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent program_exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 404 for non-existent program_exercise_id # time=2.323ms
+        ok 4 - should return 404 for non-existent program_exercise_id # time=5.936ms
         
-{"level":30,"time":1759600071065,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","res":{"statusCode":404},"responseTime":0.9916760008782148,"msg":"request completed"}
-{"level":30,"time":1759600071066,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940616,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-11","res":{"statusCode":400},"responseTime":10.99608899652958,"msg":"request completed"}
+{"level":30,"time":1759673940621,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","req":{"method":"PUT","url":"/api/program-exercises/99999/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940622,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-12","res":{"statusCode":404},"responseTime":0.9157640039920807,"msg":"request completed"}
+{"level":30,"time":1759673940624,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","req":{"method":"PUT","url":"/api/program-exercises/29078/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 404 for non-existent new_exercise_id
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 404 for non-existent new_exercise_id # time=1.631ms
+        ok 5 - should return 404 for non-existent new_exercise_id # time=2.236ms
         
-{"level":30,"time":1759600071067,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","res":{"statusCode":404},"responseTime":0.7163609992712736,"msg":"request completed"}
-{"level":30,"time":1759600071069,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","req":{"method":"PUT","url":"/api/program-exercises/undefined/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940626,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-13","res":{"statusCode":404},"responseTime":1.0422470048069954,"msg":"request completed"}
+{"level":30,"time":1759673940628,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","req":{"method":"PUT","url":"/api/program-exercises/29078/swap","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 6 - should return 401 without authentication # time=1.092ms
+        ok 6 - should return 401 without authentication # time=1.683ms
         
         1..6
-    not ok 3 - T012: PUT /api/program-exercises/:id/swap # time=45.432ms
-      ---
-      at:
-        fileName: tests/contract/program-exercises.test.ts
-        lineNumber: 562
-        columnNumber: 11
-        typeName: Test
-      source: >2
-      
-          // T012: Contract test PUT /api/program-exercises/:id/swap
-          await t.test('T012: PUT /api/program-exercises/:id/swap', async (t) => {
-        ----------^
-            await t.test('should swap exercise with compatible alternative (200)', async (t) => {
-              const response = await app.inject({
-      ...
+    ok 3 - T012: PUT /api/program-exercises/:id/swap # time=39.146ms
     
-{"level":30,"time":1759600071069,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","res":{"statusCode":401},"responseTime":0.38678100146353245,"msg":"request completed"}
-{"level":30,"time":1759600071075,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071076,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","res":{"statusCode":404},"responseTime":1.4591920003294945,"msg":"request completed"}
-{"level":30,"time":1759600071076,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071077,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","res":{"statusCode":404},"responseTime":0.6744570005685091,"msg":"request completed"}
-{"level":30,"time":1759600071077,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071078,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","res":{"statusCode":404},"responseTime":0.6157900001853704,"msg":"request completed"}
-{"level":30,"time":1759600071079,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940628,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-14","res":{"statusCode":401},"responseTime":0.6365370005369186,"msg":"request completed"}
+{"level":30,"time":1759673940634,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940639,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-15","res":{"statusCode":201},"responseTime":4.6693380028009415,"msg":"request completed"}
+{"level":30,"time":1759673940640,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940641,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-16","res":{"statusCode":201},"responseTime":1.5476920008659363,"msg":"request completed"}
+{"level":30,"time":1759673940642,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940644,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-17","res":{"statusCode":201},"responseTime":1.961155004799366,"msg":"request completed"}
+{"level":30,"time":1759673940645,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T013: PATCH /api/program-exercises/batch-reorder
         # Subtest: should reorder exercises (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 737
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:737:9)
-              source: >2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = response.json();
-                      t.ok(body.reordered === true || body.success === true, 'Returns success indicator');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
-            not ok 2 - Returns success indicator
-              ---
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 739
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:739:9)
-              source: >2
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                      const body = response.json();
-                      t.ok(body.reordered === true || body.success === true, 'Returns success indicator');
-                --------^
-                    });
-              ...
-            
+            ok 1 - Returns 200 OK
+            ok 2 - Returns success indicator
             1..2
-        not ok 1 - should reorder exercises (200) # time=9.627ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 720
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should reorder exercises (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 1 - should reorder exercises (200) # time=3.211ms
         
-{"level":30,"time":1759600071080,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","res":{"statusCode":404},"responseTime":0.8612820003181696,"msg":"request completed"}
-{"level":30,"time":1759600071092,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940646,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-18","res":{"statusCode":200},"responseTime":1.6155779957771301,"msg":"request completed"}
+{"level":30,"time":1759673940649,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should handle partial reordering (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 758
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:758:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
+            ok 1 - Returns 200 OK
             1..1
-        not ok 2 - should handle partial reordering (200) # time=7.503ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 742
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should handle partial reordering (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 2 - should handle partial reordering (200) # time=3.053ms
         
-{"level":30,"time":1759600071093,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","res":{"statusCode":404},"responseTime":0.9133839998394251,"msg":"request completed"}
-{"level":30,"time":1759600071103,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940650,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-19","res":{"statusCode":200},"responseTime":1.2290039956569672,"msg":"request completed"}
+{"level":30,"time":1759673940653,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing program_day_id
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 3 - should return 400 for missing program_day_id # time=4.65ms
+        ok 3 - should return 400 for missing program_day_id # time=2.161ms
         
-{"level":30,"time":1759600071106,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","res":{"statusCode":400},"responseTime":3.1250459998846054,"msg":"request completed"}
-{"level":30,"time":1759600071108,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940654,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1a","res":{"statusCode":400},"responseTime":0.9115040004253387,"msg":"request completed"}
+{"level":30,"time":1759673940655,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for missing exercise_order
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 400 for missing exercise_order # time=1.892ms
+        ok 4 - should return 400 for missing exercise_order # time=1.514ms
         
-{"level":30,"time":1759600071109,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","res":{"statusCode":400},"responseTime":0.7303290013223886,"msg":"request completed"}
-{"level":30,"time":1759600071111,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940656,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1b","res":{"statusCode":400},"responseTime":0.598473995923996,"msg":"request completed"}
+{"level":30,"time":1759673940658,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for invalid exercise_order format
             ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        ok 5 - should return 400 for invalid exercise_order format # time=1.812ms
+        ok 5 - should return 400 for invalid exercise_order format # time=1.73ms
         
-{"level":30,"time":1759600071112,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","res":{"statusCode":400},"responseTime":0.6674730014055967,"msg":"request completed"}
-{"level":30,"time":1759600071114,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940658,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1c","res":{"statusCode":400},"responseTime":0.6046200022101402,"msg":"request completed"}
+{"level":30,"time":1759673940660,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 400 for negative order_index
-            not ok 1 - Returns 400 Bad Request
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 830
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:830:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 400, 'Returns 400 Bad Request');
-                --------^
-                      const body = response.json();
-                      t.ok(body.error, 'Returns error message');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -400
-                +404
-              ...
-            
+            ok 1 - Returns 400 Bad Request
             ok 2 - Returns error message
             1..2
-        not ok 6 - should return 400 for negative order_index # time=7.809ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 815
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should return 400 for negative order_index', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'PATCH',
-          ...
+        ok 6 - should return 400 for negative order_index # time=1.729ms
         
-{"level":30,"time":1759600071116,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","res":{"statusCode":404},"responseTime":1.1027229987084866,"msg":"request completed"}
-{"level":30,"time":1759600071126,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 7 - should return 401 without authentication # time=2.122ms
+        ok 7 - should return 401 without authentication # time=1.34ms
         
         1..7
-    not ok 4 - T013: PATCH /api/program-exercises/batch-reorder # time=55.279ms
-      ---
-      at:
-        fileName: tests/contract/program-exercises.test.ts
-        lineNumber: 664
-        columnNumber: 11
-        typeName: Test
-      source: >2
-      
-          // T013: Contract test PATCH /api/program-exercises/batch-reorder
-          await t.test('T013: PATCH /api/program-exercises/batch-reorder', async (t) => {
-        ----------^
-            // Create additional program exercises for reordering tests
-            let exerciseId1: number;
-      ...
+    ok 4 - T013: PATCH /api/program-exercises/batch-reorder # time=30.574ms
     
-{"level":30,"time":1759600071127,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","res":{"statusCode":401},"responseTime":0.6474980004131794,"msg":"request completed"}
-{"level":30,"time":1759600071134,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940661,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1d","res":{"statusCode":400},"responseTime":0.7470269948244095,"msg":"request completed"}
+{"level":30,"time":1759673940663,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","req":{"method":"PATCH","url":"/api/program-exercises/batch-reorder","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940664,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1e","res":{"statusCode":401},"responseTime":0.4853999987244606,"msg":"request completed"}
+{"level":30,"time":1759673940669,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
     # Subtest: T011: DELETE /api/program-exercises/:id
         # Subtest: should delete program exercise (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 884
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:884:9)
-              source: |2
-                      });
-              
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = response.json();
-                      t.equal(body.deleted, true, 'Returns deleted=true');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
-            not ok 2 - Returns deleted=true
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 886
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:886:9)
-              source: >2
-                      t.equal(response.statusCode, 200, 'Returns 200 OK');
-                      const body = response.json();
-                      t.equal(body.deleted, true, 'Returns deleted=true');
-                --------^
-                      t.ok(body.volume_warning === null || typeof body.volume_warning === 'string', 'Returns volume_warning (nullable)');
-                    });
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -true
-                +undefined
-              ...
-            
-            not ok 3 - Returns volume_warning (nullable)
-              ---
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 887
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:887:9)
-              source: >2
-                      const body = response.json();
-                      t.equal(body.deleted, true, 'Returns deleted=true');
-                      t.ok(body.volume_warning === null || typeof body.volume_warning === 'string', 'Returns volume_warning (nullable)');
-                --------^
-                    });
-              ...
-            
+            ok 1 - Returns 200 OK
+            ok 2 - Returns deleted=true
+            ok 3 - Returns volume_warning (nullable)
             1..3
-        not ok 1 - should delete program exercise (200) # time=14.257ms
-          ---
-          at:
-            fileName: tests/contract/program-exercises.test.ts
-            lineNumber: 875
-            columnNumber: 13
-            typeName: Test
-          source: |2
-                });
-          
-                await t.test('should delete program exercise (200)', async (t) => {
-            ------------^
-                  const response = await app.inject({
-                    method: 'DELETE',
-          ...
+        ok 1 - should delete program exercise (200) # time=4.352ms
         
-{"level":30,"time":1759600071136,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","res":{"statusCode":404},"responseTime":1.3822980001568794,"msg":"request completed"}
-{"level":30,"time":1759600071136,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071137,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","res":{"statusCode":404},"responseTime":0.568716999143362,"msg":"request completed"}
-{"level":30,"time":1759600071154,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071156,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","msg":"Route POST:/api/program-days not found"}
-{"level":30,"time":1759600071156,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","res":{"statusCode":404},"responseTime":1.8768440000712872,"msg":"request completed"}
-{"level":30,"time":1759600071156,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071157,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","res":{"statusCode":400},"responseTime":0.8237069994211197,"msg":"request completed"}
-{"level":30,"time":1759600071157,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940671,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1f","res":{"statusCode":201},"responseTime":2.3904029950499535,"msg":"request completed"}
+{"level":30,"time":1759673940672,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","req":{"method":"DELETE","url":"/api/program-exercises/29138","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940673,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1g","res":{"statusCode":200},"responseTime":1.5558639988303185,"msg":"request completed"}
+{"level":30,"time":1759673940677,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","req":{"method":"POST","url":"/api/program-days","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940678,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1h","res":{"statusCode":201},"responseTime":0.9041710048913956,"msg":"request completed"}
+{"level":30,"time":1759673940678,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940680,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1i","res":{"statusCode":201},"responseTime":1.4573170021176338,"msg":"request completed"}
+{"level":30,"time":1759673940680,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","req":{"method":"POST","url":"/api/program-exercises","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
         # Subtest: should return volume warning when dropping below MEV (200)
-            not ok 1 - Returns 200 OK
-              ---
-              compare: ===
-              at:
-                fileName: tests/contract/program-exercises.test.ts
-                lineNumber: 947
-                columnNumber: 9
-                typeName: Test
-              stack: |
-                Test.<anonymous> (tests/contract/program-exercises.test.ts:947:9)
-              source: >2
-                      });
-              
-                      t.equal(deleteResponse.statusCode, 200, 'Returns 200 OK');
-                --------^
-                      const body = deleteResponse.json();
-                      t.ok(body.volume_warning?.includes('MEV') || body.volume_warning?.includes('below'), 'Returns volume warning for MEV');
-              diff: |
-                --- expected
-                +++ actual
-                @@ -1,1 +1,1 @@
-                -200
-                +404
-              ...
-            
+            ok 1 - Returns 200 OK
             not ok 2 - Returns volume warning for MEV
               ---
               at:
@@ -1438,7 +363,7 @@ TAP version 14
               ...
             
             1..2
-        not ok 2 - should return volume warning when dropping below MEV (200) # time=13.267ms
+        not ok 2 - should return volume warning when dropping below MEV (200) # time=44.526ms
           ---
           at:
             fileName: tests/contract/program-exercises.test.ts
@@ -1458,21 +383,21 @@ TAP version 14
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 3 - should return 404 for non-existent program_exercise_id # time=1.729ms
+        ok 3 - should return 404 for non-existent program_exercise_id # time=4.047ms
         
         # Subtest: should return 404 when deleting already deleted exercise
             ok 1 - Returns 404 Not Found
             ok 2 - Returns error message
             1..2
-        ok 4 - should return 404 when deleting already deleted exercise # time=1.599ms
+        ok 4 - should return 404 when deleting already deleted exercise # time=8.188ms
         
         # Subtest: should return 401 without authentication
             ok 1 - Returns 401 Unauthorized
             1..1
-        ok 5 - should return 401 without authentication # time=1.392ms
+        ok 5 - should return 401 without authentication # time=2.067ms
         
         1..5
-    not ok 5 - T011: DELETE /api/program-exercises/:id # time=44.703ms
+    not ok 5 - T011: DELETE /api/program-exercises/:id # time=79.912ms
       ---
       at:
         fileName: tests/contract/program-exercises.test.ts
@@ -1488,7 +413,7 @@ TAP version 14
       ...
     
     1..5
-not ok 1 - Program Exercise Editor Endpoints Contract Tests # time=1271.572ms
+not ok 1 - Program Exercise Editor Endpoints Contract Tests # time=1305.644ms
   ---
   at:
     fileName: tests/contract/program-exercises.test.ts
@@ -1503,14 +428,14 @@ not ok 1 - Program Exercise Editor Endpoints Contract Tests # time=1271.572ms
       const app = await buildApp();
   ...
 
-{"level":30,"time":1759600071158,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","res":{"statusCode":400},"responseTime":0.7038600016385317,"msg":"request completed"}
-{"level":30,"time":1759600071159,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071159,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","res":{"statusCode":404},"responseTime":0.4291040003299713,"msg":"request completed"}
-{"level":30,"time":1759600071170,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","req":{"method":"DELETE","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071171,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","res":{"statusCode":404},"responseTime":0.5476249996572733,"msg":"request completed"}
-{"level":30,"time":1759600071173,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","req":{"method":"DELETE","url":"/api/program-exercises/undefined","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071174,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","res":{"statusCode":404},"responseTime":0.5360320005565882,"msg":"request completed"}
-{"level":30,"time":1759600071176,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","req":{"method":"DELETE","url":"/api/program-exercises/1","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
-{"level":30,"time":1759600071177,"pid":215070,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","res":{"statusCode":401},"responseTime":0.3434790000319481,"msg":"request completed"}
+{"level":30,"time":1759673940682,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1j","res":{"statusCode":201},"responseTime":1.6875850036740303,"msg":"request completed"}
+{"level":30,"time":1759673940682,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","req":{"method":"DELETE","url":"/api/program-exercises/29140","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940684,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1k","res":{"statusCode":200},"responseTime":1.1973659992218018,"msg":"request completed"}
+{"level":30,"time":1759673940729,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","req":{"method":"DELETE","url":"/api/program-exercises/99999","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940730,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1l","res":{"statusCode":404},"responseTime":0.8846849948167801,"msg":"request completed"}
+{"level":30,"time":1759673940738,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","req":{"method":"DELETE","url":"/api/program-exercises/29138","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940738,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1m","res":{"statusCode":404},"responseTime":0.719649001955986,"msg":"request completed"}
+{"level":30,"time":1759673940744,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","req":{"method":"DELETE","url":"/api/program-exercises/1","hostname":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+{"level":30,"time":1759673940744,"pid":406631,"hostname":"asigator-Legion-5-17ACH6H","reqId":"req-1n","res":{"statusCode":401},"responseTime":0.3285360038280487,"msg":"request completed"}
 1..1
 Database connection closed

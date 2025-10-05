@@ -1,4 +1,4 @@
-import * as bodyWeightService from '../services/bodyWeightService';
+import * as bodyWeightService from '../services/bodyWeightService.js';
 import { authenticateJWT } from '../middleware/auth.js';
 import { db } from '../database/db.js';
 export default async function bodyWeightRoutes(fastify) {

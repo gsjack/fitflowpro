@@ -19,6 +19,6 @@ export interface LogSetResponse {
     reps: number;
     rir: number;
 }
-export declare function logSet(workoutId: number, exerciseId: number, setNumber: number, weightKg: number, reps: number, rir: number, timestamp: number, localId?: number, notes?: string): LogSetResponse;
+export declare function logSet(workoutId: number, exerciseId: number, setNumber: number | undefined, weightKg: number, reps: number, rir: number, timestamp: number | string | undefined, localId?: number, notes?: string): LogSetResponse;
 export declare function getSetsForWorkout(workoutId: number): Set[];
 //# sourceMappingURL=setService.d.ts.map

@@ -11,20 +11,14 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Platform } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  Text,
-  Button,
-  Portal,
-  Dialog,
-  Paragraph,
-  ActivityIndicator,
-  Chip,
-} from 'react-native-paper';
+import { Text, Button, Portal, Dialog, Paragraph, ActivityIndicator } from 'react-native-paper';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { format } from 'date-fns';
 import Norwegian4x4Timer from '../../src/components/Norwegian4x4Timer';
+import HeartRateZoneDisplay from '../../src/components/vo2max/HeartRateZoneDisplay';
+import SessionSummaryDialog from '../../src/components/vo2max/SessionSummaryDialog';
 import { useCreateVO2maxSession } from '../../src/services/api/vo2maxApi';
 import { getUserId, User } from '../../src/services/api/authApi';
 import { getAuthenticatedClient } from '../../src/services/api/authApi';
@@ -72,7 +66,7 @@ function calculateHeartRateZones(age: number): WorkoutPhaseZones {
 
 export default function VO2maxWorkoutScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams();
+  const _params = useLocalSearchParams();
 
   const [timerStarted, setTimerStarted] = useState(false);
   const [userAge, setUserAge] = useState<number | null>(null);
@@ -187,7 +181,7 @@ export default function VO2maxWorkoutScreen() {
     setShowSummary(false);
     if (sessionData?.session_id) {
       // Navigate to analytics/history with session details
-      router.push({ pathname: '/(tabs)/analytics', params: { sessionId: sessionData.session_id }});
+      router.push({ pathname: '/(tabs)/analytics', params: { sessionId: sessionData.session_id } });
     } else {
       router.replace('/(tabs)');
     }
@@ -213,7 +207,7 @@ export default function VO2maxWorkoutScreen() {
 
   if (!timerStarted) {
     // Instructions view
-    const maxHR = userAge ? calculateMaxHeartRate(userAge) : 190;
+    const _maxHR = userAge ? calculateMaxHeartRate(userAge) : 190;
 
     return (
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
@@ -291,73 +285,7 @@ export default function VO2maxWorkoutScreen() {
           </GradientCard>
 
           {/* Heart Rate Zones */}
-          {hrZones && (
-            <GradientCard
-              gradient={[colors.error.dark, colors.background.secondary]}
-              style={styles.zoneCard}
-            >
-              <Text variant="titleLarge" style={styles.cardTitle}>
-                Your Heart Rate Zones
-              </Text>
-
-              <View style={styles.zoneRow}>
-                <View style={styles.zoneInfo}>
-                  <Text variant="labelSmall" style={styles.zoneLabel}>
-                    YOUR AGE
-                  </Text>
-                  <Text variant="headlineSmall" style={styles.zoneValue}>
-                    {userAge} years
-                  </Text>
-                </View>
-                <View style={styles.zoneInfo}>
-                  <Text variant="labelSmall" style={styles.zoneLabel}>
-                    MAX HR
-                  </Text>
-                  <Text variant="headlineSmall" style={styles.zoneValue}>
-                    {maxHR} bpm
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.divider} />
-
-              <View style={styles.zoneDetail}>
-                <Chip
-                  mode="flat"
-                  style={styles.workChip}
-                  textStyle={styles.chipText}
-                  icon="trending-up"
-                >
-                  WORK ZONE
-                </Chip>
-                <Text variant="headlineMedium" style={styles.zoneRange}>
-                  {hrZones.work.min}-{hrZones.work.max} bpm
-                </Text>
-                <Text variant="bodySmall" style={styles.zoneDescription}>
-                  85-95% max HR · Push hard
-                </Text>
-              </View>
-
-              <View style={styles.divider} />
-
-              <View style={styles.zoneDetail}>
-                <Chip
-                  mode="flat"
-                  style={styles.recoveryChip}
-                  textStyle={styles.chipText}
-                  icon="trending-down"
-                >
-                  RECOVERY ZONE
-                </Chip>
-                <Text variant="headlineMedium" style={styles.zoneRange}>
-                  {hrZones.recovery.min}-{hrZones.recovery.max} bpm
-                </Text>
-                <Text variant="bodySmall" style={styles.zoneDescription}>
-                  60-70% max HR · Active recovery
-                </Text>
-              </View>
-            </GradientCard>
-          )}
+          {hrZones && userAge && <HeartRateZoneDisplay age={userAge} zones={hrZones} />}
 
           {/* Safety Tips */}
           <View style={styles.tipsCard}>
@@ -462,93 +390,12 @@ export default function VO2maxWorkoutScreen() {
       </Portal>
 
       {/* Session Summary Dialog */}
-      <Portal>
-        <Dialog visible={showSummary} onDismiss={handleDone} style={styles.summaryDialog}>
-          <Dialog.Title style={styles.summaryTitle}>Workout Complete! 🎉</Dialog.Title>
-          <Dialog.Content>
-            {sessionData && (
-              <View style={styles.summaryContent}>
-                <View style={styles.summaryRow}>
-                  <Text variant="labelMedium" style={styles.summaryLabel}>
-                    Duration
-                  </Text>
-                  <Text variant="titleLarge" style={styles.summaryValue}>
-                    {sessionData.duration_minutes} min
-                  </Text>
-                </View>
-
-                <View style={styles.summaryRow}>
-                  <Text variant="labelMedium" style={styles.summaryLabel}>
-                    Intervals Completed
-                  </Text>
-                  <Text variant="titleLarge" style={styles.summaryValue}>
-                    {sessionData.intervals_completed}/4
-                  </Text>
-                </View>
-
-                {sessionData.average_heart_rate && (
-                  <View style={styles.summaryRow}>
-                    <Text variant="labelMedium" style={styles.summaryLabel}>
-                      Average HR
-                    </Text>
-                    <Text variant="titleLarge" style={styles.summaryValue}>
-                      {sessionData.average_heart_rate} bpm
-                    </Text>
-                  </View>
-                )}
-
-                {sessionData.peak_heart_rate && (
-                  <View style={styles.summaryRow}>
-                    <Text variant="labelMedium" style={styles.summaryLabel}>
-                      Peak HR
-                    </Text>
-                    <Text variant="titleLarge" style={styles.summaryValue}>
-                      {sessionData.peak_heart_rate} bpm
-                    </Text>
-                  </View>
-                )}
-
-                {sessionData.estimated_vo2max && (
-                  <View style={[styles.summaryRow, styles.vo2maxRow]}>
-                    <Text variant="labelMedium" style={styles.summaryLabel}>
-                      Estimated VO2max
-                    </Text>
-                    <Text variant="displaySmall" style={styles.vo2maxValue}>
-                      {sessionData.estimated_vo2max.toFixed(1)}
-                    </Text>
-                    <Text variant="bodySmall" style={styles.vo2maxUnit}>
-                      ml/kg/min
-                    </Text>
-                  </View>
-                )}
-
-                {sessionData.completion_status === 'incomplete' && (
-                  <View style={styles.incompleteWarning}>
-                    <Text variant="bodySmall" style={styles.incompleteText}>
-                      Session marked as incomplete (less than 4 intervals)
-                    </Text>
-                  </View>
-                )}
-              </View>
-            )}
-          </Dialog.Content>
-          <Dialog.Actions style={styles.summaryActions}>
-            <Button onPress={handleDone} mode="outlined" style={styles.summaryButton}>
-              Done
-            </Button>
-            {sessionData?.session_id && (
-              <Button
-                onPress={handleViewDetails}
-                mode="contained"
-                buttonColor={colors.primary.main}
-                style={styles.summaryButton}
-              >
-                View Details
-              </Button>
-            )}
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <SessionSummaryDialog
+        visible={showSummary}
+        sessionData={sessionData}
+        onDismiss={handleDone}
+        onViewDetails={handleViewDetails}
+      />
     </SafeAreaView>
   );
 }

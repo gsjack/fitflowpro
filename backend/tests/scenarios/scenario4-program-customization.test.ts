@@ -26,15 +26,12 @@ tap.test('Scenario 4: Program Customization', async (t) => {
 
   // Setup: Create test user and get auth token
   let authToken: string;
-  let userId: number;
-  let programId: number;
-  let programDayId: number;
 
   await t.before(async () => {
     const testUsername = `test-scenario4-${Date.now()}@example.com`;
 
     // Register user
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {
@@ -46,8 +43,7 @@ tap.test('Scenario 4: Program Customization', async (t) => {
       },
     });
 
-    const registerBody = registerResponse.json();
-    userId = registerBody.user_id;
+    const _registerBody = registerResponse.json();
 
     // Login
     const loginResponse = await app.inject({
@@ -71,8 +67,6 @@ tap.test('Scenario 4: Program Customization', async (t) => {
     });
 
     const program = programResponse.json();
-    programId = program.id;
-    programDayId = program.program_days[0].id; // Use first day (e.g., Push A)
   });
 
   // AC-1: View current program exercises

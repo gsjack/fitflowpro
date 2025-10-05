@@ -1,24 +1,9 @@
 import { db } from '../database/db.js';
-const VALID_MUSCLE_GROUPS = [
-    'chest',
-    'back',
-    'lats',
-    'mid_back',
-    'rear_delts',
-    'front_delts',
-    'side_delts',
-    'triceps',
-    'biceps',
-    'forearms',
-    'quads',
-    'hamstrings',
-    'glutes',
-    'calves',
-    'abs',
-    'obliques',
-];
+import { VALID_MUSCLE_GROUPS } from '../utils/constants.js';
+import { calculateOneRepMax, roundToDecimals } from '../utils/calculations.js';
 export function getExercises(filters = {}) {
-    if (filters.muscle_group && !VALID_MUSCLE_GROUPS.includes(filters.muscle_group)) {
+    if (filters.muscle_group &&
+        !VALID_MUSCLE_GROUPS.includes(filters.muscle_group)) {
         throw new Error(`Invalid muscle_group: ${filters.muscle_group}. Valid options: ${VALID_MUSCLE_GROUPS.join(', ')}`);
     }
     const conditions = [];
@@ -125,7 +110,7 @@ export function getLastPerformance(userId, exerciseId) {
     }
     let bestOneRM = 0;
     sets.forEach((set) => {
-        const oneRM = set.weight_kg * (1 + (set.reps - set.rir) / 30);
+        const oneRM = calculateOneRepMax(set.weight_kg, set.reps, set.rir);
         if (oneRM > bestOneRM) {
             bestOneRM = oneRM;
         }
@@ -133,7 +118,7 @@ export function getLastPerformance(userId, exerciseId) {
     return {
         last_workout_date: lastWorkout.date,
         sets,
-        estimated_1rm: Math.round(bestOneRM * 10) / 10,
+        estimated_1rm: roundToDecimals(bestOneRM, 1),
     };
 }
 //# sourceMappingURL=exerciseService.js.map

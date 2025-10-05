@@ -213,7 +213,7 @@ export default async function programRoutes(fastify: FastifyInstance) {
         }
 
         // Create default program
-        const programId = createDefaultProgram(authenticatedUser.userId);
+        createDefaultProgram(authenticatedUser.userId);
 
         // Get the created program with full structure
         const program = getUserProgram(authenticatedUser.userId);

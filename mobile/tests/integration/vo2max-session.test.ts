@@ -511,7 +511,7 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
     const testCases = [
       { maxHR: 182, restingHR: 60, expected: 46.4 },
       { maxHR: 190, restingHR: 65, expected: 44.7 },
-      { maxHR: 175, restingHR: 58, expected: 46.1 },
+      { maxHR: 175, restingHR: 58, expected: 46.2 }, // 15.3 * (175/58) = 46.16 → 46.2
     ];
 
     for (const testCase of testCases) {
@@ -574,7 +574,7 @@ describe('Integration Test: VO2max Cardio Session Execution (T021 - Scenario 2)'
     const improvement = finalVO2max - initialVO2max;
 
     expect(improvement).toBeGreaterThan(0);
-    expect(improvement).toBe(4.3); // 42.1 → 46.4
+    expect(improvement).toBeCloseTo(4.3, 1); // 42.1 → 46.4 (use toBeCloseTo for floating point)
 
     // Determine fitness milestone badge
     let milestoneBadge: string;

@@ -8,7 +8,7 @@ import { View, StyleSheet } from 'react-native';
 import { Card, Button, Text, ActivityIndicator } from 'react-native-paper';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getLatestBodyWeight, type LatestWeightResponse } from '../../services/api/bodyWeightApi';
-import { getAuthenticatedClient } from '../../services/api/authApi';
+import { getToken } from '../../services/api/authApi';
 import { colors } from '../../theme/colors';
 import { spacing, borderRadius } from '../../theme/typography';
 import WeightLogModal from './WeightLogModal';
@@ -53,11 +53,11 @@ export default function BodyWeightWidget({ onWeightLogged }: BodyWeightWidgetPro
   const { data, isLoading, error } = useQuery<LatestWeightResponse>({
     queryKey: ['bodyWeight', 'latest'],
     queryFn: async () => {
-      const client = await getAuthenticatedClient();
-      if (!client?.token) {
+      const token = await getToken();
+      if (!token) {
         throw new Error('Not authenticated');
       }
-      return getLatestBodyWeight(client.token);
+      return getLatestBodyWeight(token);
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
@@ -85,7 +85,10 @@ export default function BodyWeightWidget({ onWeightLogged }: BodyWeightWidgetPro
           <Text variant="bodyMedium" style={styles.errorText}>
             Failed to load weight data
           </Text>
-          <Button mode="text" onPress={() => queryClient.invalidateQueries({ queryKey: ['bodyWeight'] })}>
+          <Button
+            mode="text"
+            onPress={() => queryClient.invalidateQueries({ queryKey: ['bodyWeight'] })}
+          >
             Retry
           </Button>
         </Card.Content>
@@ -118,13 +121,19 @@ export default function BodyWeightWidget({ onWeightLogged }: BodyWeightWidgetPro
                   <View style={styles.trendContainer}>
                     <Text
                       variant="titleMedium"
-                      style={[styles.trendIndicator, { color: getTrendColor(week_change.weight_change_kg) }]}
+                      style={[
+                        styles.trendIndicator,
+                        { color: getTrendColor(week_change.weight_change_kg) },
+                      ]}
                     >
                       {getTrendIndicator(week_change.weight_change_kg)}
                     </Text>
                     <Text
                       variant="bodyMedium"
-                      style={[styles.trendValue, { color: getTrendColor(week_change.weight_change_kg) }]}
+                      style={[
+                        styles.trendValue,
+                        { color: getTrendColor(week_change.weight_change_kg) },
+                      ]}
                     >
                       {week_change.weight_change_kg > 0 ? '+' : ''}
                       {formatWeight(Math.abs(week_change.weight_change_kg), unit)}
@@ -135,10 +144,11 @@ export default function BodyWeightWidget({ onWeightLogged }: BodyWeightWidgetPro
 
               {/* Last logged date */}
               <Text variant="bodySmall" style={styles.lastLogged}>
-                Last logged: {new Date(latest.date).toLocaleDateString('en-US', {
+                Last logged:{' '}
+                {new Date(latest.date).toLocaleDateString('en-US', {
                   month: 'short',
                   day: 'numeric',
-                  year: 'numeric'
+                  year: 'numeric',
                 })}
               </Text>
             </View>
@@ -177,7 +187,7 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.md,
     marginBottom: spacing.md,
     borderRadius: borderRadius.lg,
-    backgroundColor: colors.background.paper,
+    backgroundColor: colors.background.secondary,
     elevation: 2,
   },
   loadingContainer: {

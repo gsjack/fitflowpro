@@ -47,7 +47,6 @@ export default function VolumeWarningBadge({
   onPress,
   compact = false,
 }: VolumeWarningBadgeProps) {
-  const theme = useTheme();
   const [dialogVisible, setDialogVisible] = useState(false);
 
   /**
@@ -183,10 +182,7 @@ export default function VolumeWarningBadge({
       {/* Warning Dialog */}
       {warning && (
         <Portal>
-          <Dialog
-            visible={dialogVisible}
-            onDismiss={handleCloseDialog}
-          >
+          <Dialog visible={dialogVisible} onDismiss={handleCloseDialog}>
             <Dialog.Title>Volume Warning</Dialog.Title>
             <Dialog.Content>
               {muscleGroup && (

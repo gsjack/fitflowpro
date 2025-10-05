@@ -157,10 +157,7 @@ export function advancePhase(programId, manual = false, targetPhase) {
             newPhase = progression.next;
             volumeMultiplier = progression.multiplier;
         }
-        const programDayIds = db
-            .prepare('SELECT id FROM program_days WHERE program_id = ?')
-            .all(programId)
-            .map((row) => row.id);
+        const programDayIds = db.prepare('SELECT id FROM program_days WHERE program_id = ?').all(programId).map((row) => row.id);
         let exercisesUpdated = 0;
         for (const programDayId of programDayIds) {
             const exercises = db

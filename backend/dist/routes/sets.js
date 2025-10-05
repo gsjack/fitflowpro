@@ -7,11 +7,9 @@ const logSetSchema = {
             required: [
                 'workout_id',
                 'exercise_id',
-                'set_number',
                 'weight_kg',
                 'reps',
                 'rir',
-                'timestamp',
             ],
             properties: {
                 workout_id: {
@@ -46,8 +44,11 @@ const logSetSchema = {
                     description: 'Reps in Reserve (0-4)',
                 },
                 timestamp: {
-                    type: 'integer',
-                    description: 'UTC milliseconds when set was completed',
+                    oneOf: [
+                        { type: 'integer' },
+                        { type: 'string', format: 'date-time' },
+                    ],
+                    description: 'UTC milliseconds when set was completed (or ISO 8601 string)',
                 },
                 localId: {
                     type: 'integer',
@@ -112,8 +113,7 @@ export default async function setRoutes(fastify) {
                     error: error.message,
                 });
             }
-            if (error instanceof Error &&
-                error.message.includes('FOREIGN KEY constraint failed')) {
+            if (error instanceof Error && error.message.includes('FOREIGN KEY constraint failed')) {
                 return reply.status(400).send({
                     error: 'Invalid workout_id or exercise_id',
                 });

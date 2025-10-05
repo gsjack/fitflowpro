@@ -1,5 +1,5 @@
 import tap from 'tap';
-import Database from 'better-sqlite3';
+
 import * as programServiceModule from '../../src/services/programService.js';
 import * as dbModule from '../../src/database/db.js';
 

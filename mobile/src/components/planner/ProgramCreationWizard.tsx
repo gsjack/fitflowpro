@@ -97,9 +97,8 @@ export default function ProgramCreationWizard({
           Let's get you started with a science-based training program!
         </Paragraph>
         <Paragraph style={styles.paragraph}>
-          Your program will be based on{' '}
-          <Text style={styles.bold}>Renaissance Periodization</Text> methodology by Dr. Mike
-          Israetel.
+          Your program will be based on <Text style={styles.bold}>Renaissance Periodization</Text>{' '}
+          methodology by Dr. Mike Israetel.
         </Paragraph>
         <View style={styles.featureList}>
           <View style={styles.featureItem}>

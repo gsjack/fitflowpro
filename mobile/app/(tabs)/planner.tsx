@@ -16,7 +16,6 @@ import {
   Card,
   Button,
   Text,
-  Divider,
   ActivityIndicator,
   IconButton,
   Snackbar,
@@ -324,7 +323,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   const handleCreateProgram = async () => {
     try {
       // Import createProgram function dynamically to avoid circular dependencies
-      const { createProgram } = await import('../services/api/programApi');
+      const { createProgram } = await import('../../src/services/api/programApi');
 
       await createProgram();
 
@@ -490,7 +489,8 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
               No Active Program
             </Text>
             <Text variant="bodyMedium" style={styles.emptySubtitle}>
-              Create your personalized training program based on Renaissance Periodization principles
+              Create your personalized training program based on Renaissance Periodization
+              principles
             </Text>
             <Text variant="bodySmall" style={styles.emptyHelperText}>
               Your program will automatically progress through MEV → MAV → MRV phases

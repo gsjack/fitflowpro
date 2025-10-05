@@ -451,7 +451,7 @@ tap.test('VO2max Service Unit Tests', async (t) => {
         const sessionData: VO2maxSessionData = {
           workout_id: workoutId,
           user_id: userId,
-          protocol_type: protocols[i],
+          protocol_type: protocols[i] as 'norwegian_4x4' | 'zone2',
           duration_minutes: protocols[i] === 'norwegian_4x4' ? 30 : 60,
           average_heart_rate: hrs[i],
           intervals_completed: protocols[i] === 'norwegian_4x4' ? 4 : undefined,

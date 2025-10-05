@@ -23,9 +23,6 @@ tap.test('Scenario 1: Exercise Swap', async (t) => {
 
   // Setup: Create test user and get auth token
   let authToken: string;
-  let userId: number;
-  let programId: number;
-  let programDayId: number;
   let programExerciseId: number;
   let originalExerciseId: number;
   let originalOrderIndex: number;
@@ -34,7 +31,7 @@ tap.test('Scenario 1: Exercise Swap', async (t) => {
     const testUsername = `test-scenario1-${Date.now()}@example.com`;
 
     // Register user
-    const registerResponse = await app.inject({
+    const _registerResponse = await app.inject({
       method: 'POST',
       url: '/api/auth/register',
       payload: {
@@ -46,8 +43,7 @@ tap.test('Scenario 1: Exercise Swap', async (t) => {
       },
     });
 
-    const registerBody = registerResponse.json();
-    userId = registerBody.user_id;
+    const _registerBody = registerResponse.json();
 
     // Login
     const loginResponse = await app.inject({
@@ -71,8 +67,6 @@ tap.test('Scenario 1: Exercise Swap', async (t) => {
     });
 
     const program = programResponse.json();
-    programId = program.id;
-    programDayId = program.program_days[0].id;
 
     // Get first program exercise (should be a chest exercise like Barbell Bench Press)
     const firstExercise = program.program_days[0].exercises[0];

@@ -20,19 +20,11 @@ import {
   Platform,
   Pressable,
 } from 'react-native';
-import {
-  Text,
-  TextInput,
-  Button,
-  ActivityIndicator,
-  useTheme,
-  HelperText,
-} from 'react-native-paper';
+import { Text, TextInput, Button, ActivityIndicator, useTheme, HelperText } from 'react-native-paper';
 import { Link, useRouter } from 'expo-router';
 import { login, getUserId } from '../../src/services/api/authApi';
 import { initializeDatabase } from '../../src/database/db';
 import { seedProgram } from '../../src/database/seedProgram';
-import { colors } from '../../src/theme/colors';
 
 /**
  * Validate email format using regex
@@ -236,60 +228,20 @@ export default function LoginScreen() {
             </Text>
           )}
 
-          {/* Submit Button - Web-compatible implementation */}
-          {Platform.OS === 'web' ? (
-            // Web: Use native button with onClick for proper event handling
-            <button
-              type="button"
-              onClick={() => {
-                console.log('[LoginScreen] Web button onClick triggered!');
-                void handleLogin();
-              }}
-              disabled={isLoading}
-              style={{
-                marginTop: 24,
-                minHeight: 56,
-                borderRadius: 12,
-                backgroundColor: theme.colors.primary,
-                color: '#FFFFFF',
-                fontSize: 18,
-                fontWeight: 'bold',
-                border: 'none',
-                cursor: isLoading ? 'not-allowed' : 'pointer',
-                opacity: isLoading ? 0.6 : 1,
-                width: '100%',
-              }}
-            >
-              {isLoading ? <ActivityIndicator size="small" color="#fff" /> : 'Login'}
-            </button>
-          ) : (
-            // Native: Use Pressable
-            <Pressable
-              onPress={() => {
-                console.log('[LoginScreen] Native Pressable onPress triggered!');
-                void handleLogin();
-              }}
-              disabled={isLoading}
-              style={({ pressed }) => [
-                styles.submitButton,
-                {
-                  backgroundColor: pressed ? theme.colors.primaryContainer : theme.colors.primary,
-                  opacity: isLoading ? 0.6 : 1,
-                },
-              ]}
-              accessibilityLabel="Login"
-              accessibilityHint="Sign in to your account"
-              accessibilityRole="button"
-            >
-              <View style={styles.buttonContent}>
-                {isLoading ? (
-                  <ActivityIndicator size="small" color="#fff" />
-                ) : (
-                  <Text style={styles.buttonText}>Login</Text>
-                )}
-              </View>
-            </Pressable>
-          )}
+          {/* Submit Button - React Native Paper for cross-platform compatibility */}
+          <Button
+            mode="contained"
+            onPress={handleLogin}
+            loading={isLoading}
+            disabled={isLoading}
+            style={styles.submitButton}
+            contentStyle={styles.buttonContent}
+            labelStyle={styles.buttonText}
+            accessibilityLabel="Login"
+            accessibilityHint="Sign in to your account"
+          >
+            Login
+          </Button>
 
           {/* Link to Register */}
           <View style={styles.linkContainer}>
@@ -298,7 +250,10 @@ export default function LoginScreen() {
             </Text>
             <Link href="/(auth)/register" asChild>
               <Pressable accessibilityRole="link" accessibilityLabel="Go to registration">
-                <Text variant="bodyMedium" style={[styles.linkText, { color: theme.colors.primary }]}>
+                <Text
+                  variant="bodyMedium"
+                  style={[styles.linkText, { color: theme.colors.primary }]}
+                >
                   Register
                 </Text>
               </Pressable>

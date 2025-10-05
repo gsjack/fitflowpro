@@ -26,7 +26,6 @@ import {
   Snackbar,
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useWorkoutStore } from '../stores/workoutStore';
@@ -51,7 +50,6 @@ interface WorkoutScreenProps {
 }
 
 export default function WorkoutScreen({}: WorkoutScreenProps) {
-  const navigation = useNavigation();
   const { weightUnit } = useSettingsStore();
   const {
     currentWorkout,
@@ -84,10 +82,7 @@ export default function WorkoutScreen({}: WorkoutScreenProps) {
   const setLogCardRef = useRef<View>(null);
 
   // Fetch last performance for current exercise
-  const {
-    data: lastPerformance,
-    isLoading: isLoadingHistory,
-  } = useQuery({
+  const { data: lastPerformance, isLoading: isLoadingHistory } = useQuery({
     queryKey: ['exercise-history', currentExercise?.exercise_id],
     queryFn: () => getLastPerformance(currentExercise!.exercise_id),
     enabled: !!currentExercise,

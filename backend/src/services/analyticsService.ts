@@ -6,25 +6,8 @@
  */
 
 import { stmt1RMProgression, stmtVolumeTrends, stmtConsistencyMetrics } from '../database/db.js';
-
-/**
- * Volume landmarks for muscle groups (from mobile constants)
- */
-const VOLUME_LANDMARKS: Record<string, { mev: number; mav: number; mrv: number }> = {
-  chest: { mev: 8, mav: 14, mrv: 22 },
-  back_lats: { mev: 10, mav: 16, mrv: 26 },
-  back_traps: { mev: 6, mav: 12, mrv: 20 },
-  shoulders_front: { mev: 4, mav: 8, mrv: 14 },
-  shoulders_side: { mev: 8, mav: 16, mrv: 26 },
-  shoulders_rear: { mev: 8, mav: 14, mrv: 22 },
-  biceps: { mev: 6, mav: 12, mrv: 20 },
-  triceps: { mev: 6, mav: 12, mrv: 22 },
-  quads: { mev: 8, mav: 14, mrv: 24 },
-  hamstrings: { mev: 6, mav: 12, mrv: 20 },
-  glutes: { mev: 6, mav: 12, mrv: 20 },
-  calves: { mev: 8, mav: 14, mrv: 22 },
-  abs: { mev: 8, mav: 16, mrv: 28 },
-};
+import { VOLUME_LANDMARKS } from '../utils/constants.js';
+import { roundToDecimals } from '../utils/calculations.js';
 
 /**
  * 1RM Progression Data Point
@@ -79,7 +62,7 @@ export function get1RMProgression(
 
   return results.map((row) => ({
     date: row.date,
-    estimated_1rm: Math.round(row.estimated_1rm * 10) / 10, // Round to 1 decimal place
+    estimated_1rm: roundToDecimals(row.estimated_1rm, 1),
   }));
 }
 
@@ -140,7 +123,7 @@ export function getConsistencyMetrics(userId: number): ConsistencyMetrics {
     result.total_workouts > 0 ? result.completed_workouts / result.total_workouts : 0;
 
   return {
-    adherence_rate: Math.round(adherenceRate * 1000) / 1000, // Round to 3 decimal places
+    adherence_rate: roundToDecimals(adherenceRate, 3),
     avg_session_duration: result.avg_session_duration || 0,
     total_workouts: result.total_workouts,
   };

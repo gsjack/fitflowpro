@@ -219,15 +219,21 @@ export default async function programDaysRoutes(fastify: FastifyInstance) {
         // Determine today's day of week (0=Sunday, 1=Monday, ..., 6=Saturday)
         const dayOfWeek = new Date().getDay();
 
+        // Sunday is a rest day - no program day scheduled
+        if (dayOfWeek === 0) {
+          return reply.status(404).send({
+            error: 'No program day scheduled for today (rest day)',
+          });
+        }
+
         // Map day of week to program day_of_week
-        // Sunday (0) -> day 6 (index 5, VO2max B)
-        // Monday (1) -> day 1 (index 0, Push A)
-        // Tuesday (2) -> day 2 (index 1, Pull A)
-        // Wednesday (3) -> day 3 (index 2, VO2max A)
-        // Thursday (4) -> day 4 (index 3, Push B)
-        // Friday (5) -> day 5 (index 4, Pull B)
-        // Saturday (6) -> day 6 (index 5, VO2max B)
-        const dayMapping = [6, 1, 2, 3, 4, 5, 6]; // Maps JS day of week to program day_of_week
+        // Monday (1) -> day 1 (Push A)
+        // Tuesday (2) -> day 2 (Pull A)
+        // Wednesday (3) -> day 3 (VO2max A)
+        // Thursday (4) -> day 4 (Push B)
+        // Friday (5) -> day 5 (Pull B)
+        // Saturday (6) -> day 6 (VO2max B)
+        const dayMapping = [0, 1, 2, 3, 4, 5, 6]; // Maps JS day of week to program day_of_week (index 0 unused)
         const targetDayOfWeek = dayMapping[dayOfWeek]!;
 
         // Get program day for today
@@ -284,6 +290,58 @@ export default async function programDaysRoutes(fastify: FastifyInstance) {
         fastify.log.error(error);
         return reply.status(500).send({
           error: 'Failed to get recommended program day',
+        });
+      }
+    }
+  );
+
+  /**
+   * POST /api/program-days
+   *
+   * Create a new program day for a program
+   *
+   * Requires JWT authentication
+   */
+  fastify.post<{ Body: { program_id: number; name: string; day_of_week: number } }>(
+    '/program-days',
+    {
+      preHandler: authenticateJWT,
+    },
+    async (
+      request: FastifyRequest<{ Body: { program_id: number; name: string; day_of_week: number } }>,
+      reply: FastifyReply
+    ) => {
+      try {
+        const authenticatedUser = (request as AuthenticatedRequest).user;
+        const { program_id, name, day_of_week } = request.body;
+
+        // Verify program belongs to user
+        const programStmt = db.prepare(`
+          SELECT id FROM programs WHERE id = ? AND user_id = ?
+        `);
+        const program = programStmt.get(program_id, authenticatedUser.userId);
+
+        if (!program) {
+          return reply.status(404).send({ error: 'Program not found' });
+        }
+
+        // Insert program day
+        const insertStmt = db.prepare(`
+          INSERT INTO program_days (program_id, day_name, day_of_week, day_type)
+          VALUES (?, ?, ?, 'strength')
+        `);
+        const result = insertStmt.run(program_id, name, day_of_week);
+
+        return reply.status(201).send({
+          program_day_id: result.lastInsertRowid,
+          program_id,
+          name,
+          day_of_week
+        });
+      } catch (error) {
+        fastify.log.error(error);
+        return reply.status(500).send({
+          error: 'Failed to create program day',
         });
       }
     }

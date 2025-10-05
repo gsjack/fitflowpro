@@ -89,7 +89,6 @@ export function MuscleGroupVolumeBar({
   mrv,
   zone,
 }: MuscleGroupVolumeBarProps): React.JSX.Element {
-  const theme = useTheme();
   const [expanded, setExpanded] = useState(false);
 
   // Calculate progress (capped at 1.0 for progress bar, but show actual value)

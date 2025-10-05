@@ -26,7 +26,6 @@ tap.test('Volume Service Unit Tests', async (t) => {
   let programId: number;
   let programDayId: number;
   let benchPressId: number;
-  let bicepCurlId: number;
 
   const userIds: number[] = [];
   const programIds: number[] = [];
@@ -54,7 +53,6 @@ tap.test('Volume Service Unit Tests', async (t) => {
     // Find bicep curl (single muscle: biceps)
     const bicepCurl = db.prepare(`SELECT id FROM exercises WHERE name LIKE '%Curl%' AND muscle_groups LIKE '%biceps%' LIMIT 1`).get() as { id: number } | undefined;
     if (bicepCurl) {
-      bicepCurlId = bicepCurl.id;
     } else {
       throw new Error('Bicep curl exercise not found in database');
     }

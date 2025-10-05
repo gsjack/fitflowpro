@@ -39,7 +39,7 @@ interface SetLogCardProps {
 }
 
 export default function SetLogCard({
-  exerciseName,
+  exerciseName: _exerciseName,
   setNumber,
   targetReps,
   targetRir,

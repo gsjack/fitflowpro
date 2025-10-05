@@ -46,9 +46,7 @@ export function createVO2maxSession(data) {
     const durationSeconds = data.duration_minutes * 60;
     let estimatedVO2max = data.estimated_vo2max;
     if (estimatedVO2max === undefined && data.average_heart_rate !== undefined) {
-        const user = db
-            .prepare('SELECT id, age FROM users WHERE id = ?')
-            .get(data.user_id);
+        const user = db.prepare('SELECT id, age FROM users WHERE id = ?').get(data.user_id);
         if (user && user.age) {
             estimatedVO2max = estimateVO2max(user.age, data.average_heart_rate);
             console.log(`[VO2max] Auto-calculated VO2max: ${estimatedVO2max.toFixed(1)} ml/kg/min ` +

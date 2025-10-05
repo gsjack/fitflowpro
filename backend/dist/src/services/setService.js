@@ -1,17 +1,9 @@
-import { stmtLogSet, db, calculateOneRepMax } from '../database/db.js';
+import { stmtLogSet, db } from '../database/db.js';
+import { calculateOneRepMax, roundToDecimals } from '../utils/calculations.js';
+import { validateSetParameters, validateNotes } from '../utils/validation.js';
 export function logSet(workoutId, exerciseId, setNumber, weightKg, reps, rir, timestamp, localId, notes) {
-    if (weightKg < 0 || weightKg > 500) {
-        throw new Error('Weight must be between 0 and 500 kg');
-    }
-    if (reps < 1 || reps > 50) {
-        throw new Error('Reps must be between 1 and 50');
-    }
-    if (rir < 0 || rir > 4) {
-        throw new Error('RIR must be between 0 and 4');
-    }
-    if (notes && notes.length > 500) {
-        throw new Error('Notes must be 500 characters or less');
-    }
+    validateSetParameters(weightKg, reps, rir);
+    validateNotes(notes);
     let finalSetNumber = setNumber;
     if (finalSetNumber === undefined) {
         const existingSets = db
@@ -51,7 +43,7 @@ export function logSet(workoutId, exerciseId, setNumber, weightKg, reps, rir, ti
     const setId = result.lastInsertRowid;
     const estimated1RM = calculateOneRepMax(weightKg, reps, rir);
     console.log(`Set logged: workout=${workoutId}, exercise=${exerciseId}, ` +
-        `${weightKg}kg × ${reps} @ RIR ${rir} (Est. 1RM: ${estimated1RM.toFixed(1)}kg)`);
+        `${weightKg}kg × ${reps} @ RIR ${rir} (Est. 1RM: ${roundToDecimals(estimated1RM, 1)}kg)`);
     return {
         id: setId,
         localId: localId ?? null,

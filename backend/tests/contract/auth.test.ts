@@ -15,7 +15,7 @@ tap.test('Authentication Endpoints Contract Tests', async (t) => {
   await t.test('POST /api/auth/register', async (t) => {
     await t.test('should register new user with valid data and return 201', async (t) => {
       const validRegistration = {
-        username: 'test@example.com',
+        username: `test-${Date.now()}-1@example.com`,
         password: 'SecurePass123!',
         age: 28,
         weight_kg: 75.5,
@@ -67,7 +67,7 @@ tap.test('Authentication Endpoints Contract Tests', async (t) => {
 
     await t.test('should validate password minimum length (8 characters)', async (t) => {
       const shortPassword = {
-        username: 'test@example.com',
+        username: `test-${Date.now()}-2@example.com`,
         password: 'short',
         age: 28,
         weight_kg: 75.5,
@@ -89,7 +89,7 @@ tap.test('Authentication Endpoints Contract Tests', async (t) => {
 
     await t.test('should validate age range (13-100)', async (t) => {
       const invalidAge = {
-        username: 'test@example.com',
+        username: `test-${Date.now()}-3@example.com`,
         password: 'SecurePass123!',
         age: 10,
         weight_kg: 75.5,
@@ -111,7 +111,7 @@ tap.test('Authentication Endpoints Contract Tests', async (t) => {
 
     await t.test('should validate weight_kg range (30-300)', async (t) => {
       const invalidWeight = {
-        username: 'test@example.com',
+        username: `test-${Date.now()}-4@example.com`,
         password: 'SecurePass123!',
         age: 28,
         weight_kg: 25,
@@ -133,7 +133,7 @@ tap.test('Authentication Endpoints Contract Tests', async (t) => {
 
     await t.test('should validate experience_level enum', async (t) => {
       const invalidExperience = {
-        username: 'test@example.com',
+        username: `test-${Date.now()}-5@example.com`,
         password: 'SecurePass123!',
         age: 28,
         weight_kg: 75.5,
@@ -186,7 +186,7 @@ tap.test('Authentication Endpoints Contract Tests', async (t) => {
 
     await t.test('should allow registration without optional fields', async (t) => {
       const minimalRegistration = {
-        username: 'minimal@example.com',
+        username: `minimal-${Date.now()}@example.com`,
         password: 'SecurePass123!'
       };
 

@@ -5,17 +5,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
-import {
-  Portal,
-  Dialog,
-  Button,
-  Text,
-  TextInput,
-  SegmentedButtons,
-} from 'react-native-paper';
+import { Portal, Dialog, Button, Text, TextInput, SegmentedButtons } from 'react-native-paper';
 import * as Haptics from 'expo-haptics';
 import { logBodyWeight } from '../../services/api/bodyWeightApi';
-import { getAuthenticatedClient } from '../../services/api/authApi';
+import { getToken } from '../../services/api/authApi';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/typography';
 
@@ -105,8 +98,8 @@ export default function WeightLogModal({
       const weightKg = convertToKg(weightNum, selectedUnit);
 
       // Get auth token
-      const client = await getAuthenticatedClient();
-      if (!client?.token) {
+      const token = await getToken();
+      if (!token) {
         throw new Error('Not authenticated');
       }
 
@@ -143,7 +136,7 @@ export default function WeightLogModal({
           <View style={styles.unitToggle}>
             <SegmentedButtons
               value={selectedUnit}
-              onValueChange={(value) => setSelectedUnit(value as 'kg' | 'lbs')}
+              onValueChange={(value) => setSelectedUnit(value)}
               buttons={[
                 { value: 'kg', label: 'kg' },
                 { value: 'lbs', label: 'lbs' },
@@ -189,10 +182,11 @@ export default function WeightLogModal({
 
           {/* Helper Text */}
           <Text variant="bodySmall" style={styles.helperText}>
-            Date: {new Date(date).toLocaleDateString('en-US', {
+            Date:{' '}
+            {new Date(date).toLocaleDateString('en-US', {
               month: 'long',
               day: 'numeric',
-              year: 'numeric'
+              year: 'numeric',
             })}
           </Text>
         </Dialog.Content>

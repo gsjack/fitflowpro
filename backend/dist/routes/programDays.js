@@ -122,7 +122,12 @@ export default async function programDaysRoutes(fastify) {
                 });
             }
             const dayOfWeek = new Date().getDay();
-            const dayMapping = [6, 1, 2, 3, 4, 5, 6];
+            if (dayOfWeek === 0) {
+                return reply.status(404).send({
+                    error: 'No program day scheduled for today (rest day)',
+                });
+            }
+            const dayMapping = [0, 1, 2, 3, 4, 5, 6];
             const targetDayOfWeek = dayMapping[dayOfWeek];
             const programDayStmt = db.prepare(`
           SELECT

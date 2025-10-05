@@ -156,7 +156,7 @@ export default async function programRoutes(fastify) {
                     program_id: existingProgram.id,
                 });
             }
-            const programId = createDefaultProgram(authenticatedUser.userId);
+            createDefaultProgram(authenticatedUser.userId);
             const program = getUserProgram(authenticatedUser.userId);
             if (!program) {
                 throw new Error('Failed to retrieve created program');

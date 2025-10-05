@@ -16,14 +16,14 @@ try {
     const migration002 = readFileSync(MIGRATION_002, 'utf-8');
     const cleanSql = migration002
         .split('\n')
-        .filter(line => !line.trim().startsWith('--'))
+        .filter((line) => !line.trim().startsWith('--'))
         .join('\n')
         .replace(/\/\*[\s\S]*?\*\//g, '');
     const statements = cleanSql
         .split(';')
-        .map(s => s.trim())
-        .filter(s => s && s.toUpperCase().includes('CREATE INDEX'));
-    statements.forEach(statement => {
+        .map((s) => s.trim())
+        .filter((s) => s && s.toUpperCase().includes('CREATE INDEX'));
+    statements.forEach((statement) => {
         db.exec(statement + ';');
         const indexName = statement.match(/CREATE INDEX IF NOT EXISTS (\w+)/)?.[1];
         console.log(`  ✓ Created index: ${indexName}`);
@@ -40,15 +40,15 @@ const expectedIndices = {
     program_exercises: [
         'idx_program_exercises_program_day_id',
         'idx_program_exercises_exercise_id',
-        'idx_program_exercises_order'
+        'idx_program_exercises_order',
     ],
     sets: ['idx_sets_exercise_id'],
-    workouts: ['idx_workouts_date_range']
+    workouts: ['idx_workouts_date_range'],
 };
 let allIndicesFound = true;
 for (const [table, expectedIndexNames] of Object.entries(expectedIndices)) {
     const indices = db.prepare(`PRAGMA index_list(${table})`).all();
-    const indexNames = indices.map(idx => idx.name);
+    const indexNames = indices.map((idx) => idx.name);
     console.log(`\n  Table: ${table}`);
     for (const expectedIndex of expectedIndexNames) {
         if (indexNames.includes(expectedIndex)) {
@@ -69,18 +69,24 @@ else {
 }
 console.log('=== Test 3: Query Performance Analysis ===\n');
 console.log('  Test 3a: Exercise filtering by equipment');
-const equipmentPlan = db.prepare(`EXPLAIN QUERY PLAN SELECT * FROM exercises WHERE equipment = 'barbell'`).all();
-const usesEquipmentIndex = equipmentPlan.some(row => row.detail.includes('idx_exercises_equipment') || row.detail.includes('USING INDEX'));
+const equipmentPlan = db
+    .prepare(`EXPLAIN QUERY PLAN SELECT * FROM exercises WHERE equipment = 'barbell'`)
+    .all();
+const usesEquipmentIndex = equipmentPlan.some((row) => row.detail.includes('idx_exercises_equipment') || row.detail.includes('USING INDEX'));
 console.log(`    Query plan: ${equipmentPlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesEquipmentIndex ? '✓' : '✗'}\n`);
 console.log('  Test 3b: Program exercises ordered by index');
-const programExercisePlan = db.prepare(`EXPLAIN QUERY PLAN SELECT * FROM program_exercises WHERE program_day_id = 1 ORDER BY order_index`).all();
-const usesProgramIndex = programExercisePlan.some(row => row.detail.includes('idx_program_exercises') || row.detail.includes('USING INDEX'));
+const programExercisePlan = db
+    .prepare(`EXPLAIN QUERY PLAN SELECT * FROM program_exercises WHERE program_day_id = 1 ORDER BY order_index`)
+    .all();
+const usesProgramIndex = programExercisePlan.some((row) => row.detail.includes('idx_program_exercises') || row.detail.includes('USING INDEX'));
 console.log(`    Query plan: ${programExercisePlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesProgramIndex ? '✓' : '✗'}\n`);
 console.log('  Test 3c: Volume aggregation by exercise');
-const volumePlan = db.prepare(`EXPLAIN QUERY PLAN SELECT SUM(weight_kg * reps) FROM sets WHERE exercise_id = 10`).all();
-const usesSetsIndex = volumePlan.some(row => row.detail.includes('idx_sets_exercise') || row.detail.includes('USING INDEX'));
+const volumePlan = db
+    .prepare(`EXPLAIN QUERY PLAN SELECT SUM(weight_kg * reps) FROM sets WHERE exercise_id = 10`)
+    .all();
+const usesSetsIndex = volumePlan.some((row) => row.detail.includes('idx_sets_exercise') || row.detail.includes('USING INDEX'));
 console.log(`    Query plan: ${volumePlan[0]?.detail || 'No plan'}`);
 console.log(`    Uses index: ${usesSetsIndex ? '✓' : '✗'}\n`);
 console.log('=== Test 4: Running Migration 003 (VO2max Constraints) ===');
@@ -94,7 +100,9 @@ catch (error) {
     process.exit(1);
 }
 console.log('=== Test 5: Verifying VO2max Constraint Triggers ===\n');
-const triggers = db.prepare(`SELECT name, sql FROM sqlite_master WHERE type='trigger' AND tbl_name='vo2max_sessions'`).all();
+const triggers = db
+    .prepare(`SELECT name, sql FROM sqlite_master WHERE type='trigger' AND tbl_name='vo2max_sessions'`)
+    .all();
 const expectedTriggers = [
     'validate_vo2max_hr_insert',
     'validate_vo2max_peak_hr_insert',
@@ -103,9 +111,9 @@ const expectedTriggers = [
     'validate_vo2max_hr_update',
     'validate_vo2max_peak_hr_update',
     'validate_vo2max_estimate_update',
-    'validate_vo2max_duration_update'
+    'validate_vo2max_duration_update',
 ];
-const triggerNames = triggers.map(t => t.name);
+const triggerNames = triggers.map((t) => t.name);
 let allTriggersFound = true;
 for (const expectedTrigger of expectedTriggers) {
     if (triggerNames.includes(expectedTrigger)) {
@@ -138,11 +146,13 @@ db.prepare(`
   INSERT OR IGNORE INTO program_days (id, program_id, day_of_week, day_name, day_type)
   VALUES (?, 1, 1, 'Test Day', 'vo2max')
 `).run(testProgramDayId);
-const testWorkoutId = db.prepare(`
+const testWorkoutId = db
+    .prepare(`
   INSERT INTO workouts (user_id, program_day_id, date, status)
   VALUES (?, ?, '2025-10-03', 'in_progress')
   RETURNING id
-`).get(testUserId, testProgramDayId);
+`)
+    .get(testUserId, testProgramDayId);
 console.log(`  Created test workout: ${testWorkoutId.id}\n`);
 console.log('  Test 6a: Attempting to insert invalid average_hr (250 bpm)');
 try {
@@ -218,11 +228,13 @@ catch (error) {
 }
 console.log('  Test 6e: Inserting valid VO2max session');
 try {
-    const result = db.prepare(`
+    const result = db
+        .prepare(`
     INSERT INTO vo2max_sessions (workout_id, protocol, duration_seconds, average_hr, peak_hr, estimated_vo2max)
     VALUES (?, '4x4', 1200, 165, 185, 52.5)
     RETURNING id
-  `).get(testWorkoutId.id);
+  `)
+        .get(testWorkoutId.id);
     console.log(`    ✓ PASSED: Valid data accepted (id: ${result.id})\n`);
 }
 catch (error) {

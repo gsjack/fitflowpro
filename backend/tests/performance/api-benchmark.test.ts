@@ -63,7 +63,7 @@ tap.test('Performance Test: API Response Time Benchmark (T080)', async (t) => {
     t.comment(`  Max:        ${max.toFixed(2)}ms`);
 
     // Constitutional requirement
-    t.ok(p95 < 50, `p95 should be < 50ms, got ${p95.toFixed(2)}ms`);
+    t.ok((p95) < 50, `p95 should be < 50ms, got ${p95.toFixed(2)}ms`);
   });
 
   t.test('GET /api/workouts should have p95 < 100ms', async (t) => {
@@ -98,7 +98,7 @@ tap.test('Performance Test: API Response Time Benchmark (T080)', async (t) => {
     t.comment(`  Average:    ${avg.toFixed(2)}ms`);
     t.comment(`  p95:        ${p95.toFixed(2)}ms`);
 
-    t.ok(p95 < 100, `p95 should be < 100ms, got ${p95.toFixed(2)}ms`);
+    t.ok((p95) < 100, `p95 should be < 100ms, got ${p95.toFixed(2)}ms`);
   });
 
   t.test('GET /api/analytics/volume-trends should have p95 < 200ms', async (t) => {
@@ -137,7 +137,7 @@ tap.test('Performance Test: API Response Time Benchmark (T080)', async (t) => {
     t.comment(`  p95:        ${p95.toFixed(2)}ms`);
 
     // Constitutional requirement
-    t.ok(p95 < 200, `p95 should be < 200ms, got ${p95.toFixed(2)}ms`);
+    t.ok((p95) < 200, `p95 should be < 200ms, got ${p95.toFixed(2)}ms`);
   });
 
   t.test('GET /api/analytics/1rm-progression should have p95 < 200ms', async (t) => {
@@ -175,7 +175,7 @@ tap.test('Performance Test: API Response Time Benchmark (T080)', async (t) => {
     t.comment(`  Average:    ${avg.toFixed(2)}ms`);
     t.comment(`  p95:        ${p95.toFixed(2)}ms`);
 
-    t.ok(p95 < 200, `p95 should be < 200ms, got ${p95.toFixed(2)}ms`);
+    t.ok((p95) < 200, `p95 should be < 200ms, got ${p95.toFixed(2)}ms`);
   });
 
   t.test('POST /api/auth/login should have p95 < 100ms', async (t) => {
@@ -213,7 +213,7 @@ tap.test('Performance Test: API Response Time Benchmark (T080)', async (t) => {
     t.comment(`  p95:        ${p95.toFixed(2)}ms`);
 
     // Auth should be reasonably fast
-    t.ok(p95 < 100, `p95 should be < 100ms, got ${p95.toFixed(2)}ms`);
+    t.ok((p95) < 100, `p95 should be < 100ms, got ${p95.toFixed(2)}ms`);
   });
 
   t.test('Concurrent requests should maintain performance', async (t) => {

@@ -7,57 +7,57 @@ TAP version 14
             ok 3 - Exercises have names
             ok 4 - secondary_muscle_groups is parsed array
             1..4
-        ok 1 - should return all exercises without filters # time=8.536ms
+        ok 1 - should return all exercises without filters # time=7.616ms
         
         # Subtest: should filter by muscle_group (primary)
             ok 1 - Returns at least one chest exercise
             ok 2 - All exercises target chest
             1..2
-        ok 2 - should filter by muscle_group (primary) # time=1.773ms
+        ok 2 - should filter by muscle_group (primary) # time=1.204ms
         
         # Subtest: should filter by muscle_group (secondary)
             ok 1 - Returns at least one exercise with triceps
             ok 2 - All exercises target triceps
             1..2
-        ok 3 - should filter by muscle_group (secondary) # time=1.517ms
+        ok 3 - should filter by muscle_group (secondary) # time=1.364ms
         
         # Subtest: should filter by equipment
             ok 1 - Returns at least one barbell exercise
             ok 2 - All exercises use barbell
             1..2
-        ok 4 - should filter by equipment # time=1.555ms
+        ok 4 - should filter by equipment # time=1.127ms
         
         # Subtest: should filter by movement_pattern
             ok 1 - Returns at least one compound exercise
             ok 2 - All exercises are compound
             1..2
-        ok 5 - should filter by movement_pattern # time=1.757ms
+        ok 5 - should filter by movement_pattern # time=1.483ms
         
         # Subtest: should filter by difficulty
             ok 1 - Returns at least one beginner exercise
             ok 2 - All exercises are beginner
             1..2
-        ok 6 - should filter by difficulty # time=2.723ms
+        ok 6 - should filter by difficulty # time=1.512ms
         
         # Subtest: should combine multiple filters
             ok 1 - Returns at least one compound barbell exercise
             ok 2 - All use barbell
             ok 3 - All are compound
             1..3
-        ok 7 - should combine multiple filters # time=3.03ms
+        ok 7 - should combine multiple filters # time=1.619ms
         
         # Subtest: should return empty array for no matches
             ok 1 - Returns array
             1..1
-        ok 8 - should return empty array for no matches # time=0.899ms
+        ok 8 - should return empty array for no matches # time=0.984ms
         
         # Subtest: should throw error for invalid muscle_group
             ok 1 - Throws error for invalid muscle group
             1..1
-        ok 9 - should throw error for invalid muscle_group # time=2.822ms
+        ok 9 - should throw error for invalid muscle_group # time=2.406ms
         
         1..9
-    ok 1 - getExercises() # time=58.701ms
+    ok 1 - getExercises() # time=37.616ms
     
     # Subtest: getExerciseById()
         # Subtest: should return exercise by ID
@@ -70,12 +70,12 @@ TAP version 14
             ok 7 - Has equipment
             ok 8 - Has movement pattern
             1..8
-        ok 1 - should return exercise by ID # time=4.714ms
+        ok 1 - should return exercise by ID # time=2.352ms
         
         # Subtest: should return undefined for non-existent ID
             ok 1 - Returns undefined
             1..1
-        ok 2 - should return undefined for non-existent ID # time=1.227ms
+        ok 2 - should return undefined for non-existent ID # time=0.635ms
         
         # Subtest: should parse secondary_muscle_groups correctly
             ok 1 - At least one isolation exercise exists
@@ -83,13 +83,13 @@ TAP version 14
             ok 3 - secondary_muscle_groups is array
             ok 4 - Exercise is isolation movement
             1..4
-        ok 3 - should parse secondary_muscle_groups correctly # time=7ms
+        ok 3 - should parse secondary_muscle_groups correctly # time=1.626ms
         
         1..3
-    ok 2 - getExerciseById() # time=16.982ms
+    ok 2 - getExerciseById() # time=7.833ms
     
     1..2
-ok 1 - Exercise Service Unit Tests # time=84.042ms
+ok 1 - Exercise Service Unit Tests # time=50.145ms
 
 1..1
 Database connection closed

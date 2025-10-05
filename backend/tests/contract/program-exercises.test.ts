@@ -22,7 +22,6 @@ tap.test('Program Exercise Editor Endpoints Contract Tests', async (t) => {
 
   // Test data IDs (populated in before hook)
   let authToken: string;
-  let userId: number;
   let programId: number;
   let programDayId: number;
   let chestExerciseId: number; // Barbell Bench Press or similar
@@ -45,8 +44,7 @@ tap.test('Program Exercise Editor Endpoints Contract Tests', async (t) => {
       }
     });
 
-    const registerData = registerResponse.json();
-    userId = registerData.user_id;
+    registerResponse.json();
 
     const loginResponse = await app.inject({
       method: 'POST',
@@ -194,10 +192,10 @@ tap.test('Program Exercise Editor Endpoints Contract Tests', async (t) => {
 
       const responses = await Promise.all(promises);
       const lastResponse = responses[responses.length - 1];
-      const body = lastResponse.json();
+      const body = lastResponse?.json();
 
       // Should warn about exceeding MRV (Chest MRV ~22 sets, we've added 4+2+6*4=30 sets)
-      t.ok(body.volume_warning?.includes('MRV') || body.volume_warning?.includes('exceeds'), 'Returns volume warning for MRV');
+      t.ok(body?.volume_warning?.includes('MRV') || body?.volume_warning?.includes('exceeds'), 'Returns volume warning for MRV');
     });
 
     await t.test('should accept optional order_index (201)', async (t) => {
@@ -905,7 +903,7 @@ tap.test('Program Exercise Editor Endpoints Contract Tests', async (t) => {
       const minimalDayId = minimalDayResponse.json().program_day_id;
 
       // Add exercises up to just above MEV (Chest MEV ~8 sets)
-      const exercise1Response = await app.inject({
+      await app.inject({
         method: 'POST',
         url: '/api/program-exercises',
         headers: {

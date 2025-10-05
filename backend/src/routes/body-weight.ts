@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import * as bodyWeightService from '../services/bodyWeightService';
+import * as bodyWeightService from '../services/bodyWeightService.js';
 import { authenticateJWT, AuthenticatedRequest } from '../middleware/auth.js';
 import { db } from '../database/db.js';
 

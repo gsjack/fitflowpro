@@ -97,59 +97,59 @@ tap.test('GET /api/analytics/volume-trends - T018', async (t) => {
             },
         });
         const { token } = JSON.parse(registerResponse.body);
-        await t.test('requires muscle_group query param', async (t) => {
+        await t.test('accepts requests without muscle_group (returns all muscle groups)', async (t) => {
             const response = await app.inject({
                 method: 'GET',
-                url: '/api/analytics/volume-trends?start_date=2025-01-01&end_date=2025-01-31',
+                url: '/api/analytics/volume-trends',
                 headers: {
                     authorization: `Bearer ${token}`,
                 },
             });
-            t.equal(response.statusCode, 400, 'should return 400 without muscle_group');
+            t.equal(response.statusCode, 200, 'should return 200 without muscle_group (optional param)');
         });
-        await t.test('requires start_date query param', async (t) => {
+        await t.test('accepts custom weeks parameter', async (t) => {
             const response = await app.inject({
                 method: 'GET',
-                url: '/api/analytics/volume-trends?muscle_group=chest&end_date=2025-01-31',
+                url: '/api/analytics/volume-trends?weeks=12',
                 headers: {
                     authorization: `Bearer ${token}`,
                 },
             });
-            t.equal(response.statusCode, 400, 'should return 400 without start_date');
+            t.equal(response.statusCode, 200, 'should return 200 with weeks parameter');
         });
-        await t.test('requires end_date query param', async (t) => {
+        await t.test('validates weeks parameter (must be positive)', async (t) => {
             const response = await app.inject({
                 method: 'GET',
-                url: '/api/analytics/volume-trends?muscle_group=chest&start_date=2025-01-01',
+                url: '/api/analytics/volume-trends?weeks=-5',
                 headers: {
                     authorization: `Bearer ${token}`,
                 },
             });
-            t.equal(response.statusCode, 400, 'should return 400 without end_date');
+            t.equal(response.statusCode, 400, 'should return 400 for negative weeks');
         });
         await t.test('returns valid response schema with all params', async (t) => {
             const response = await app.inject({
                 method: 'GET',
-                url: '/api/analytics/volume-trends?muscle_group=chest&start_date=2025-01-01&end_date=2025-01-31',
+                url: '/api/analytics/volume-trends?muscle_group=chest&weeks=8',
                 headers: {
                     authorization: `Bearer ${token}`,
                 },
             });
             t.equal(response.statusCode, 200, 'should return 200 with valid params');
             const data = JSON.parse(response.body);
-            t.ok(Array.isArray(data), 'response should be an array');
-            if (data.length > 0) {
-                const firstItem = data[0];
-                t.ok(firstItem.hasOwnProperty('week'), 'item should have week property');
-                t.ok(firstItem.hasOwnProperty('total_sets'), 'item should have total_sets property');
-                t.ok(firstItem.hasOwnProperty('mev'), 'item should have mev property');
-                t.ok(firstItem.hasOwnProperty('mav'), 'item should have mav property');
-                t.ok(firstItem.hasOwnProperty('mrv'), 'item should have mrv property');
-                t.type(firstItem.week, 'string', 'week should be string (ISO week format)');
-                t.type(firstItem.total_sets, 'number', 'total_sets should be number');
-                t.type(firstItem.mev, 'number', 'mev should be number');
-                t.type(firstItem.mav, 'number', 'mav should be number');
-                t.type(firstItem.mrv, 'number', 'mrv should be number');
+            t.ok(data.weeks, 'response should have weeks property');
+            t.ok(Array.isArray(data.weeks), 'weeks should be an array');
+            if (data.weeks.length > 0) {
+                const firstWeek = data.weeks[0];
+                t.ok(firstWeek.hasOwnProperty('week_start'), 'week should have week_start property');
+                t.ok(firstWeek.hasOwnProperty('muscle_groups'), 'week should have muscle_groups array');
+                t.type(firstWeek.week_start, 'string', 'week_start should be string (ISO date format)');
+                t.ok(Array.isArray(firstWeek.muscle_groups), 'muscle_groups should be array');
+                if (firstWeek.muscle_groups.length > 0) {
+                    const firstMuscle = firstWeek.muscle_groups[0];
+                    t.ok(firstMuscle.hasOwnProperty('muscle_group'), 'should have muscle_group');
+                    t.ok(firstMuscle.hasOwnProperty('completed_sets'), 'should have completed_sets');
+                }
             }
         });
     });

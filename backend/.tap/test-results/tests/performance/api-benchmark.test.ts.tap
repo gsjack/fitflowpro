@@ -102,14 +102,14 @@ TAP version 14
         ok 99 - Request 99 returned valid status
         ok 100 - Request 100 returned valid status
         # POST /api/sets Performance (100 requests):
-        #   Average:    5.57ms
-        #   p50:        4.00ms
-        #   p95:        9.00ms
-        #   p99:        101.00ms
-        #   Max:        101.00ms
-        ok 101 - p95 should be < 50ms, got 9.00ms
+        #   Average:    2.19ms
+        #   p50:        2.00ms
+        #   p95:        3.00ms
+        #   p99:        59.00ms
+        #   Max:        59.00ms
+        ok 101 - p95 should be < 50ms, got 3.00ms
         1..101
-    ok 1 - POST /api/sets should have p95 < 50ms (100 requests) # time=644.361ms
+    ok 1 - POST /api/sets should have p95 < 50ms (100 requests) # time=253.244ms
     
     # Subtest: GET /api/workouts should have p95 < 100ms
         ok 1 - Request 1 returned valid status
@@ -163,11 +163,11 @@ TAP version 14
         ok 49 - Request 49 returned valid status
         ok 50 - Request 50 returned valid status
         # GET /api/workouts Performance (50 requests):
-        #   Average:    2.96ms
-        #   p95:        5.00ms
-        ok 51 - p95 should be < 100ms, got 5.00ms
+        #   Average:    1.40ms
+        #   p95:        2.00ms
+        ok 51 - p95 should be < 100ms, got 2.00ms
         1..51
-    ok 2 - GET /api/workouts should have p95 < 100ms # time=182.064ms
+    ok 2 - GET /api/workouts should have p95 < 100ms # time=81.067ms
     
     # Subtest: GET /api/analytics/volume-trends should have p95 < 200ms
         ok 1 - Request 1 returned valid status
@@ -201,11 +201,11 @@ TAP version 14
         ok 29 - Request 29 returned valid status
         ok 30 - Request 30 returned valid status
         # GET /api/analytics/volume-trends Performance (30 requests):
-        #   Average:    3.03ms
-        #   p95:        6.00ms
-        ok 31 - p95 should be < 200ms, got 6.00ms
+        #   Average:    1.33ms
+        #   p95:        2.00ms
+        ok 31 - p95 should be < 200ms, got 2.00ms
         1..31
-    ok 3 - GET /api/analytics/volume-trends should have p95 < 200ms # time=103.127ms
+    ok 3 - GET /api/analytics/volume-trends should have p95 < 200ms # time=45.66ms
     
     # Subtest: GET /api/analytics/1rm-progression should have p95 < 200ms
         ok 1 - Request 1 returned valid status
@@ -239,11 +239,11 @@ TAP version 14
         ok 29 - Request 29 returned valid status
         ok 30 - Request 30 returned valid status
         # GET /api/analytics/1rm-progression Performance (30 requests):
-        #   Average:    3.17ms
-        #   p95:        6.00ms
-        ok 31 - p95 should be < 200ms, got 6.00ms
+        #   Average:    1.07ms
+        #   p95:        2.00ms
+        ok 31 - p95 should be < 200ms, got 2.00ms
         1..31
-    ok 4 - GET /api/analytics/1rm-progression should have p95 < 200ms # time=116.18ms
+    ok 4 - GET /api/analytics/1rm-progression should have p95 < 200ms # time=36.304ms
     
     # Subtest: POST /api/auth/login should have p95 < 100ms
         ok 1 - Request 1 returned status 400
@@ -267,37 +267,37 @@ TAP version 14
         ok 19 - Request 19 returned status 400
         ok 20 - Request 20 returned status 400
         # POST /api/auth/login Performance (20 requests):
-        #   Average:    3.95ms
-        #   p95:        7.00ms
-        ok 21 - p95 should be < 100ms, got 7.00ms
+        #   Average:    1.60ms
+        #   p95:        2.00ms
+        ok 21 - p95 should be < 100ms, got 2.00ms
         1..21
-    ok 5 - POST /api/auth/login should have p95 < 100ms # time=100.794ms
+    ok 5 - POST /api/auth/login should have p95 < 100ms # time=35.625ms
     
     # Subtest: Concurrent requests should maintain performance
         # Concurrent Requests Performance (50 requests):
-        #   Total duration: 108.00ms
-        #   Avg per req:    2.16ms
+        #   Total duration: 49.00ms
+        #   Avg per req:    0.98ms
         ok 1 - All requests completed
-        ok 2 - Avg duration should be < 100ms, got 2.16ms
+        ok 2 - Avg duration should be < 100ms, got 0.98ms
         1..2
-    ok 6 - Concurrent requests should maintain performance # time=115.5ms
+    ok 6 - Concurrent requests should maintain performance # time=50.569ms
     
     # Subtest: Database query optimization verification
-        # Date range query duration: 4ms
-        ok 1 - Date range query should be < 100ms, got 4ms
+        # Date range query duration: 1ms
+        ok 1 - Date range query should be < 100ms, got 1ms
         ok 2 - Valid response status
         1..2
-    ok 7 - Database query optimization verification # time=8.884ms
+    ok 7 - Database query optimization verification # time=1.822ms
     
     # Subtest: Payload size impact on performance
-        # small payload avg: 3.20ms
+        # small payload avg: 2.00ms
         ok 1 - small payload should be < 100ms
-        # medium payload avg: 5.60ms
+        # medium payload avg: 1.10ms
         ok 2 - medium payload should be < 100ms
-        # large payload avg: 4.00ms
+        # large payload avg: 1.10ms
         ok 3 - large payload should be < 100ms
         1..3
-    ok 8 - Payload size impact on performance # time=132.92ms
+    ok 8 - Payload size impact on performance # time=43.582ms
     
     # Subtest: Error response performance
         ok 1 - Error status returned
@@ -320,10 +320,10 @@ TAP version 14
         ok 18 - Error status returned
         ok 19 - Error status returned
         ok 20 - Error status returned
-        # Error response avg: 4.30ms
-        ok 21 - Error response should be < 50ms, got 4.30ms
+        # Error response avg: 1.80ms
+        ok 21 - Error response should be < 50ms, got 1.80ms
         1..21
-    ok 9 - Error response performance # time=96.02ms
+    ok 9 - Error response performance # time=39.927ms
     
     # Subtest: Server health check latency
         ok 1 - Health check returned valid status
@@ -336,12 +336,12 @@ TAP version 14
         ok 8 - Health check returned valid status
         ok 9 - Health check returned valid status
         ok 10 - Health check returned valid status
-        # Health check avg: 2.50ms
-        ok 11 - Health check should be < 10ms, got 2.50ms
+        # Health check avg: 1.10ms
+        ok 11 - Health check should be < 10ms, got 1.10ms
         1..11
-    ok 10 - Server health check latency # time=29.811ms
+    ok 10 - Server health check latency # time=11.619ms
     
     1..10
-ok 1 - Performance Test: API Response Time Benchmark (T080) # time=1547.514ms
+ok 1 - Performance Test: API Response Time Benchmark (T080) # time=611.078ms
 
 1..1

@@ -12,7 +12,7 @@
 
 import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet, Animated } from 'react-native';
-import { Surface, Text, SegmentedButtons, ActivityIndicator, Button } from 'react-native-paper';
+import { Surface, Text, SegmentedButtons, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useConsistencyMetrics } from '../../src/services/api/analyticsApi';

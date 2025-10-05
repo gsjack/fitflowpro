@@ -20,7 +20,6 @@ tap.test('Volume Analytics Endpoints Contract Tests', async (t) => {
 
   // Create test user and get auth token
   let authToken: string;
-  let userId: number;
 
   t.before(async () => {
     const registerResponse = await app.inject({
@@ -36,7 +35,6 @@ tap.test('Volume Analytics Endpoints Contract Tests', async (t) => {
     });
 
     const userData = registerResponse.json();
-    userId = userData.user_id;
     authToken = userData.token;
   });
 

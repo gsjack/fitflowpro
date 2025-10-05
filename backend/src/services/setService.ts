@@ -7,7 +7,9 @@
  * - 1RM calculation using Epley formula with RIR adjustment
  */
 
-import { stmtLogSet, db, calculateOneRepMax } from '../database/db.js';
+import { stmtLogSet, db } from '../database/db.js';
+import { calculateOneRepMax, roundToDecimals } from '../utils/calculations.js';
+import { validateSetParameters, validateNotes } from '../utils/validation.js';
 
 /**
  * Set interface matching database schema
@@ -67,20 +69,8 @@ export function logSet(
   notes?: string
 ): LogSetResponse {
   // Validate input ranges (per FR-005)
-  if (weightKg < 0 || weightKg > 500) {
-    throw new Error('Weight must be between 0 and 500 kg');
-  }
-  if (reps < 1 || reps > 50) {
-    throw new Error('Reps must be between 1 and 50');
-  }
-  if (rir < 0 || rir > 4) {
-    throw new Error('RIR must be between 0 and 4');
-  }
-
-  // Validate notes length
-  if (notes && notes.length > 500) {
-    throw new Error('Notes must be 500 characters or less');
-  }
+  validateSetParameters(weightKg, reps, rir);
+  validateNotes(notes);
 
   // Default values for optional fields
   // Auto-generate set_number if not provided (count existing sets + 1)
@@ -154,7 +144,7 @@ export function logSet(
   // Log for performance monitoring (should be < 5ms per CLAUDE.md)
   console.log(
     `Set logged: workout=${workoutId}, exercise=${exerciseId}, ` +
-      `${weightKg}kg × ${reps} @ RIR ${rir} (Est. 1RM: ${estimated1RM.toFixed(1)}kg)`
+      `${weightKg}kg × ${reps} @ RIR ${rir} (Est. 1RM: ${roundToDecimals(estimated1RM, 1)}kg)`
   );
 
   return {

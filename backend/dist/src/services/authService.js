@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import { stmtGetUserByUsername, stmtCreateUser } from '../database/db.js';
 import { createDefaultProgram } from './programService.js';
-const BCRYPT_COST = 12;
-export const JWT_EXPIRATION = '30d';
+import { BCRYPT_COST, JWT_EXPIRATION } from '../utils/constants.js';
+export { JWT_EXPIRATION };
 export async function registerUser(username, password, age, weight_kg, experience_level, jwtSign) {
     const existingUser = stmtGetUserByUsername.get(username);
     if (existingUser) {

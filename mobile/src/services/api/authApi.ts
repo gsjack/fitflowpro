@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import storage from '../../utils/storage';
 
 /**
  * Authentication API Client for FitFlow Pro
@@ -75,24 +75,41 @@ export interface LoginResponse {
 }
 
 /**
- * Store JWT token in AsyncStorage
+ * Store JWT token in storage (localStorage on web, AsyncStorage on native)
  */
 async function storeToken(token: string): Promise<void> {
-  await AsyncStorage.setItem(TOKEN_STORAGE_KEY, token);
+  console.log('[authApi] storeToken called');
+  console.log('[authApi] Token to store:', token);
+  console.log('[authApi] Storage key:', TOKEN_STORAGE_KEY);
+  console.log('[authApi] Platform.OS:', Platform.OS);
+
+  await storage.setItem(TOKEN_STORAGE_KEY, token);
+
+  // Verify it was stored
+  const storedToken = await storage.getItem(TOKEN_STORAGE_KEY);
+  console.log('[authApi] Verification - token stored:', !!storedToken);
+  console.log('[authApi] Stored token matches:', storedToken === token);
 }
 
 /**
- * Retrieve JWT token from AsyncStorage
+ * Retrieve JWT token from storage (localStorage on web, AsyncStorage on native)
  */
 export async function getToken(): Promise<string | null> {
-  return await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
+  console.log('[authApi] getToken called');
+  console.log('[authApi] Storage key:', TOKEN_STORAGE_KEY);
+  const token = await storage.getItem(TOKEN_STORAGE_KEY);
+  console.log('[authApi] Token retrieved:', !!token);
+  if (token) {
+    console.log('[authApi] Token length:', token.length);
+  }
+  return token;
 }
 
 /**
- * Remove JWT token from AsyncStorage
+ * Remove JWT token from storage (localStorage on web, AsyncStorage on native)
  */
 export async function clearToken(): Promise<void> {
-  await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
+  await storage.removeItem(TOKEN_STORAGE_KEY);
 }
 
 /**
@@ -140,6 +157,9 @@ export async function register(
   weight_kg?: number,
   experience_level?: 'beginner' | 'intermediate' | 'advanced'
 ): Promise<RegisterResponse> {
+  console.log('[authApi] register called with username:', username);
+  console.log('[authApi] API_BASE_URL:', API_BASE_URL);
+
   const payload: RegisterRequest = {
     username,
     password,
@@ -148,10 +168,14 @@ export async function register(
     ...(experience_level !== undefined ? { experience_level } : {}),
   };
 
+  console.log('[authApi] Posting to /api/auth/register...');
   const response = await baseClient.post<RegisterResponse>('/api/auth/register', payload);
+  console.log('[authApi] Register response:', response.status, 'token received:', !!response.data.token);
 
   // Store token immediately after successful registration
+  console.log('[authApi] About to call storeToken');
   await storeToken(response.data.token);
+  console.log('[authApi] storeToken completed');
 
   return response.data;
 }
