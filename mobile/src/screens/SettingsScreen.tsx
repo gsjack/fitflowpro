@@ -35,6 +35,7 @@ import {
 } from '../services/export/csvExporter';
 import DeleteAccountModal from '../components/common/DeleteAccountModal';
 import { useSettingsStore, type WeightUnit } from '../stores/settingsStore';
+import { colors } from '../theme/colors';
 
 interface SettingsScreenProps {
   onLogout: () => void; // Navigate to AuthScreen after logout
@@ -410,11 +411,13 @@ export default function SettingsScreen({ onLogout }: SettingsScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.background.primary,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.background.primary,
   },
   loadingText: {
     marginTop: 16,

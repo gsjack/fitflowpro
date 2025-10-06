@@ -1,0 +1,200 @@
+================================================================================
+PUSH B WORKOUT TRANSFER - EXECUTION CHECKLIST
+================================================================================
+Target: asigator@gmail.com (User ID 118)
+Source: TBD (pending Agent 3 identification)
+Date: 2025-10-04
+Status: RESEARCH ONLY - DO NOT EXECUTE YET
+================================================================================
+
+PREREQUISITE: Agent 3 Findings
+--------------------------------------------------------------------------------
+[ ] Source user ID identified: _______________
+[ ] Source workout ID identified: _______________
+[ ] Workout confirmed to be "Push B"
+[ ] Placeholders replaced in SQL script:
+    - SOURCE_USER_ID → _______________
+    - WORKOUT_ID → _______________
+
+PRE-EXECUTION
+--------------------------------------------------------------------------------
+[ ] Full database backup created:
+    Command: cp fitflow.db fitflow_backup_20251004.db
+    Location: /mnt/1000gb/Fitness/fitflowpro/backend/data/
+
+[ ] Backup verified:
+    Command: sqlite3 fitflow_backup_20251004.db "SELECT COUNT(*) FROM workouts;"
+    Result: _______________
+
+[ ] Development environment test completed:
+    - Test database created
+    - Script executed successfully in test env
+    - Verification queries passed
+    - Rollback tested and confirmed working
+
+STEP 0: PRE-FLIGHT CHECKS
+--------------------------------------------------------------------------------
+[ ] Target user verification:
+    Query: SELECT id, username FROM users WHERE username = 'asigator@gmail.com';
+    Expected: id=118, username=asigator@gmail.com
+    Actual: _______________
+
+[ ] Source workout identification:
+    Query: SELECT w.id, w.user_id, u.username, pd.day_name
+           FROM workouts w
+           JOIN users u ON w.user_id = u.id
+           JOIN program_days pd ON w.program_day_id = pd.id
+           WHERE w.id = WORKOUT_ID;
+    Expected: day_name='Push B'
+    Actual: _______________
+
+[ ] Program day verification:
+    Query: SELECT pd.id, pd.day_name, p.user_id
+           FROM program_days pd
+           JOIN programs p ON pd.program_id = p.id
+           WHERE pd.day_name = 'Push B';
+    Result: _______________
+
+[ ] Transfer strategy selected:
+    [ ] Option A: Target has Push B program_day (preferred)
+    [ ] Option B: Target has no Push B program_day (fallback)
+
+STEP 1: BACKUP CURRENT STATE
+--------------------------------------------------------------------------------
+[ ] Backup tables created:
+    - workouts_backup_20251004
+    - sets_backup_20251004
+    - programs_backup_20251004
+    - program_days_backup_20251004
+
+[ ] Backup row counts verified:
+    - Workouts: _______________ (expected: 1)
+    - Sets: _______________ (expected: varies)
+    - Programs: _______________ (expected: 1)
+    - Program days: _______________ (expected: 1)
+
+STEP 2: VERIFICATION QUERIES
+--------------------------------------------------------------------------------
+[ ] Records to update counted:
+    - Workouts count: _______________ (expected: 1)
+    - Sets count: _______________
+    - Program days count: _______________ (expected: 1)
+
+[ ] Counts match expectations (all = 1 for workouts/program_days)
+
+STEP 3: TRANSFER TRANSACTION
+--------------------------------------------------------------------------------
+[ ] Transaction started: BEGIN TRANSACTION;
+
+[ ] Transfer SQL executed:
+    Option used: [ ] A  [ ] B
+    Rows updated: _______________
+
+[ ] In-transaction verification reviewed:
+    - workout.user_id = 118? _______________
+    - Sets count unchanged? _______________
+    - Program_day linked? _______________
+
+[ ] Decision made:
+    [ ] COMMIT (if verification passed)
+    [ ] ROLLBACK (if issues found)
+
+[ ] Transaction finalized
+
+STEP 4: POST-TRANSFER VERIFICATION
+--------------------------------------------------------------------------------
+[ ] Workout ownership verified:
+    Query: SELECT user_id FROM workouts WHERE id = WORKOUT_ID;
+    Expected: 118
+    Actual: _______________
+
+[ ] Sets linkage verified:
+    Query: SELECT COUNT(*) FROM sets WHERE workout_id = WORKOUT_ID;
+    Expected: _______________ (from STEP 2)
+    Actual: _______________
+
+[ ] Program day linkage verified:
+    Query: SELECT pd.id, p.user_id FROM program_days pd
+           JOIN programs p ON pd.program_id = p.id
+           WHERE pd.id = (SELECT program_day_id FROM workouts WHERE id = WORKOUT_ID);
+    Expected: p.user_id = 118
+    Actual: _______________
+
+[ ] Target user workout count updated:
+    Query: SELECT COUNT(*) FROM workouts WHERE user_id = 118;
+    Before: _______________
+    After: _______________
+
+STEP 5: MOBILE APP TESTING
+--------------------------------------------------------------------------------
+[ ] User logged in as asigator@gmail.com
+[ ] Push B workout visible in workout history
+[ ] Workout date correct: _______________
+[ ] All sets visible when opening workout:
+    - Set 1: _______________ kg x _______________ reps @ RIR _______________
+    - Set 2: _______________ kg x _______________ reps @ RIR _______________
+    - Set 3: _______________ kg x _______________ reps @ RIR _______________
+    - (Continue for all sets)
+
+[ ] Analytics updated:
+    - 1RM progression includes transferred workout
+    - Volume trends updated
+    - Consistency metrics correct
+
+[ ] Sync queue processed without errors
+[ ] No backend error logs related to transferred workout
+
+MONITORING (24-48 HOURS)
+--------------------------------------------------------------------------------
+[ ] Day 1 check (_______________):
+    - No sync errors
+    - Workout still accessible
+    - Analytics correct
+
+[ ] Day 2 check (_______________):
+    - No delayed issues
+    - User reports no problems
+    - Backend logs clean
+
+STEP 6: CLEANUP
+--------------------------------------------------------------------------------
+[ ] 48 hours elapsed since transfer
+[ ] No issues reported
+[ ] Backup tables dropped:
+    DROP TABLE workouts_backup_20251004;
+    DROP TABLE sets_backup_20251004;
+    DROP TABLE programs_backup_20251004;
+    DROP TABLE program_days_backup_20251004;
+
+ROLLBACK (IF NEEDED)
+--------------------------------------------------------------------------------
+If issues found at any stage:
+
+[ ] BEGIN TRANSACTION;
+[ ] DELETE FROM workouts WHERE id = WORKOUT_ID;
+[ ] INSERT INTO workouts SELECT * FROM workouts_backup_20251004;
+[ ] DELETE FROM sets WHERE workout_id = WORKOUT_ID;
+[ ] INSERT INTO sets SELECT * FROM sets_backup_20251004;
+[ ] (Restore program_days and programs if modified)
+[ ] COMMIT;
+[ ] Verify restoration successful
+[ ] Document issue and cause
+
+SIGN-OFF
+--------------------------------------------------------------------------------
+Executed by: _______________
+Date/Time: _______________
+Duration: _______________
+Issues encountered: _______________
+Resolution: _______________
+Final status: [ ] Success  [ ] Rolled back  [ ] Pending
+
+Notes:
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+
+================================================================================
+END OF CHECKLIST
+================================================================================

@@ -16,6 +16,7 @@ import {
   Platform,
   Animated,
 } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   Card,
   Button,
@@ -319,24 +320,37 @@ export default function DashboardScreen({
           </Text>
 
           {/* Quote of the Day */}
-          <View style={styles.quoteContainer}>
-            <Text variant="bodyMedium" style={styles.quoteText}>
-              "{quoteOfTheDay}"
-            </Text>
-          </View>
+          <Text variant="bodyMedium" style={styles.quoteText}>
+            "{quoteOfTheDay}"
+          </Text>
 
           {todayAssessment ? (
-            <View style={styles.recoveryPrompt}>
-              <Text variant="bodySmall" style={styles.promptTitle}>
-                Recovery Check ✓
-              </Text>
-              <View style={styles.recoveryLoggedState}>
-                <Text variant="bodyMedium" style={styles.recoveryScoreText}>
-                  {todayAssessment.total_score}/15
+            <View style={styles.recoveryCompletedCard}>
+              <View style={styles.recoveryCompletedHeader}>
+                <MaterialCommunityIcons name="check-circle" size={20} color={colors.success.main} />
+                <Text variant="labelMedium" style={styles.recoveryCompletedTitle}>
+                  Recovery Check Complete
                 </Text>
-                <Text variant="bodySmall" style={styles.recoveryMessageText}>
-                  {getRecoveryMessage(volumeAdjustment)}
-                </Text>
+              </View>
+              <View style={styles.recoveryCompletedContent}>
+                <View style={styles.recoveryScoreCircle}>
+                  <Text variant="headlineMedium" style={styles.recoveryScoreValue}>
+                    {todayAssessment.total_score}
+                  </Text>
+                  <Text variant="bodySmall" style={styles.recoveryScoreMax}>
+                    / 15
+                  </Text>
+                </View>
+                <View style={styles.recoveryCompletedMessage}>
+                  <Text variant="bodyMedium" style={styles.recoveryMessageText}>
+                    {getRecoveryMessage(volumeAdjustment)}
+                  </Text>
+                  <View style={styles.recoveryBreakdown}>
+                    <Text variant="bodySmall" style={styles.recoveryBreakdownText}>
+                      Sleep: {todayAssessment.sleep_quality} • Soreness: {todayAssessment.muscle_soreness} • Motivation: {todayAssessment.mental_motivation}
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           ) : (
@@ -799,20 +813,74 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
     fontWeight: '600',
   },
-  quoteContainer: {
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-    marginBottom: spacing.sm,
-    borderLeftWidth: 3,
-    borderLeftColor: colors.primary.main,
-    backgroundColor: colors.background.secondary,
-    borderRadius: borderRadius.sm,
-  },
   quoteText: {
     color: colors.text.secondary,
     fontStyle: 'italic',
-    lineHeight: 20,
+    marginBottom: spacing.lg,
+    paddingHorizontal: spacing.xs,
   },
+
+  // Recovery Completed State
+  recoveryCompletedCard: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    marginTop: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.success.main + '30',
+  },
+  recoveryCompletedHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginBottom: spacing.md,
+  },
+  recoveryCompletedTitle: {
+    color: colors.success.main,
+    fontSize: 13,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+  recoveryCompletedContent: {
+    flexDirection: 'row',
+    gap: spacing.lg,
+    alignItems: 'center',
+  },
+  recoveryScoreCircle: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: colors.success.main + '20',
+    borderWidth: 2,
+    borderColor: colors.success.main,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  recoveryScoreValue: {
+    color: colors.success.main,
+    fontWeight: '700',
+  },
+  recoveryScoreMax: {
+    color: colors.text.tertiary,
+    fontSize: 11,
+  },
+  recoveryCompletedMessage: {
+    flex: 1,
+    gap: spacing.xs,
+  },
+  recoveryMessageText: {
+    color: colors.text.primary,
+    fontWeight: '500',
+  },
+  recoveryBreakdown: {
+    marginTop: spacing.xs,
+  },
+  recoveryBreakdownText: {
+    color: colors.text.tertiary,
+    fontSize: 11,
+  },
+
+  // Recovery Prompt (not completed)
   recoveryPrompt: {
     marginTop: spacing.sm,
     paddingVertical: spacing.sm,
@@ -823,24 +891,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing.sm,
     letterSpacing: 0.5,
-  },
-
-  // Logged Recovery State
-  recoveryLoggedState: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.md,
-    paddingVertical: spacing.xs,
-  },
-  recoveryScoreText: {
-    color: colors.text.primary,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  recoveryMessageText: {
-    color: colors.text.secondary,
-    fontSize: 12,
   },
 
   // Compact Recovery Assessment
