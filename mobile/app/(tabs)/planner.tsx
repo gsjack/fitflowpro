@@ -194,6 +194,33 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   };
 
   /**
+   * Handle moving exercise up/down in order (for web/arrow buttons)
+   */
+  const handleMoveExercise = async (programExerciseId: number, direction: 'up' | 'down') => {
+    if (!selectedDayExercises || selectedDayExercises.length < 2) return;
+
+    const currentIndex = selectedDayExercises.findIndex((ex) => ex.id === programExerciseId);
+    if (currentIndex === -1) return;
+
+    // Check bounds
+    if (direction === 'up' && currentIndex === 0) return;
+    if (direction === 'down' && currentIndex === selectedDayExercises.length - 1) return;
+
+    // Create new order array
+    const newOrder = [...selectedDayExercises];
+    const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+
+    // Swap items
+    [newOrder[currentIndex], newOrder[targetIndex]] = [
+      newOrder[targetIndex],
+      newOrder[currentIndex],
+    ];
+
+    // Call handleReorder with new array
+    await handleReorder(newOrder);
+  };
+
+  /**
    * Handle phase advancement (T096)
    * Note: Actual API call happens in PhaseProgressIndicator component
    */
@@ -351,7 +378,8 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   /**
    * Render draggable exercise item (T094)
    */
-  const renderExerciseItem = ({ item, drag, isActive }: RenderItemParams<any>) => {
+  const renderExerciseItem = ({ item, drag, isActive, getIndex }: RenderItemParams<any>) => {
+    const index = getIndex();
     const muscleGroups = item.muscle_groups ? JSON.parse(item.muscle_groups) : [];
     const primaryMuscleGroup = muscleGroups[0] || '';
 
@@ -426,21 +454,45 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
                 title="Remove Exercise"
               />
             </Menu>
-            <TouchableOpacity
-              onLongPress={drag}
-              disabled={isActive}
-              style={styles.dragHandle}
-              activeOpacity={0.6}
-              accessibilityLabel="Drag to reorder exercise"
-              accessibilityHint="Long press and drag to change exercise order"
-              accessibilityRole="button"
-            >
-              <MaterialCommunityIcons
-                name="drag-horizontal-variant"
-                size={28}
-                color={colors.text.primary} // FIX P0-7: Changed from secondary to primary for better contrast (≥3:1)
+            {/* Arrow buttons for reordering (web-friendly) */}
+            <View style={styles.reorderButtons}>
+              <IconButton
+                icon="chevron-up"
+                size={20}
+                onPress={() => void handleMoveExercise(item.id, 'up')}
+                disabled={isOffline || index === 0}
+                accessibilityLabel="Move exercise up"
+                accessibilityHint="Move this exercise earlier in the workout"
+                accessibilityRole="button"
               />
-            </TouchableOpacity>
+              <IconButton
+                icon="chevron-down"
+                size={20}
+                onPress={() => void handleMoveExercise(item.id, 'down')}
+                disabled={isOffline || index === (selectedDayExercises?.length ?? 0) - 1}
+                accessibilityLabel="Move exercise down"
+                accessibilityHint="Move this exercise later in the workout"
+                accessibilityRole="button"
+              />
+            </View>
+            {/* Drag handle for native (hidden on web) */}
+            {Platform.OS !== 'web' && (
+              <TouchableOpacity
+                onLongPress={drag}
+                disabled={isActive}
+                style={styles.dragHandle}
+                activeOpacity={0.6}
+                accessibilityLabel="Drag to reorder exercise"
+                accessibilityHint="Long press and drag to change exercise order"
+                accessibilityRole="button"
+              >
+                <MaterialCommunityIcons
+                  name="drag-horizontal-variant"
+                  size={28}
+                  color={colors.text.primary}
+                />
+              </TouchableOpacity>
+            )}
           </Card.Content>
         </Card>
       </ScaleDecorator>
@@ -720,7 +772,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.primary,
   },
   listContent: {
-    flexGrow: 1,
+    paddingBottom: 100,
   },
   loadingContainer: {
     flex: 1,
@@ -802,6 +854,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     justifyContent: 'space-between',
+  },
+  reorderButtons: {
+    flexDirection: 'column',
+    marginLeft: 4,
   },
   dragHandle: {
     marginLeft: 'auto',

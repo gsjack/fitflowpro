@@ -136,36 +136,57 @@ export default function DashboardScreen() {
   };
 
   const handleStartWorkout = async () => {
+    if (!userId) return;
+
     // Haptic feedback on workout start (mobile only)
     if (Platform.OS !== 'web') {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }
 
-    // Navigate to workout screen with params
-    if (todayWorkout) {
-      if (todayWorkout.day_type === 'vo2max') {
-        router.push({
-          pathname: '/(tabs)/vo2max-workout',
-          params: { programDayId: todayWorkout.program_day_id, date: todayWorkout.date },
-        });
-      } else {
-        router.push({
-          pathname: '/(tabs)/workout',
-          params: { programDayId: todayWorkout.program_day_id, date: todayWorkout.date },
-        });
+    try {
+      // Start workout in store (creates workout if needed)
+      if (todayWorkout) {
+        // Workout already exists, load it into store before navigating
+        const { startWorkout } = useWorkoutStore.getState();
+        await startWorkout(userId, todayWorkout.program_day_id, todayWorkout.date);
+
+        // Navigate after workout is loaded into store
+        if (todayWorkout.day_type === 'vo2max') {
+          router.push({
+            pathname: '/(tabs)/vo2max-workout',
+            params: { programDayId: todayWorkout.program_day_id, date: todayWorkout.date },
+          });
+        } else {
+          router.push({
+            pathname: '/(tabs)/workout',
+            params: { programDayId: todayWorkout.program_day_id, date: todayWorkout.date },
+          });
+        }
+      } else if (recommendedProgramDay) {
+        const today = new Date().toISOString().split('T')[0];
+
+        // Create workout via store before navigating
+        const { startWorkout } = useWorkoutStore.getState();
+        await startWorkout(userId, recommendedProgramDay.id, today);
+
+        // Navigate after workout is created
+        if (recommendedProgramDay.day_type === 'vo2max') {
+          router.push({
+            pathname: '/(tabs)/vo2max-workout',
+            params: { programDayId: recommendedProgramDay.id, date: today },
+          });
+        } else {
+          router.push({
+            pathname: '/(tabs)/workout',
+            params: { programDayId: recommendedProgramDay.id, date: today },
+          });
+        }
       }
-    } else if (recommendedProgramDay) {
-      const today = new Date().toISOString().split('T')[0];
-      if (recommendedProgramDay.day_type === 'vo2max') {
-        router.push({
-          pathname: '/(tabs)/vo2max-workout',
-          params: { programDayId: recommendedProgramDay.id, date: today },
-        });
-      } else {
-        router.push({
-          pathname: '/(tabs)/workout',
-          params: { programDayId: recommendedProgramDay.id, date: today },
-        });
+    } catch (error) {
+      console.error('[DashboardScreen] Error starting workout:', error);
+      // Show error feedback (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
     }
   };

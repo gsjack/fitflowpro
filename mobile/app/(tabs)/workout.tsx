@@ -306,37 +306,7 @@ export default function WorkoutScreen() {
     }
   };
 
-  if (!currentWorkout || !currentExercise) {
-    return (
-      <View style={styles.container}>
-        <LinearGradient
-          colors={[colors.background.primary, colors.background.secondary]}
-          style={styles.gradient}
-        >
-          <View style={styles.emptyState}>
-            <MaterialCommunityIcons name="dumbbell" size={80} color={colors.text.disabled} />
-            <Text variant="headlineMedium" style={styles.emptyTitle}>
-              No active workout
-            </Text>
-            <Text variant="bodyMedium" style={styles.emptyDescription}>
-              Return to Dashboard to start a workout from your program
-            </Text>
-            <Button
-              mode="contained"
-              icon="home"
-              onPress={() => router.replace('/(tabs)')}
-              style={styles.emptyStateCTA}
-              contentStyle={styles.emptyStateCtaContent}
-              accessibilityLabel="Go to Dashboard"
-            >
-              Go to Dashboard
-            </Button>
-          </View>
-        </LinearGradient>
-      </View>
-    );
-  }
-
+  // Move all hooks before early return to comply with Rules of Hooks
   const totalSets = exercises.reduce((sum, ex) => sum + ex.sets, 0);
   const completedSetCount = completedSets.length;
   const progress = totalSets > 0 ? completedSetCount / totalSets : 0;
@@ -346,6 +316,8 @@ export default function WorkoutScreen() {
 
   // Milestone detection and celebration effect
   useEffect(() => {
+    if (!currentWorkout || !currentExercise) return;
+
     const currentProgress = progress;
     const previousProgress = previousProgressRef.current;
 
@@ -388,16 +360,49 @@ export default function WorkoutScreen() {
     });
 
     previousProgressRef.current = currentProgress;
-  }, [progress]);
+  }, [progress, currentWorkout, currentExercise]);
 
   // Animate progress bar smoothly
   useEffect(() => {
+    if (!currentWorkout || !currentExercise) return;
+
     Animated.timing(progressAnimValue, {
       toValue: progress,
       duration: 300,
       useNativeDriver: false, // ProgressBar doesn't support native driver
     }).start();
-  }, [progress, progressAnimValue]);
+  }, [progress, progressAnimValue, currentWorkout, currentExercise]);
+
+  if (!currentWorkout || !currentExercise) {
+    return (
+      <View style={styles.container}>
+        <LinearGradient
+          colors={[colors.background.primary, colors.background.secondary]}
+          style={styles.gradient}
+        >
+          <View style={styles.emptyState}>
+            <MaterialCommunityIcons name="dumbbell" size={80} color={colors.text.disabled} />
+            <Text variant="headlineMedium" style={styles.emptyTitle}>
+              No active workout
+            </Text>
+            <Text variant="bodyMedium" style={styles.emptyDescription}>
+              Return to Dashboard to start a workout from your program
+            </Text>
+            <Button
+              mode="contained"
+              icon="home"
+              onPress={() => router.replace('/(tabs)')}
+              style={styles.emptyStateCTA}
+              contentStyle={styles.emptyStateCtaContent}
+              accessibilityLabel="Go to Dashboard"
+            >
+              Go to Dashboard
+            </Button>
+          </View>
+        </LinearGradient>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

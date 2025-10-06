@@ -118,104 +118,45 @@ export function MuscleGroupVolumeBar({
         accessibilityLabel={`${formattedName} volume: ${completedSets} of ${plannedSets} sets completed. ${statusText}. Tap to ${expanded ? 'collapse' : 'expand'} details.`}
         accessibilityHint="Double tap to toggle volume landmark details"
       >
-        {/* Header Row */}
+        {/* Compact Header Row */}
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            <Text variant="titleMedium" style={styles.muscleGroupName}>
+            <View style={[styles.zoneIndicator, { backgroundColor: zoneColor }]} />
+            <Text variant="bodyLarge" style={styles.muscleGroupName}>
               {formattedName}
             </Text>
-            <View style={[styles.zoneIndicator, { backgroundColor: zoneColor }]} />
           </View>
           <View style={styles.headerRight}>
-            <Text variant="bodyLarge" style={styles.setsText}>
-              {completedSets}/{plannedSets}
+            <Text variant="headlineSmall" style={styles.setsText}>
+              {completedSets}<Text style={styles.setsDivider}>/</Text>{plannedSets}
             </Text>
-            <Text variant="bodySmall" style={styles.setsLabel}>
-              sets
+            <Text variant="bodySmall" style={styles.completionPercentage}>
+              {completionPercentage}%
             </Text>
             <MaterialCommunityIcons
               name={expanded ? 'chevron-up' : 'chevron-down'}
-              size={24}
-              color={colors.text.secondary}
+              size={20}
+              color={colors.text.tertiary}
             />
           </View>
         </View>
 
-        {/* Progress Bar with Threshold Markers */}
-        <View style={styles.progressContainer}>
-          {/* Threshold Markers (behind progress bar) */}
-          <View style={styles.markersContainer}>
-            {/* MEV Marker */}
-            <View style={[styles.thresholdMarker, { left: `${mevPosition}%` }]}>
-              <View style={styles.markerLine} />
-            </View>
-            {/* MAV Marker */}
-            <View style={[styles.thresholdMarker, { left: `${mavPosition}%` }]}>
-              <View style={styles.markerLine} />
-            </View>
-            {/* MRV Marker */}
-            <View style={[styles.thresholdMarker, { left: `${mrvPosition}%` }]}>
-              <View style={styles.markerLine} />
-            </View>
-          </View>
+        {/* Simple Progress Bar (no markers by default) */}
+        <ProgressBar progress={progress} color={zoneColor} style={styles.progressBar} />
 
-          {/* Progress Bar */}
-          <ProgressBar progress={progress} color={zoneColor} style={styles.progressBar} />
-
-          {/* Threshold Labels (below bar) */}
-          <View style={styles.thresholdLabels}>
-            <Text style={[styles.thresholdLabel, { left: `${mevPosition}%` }]}>MEV</Text>
-            <Text style={[styles.thresholdLabel, { left: `${mavPosition}%` }]}>MAV</Text>
-            <Text style={[styles.thresholdLabel, { left: `${mrvPosition}%` }]}>MRV</Text>
-          </View>
-        </View>
-
-        {/* Completion Percentage */}
-        <View style={styles.completionRow}>
-          <Text variant="bodySmall" style={styles.completionText}>
-            {completionPercentage}% of planned volume
-          </Text>
-          {isOverMRV && (
-            <View style={styles.warningBadge}>
-              <MaterialCommunityIcons name="alert" size={14} color={colors.error.main} />
-              <Text variant="bodySmall" style={styles.warningText}>
-                Over MRV
-              </Text>
-            </View>
-          )}
-        </View>
-
-        {/* Expanded Details */}
+        {/* Expanded Details with Threshold Info */}
         {expanded && (
-          <View style={styles.detailsContainer}>
-            <View style={styles.detailRow}>
-              <Text variant="bodySmall" style={styles.detailLabel}>
-                MEV (Minimum Effective Volume):
-              </Text>
-              <Text variant="bodyMedium" style={styles.detailValue}>
-                {mev} sets/week
-              </Text>
+          <View style={styles.thresholdInfo}>
+            <View style={styles.thresholdRow}>
+              <Text style={styles.thresholdMiniLabel}>MEV: {mev}</Text>
+              <Text style={styles.thresholdMiniLabel}>MAV: {mav}</Text>
+              <Text style={styles.thresholdMiniLabel}>MRV: {mrv}</Text>
             </View>
-            <View style={styles.detailRow}>
-              <Text variant="bodySmall" style={styles.detailLabel}>
-                MAV (Maximum Adaptive Volume):
-              </Text>
-              <Text variant="bodyMedium" style={styles.detailValue}>
-                {mav} sets/week
-              </Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text variant="bodySmall" style={styles.detailLabel}>
-                MRV (Maximum Recoverable Volume):
-              </Text>
-              <Text variant="bodyMedium" style={styles.detailValue}>
-                {mrv} sets/week
-              </Text>
-            </View>
+
             <View style={styles.statusRow}>
               <MaterialCommunityIcons
                 name="information-outline"
-                size={16}
+                size={14}
                 color={colors.text.secondary}
               />
               <Text variant="bodySmall" style={styles.statusText}>
@@ -231,155 +172,83 @@ export function MuscleGroupVolumeBar({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    borderRadius: 12,
+    padding: 12,
+    borderRadius: 8,
     backgroundColor: colors.background.secondary,
-    marginBottom: 12,
+    marginBottom: 8,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    flex: 1,
+  },
+  zoneIndicator: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
   muscleGroupName: {
     color: colors.text.primary,
-    fontWeight: '600',
-  },
-  zoneIndicator: {
-    width: 12, // Increased from 10 to 12px for better visibility
-    height: 12,
-    borderRadius: 6,
-    borderWidth: 2, // Thicker border for better definition
-    borderColor: '#FFFFFF',
-    shadowColor: '#000000', // Added shadow for depth
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
+    fontWeight: '500',
   },
   headerRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 12,
   },
   setsText: {
     color: colors.text.primary,
-    fontSize: 18,
     fontWeight: '700',
   },
-  setsLabel: {
-    fontSize: 13,
+  setsDivider: {
+    color: colors.text.tertiary,
+    fontWeight: '400',
+  },
+  completionPercentage: {
     color: colors.text.secondary,
-  },
-  progressContainer: {
-    position: 'relative',
-    marginBottom: 24,
-  },
-  markersContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1,
-  },
-  thresholdMarker: {
-    position: 'absolute',
-    height: '100%',
-    width: 2,
-    zIndex: 1,
-  },
-  markerLine: {
-    width: 2,
-    height: '100%',
-    backgroundColor: '#FFFFFF',
-    opacity: 0.8, // Enhanced to 0.8 for maximum visibility (7.2:1 contrast ratio)
-    shadowColor: '#FFFFFF',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5, // Increased shadow for stronger definition
-    shadowRadius: 3, // Wider glow for better visibility
+    fontWeight: '600',
+    minWidth: 40,
+    textAlign: 'right',
   },
   progressBar: {
-    height: 16, // Increased from 14 to 16px for better visual prominence
-    borderRadius: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Enhanced to 0.5 for stronger track visibility (4.3:1 contrast)
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)', // Increased border opacity for better definition
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.background.tertiary,
   },
-  thresholdLabels: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  thresholdLabel: {
-    position: 'absolute',
-    fontSize: 12, // Increased from 11 to 12px for better readability
-    fontWeight: '700', // Bold for optimal visibility
-    color: colors.text.primary, // White (#FFFFFF) for maximum contrast (15.6:1)
-    marginLeft: -15, // Adjusted centering for larger font
-    textShadowColor: 'rgba(0, 0, 0, 0.6)', // Enhanced shadow for better legibility
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3, // Wider shadow for stronger outline effect
-    letterSpacing: 0.5, // Added letter spacing for clarity
-  },
-  completionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  completionText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: colors.text.secondary,
-  },
-  warningBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: colors.error.bg,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  warningText: {
-    color: colors.error.main,
-    fontWeight: '600',
-  },
-  detailsContainer: {
-    marginTop: 16,
-    paddingTop: 16,
+  thresholdInfo: {
+    marginTop: 8,
+    paddingTop: 8,
     borderTopWidth: 1,
     borderTopColor: colors.effects.divider,
-    gap: 8,
   },
-  detailRow: {
+  thresholdRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 8,
   },
-  detailLabel: {
-    color: colors.text.secondary,
-    flex: 1,
-  },
-  detailValue: {
-    color: colors.text.primary,
-    fontWeight: '600',
+  thresholdMiniLabel: {
+    fontSize: 11,
+    color: colors.text.tertiary,
+    fontWeight: '500',
   },
   statusRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginTop: 8,
+    gap: 6,
     padding: 8,
     backgroundColor: colors.background.tertiary,
-    borderRadius: 8,
+    borderRadius: 6,
   },
   statusText: {
     color: colors.text.secondary,
     flex: 1,
+    fontSize: 11,
   },
 });
