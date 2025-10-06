@@ -179,25 +179,10 @@ export default function TodaysWorkoutCard({
         )}
 
         {status === 'completed' && (
-          <View style={styles.completedMetrics}>
-            <View style={styles.metricItem}>
-              <Text variant="displaySmall" style={styles.metricValue}>
-                {totalVolumeKg?.toFixed(0) || '0'}
-              </Text>
-              <Text variant="bodySmall" style={styles.metricLabel}>
-                kg volume
-              </Text>
-            </View>
-            {averageRir !== undefined && (
-              <View style={styles.metricItem}>
-                <Text variant="displaySmall" style={styles.metricValue}>
-                  {averageRir?.toFixed(1) ?? 'N/A'}
-                </Text>
-                <Text variant="bodySmall" style={styles.metricLabel}>
-                  avg RIR
-                </Text>
-              </View>
-            )}
+          <View style={styles.completedBanner}>
+            <Text variant="displaySmall" style={styles.completedText}>
+              ✓ COMPLETED
+            </Text>
           </View>
         )}
       </View>
@@ -290,21 +275,19 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.5,
   },
-  completedMetrics: {
-    flexDirection: 'row',
-    gap: spacing.xl,
+  completedBanner: {
     marginTop: spacing.md,
-  },
-  metricItem: {
-    flex: 1,
+    padding: spacing.lg,
     alignItems: 'center',
+    backgroundColor: colors.success.main + '20',
+    borderRadius: borderRadius.md,
+    borderWidth: 2,
+    borderColor: colors.success.main,
   },
-  metricValue: {
+  completedText: {
     color: colors.success.main,
     fontWeight: '700',
-  },
-  metricLabel: {
-    color: colors.text.tertiary,
-    marginTop: spacing.xs,
+    fontSize: 28,
+    letterSpacing: 2,
   },
 });
