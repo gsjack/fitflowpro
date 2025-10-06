@@ -73,16 +73,21 @@ export default function SetLogCard({
   }, []);
 
   const handleLogSet = async () => {
+    console.log('[SetLogCard] handleLogSet called');
     const weightInDisplayUnit = parseFloat(weightDisplay);
     const repsNum = parseInt(reps, 10);
     const rirNum = parseInt(rir, 10);
 
+    console.log('[SetLogCard] Parsed values:', { weightInDisplayUnit, repsNum, rirNum });
+
     if (isNaN(weightInDisplayUnit) || isNaN(repsNum) || isNaN(rirNum)) {
+      console.log('[SetLogCard] Invalid values, returning');
       return;
     }
 
     // Convert display weight to kg for backend
     const weightKg = toBackendWeight(weightInDisplayUnit, weightUnit);
+    console.log('[SetLogCard] Calling onLogSet with:', { weightKg, repsNum, rirNum });
 
     // Haptic feedback on successful set completion (mobile only)
     if (Platform.OS !== 'web') {
@@ -162,6 +167,16 @@ export default function SetLogCard({
     reps !== '' &&
     !isNaN(parseFloat(weightDisplay)) &&
     !isNaN(parseInt(reps, 10));
+
+  // Debug logging
+  console.log('[SetLogCard] Form state:', {
+    weightDisplay,
+    reps,
+    rir,
+    isValid,
+    previousWeight,
+    previousReps,
+  });
 
   // Get appropriate increment and unit label based on user preference
   const weightIncrement = getWeightIncrement(weightUnit);

@@ -87,7 +87,15 @@ export function logSet(
   if (timestamp === undefined) {
     finalTimestamp = Date.now();
   } else if (typeof timestamp === 'string') {
-    finalTimestamp = new Date(timestamp).getTime();
+    // Check if it's a numeric string (Unix ms timestamp) or ISO date string
+    const numericTimestamp = parseInt(timestamp, 10);
+    if (!isNaN(numericTimestamp) && timestamp === numericTimestamp.toString()) {
+      // It's a numeric string like "1759763562409"
+      finalTimestamp = numericTimestamp;
+    } else {
+      // It's an ISO date string like "2025-10-06T15:12:42.409Z"
+      finalTimestamp = new Date(timestamp).getTime();
+    }
   } else {
     finalTimestamp = timestamp;
   }

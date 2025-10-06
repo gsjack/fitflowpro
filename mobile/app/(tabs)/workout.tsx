@@ -48,7 +48,7 @@ import { useFadeIn } from '../../src/utils/animations';
 
 export default function WorkoutScreen() {
   const router = useRouter();
-  const _params = useLocalSearchParams();
+  const params = useLocalSearchParams();
   const { weightUnit } = useSettingsStore();
   const {
     currentWorkout,
@@ -59,6 +59,7 @@ export default function WorkoutScreen() {
     completeWorkout,
     cancelWorkout,
     resumeWorkout,
+    startWorkout,
   } = useWorkoutStore();
 
   const [exercises, setExercises] = useState<ProgramExercise[]>([]);
@@ -105,7 +106,20 @@ export default function WorkoutScreen() {
           return;
         }
 
-        // Import workoutDb to check for in-progress workout
+        // If URL params provided (direct navigation), start workout with those params
+        if (params.programDayId && params.date) {
+          const programDayId = Number(params.programDayId);
+          const date = String(params.date);
+          console.log('[WorkoutScreen] Starting workout from URL params:', {
+            programDayId,
+            date,
+          });
+          await startWorkout(userId, programDayId, date);
+          setCheckedForActiveWorkout(true);
+          return;
+        }
+
+        // Otherwise, check for existing in-progress workout
         const workoutDb = await import('../../src/services/database/workoutDb');
         const todayWorkout = await workoutDb.getTodayWorkout(userId);
 
@@ -121,7 +135,7 @@ export default function WorkoutScreen() {
     };
 
     void checkActiveWorkout();
-  }, [checkedForActiveWorkout, currentWorkout, resumeWorkout]);
+  }, [checkedForActiveWorkout, currentWorkout, resumeWorkout, startWorkout, params]);
 
   // Load exercises from the workout (API includes exercises in workout response)
   useEffect(() => {
