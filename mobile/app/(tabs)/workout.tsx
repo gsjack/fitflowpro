@@ -259,13 +259,15 @@ export default function WorkoutScreen() {
       // Start rest timer (3 minutes = 180 seconds)
       startRestTimer(180);
 
-      // Accessibility: Focus back to weight input after brief delay
-      setTimeout(() => {
-        const reactTag = findNodeHandle(setLogCardRef.current);
-        if (reactTag) {
-          AccessibilityInfo.setAccessibilityFocus(reactTag);
-        }
-      }, 500);
+      // Accessibility: Focus back to weight input after brief delay (mobile only)
+      if (Platform.OS !== 'web') {
+        setTimeout(() => {
+          const reactTag = findNodeHandle(setLogCardRef.current);
+          if (reactTag) {
+            AccessibilityInfo.setAccessibilityFocus(reactTag);
+          }
+        }, 500);
+      }
     } catch (error) {
       console.error('[WorkoutScreen] Failed to log set:', error);
     }
