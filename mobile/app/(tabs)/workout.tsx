@@ -297,11 +297,26 @@ export default function WorkoutScreen() {
   // Handle workout completion
   const handleCompleteWorkout = async () => {
     try {
+      // Haptic feedback for completion (mobile only)
+      if (Platform.OS !== 'web') {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      }
+
       await completeWorkout();
-      // TODO: Navigate to workout summary
-      console.log('[WorkoutScreen] Workout completed');
+      console.log('[WorkoutScreen] Workout completed successfully');
+
+      // Show success message
+      setMilestoneMessage('🎉 Workout completed! Great work!');
+      setSnackbarVisible(true);
+
+      // Navigate back to dashboard after brief delay
+      setTimeout(() => {
+        router.push('/(tabs)');
+      }, 1500);
     } catch (error) {
       console.error('[WorkoutScreen] Failed to complete workout:', error);
+      setMilestoneMessage('Failed to complete workout. Please try again.');
+      setSnackbarVisible(true);
     }
   };
 
