@@ -159,10 +159,15 @@ function LineChart({ data, theme, weightUnit }: LineChartProps): React.JSX.Eleme
   // Calculate point positions (using display unit values)
   const points = data.map((point, index) => {
     const valueInDisplayUnit = fromBackendWeight(point.estimated_1rm, weightUnit);
-    const x = PADDING.left + (index / (data.length - 1)) * chartWidth;
-    const y =
-      PADDING.top + chartHeight - ((valueInDisplayUnit - minValue) / valueRange) * chartHeight;
-    return { x, y, value: valueInDisplayUnit, date: point.date };
+    // Handle single data point case (avoid division by zero)
+    const xPosition = data.length === 1
+      ? PADDING.left + chartWidth / 2
+      : PADDING.left + (index / (data.length - 1)) * chartWidth;
+    const yPosition =
+      valueRange === 0
+        ? PADDING.top + chartHeight / 2
+        : PADDING.top + chartHeight - ((valueInDisplayUnit - minValue) / valueRange) * chartHeight;
+    return { x: xPosition, y: yPosition, value: valueInDisplayUnit, date: point.date };
   });
 
   // Create polyline path for the line
@@ -229,21 +234,23 @@ function LineChart({ data, theme, weightUnit }: LineChartProps): React.JSX.Eleme
         ))}
 
         {/* X-axis labels (show first, middle, last) */}
-        {[0, Math.floor(points.length / 2), points.length - 1].map((index) => {
-          const point = points[index];
-          return (
-            <SvgText
-              key={index}
-              x={point.x}
-              y={CHART_HEIGHT - PADDING.bottom + 20}
-              fontSize="10"
-              fill="#666"
-              textAnchor="middle"
-            >
-              {formatDate(point.date)}
-            </SvgText>
-          );
-        })}
+        {[0, Math.floor(points.length / 2), points.length - 1]
+          .filter((value, idx, self) => self.indexOf(value) === idx) // Remove duplicates
+          .map((index) => {
+            const point = points[index];
+            return (
+              <SvgText
+                key={`x-label-${index}`}
+                x={point.x}
+                y={CHART_HEIGHT - PADDING.bottom + 20}
+                fontSize="10"
+                fill="#666"
+                textAnchor="middle"
+              >
+                {formatDate(point.date)}
+              </SvgText>
+            );
+          })}
 
         {/* Y-axis label */}
         <SvgText
