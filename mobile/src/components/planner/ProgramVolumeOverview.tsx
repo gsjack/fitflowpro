@@ -86,15 +86,11 @@ export default function ProgramVolumeOverview({ muscleGroups }: ProgramVolumeOve
       accessibilityRole="text"
       accessibilityLabel={`${mg.muscle_group}: ${mg.planned_weekly_sets} sets per week, ${mg.zone.replace('_', ' ')} zone`}
     >
+      {/* Muscle group name + badge */}
       <View style={styles.muscleGroupHeader}>
-        <View style={styles.muscleGroupInfo}>
-          <Text variant="labelLarge" style={styles.muscleGroupName}>
-            {mg.muscle_group.charAt(0).toUpperCase() + mg.muscle_group.slice(1)}
-          </Text>
-          <Text variant="bodySmall" style={styles.muscleGroupSets}>
-            {mg.planned_weekly_sets} sets/week
-          </Text>
-        </View>
+        <Text variant="labelLarge" style={styles.muscleGroupName}>
+          {mg.muscle_group.charAt(0).toUpperCase() + mg.muscle_group.slice(1)}
+        </Text>
         <VolumeWarningBadge
           zone={mg.zone}
           muscleGroup={mg.muscle_group}
@@ -102,11 +98,20 @@ export default function ProgramVolumeOverview({ muscleGroups }: ProgramVolumeOve
           compact
         />
       </View>
+
+      {/* Sets/week - separate line */}
+      <Text variant="bodyMedium" style={styles.muscleGroupSets}>
+        {mg.planned_weekly_sets} sets/week
+      </Text>
+
+      {/* Progress bar */}
       <ProgressBar
         progress={getProgressValue(mg)}
         color={getProgressColor(mg.zone)}
         style={styles.progressBar}
       />
+
+      {/* MEV/MAV/MRV - separate line */}
       <View style={styles.landmarkLabels}>
         <Text variant="labelSmall" style={styles.landmarkLabel}>
           MEV {mg.mev}
@@ -182,9 +187,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing.xs,
   },
-  muscleGroupInfo: {
-    flex: 1,
-  },
   muscleGroupName: {
     fontWeight: '600',
     color: colors.text.primary,
@@ -192,13 +194,16 @@ const styles = StyleSheet.create({
   },
   muscleGroupSets: {
     color: colors.text.secondary,
-    marginTop: 2,
+    marginTop: spacing.xs,
+    marginBottom: spacing.sm,
+    fontWeight: '500',
   },
   progressBar: {
     height: 8,
     borderRadius: 4,
     backgroundColor: colors.background.tertiary,
     marginBottom: spacing.xs,
+    marginTop: spacing.sm,
   },
   landmarkLabels: {
     flexDirection: 'row',

@@ -32,7 +32,6 @@ export type MuscleGroup =
   | 'shoulders_side'
   | 'shoulders_rear'
   | 'biceps'
-  | 'brachialis'
   | 'triceps'
   | 'quads'
   | 'hamstrings'
@@ -79,11 +78,6 @@ export const VOLUME_LANDMARKS: Record<MuscleGroup, VolumeLandmark> = {
     mev: 6,
     mav: 12,
     mrv: 20,
-  },
-  brachialis: {
-    mev: 4,
-    mav: 8,
-    mrv: 14,
   },
   triceps: {
     mev: 6,
