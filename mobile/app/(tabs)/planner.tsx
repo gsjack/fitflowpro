@@ -567,11 +567,19 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   const selectedDay = program.program_days.find((day) => day.id === selectedDayId);
 
   /**
-   * Render header with training days selector
+   * Render header with phase indicator and training days selector
    */
   const renderListHeader = () => (
     <>
-      {/* 1. Training Days */}
+      {/* 1. Phase Progress Indicator (MEV/MAV/MRV) */}
+      <PhaseProgressIndicator
+        currentPhase={program.mesocycle_phase}
+        currentWeek={program.mesocycle_week}
+        programId={program.id}
+        onAdvancePhase={handleAdvancePhase}
+      />
+
+      {/* 2. Training Days */}
       <Card style={styles.card}>
         <Card.Content>
           <Text variant="titleMedium" style={styles.sectionTitle}>
@@ -593,7 +601,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
         </Card.Content>
       </Card>
 
-      {/* 2. Exercise List Header */}
+      {/* 3. Exercise List Header */}
       {selectedDay && (
         <Card style={styles.cardHeader}>
           <Card.Content>
@@ -607,7 +615,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
   );
 
   /**
-   * Render footer with volume and phase info
+   * Render footer with add exercise button and weekly volume overview
    */
   const renderListFooter = () => (
     <>
@@ -626,7 +634,7 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
         </View>
       )}
 
-      {/* 3. Program Volume Overview (T092) */}
+      {/* Weekly Volume Overview */}
       {volumeAnalysis && (
         <ProgramVolumeOverview
           muscleGroups={volumeAnalysis.muscle_groups.map(
@@ -642,14 +650,6 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
           )}
         />
       )}
-
-      {/* 4. Phase Progress Indicator (T096) */}
-      <PhaseProgressIndicator
-        currentPhase={program.mesocycle_phase}
-        currentWeek={program.mesocycle_week}
-        programId={program.id}
-        onAdvancePhase={handleAdvancePhase}
-      />
     </>
   );
 
@@ -679,67 +679,66 @@ export default function PlannerScreen({ userId }: PlannerScreenProps) {
 
   return (
     <GestureHandlerRootView style={styles.flex}>
-      <View style={styles.container}>
-        <DraggableFlatList
-          data={selectedDayExercises}
-          onDragEnd={({ data }) => void handleReorder(data)}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderExerciseItem}
-          ListHeaderComponent={renderListHeader}
-          ListFooterComponent={renderListFooter}
-          ListEmptyComponent={renderEmptyComponent}
-          contentContainerStyle={styles.listContent}
-        />
+      <DraggableFlatList
+        data={selectedDayExercises}
+        onDragEnd={({ data }) => void handleReorder(data)}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderExerciseItem}
+        ListHeaderComponent={renderListHeader}
+        ListFooterComponent={renderListFooter}
+        ListEmptyComponent={renderEmptyComponent}
+        containerStyle={styles.container}
+        contentContainerStyle={styles.listContent}
+      />
 
-        {/* Exercise Swap Modal (T093) */}
-        <ExerciseSelectionModal
-          visible={swapModalVisible}
-          onDismiss={() => {
-            setSwapModalVisible(false);
-            setSelectedExerciseId(null);
-            setSwapMuscleGroupFilter(undefined);
-          }}
-          onSelectExercise={handleConfirmSwap}
-          muscleGroupFilter={swapMuscleGroupFilter}
-          excludeExercises={
-            selectedExerciseId
-              ? [
-                  selectedDayExercises.find((ex) => ex.id === selectedExerciseId)?.exercise_id,
-                ].filter((id): id is number => id !== undefined)
-              : []
-          }
-        />
+      {/* Exercise Swap Modal (T093) */}
+      <ExerciseSelectionModal
+        visible={swapModalVisible}
+        onDismiss={() => {
+          setSwapModalVisible(false);
+          setSelectedExerciseId(null);
+          setSwapMuscleGroupFilter(undefined);
+        }}
+        onSelectExercise={handleConfirmSwap}
+        muscleGroupFilter={swapMuscleGroupFilter}
+        excludeExercises={
+          selectedExerciseId
+            ? [
+                selectedDayExercises.find((ex) => ex.id === selectedExerciseId)?.exercise_id,
+              ].filter((id): id is number => id !== undefined)
+            : []
+        }
+      />
 
-        {/* Add Exercise Modal */}
-        <ExerciseSelectionModal
-          visible={addExerciseModalVisible}
-          onDismiss={() => setAddExerciseModalVisible(false)}
-          onSelectExercise={handleAddExercise}
-          muscleGroupFilter={undefined}
-          excludeExercises={[]}
-        />
+      {/* Add Exercise Modal */}
+      <ExerciseSelectionModal
+        visible={addExerciseModalVisible}
+        onDismiss={() => setAddExerciseModalVisible(false)}
+        onSelectExercise={handleAddExercise}
+        muscleGroupFilter={undefined}
+        excludeExercises={[]}
+      />
 
-        {/* Program Creation Wizard */}
-        <ProgramCreationWizard
-          visible={wizardVisible}
-          onDismiss={() => setWizardVisible(false)}
-          onProgramCreated={handleProgramCreated}
-          onCreateProgram={handleCreateProgram}
-        />
+      {/* Program Creation Wizard */}
+      <ProgramCreationWizard
+        visible={wizardVisible}
+        onDismiss={() => setWizardVisible(false)}
+        onProgramCreated={handleProgramCreated}
+        onCreateProgram={handleCreateProgram}
+      />
 
-        {/* Snackbar */}
-        <Snackbar
-          visible={snackbarVisible}
-          onDismiss={() => setSnackbarVisible(false)}
-          duration={3000}
-          action={{
-            label: 'Close',
-            onPress: () => setSnackbarVisible(false),
-          }}
-        >
-          {snackbarMessage}
-        </Snackbar>
-      </View>
+      {/* Snackbar */}
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={3000}
+        action={{
+          label: 'Close',
+          onPress: () => setSnackbarVisible(false),
+        }}
+      >
+        {snackbarMessage}
+      </Snackbar>
 
       {/* Delete Confirmation Dialog */}
       <Portal>

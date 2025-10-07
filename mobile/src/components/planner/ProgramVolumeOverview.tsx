@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Card, Text, ProgressBar } from 'react-native-paper';
 import VolumeWarningBadge from './VolumeWarningBadge';
 import { colors } from '../../theme/colors';
@@ -137,9 +137,9 @@ export default function ProgramVolumeOverview({ muscleGroups }: ProgramVolumeOve
           )}
         </View>
 
-        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <View style={styles.muscleGroupsContainer}>
           {muscleGroups.map(renderMuscleGroupBar)}
-        </ScrollView>
+        </View>
       </Card.Content>
     </Card>
   );
@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.sm,
     overflow: 'hidden',
   },
-  scrollView: {
-    maxHeight: 300,
+  muscleGroupsContainer: {
+    // No maxHeight - let it expand fully
   },
   muscleGroupRow: {
     marginBottom: spacing.lg,
