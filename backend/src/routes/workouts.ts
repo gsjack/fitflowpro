@@ -349,6 +349,8 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
     Body: {
       status?: 'not_started' | 'in_progress' | 'completed' | 'cancelled';
       program_day_id?: number;
+      total_volume_kg?: number;
+      average_rir?: number;
     };
   }>(
     '/workouts/:id',
@@ -374,6 +376,14 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
               description:
                 'Change the program day for this workout (only allowed if status is not_started)',
             },
+            total_volume_kg: {
+              type: 'number',
+              description: 'Total volume in kg (sum of weight × reps for all sets)',
+            },
+            average_rir: {
+              type: 'number',
+              description: 'Average RIR across all sets',
+            },
           },
           minProperties: 1, // Require at least one property
         },
@@ -382,14 +392,16 @@ export default async function workoutRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       try {
         const workoutId = parseInt(request.params.id, 10);
-        const { status, program_day_id } = request.body;
+        const { status, program_day_id, total_volume_kg, average_rir } = request.body;
         const authenticatedUser = (request as AuthenticatedRequest).user;
 
         const workout = updateWorkoutStatus(
           authenticatedUser.userId,
           workoutId,
           status,
-          program_day_id
+          program_day_id,
+          total_volume_kg,
+          average_rir
         );
         return reply.status(200).send(workout);
       } catch (error) {
