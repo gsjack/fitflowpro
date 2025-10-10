@@ -535,6 +535,11 @@ export default function DashboardScreen({
                 <Text variant="headlineLarge" style={styles.workoutNameNew}>
                   {todayWorkout.day_name || 'Workout'}
                 </Text>
+                {console.log('[DashboardScreen] SWAP button check:', {
+                  status: todayWorkout.status,
+                  shouldShow: todayWorkout.status !== 'completed',
+                  isNotCompleted: todayWorkout.status !== 'completed'
+                })}
                 {todayWorkout.status !== 'completed' && (
                   <Button
                     mode="outlined"

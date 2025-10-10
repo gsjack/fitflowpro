@@ -232,6 +232,9 @@ export function getCurrentWeekVolume(userId: number): CurrentWeekVolume {
     completed_sets: number;
   }>;
 
+  console.log('[VolumeService] Completed sets query result:', JSON.stringify(completedResults));
+  console.log('[VolumeService] Week boundaries:', week_start, 'to', week_end);
+
   // Query planned sets from active program for current week
   // Get active program first
   const activeProgramQuery = db.prepare(`
@@ -264,6 +267,7 @@ export function getCurrentWeekVolume(userId: number): CurrentWeekVolume {
       muscle_group: string;
       planned_sets: number;
     }>;
+    console.log('[VolumeService] Planned sets query result:', JSON.stringify(plannedResults));
   }
 
   // Merge completed and planned data
@@ -325,6 +329,8 @@ export function getCurrentWeekVolume(userId: number): CurrentWeekVolume {
 
   // Sort by muscle group name
   muscleGroups.sort((a, b) => a.muscle_group.localeCompare(b.muscle_group));
+
+  console.log('[VolumeService] Final muscle groups:', JSON.stringify(muscleGroups.filter(mg => mg.muscle_group === 'biceps')));
 
   return {
     week_start,

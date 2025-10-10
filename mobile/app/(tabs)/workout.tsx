@@ -330,8 +330,8 @@ export default function WorkoutScreen() {
     try {
       setCancelDialogVisible(false);
       await cancelWorkout();
-      console.log('[WorkoutScreen] Workout cancelled, navigating back');
-      router.back();
+      console.log('[WorkoutScreen] Workout cancelled, navigating to dashboard');
+      router.replace('/(tabs)');
     } catch (error) {
       console.error('[WorkoutScreen] Failed to cancel workout:', error);
     }
