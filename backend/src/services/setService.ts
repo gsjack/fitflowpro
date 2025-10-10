@@ -184,3 +184,19 @@ export function getSetsForWorkout(workoutId: number): Set[] {
 
   return sets;
 }
+
+/**
+ * Delete a set by ID
+ *
+ * Used when cancelling workouts to remove logged sets.
+ *
+ * @param setId - ID of the set to delete
+ * @returns true if set was deleted, false if set didn't exist
+ */
+export function deleteSet(setId: number): boolean {
+  const result = db.prepare('DELETE FROM sets WHERE id = ?').run(setId);
+
+  console.log(`Set deleted: id=${setId}, changes=${result.changes}`);
+
+  return result.changes > 0;
+}

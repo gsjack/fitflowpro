@@ -6,7 +6,8 @@
  * - Inline recovery assessment (if not submitted today)
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   View,
   StyleSheet,
@@ -54,6 +55,7 @@ interface DashboardScreenProps {
 
 interface ProgramDay {
   id: number;
+  program_id: number;
   day_name: string;
   day_type: 'strength' | 'vo2max';
   exercise_count?: number;
@@ -110,9 +112,13 @@ export default function DashboardScreen({
     isRefetching: isRefetchingVolume,
   } = useCurrentWeekVolume();
 
-  useEffect(() => {
-    loadDashboardData();
-  }, [userId]);
+  // Reload dashboard data whenever screen comes into focus
+  // This ensures fresh data after returning from workout screen
+  useFocusEffect(
+    useCallback(() => {
+      loadDashboardData();
+    }, [userId])
+  );
 
   const getRecommendedWorkout = async () => {
     try {
@@ -225,18 +231,44 @@ export default function DashboardScreen({
   };
 
   const handleSwapWorkout = async (newProgramDayId: number) => {
-    if (!todayWorkout) return;
-
     try {
       setSwapping(true);
-      const client = await getAuthenticatedClient();
-      await client.patch(`/api/workouts/${todayWorkout.id}`, {
-        program_day_id: newProgramDayId,
-      });
 
-      // Close dialog and reload dashboard
+      if (todayWorkout) {
+        // Swap existing workout
+        const client = await getAuthenticatedClient();
+        await client.patch(`/api/workouts/${todayWorkout.id}`, {
+          program_day_id: newProgramDayId,
+        });
+        // Reload to get updated workout
+        await loadDashboardData();
+      } else if (recommendedProgramDay) {
+        // Change recommendation - load full program day details
+        const client = await getAuthenticatedClient();
+        const programDayResponse = await client.get(`/api/program-days`);
+        const allProgramDays = programDayResponse.data as ProgramDay[];
+        const selectedDay = allProgramDays.find((day) => day.id === newProgramDayId);
+
+        if (selectedDay) {
+          // Fetch exercises for this program day
+          const exercisesResponse = await client.get(`/api/program-exercises`, {
+            params: { program_day_id: newProgramDayId },
+          });
+
+          const recommendedDay: RecommendedProgramDay = {
+            id: selectedDay.id,
+            program_id: selectedDay.program_id,
+            day_name: selectedDay.day_name,
+            day_type: selectedDay.day_type,
+            weekday: new Date().getDay(),
+            exercises: exercisesResponse.data,
+          };
+
+          setRecommendedProgramDay(recommendedDay);
+        }
+      }
+
       setShowSwapDialog(false);
-      await loadDashboardData();
     } catch (error) {
       console.error('[DashboardScreen] Error swapping workout:', error);
       Alert.alert('Error', 'Failed to change workout. Please try again.');
@@ -452,6 +484,12 @@ export default function DashboardScreen({
         </View>
 
         {/* Today's Workout Card */}
+        {console.log('[DashboardScreen] DEBUG:', {
+          hasTodayWorkout: !!todayWorkout,
+          todayWorkoutStatus: todayWorkout?.status,
+          hasRecommended: !!recommendedProgramDay,
+          recommendedDayName: recommendedProgramDay?.day_name
+        })}
         {todayWorkout ? (
           <GradientCard
             gradient={
@@ -489,23 +527,26 @@ export default function DashboardScreen({
                   >
                     {todayWorkout.status.replace('_', ' ').toUpperCase()}
                   </Chip>
-                  {todayWorkout.status === 'not_started' && (
-                    <IconButton
-                      icon="swap-horizontal"
-                      size={24}
-                      iconColor={colors.primary.main}
-                      onPress={handleOpenSwapDialog}
-                      accessibilityLabel="Change workout"
-                      style={[styles.swapButton, styles.swapButtonContainer]}
-                    />
-                  )}
                 </View>
               </View>
 
-              {/* Workout Name */}
-              <Text variant="headlineLarge" style={styles.workoutNameNew}>
-                {todayWorkout.day_name || 'Workout'}
-              </Text>
+              {/* Workout Name with Swap Button */}
+              <View style={styles.workoutTitleRow}>
+                <Text variant="headlineLarge" style={styles.workoutNameNew}>
+                  {todayWorkout.day_name || 'Workout'}
+                </Text>
+                {todayWorkout.status !== 'completed' && (
+                  <Button
+                    mode="outlined"
+                    onPress={handleOpenSwapDialog}
+                    style={styles.swapButtonInline}
+                    labelStyle={styles.swapButtonLabel}
+                    contentStyle={styles.swapButtonContent}
+                  >
+                    SWAP
+                  </Button>
+                )}
+              </View>
 
               {/* Workout Type */}
               <Text variant="bodyMedium" style={styles.workoutTypeNew}>
@@ -607,10 +648,23 @@ export default function DashboardScreen({
                 </Text>
               </View>
 
-              {/* Workout Name */}
-              <Text variant="headlineLarge" style={styles.workoutNameNew}>
-                {recommendedProgramDay.day_name}
-              </Text>
+              {/* Workout Name with Swap Button */}
+              <View style={styles.workoutTitleRow}>
+                <Text variant="headlineLarge" style={styles.workoutNameNew}>
+                  {recommendedProgramDay.day_name}
+                </Text>
+                <Button
+                  mode="contained"
+                  onPress={handleOpenSwapDialog}
+                  buttonColor="#FFFFFF"
+                  textColor="#000000"
+                  style={styles.swapButtonInline}
+                  labelStyle={styles.swapButtonLabel}
+                  contentStyle={styles.swapButtonContent}
+                >
+                  SWAP
+                </Button>
+              </View>
 
               {/* Workout Type */}
               <Text variant="bodyMedium" style={styles.workoutTypeNew}>
@@ -701,9 +755,13 @@ export default function DashboardScreen({
 
             {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length > 0 && (
               <>
-                {/* Filter to show only muscle groups with planned sets > 0 */}
+                {/* Filter to show only muscle groups with planned sets > 0, excluding minor muscle groups */}
                 {volumeData.muscle_groups
-                  .filter((mg) => mg.planned_sets > 0)
+                  .filter(
+                    (mg) =>
+                      mg.planned_sets > 0 &&
+                      !['brachialis', 'forearms', 'traps'].includes(mg.muscle_group)
+                  )
                   .sort((a, b) => a.muscle_group.localeCompare(b.muscle_group))
                   .map((muscleGroup) => (
                     <MuscleGroupVolumeBar
@@ -750,14 +808,17 @@ export default function DashboardScreen({
           onDismiss={() => setShowSwapDialog(false)}
           style={styles.swapDialog}
         >
-          <Dialog.Title>Change Workout</Dialog.Title>
+          <Dialog.Title>
+            {todayWorkout ? 'Change Workout' : 'Choose Workout'}
+          </Dialog.Title>
           <Dialog.Content>
             {loadingProgramDays ? (
               <ActivityIndicator size="large" style={styles.dialogLoader} />
             ) : (
               <View>
                 {programDays.map((day) => {
-                  const isCurrentDay = todayWorkout?.program_day_id === day.id;
+                  const currentProgramDayId = todayWorkout?.program_day_id || recommendedProgramDay?.id;
+                  const isCurrentDay = currentProgramDayId === day.id;
                   const dayIcon = day.day_type === 'vo2max' ? 'heart-pulse' : 'dumbbell';
 
                   return (
@@ -927,6 +988,12 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     letterSpacing: 1.5,
   },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 0,
+    flex: 1,
+  },
   headerActions: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -942,16 +1009,42 @@ const styles = StyleSheet.create({
     minWidth: 48,
     minHeight: 48,
   },
+  swapButtonCompact: {
+    margin: 0,
+    marginLeft: 0,
+    marginRight: 8,
+  },
   segmentedButtons: {
     minHeight: 48, // FIX P0-2: Increased from 44px to meet WCAG 48px minimum touch target
+  },
+  workoutTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
   },
   workoutNameNew: {
     color: colors.text.primary,
     fontWeight: '700',
-    marginBottom: spacing.xs,
+    flex: 1,
+  },
+  swapButtonInline: {
+    margin: 0,
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+  },
+  swapButtonLabel: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+  swapButtonContent: {
+    height: 32,
+    paddingHorizontal: 12,
   },
   workoutTypeNew: {
     color: colors.text.secondary,
+    marginTop: spacing.xs,
     marginBottom: spacing.md,
   },
   exerciseDetails: {

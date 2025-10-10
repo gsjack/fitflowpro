@@ -144,15 +144,16 @@ export function MuscleGroupVolumeBar({
         {/* Simple Progress Bar (no markers by default) */}
         <ProgressBar progress={progress} color={zoneColor} style={styles.progressBar} />
 
-        {/* Expanded Details with Threshold Info */}
-        {expanded && (
-          <View style={styles.thresholdInfo}>
-            <View style={styles.thresholdRow}>
-              <Text style={styles.thresholdMiniLabel}>MEV: {mev}</Text>
-              <Text style={styles.thresholdMiniLabel}>MAV: {mav}</Text>
-              <Text style={styles.thresholdMiniLabel}>MRV: {mrv}</Text>
-            </View>
+        {/* Always show threshold markers */}
+        <View style={styles.thresholdRow}>
+          <Text style={styles.thresholdMiniLabel}>MEV: {mev}</Text>
+          <Text style={styles.thresholdMiniLabel}>MAV: {mav}</Text>
+          <Text style={styles.thresholdMiniLabel}>MRV: {mrv}</Text>
+        </View>
 
+        {/* Expanded Details with Status */}
+        {expanded && (
+          <View style={styles.statusInfo}>
             <View style={styles.statusRow}>
               <MaterialCommunityIcons
                 name="information-outline"
@@ -221,22 +222,23 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
     backgroundColor: colors.background.tertiary,
-  },
-  thresholdInfo: {
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: colors.effects.divider,
+    marginBottom: 10,
   },
   thresholdRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 8,
+    paddingVertical: 8,
   },
   thresholdMiniLabel: {
-    fontSize: 11,
+    fontSize: 12,
     color: colors.text.tertiary,
     fontWeight: '500',
+  },
+  statusInfo: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: colors.effects.divider,
   },
   statusRow: {
     flexDirection: 'row',

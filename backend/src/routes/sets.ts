@@ -6,7 +6,7 @@
  */
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { logSet, getSetsForWorkout } from '../services/setService.js';
+import { logSet, getSetsForWorkout, deleteSet } from '../services/setService.js';
 import { authenticateJWT } from '../middleware/auth.js';
 
 /**
@@ -216,6 +216,45 @@ export default async function setRoutes(fastify: FastifyInstance) {
         fastify.log.error(error);
         return reply.status(500).send({
           error: 'Failed to log set',
+        });
+      }
+    }
+  );
+
+  /**
+   * DELETE /api/sets/:id
+   *
+   * Delete a specific set by ID
+   * Used when cancelling workouts to remove logged sets
+   *
+   * Requires JWT authentication
+   */
+  fastify.delete<{ Params: { id: string } }>(
+    '/sets/:id',
+    { preHandler: authenticateJWT },
+    async (request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) => {
+      try {
+        const setId = parseInt(request.params.id, 10);
+
+        if (isNaN(setId)) {
+          return reply.status(400).send({
+            error: 'Invalid set ID',
+          });
+        }
+
+        const deleted = deleteSet(setId);
+
+        if (!deleted) {
+          return reply.status(404).send({
+            error: 'Set not found',
+          });
+        }
+
+        return reply.status(204).send();
+      } catch (error) {
+        fastify.log.error(error);
+        return reply.status(500).send({
+          error: 'Failed to delete set',
         });
       }
     }
