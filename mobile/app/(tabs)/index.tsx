@@ -8,7 +8,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, RefreshControl, Platform } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { Card, Text, Button } from 'react-native-paper';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { useWorkoutStore } from '../../src/stores/workoutStore';
@@ -21,7 +21,6 @@ import { getAuthenticatedClient, getUserId } from '../../src/services/api/authAp
 import { getQuoteOfTheDay } from '../../src/constants/quotes';
 import { useCurrentWeekVolume } from '../../src/services/api/analyticsApi';
 import { WorkoutCardSkeleton, VolumeBarSkeleton } from '../../src/components/skeletons';
-import BodyWeightWidget from '../../src/components/dashboard/BodyWeightWidget';
 import TodaysWorkoutCard from '../../src/components/dashboard/TodaysWorkoutCard';
 import WeeklyVolumeSection from '../../src/components/dashboard/WeeklyVolumeSection';
 import WorkoutSwapDialog from '../../src/components/dashboard/WorkoutSwapDialog';
@@ -215,8 +214,42 @@ export default function DashboardScreen() {
   };
 
   const handleSwapWorkout = async (newProgramDayId: number) => {
-    if (!todayWorkout) return;
-    await workoutSwap.swapWorkout(todayWorkout.id, newProgramDayId);
+    if (todayWorkout) {
+      // Swap existing workout
+      await workoutSwap.swapWorkout(todayWorkout.id, newProgramDayId);
+    } else {
+      // No workout yet - fetch full details of selected program day and set as recommended
+      try {
+        const client = await getAuthenticatedClient();
+
+        // Fetch program day details
+        const programDayResponse = await client.get<{ id: number; program_id: number; day_name: string; day_type: 'strength' | 'vo2max' }>(`/api/program-days/${newProgramDayId}`);
+        const selectedDay = programDayResponse.data;
+
+        // Fetch exercises for this program day
+        const exercisesResponse = await client.get<Array<{ id: number; exercise_name: string; sets: number; reps: number; rir: number }>>('/api/program-exercises', {
+          params: { program_day_id: newProgramDayId },
+        });
+
+        // Set as recommended workout
+        const newRecommended: RecommendedProgramDay = {
+          id: selectedDay.id,
+          program_id: selectedDay.program_id,
+          day_name: selectedDay.day_name,
+          day_type: selectedDay.day_type,
+          weekday: new Date().getDay(),
+          exercises: exercisesResponse.data,
+        };
+
+        setRecommendedProgramDay(newRecommended);
+
+        // Close dialog
+        workoutSwap.closeDialog();
+      } catch (error) {
+        console.error('[DashboardScreen] Error selecting workout:', error);
+        // Dialog will show error via workoutSwap hook
+      }
+    }
   };
 
   if (loading) {
@@ -299,6 +332,7 @@ export default function DashboardScreen() {
             exercises={recommendedProgramDay.exercises}
             isRecommended
             onStartWorkout={handleStartWorkout}
+            onSwapWorkout={workoutSwap.openDialog}
           />
         ) : (
           <Card style={styles.emptyWorkoutCard}>
@@ -307,8 +341,18 @@ export default function DashboardScreen() {
                 No Workout Today
               </Text>
               <Text variant="bodyMedium" style={styles.emptyDescription}>
-                Head to the Planner to schedule your training
+                Choose a workout to get started
               </Text>
+              <Button
+                mode="contained"
+                onPress={workoutSwap.openDialog}
+                style={styles.chooseWorkoutButton}
+                buttonColor={colors.primary.main}
+                icon="calendar-plus"
+                accessibilityLabel="Choose a workout"
+              >
+                Choose Workout
+              </Button>
             </Card.Content>
           </Card>
         )}
@@ -320,16 +364,13 @@ export default function DashboardScreen() {
           error={volumeError}
           onRetry={refetchVolume}
         />
-
-        {/* Body Weight Widget */}
-        <BodyWeightWidget onWeightLogged={handleRefresh} />
       </View>
 
       {/* Workout Swap Dialog */}
       <WorkoutSwapDialog
         visible={workoutSwap.showDialog}
         programDays={workoutSwap.programDays}
-        currentProgramDayId={todayWorkout?.program_day_id}
+        currentProgramDayId={todayWorkout?.program_day_id || recommendedProgramDay?.id}
         isLoading={workoutSwap.isLoadingDays}
         isSwapping={workoutSwap.isSwapping}
         onDismiss={workoutSwap.closeDialog}
@@ -361,5 +402,11 @@ const styles = StyleSheet.create({
   emptyDescription: {
     color: colors.text.tertiary,
     textAlign: 'center',
+    marginBottom: spacing.lg,
+  },
+  chooseWorkoutButton: {
+    marginTop: spacing.md,
+    minHeight: 56,
+    borderRadius: borderRadius.md,
   },
 });

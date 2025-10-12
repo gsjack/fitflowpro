@@ -285,7 +285,7 @@ export default function VO2maxWorkoutScreen() {
           </GradientCard>
 
           {/* Heart Rate Zones */}
-          {hrZones && userAge && <HeartRateZoneDisplay age={userAge} zones={hrZones} />}
+          {hrZones && <HeartRateZoneDisplay workZone={hrZones.work} recoveryZone={hrZones.recovery} />}
 
           {/* Safety Tips */}
           <View style={styles.tipsCard}>

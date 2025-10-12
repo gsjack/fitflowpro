@@ -64,9 +64,13 @@ export default function WeeklyVolumeSection({
 
         {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length > 0 && (
           <>
-            {/* Filter to show only muscle groups with planned sets > 0 */}
+            {/* Filter to show only muscle groups with planned sets > 0, excluding minor muscle groups */}
             {volumeData.muscle_groups
-              .filter((mg) => mg.planned_sets > 0)
+              .filter((mg) => {
+                const hasPlannedSets = mg.planned_sets > 0;
+                const isExcluded = ['brachialis', 'forearms', 'traps'].includes(mg.muscle_group);
+                return hasPlannedSets && !isExcluded;
+              })
               .sort((a, b) => a.muscle_group.localeCompare(b.muscle_group))
               .map((muscleGroup) => (
                 <MuscleGroupVolumeBar

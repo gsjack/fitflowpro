@@ -761,14 +761,22 @@ export default function DashboardScreen({
             {volumeData && volumeData.muscle_groups && volumeData.muscle_groups.length > 0 && (
               <>
                 {/* Filter to show only muscle groups with planned sets > 0, excluding minor muscle groups */}
-                {volumeData.muscle_groups
-                  .filter(
-                    (mg) =>
-                      mg.planned_sets > 0 &&
-                      !['brachialis', 'forearms', 'traps'].includes(mg.muscle_group)
-                  )
-                  .sort((a, b) => a.muscle_group.localeCompare(b.muscle_group))
-                  .map((muscleGroup) => (
+                {(() => {
+                  console.log('🔍 Raw muscle groups:', volumeData.muscle_groups.map(mg => ({ name: mg.muscle_group, planned: mg.planned_sets })));
+
+                  const filtered = volumeData.muscle_groups
+                    .filter((mg) => {
+                      const hasPlannedSets = mg.planned_sets > 0;
+                      const isExcluded = ['brachialis', 'forearms', 'traps'].includes(mg.muscle_group);
+                      const willShow = hasPlannedSets && !isExcluded;
+                      console.log('🔍 Evaluating:', mg.muscle_group, '| Planned sets:', mg.planned_sets, '| Is excluded:', isExcluded, '| Will show:', willShow);
+                      return willShow;
+                    })
+                    .sort((a, b) => a.muscle_group.localeCompare(b.muscle_group));
+
+                  console.log('🔍 Final filtered muscle groups:', filtered.map(mg => mg.muscle_group));
+
+                  return filtered.map((muscleGroup) => (
                     <MuscleGroupVolumeBar
                       key={muscleGroup.muscle_group}
                       muscleGroup={muscleGroup.muscle_group}
@@ -779,7 +787,8 @@ export default function DashboardScreen({
                       mrv={muscleGroup.mrv}
                       zone={muscleGroup.zone}
                     />
-                  ))}
+                  ));
+                })()}
 
                 {/* Week info */}
                 <Text variant="bodySmall" style={styles.weekInfoText}>

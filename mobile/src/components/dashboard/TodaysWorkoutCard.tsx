@@ -98,7 +98,7 @@ export default function TodaysWorkoutCard({
                 {status.replace('_', ' ').toUpperCase()}
               </Chip>
             )}
-            {(status === 'not_started' || isRecommended) && onSwapWorkout && (
+            {(status === 'not_started' || status === 'in_progress' || isRecommended) && onSwapWorkout && (
               <IconButton
                 icon="swap-horizontal"
                 size={24}
